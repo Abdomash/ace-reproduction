@@ -1,0 +1,121 @@
+\documentclass[letterpaper,twocolumn,10pt]{article}
+\usepackage{usenix}
+
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage{url}
+\usepackage{hyperref}
+
+\begin{document}
+
+%don't want date printed
+\date{}
+
+
+\title{\Large \bf Reproducing the Agentic Context Engineering framework\\under MAESTRO Observability}
+
+\author{
+{\rm Abdulrahman Alshahrani}\\
+KAUST
+}
+
+\maketitle
+
+\begin{abstract}
+Agentic Context Engineering (ACE)~\cite{zhang2025agenticcontextengineeringevolving} is a framework that treats LLM contexts as evolving playbooks maintained by three specialized agents---Generator, Reflector, and Curator---achieving strong accuracy gains on agent and domain-specific benchmarks. However, the ACE paper only reports task-level accuracy and high-level cost metrics, whereas the system-level execution behavior remains largely unexplored. We propose a reproduction study that (1)~reproduces ACE's methodology on a different LLM backbone (MiniMax-M2.5 instead of DeepSeek-V3.1) across the AppWorld and FiNER benchmarks, (2)~utilize MAESTRO's~\cite{maestro} OpenTelemetry tools to capture per-agent CPU, memory, and network usage, and (3)~extends the original work by studying a mixed-model setup: a stronger model is assigned to the Reflector, while cheaper models power the remaining agents. This lets us examine the cost–accuracy tradeoffs the original authors flagged as an open question but did not evaluate.
+\end{abstract}
+
+\section{Project type}
+
+This project is a reproduction study.
+
+This project explores the use of GenAI tools in systems research. We plan to use the GenAI tool OpenCode \cite{anomalyco_opencode} (akin to Claude Code) to aid in the technical implementation of the project, by exploring the projects codebases, extracting useful APIs, suggesting implementation paths, generating code snippets, and assisting with the experiment setup implementation.
+
+\section{Introduction}
+
+\subsection{Problem and motivation}
+
+Many modern LLM applications have increasingly focused on improving \emph{context engineering} by refining inputs (system prompts, memory, evidence) rather than updating model weights to boost performance. The recently proposed Agentic Context Engineering (ACE) framework~\cite{zhang2025agenticcontextengineeringevolving} advances this paradigm by treating contexts as evolving \emph{playbooks} (i.e. structured, itemized bullet points of strategies, code snippets, and failure reflections) maintained by a three-agent workflow: a \textbf{Generator} that produces reasoning trajectories, a \textbf{Reflector} that critiques traces and extracts lessons, and a \textbf{Curator} that integrates lessons into incremental updates to the playbooks. ACE reports strong results: +10.6\% on the AppWorld agent benchmark~\cite{trivedi2024appworldcontrollableworldapps} and +8.6\% on financial analysis tasks (FiNER~\cite{Loukas_2022}), while still reducing model latency significantly compared to the other tested frameworks (GEPA and DC).
+
+Despite these gains, ACE's analysis is limited to task-level accuracy and aggregate cost metrics (latency, dollar cost, etc). The \emph{system-level} execution behavior of CPU usage during the Reflector's iterative refinement, memory footprint as playbooks grow in token count, and the network traffic per LLM call remains largely unexplored. The MAESTRO test suite confirms the importance of such system-level profiles in understanding multi-agent systems (MAS), noting that system architecture dominates most of the resource consumption patterns.
+
+A second limitation of ACE's results is in regards to their model choices. The authors use the same LLM (DeepSeek-V3.1) for all three agents to ensure fairness between them, but they acknowledge in their limitations that the Reflector's quality is a critical bottleneck: if it fails to extract meaningful insights, the playbook quality will degrade. Whether allocating a stronger, but more expensive, model specifically to the Reflector can improve the cost--accuracy tradeoff is an open question the authors identified.
+
+\subsection{Research questions}
+
+This project addresses three research questions:
+
+\begin{enumerate}
+    \item \textbf{Generalizability.} Do ACE's relative performance gains over the baselines hold when the underlying LLM model is changed from DeepSeek-V3.1 to MiniMax-M2.5?
+    \item \textbf{System-level behavior.} What are the CPU, memory, network, and call-graph characteristics of the ACE three-agent workflow, and how do they evolve as the playbook grows over time?
+    \item \textbf{Quantifying the Reflector's Impact.} Does assigning a stronger model (MiniMax-M2.5) to the Reflector while using a cheaper model (GPT-oss-20b) for Generator and Curator yield a better cost--accuracy tradeoff than a single model choice?
+\end{enumerate}
+
+\subsection{Proposed approach}
+
+We propose to:
+
+\begin{itemize}
+    \item \textbf{Reproduce ACE with a different LLM.} We run ACE's offline and online adaptation on AppWorld and FiNER using MiniMax-M2.5, comparing relative gains against the other baselines in the paper (ReAct, ICL, Dynamic Cheatsheet) on the same LLM. We should validate that ACE's methodology drives the improvement, not the specific chosen model.
+
+    \item \textbf{Integrate ACE with MAESTRO telemetry.} We inject OpenTelemetry traces into ACE's orchestrator using MAESTRO's telemetry helpers, capturing per-agent latency, token usage, CPU, memory, and network message sizes. We analyze call-graph stability using Jaccard and LCS similarity metrics across repeated runs.
+
+    \item \textbf{Explore mixed model usage.} We run experiments with three configurations: using only MiniMax-M2.5, using only GPT-oss-20b, and a mixed setup (GPT-oss-20b for Generator/Curator and MiniMax-M2.5 for Reflector). We should analyze the resulting cost--accuracy tradeoff.
+\end{itemize}
+
+\subsection{Evaluation}
+
+We evaluate along four dimensions:
+
+\begin{itemize}
+    \item \textbf{Task accuracy.} Task Goal Completion (TGC) and Scenario Goal Completion (SGC) for AppWorld; exact-match accuracy for FiNER. We will report relative gains over baselines and compare it with the original paper.
+    \item \textbf{System metrics.} CPU utilization, memory usage, and network message sizes, reported as time series data following MAESTRO's traces format.
+    \item \textbf{Call-graph stability.} Jaccard similarity (similar tool calls) and LCS similarity (similar order of tool calls) across the various runs, following MAESTRO's methodology.
+    \item \textbf{Cost--accuracy tradeoff.} Total API cost and token usage versus task accuracy.
+\end{itemize}
+
+\section{Tasks and timeline}
+
+\subsection{Integrate ACE with MAESTRO}
+Add MiniMax-M2.5 as a provider in ACE's client initialization. Inject MAESTRO's telemetry helpers into the ACE orchestrator. Verify that trace export works by running a small test.
+
+This will take 2 weeks.
+
+\subsection{Reproduce FiNER results}
+Run ACE on FiNER with MiniMax-M2.5. Compare relative accuracy gains against ACE paper results. Collect the MAESTRO traces for system-level analysis.
+
+This will take 2 weeks.
+
+\subsection{The Stronger Reflector experiment}
+Run two additional FiNER tests: (1) use GPT-oss-20b for all agents, and (2) use MiniMax-M2.5 only for the Reflector, keeping GPT-oss-20b for the other agents. Collect MAESTRO traces for the two configurations and analyze their cost--accuracy tradeoffs, per-agent latency breakdowns, and resource profiles.
+
+This will take 1 week.
+
+\subsection{Reproduce AppWorld results}
+Setup the AppWorld execution environment in ACE. Run ACE with MiniMax-M2.5 on the test-normal and test-challenge splits. Compare relative gains against ACE paper results.
+
+This will take 3 weeks.
+
+\subsection{Task 5: Analysis and write-up}
+Collect and generate the final plots, using MAESTRO post-processing helpers: CPU/memory time-series plots, call-graph similarity heatmaps, per-agent latency breakdowns, and playbook growth curves. Write the final project report with all figures and analysis.
+
+This will take 2 weeks.
+
+
+\section{Resources}
+
+KAUST IBEX cluster or the ROCS testbed should be sufficient for running the experiments.
+
+The model MiniMax-M2.5 will need to be accessed from an external API, with estimated cost of \$0.3/1.2 per 1M input/output tokens. As for GPT-oss-20b, I will aim to utilize ROCS testbed that already host the model locally.
+
+\section*{Group members}
+
+This proposal is by:
+\begin{itemize}
+  \item Abdulrahman Alshahrani -- KAUST ID 182856
+\end{itemize}
+
+
+\bibliographystyle{plain}
+\bibliography{main.bib}
+\end{document}
