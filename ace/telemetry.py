@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import os
 import sys
+import importlib
 from pathlib import Path
 from typing import Any, Dict, Optional
 
@@ -37,10 +38,21 @@ def _try_import_maestro() -> bool:
             record_invoke_agent_output as _record_invoke_agent_output,
             setup_jsonl_tracing as _setup_jsonl_tracing,
         )
-    except Exception:
+    except Exception as first_exc:
         maestro_src = _repo_root_from_here() / "maestro" / "src"
-        if maestro_src.exists():
+        if maestro_src.exists() and str(maestro_src) not in sys.path:
             sys.path.insert(0, str(maestro_src))
+
+        loaded_maestro = sys.modules.get("maestro")
+        if loaded_maestro is not None:
+            loaded_file = getattr(loaded_maestro, "__file__", "") or ""
+            if not loaded_file.startswith(str(maestro_src)):
+                for module_name in list(sys.modules.keys()):
+                    if module_name == "maestro" or module_name.startswith("maestro."):
+                        sys.modules.pop(module_name, None)
+
+        importlib.invalidate_caches()
+
         try:
             from maestro.telemetry_helpers.langgraph_otel import (  # type: ignore
                 PsutilMetricsRecorder as _PsutilMetricsRecorder,
@@ -48,8 +60,8 @@ def _try_import_maestro() -> bool:
                 record_invoke_agent_output as _record_invoke_agent_output,
                 setup_jsonl_tracing as _setup_jsonl_tracing,
             )
-        except Exception as exc:
-            _MAESTRO_IMPORT_ERROR = str(exc)
+        except Exception as second_exc:
+            _MAESTRO_IMPORT_ERROR = f"initial import error: {first_exc}; fallback import error: {second_exc}"
             return False
 
     setup_jsonl_tracing = _setup_jsonl_tracing
