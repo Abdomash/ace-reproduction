@@ -1,0 +1,44 @@
+[
+  {
+    "epoch": 1,
+    "step": 1,
+    "val_results": {
+      "accuracy": 1.0,
+      "correct": 2,
+      "total": 2,
+      "no_answer": 0
+    },
+    "error_log": {
+      "accuracy": 1.0,
+      "errors": []
+    }
+  },
+  {
+    "epoch": 1,
+    "step": 2,
+    "val_results": {
+      "accuracy": 1.0,
+      "correct": 2,
+      "total": 2,
+      "no_answer": 0
+    },
+    "error_log": {
+      "accuracy": 1.0,
+      "errors": []
+    }
+  },
+  {
+    "epoch": 1,
+    "step": 3,
+    "val_results": {
+      "accuracy": 1.0,
+      "correct": 2,
+      "total": 2,
+      "no_answer": 0
+    },
+    "error_log": {
+      "accuracy": 1.0,
+      "errors": []
+    }
+  }
+]

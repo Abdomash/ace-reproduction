@@ -1,0 +1,140 @@
+
+============================================================
+CURATOR FAILURE LOG
+============================================================
+Timestamp: 2026-04-06 19:11:26
+Epoch: 0
+Step: 20
+Failure Type: json_parse_error
+Error Details: Failed to extract valid JSON from curator response
+
+Raw Curator Response (first 1000 chars):
+----------------------------------------
+{"reasoning":"The reflection highlights that the model failed because it did not correctly map numeric
+----------------------------------------
+
+Full Raw Curator Response:
+----------------------------------------
+{"reasoning":"The reflection highlights that the model failed because it did not correctly map numeric
+----------------------------------------
+
+
+============================================================
+CURATOR FAILURE LOG
+============================================================
+Timestamp: 2026-04-06 19:44:35
+Epoch: 0
+Step: 50
+Failure Type: json_parse_error
+Error Details: Failed to extract valid JSON from curator response
+
+Raw Curator Response (first 1000 chars):
+----------------------------------------
+
+----------------------------------------
+
+Full Raw Curator Response:
+----------------------------------------
+
+----------------------------------------
+
+
+============================================================
+CURATOR FAILURE LOG
+============================================================
+Timestamp: 2026-04-06 19:52:04
+Epoch: 0
+Step: 60
+Failure Type: json_parse_error
+Error Details: Failed to extract valid JSON from curator response
+
+Raw Curator Response (first 1000 chars):
+----------------------------------------
+
+----------------------------------------
+
+Full Raw Curator Response:
+----------------------------------------
+
+----------------------------------------
+
+
+============================================================
+CURATOR FAILURE LOG
+============================================================
+Timestamp: 2026-04-06 19:59:29
+Epoch: 0
+Step: 70
+Failure Type: json_parse_error
+Error Details: Failed to extract valid JSON from curator response
+
+Raw Curator Response (first 1000 chars):
+----------------------------------------
+
+----------------------------------------
+
+Full Raw Curator Response:
+----------------------------------------
+
+----------------------------------------
+
+
+============================================================
+CURATOR FAILURE LOG
+============================================================
+Timestamp: 2026-04-06 20:06:53
+Epoch: 0
+Step: 80
+Failure Type: json_parse_error
+Error Details: Failed to extract valid JSON from curator response
+
+Raw Curator Response (first 1000 chars):
+----------------------------------------
+
+----------------------------------------
+
+Full Raw Curator Response:
+----------------------------------------
+
+----------------------------------------
+
+
+============================================================
+CURATOR FAILURE LOG
+============================================================
+Timestamp: 2026-04-06 20:26:38
+Epoch: 0
+Step: 90
+Failure Type: json_parse_error
+Error Details: Failed to extract valid JSON from curator response
+
+Raw Curator Response (first 1000 chars):
+----------------------------------------
+
+----------------------------------------
+
+Full Raw Curator Response:
+----------------------------------------
+
+----------------------------------------
+
+
+============================================================
+CURATOR FAILURE LOG
+============================================================
+Timestamp: 2026-04-06 20:33:45
+Epoch: 0
+Step: 100
+Failure Type: json_parse_error
+Error Details: Failed to extract valid JSON from curator response
+
+Raw Curator Response (first 1000 chars):
+----------------------------------------
+
+----------------------------------------
+
+Full Raw Curator Response:
+----------------------------------------
+
+----------------------------------------
+

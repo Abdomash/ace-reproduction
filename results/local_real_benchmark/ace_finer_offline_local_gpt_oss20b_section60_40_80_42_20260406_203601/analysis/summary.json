@@ -1,0 +1,41 @@
+{
+  "run_dir": "../results/local_real_benchmark/ace_finer_offline_local_gpt_oss20b_section60_40_80_42_20260406_203601",
+  "trace_path": "../results/local_real_benchmark/ace_finer_offline_local_gpt_oss20b_section60_40_80_42_20260406_203601/telemetry/run_ace_finer_offline_local_gpt_oss20b_section60_40_80_42_20260406_203601.otel.jsonl",
+  "metrics_path": "../results/local_real_benchmark/ace_finer_offline_local_gpt_oss20b_section60_40_80_42_20260406_203601/telemetry/ace_ace_finer_offline_local_gpt_oss20b_section60_40_80_42_20260406_203601.metrics.jsonl",
+  "llm_log_dir": "../results/local_real_benchmark/ace_finer_offline_local_gpt_oss20b_section60_40_80_42_20260406_203601/detailed_llm_logs",
+  "plots_dir": "../results/local_real_benchmark/ace_finer_offline_local_gpt_oss20b_section60_40_80_42_20260406_203601/analysis/plots",
+  "span_count": 710,
+  "llm_call_count": 475,
+  "operation_counts": {
+    "call_llm": 475,
+    "invoke_agent": 235
+  },
+  "duration_by_agent_operation_seconds": {
+    "generator": {
+      "call_llm": 6167.850480884002,
+      "invoke_agent": 1698.2983759999995
+    },
+    "reflector": {
+      "call_llm": 630.7988073539999,
+      "invoke_agent": 630.8082838830002
+    },
+    "curator": {
+      "call_llm": 53.642659648000006,
+      "invoke_agent": 53.644327225000005
+    }
+  },
+  "tokens_by_role": {
+    "curator": 11182,
+    "generator": 1265018,
+    "reflector": 198594
+  },
+  "resource_stats": {
+    "avg_cpu_pct": 0.026077586206896555,
+    "peak_mem_mb": 143.80078125
+  },
+  "accuracy": {
+    "initial_test": 0.14375,
+    "final_test": 0.15625,
+    "best_validation": 0.21875
+  }
+}

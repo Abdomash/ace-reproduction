@@ -1,0 +1,19 @@
+{
+  "run_id": "ace_finer_offline_local_gpt_oss20b_section120_80_150_resume80_42_20260406_220807",
+  "telemetry": {
+    "enabled": true,
+    "trace_path": "../results/local_real_benchmark/ace_finer_offline_local_gpt_oss20b_section120_80_150_resume80_42_20260406_220807/telemetry/run_ace_finer_offline_local_gpt_oss20b_section120_80_150_resume80_42_20260406_220807.otel.jsonl",
+    "metrics_path": "../results/local_real_benchmark/ace_finer_offline_local_gpt_oss20b_section120_80_150_resume80_42_20260406_220807/telemetry/ace_ace_finer_offline_local_gpt_oss20b_section120_80_150_resume80_42_20260406_220807.metrics.jsonl",
+    "metrics_interval_seconds": 5.0,
+    "task_name": "finer",
+    "mode": "offline"
+  },
+  "results": {
+    "training_results": {
+      "best_validation_accuracy": 0.1375
+    }
+  },
+  "training_results": {
+    "best_validation_accuracy": 0.1375
+  }
+}

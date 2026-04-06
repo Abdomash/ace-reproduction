@@ -1,0 +1,30 @@
+{
+  "run_id": "ace_finer_eval_only_local_gpt_oss20b_section120_80_150_resume80_42_20260406_220807",
+  "task_name": "finer",
+  "mode": "eval_only",
+  "generator_model": "gpt-oss:20b",
+  "reflector_model": "gpt-oss:20b",
+  "curator_model": "gpt-oss:20b",
+  "telemetry": {
+    "enabled": true,
+    "trace_path": "../results/local_real_benchmark/ace_finer_eval_only_local_gpt_oss20b_section120_80_150_resume80_42_20260406_220807/telemetry/run_ace_finer_eval_only_local_gpt_oss20b_section120_80_150_resume80_42_20260406_220807.otel.jsonl",
+    "metrics_path": "../results/local_real_benchmark/ace_finer_eval_only_local_gpt_oss20b_section120_80_150_resume80_42_20260406_220807/telemetry/ace_ace_finer_eval_only_local_gpt_oss20b_section120_80_150_resume80_42_20260406_220807.metrics.jsonl",
+    "metrics_interval_seconds": 5.0,
+    "task_name": "finer",
+    "mode": "eval_only"
+  },
+  "config": {
+    "task_name": "finer",
+    "mode": "eval_only",
+    "json_mode": false,
+    "no_ground_truth": false,
+    "save_dir": "../results/local_real_benchmark",
+    "test_workers": 2,
+    "api_provider": "minimax",
+    "telemetry_enabled": true,
+    "telemetry_metrics_interval_seconds": 5.0,
+    "seed": 42,
+    "config_name": "local_gpt_oss20b_section120_80_150_resume80_finaleval",
+    "run_id": "ace_finer_eval_only_local_gpt_oss20b_section120_80_150_resume80_42_20260406_220807"
+  }
+}

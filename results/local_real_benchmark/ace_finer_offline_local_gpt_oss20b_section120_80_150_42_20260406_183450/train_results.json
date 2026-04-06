@@ -1,0 +1,93 @@
+{
+  "best_accuracy": 0.125,
+  "results": [
+    {
+      "epoch": 1,
+      "step": 40,
+      "train_result": {
+        "pre_train_accuracy": 0.16875,
+        "post_train_accuracy": 0.19375
+      },
+      "val_result": {
+        "accuracy": 0.125,
+        "correct": 8,
+        "total": 80,
+        "no_answer": 66
+      },
+      "playbook_num_tokens": 651,
+      "playbook_length": 2879,
+      "playbook_stats": {
+        "total_bullets": 11,
+        "high_performing": 0,
+        "problematic": 0,
+        "unused": 11,
+        "by_section": {
+          "STRATEGIES & INSIGHTS": {
+            "count": 3,
+            "helpful": 0,
+            "harmful": 0
+          },
+          "COMMON MISTAKES TO AVOID": {
+            "count": 3,
+            "helpful": 0,
+            "harmful": 0
+          },
+          "CONTEXT CLUES & INDICATORS": {
+            "count": 3,
+            "helpful": 0,
+            "harmful": 0
+          },
+          "OTHERS": {
+            "count": 2,
+            "helpful": 0,
+            "harmful": 0
+          }
+        }
+      }
+    },
+    {
+      "epoch": 1,
+      "step": 80,
+      "train_result": {
+        "pre_train_accuracy": 0.128125,
+        "post_train_accuracy": 0.14375
+      },
+      "val_result": {
+        "accuracy": 0.11875,
+        "correct": 9,
+        "total": 80,
+        "no_answer": 70
+      },
+      "playbook_num_tokens": 651,
+      "playbook_length": 2879,
+      "playbook_stats": {
+        "total_bullets": 11,
+        "high_performing": 0,
+        "problematic": 0,
+        "unused": 11,
+        "by_section": {
+          "STRATEGIES & INSIGHTS": {
+            "count": 3,
+            "helpful": 0,
+            "harmful": 0
+          },
+          "COMMON MISTAKES TO AVOID": {
+            "count": 3,
+            "helpful": 0,
+            "harmful": 0
+          },
+          "CONTEXT CLUES & INDICATORS": {
+            "count": 3,
+            "helpful": 0,
+            "harmful": 0
+          },
+          "OTHERS": {
+            "count": 2,
+            "helpful": 0,
+            "harmful": 0
+          }
+        }
+      }
+    }
+  ]
+}

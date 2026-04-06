@@ -15,3 +15,8 @@ This file records assumptions and deviations encountered during implementation.
 - Deviation from strict scheduler execution policy: Slurm templates were added but not executed from this environment because `mcmgt01` access and cluster-side dry run are outside this workspace.
 - Unexpected environment issue during smoke: local `maestro` import initially resolved to a non-repo package. `ace/telemetry.py` now clears conflicting preloaded `maestro*` modules and retries import from local `maestro/src`.
 - Smoke execution note: because no real provider credentials are available here, LLM-path verification used deterministic local stubs/fake client to validate telemetry spans and output artifacts without external API calls.
+- Partial local visualization run was executed with synthetic fake-client responses (no external API). This produced full artifact structure, telemetry, LLM logs, and ready-to-view plots under `results/local_partial_run/.../analysis/plots`.
+
+## 2026-04-07
+
+- Command log (current session): `git status --short`; `git diff --stat`; `git diff --cached --stat`; `git log --oneline -5`; `ls -la`; `ls -la ace`; `ls -la ace/ace`; `python - <<'PY' ...`; `wc -l results/.../bullet_usage_log.jsonl`; `ps -eo ... | rg ...`; `pgrep -af ...`; `ss -tpn | rg ...`; `ls -lt results/...`; `git blame -L ... ace/llm.py`; `git remote -v`; `webfetch https://arxiv.org/abs/...`; `bash resume.sh`.

@@ -1,0 +1,41 @@
+{
+  "run_dir": "/home/abdo/ace-reproduction/results/local_partial_run/ace_finer_offline_partial_local_viz_42_20260406_181622",
+  "trace_path": "/home/abdo/ace-reproduction/results/local_partial_run/ace_finer_offline_partial_local_viz_42_20260406_181622/telemetry/run_ace_finer_offline_partial_local_viz_42_20260406_181622.otel.jsonl",
+  "metrics_path": "/home/abdo/ace-reproduction/results/local_partial_run/ace_finer_offline_partial_local_viz_42_20260406_181622/telemetry/ace_ace_finer_offline_partial_local_viz_42_20260406_181622.metrics.jsonl",
+  "llm_log_dir": "/home/abdo/ace-reproduction/results/local_partial_run/ace_finer_offline_partial_local_viz_42_20260406_181622/detailed_llm_logs",
+  "plots_dir": "/home/abdo/ace-reproduction/results/local_partial_run/ace_finer_offline_partial_local_viz_42_20260406_181622/analysis/plots",
+  "span_count": 34,
+  "llm_call_count": 22,
+  "operation_counts": {
+    "call_llm": 22,
+    "invoke_agent": 12
+  },
+  "duration_by_agent_operation_seconds": {
+    "generator": {
+      "call_llm": 0.002747428,
+      "invoke_agent": 0.001240527
+    },
+    "reflector": {
+      "call_llm": 0.00037314300000000004,
+      "invoke_agent": 0.0006359790000000001
+    },
+    "curator": {
+      "call_llm": 0.000328849,
+      "invoke_agent": 0.0007378899999999999
+    }
+  },
+  "tokens_by_role": {
+    "curator": 1215,
+    "generator": 3536,
+    "reflector": 1059
+  },
+  "resource_stats": {
+    "avg_cpu_pct": 0.0,
+    "peak_mem_mb": 139.55078125
+  },
+  "accuracy": {
+    "initial_test": 1.0,
+    "final_test": 1.0,
+    "best_validation": 1.0
+  }
+}

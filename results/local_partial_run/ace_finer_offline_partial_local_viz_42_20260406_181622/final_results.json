@@ -1,0 +1,43 @@
+{
+  "run_id": "ace_finer_offline_partial_local_viz_42_20260406_181622",
+  "telemetry": {
+    "enabled": true,
+    "trace_path": "/home/abdo/ace-reproduction/results/local_partial_run/ace_finer_offline_partial_local_viz_42_20260406_181622/telemetry/run_ace_finer_offline_partial_local_viz_42_20260406_181622.otel.jsonl",
+    "metrics_path": "/home/abdo/ace-reproduction/results/local_partial_run/ace_finer_offline_partial_local_viz_42_20260406_181622/telemetry/ace_ace_finer_offline_partial_local_viz_42_20260406_181622.metrics.jsonl",
+    "metrics_interval_seconds": 1.0,
+    "task_name": "finer",
+    "mode": "offline"
+  },
+  "results": {
+    "initial_test_results": {
+      "accuracy": 1.0,
+      "correct": 2,
+      "total": 2,
+      "no_answer": 0
+    },
+    "training_results": {
+      "best_validation_accuracy": 1.0
+    },
+    "final_test_results": {
+      "accuracy": 1.0,
+      "correct": 2,
+      "total": 2,
+      "no_answer": 0
+    }
+  },
+  "initial_test_results": {
+    "accuracy": 1.0,
+    "correct": 2,
+    "total": 2,
+    "no_answer": 0
+  },
+  "training_results": {
+    "best_validation_accuracy": 1.0
+  },
+  "final_test_results": {
+    "accuracy": 1.0,
+    "correct": 2,
+    "total": 2,
+    "no_answer": 0
+  }
+}
