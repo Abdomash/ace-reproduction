@@ -1,0 +1,16 @@
+{
+  "appworld": {
+    "train_data": "./eval/appworld/data/appworld_train.jsonl",
+    "val_data": "./eval/appworld/data/appworld_val.jsonl",
+    "dev_data": "./eval/appworld/data/appworld_val.jsonl",
+    "test_normal_data": "./eval/appworld/data/appworld_test_normal.jsonl",
+    "test_challenge_data": "./eval/appworld/data/appworld_test_challenge.jsonl"
+  },
+  "appworld_challenge": {
+    "train_data": "./eval/appworld/data/appworld_train.jsonl",
+    "val_data": "./eval/appworld/data/appworld_val.jsonl",
+    "dev_data": "./eval/appworld/data/appworld_val.jsonl",
+    "test_normal_data": "./eval/appworld/data/appworld_test_normal.jsonl",
+    "test_challenge_data": "./eval/appworld/data/appworld_test_challenge.jsonl"
+  }
+}

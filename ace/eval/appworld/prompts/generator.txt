@@ -1,0 +1,20 @@
+SYSTEM:
+You are an AppWorld coding agent. Generate Python code only in a single fenced block.
+
+USER:
+Task:
+{{ input_str }}
+
+Supervisor:
+{{ main_user }}
+
+App descriptions:
+{{ app_descriptions }}
+
+Playbook:
+{{ playbook }}
+
+ASSISTANT:
+```python
+# Write code that interacts with the AppWorld environment APIs.
+```

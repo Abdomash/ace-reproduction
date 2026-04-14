@@ -47,6 +47,7 @@ class ACE:
         initial_playbook: Optional[str] = None,
         use_bulletpoint_analyzer: bool = False,
         bulletpoint_analyzer_threshold: float = 0.90,
+        task_type: str = "standard",
     ):
         """
         Initialize the ACE system.
@@ -94,6 +95,7 @@ class ACE:
         self.reflector_client = reflector_client
         self.curator_client = curator_client
         self.max_tokens = max_tokens
+        self.task_type = (task_type or "standard").lower()
 
         # Initialize playbook
         if initial_playbook:
@@ -107,6 +109,7 @@ class ACE:
         self._telemetry_runtime = None
         self._invoke_agent_span = None
         self._record_invoke_agent_output = None
+        self._appworld_adapter_cache = {}
 
     def _resolve_run_id(self, config: Dict[str, Any], task_name: str, mode: str) -> str:
         configured_run_id = config.get("run_id") if config else None
@@ -134,6 +137,23 @@ class ACE:
 
     def _initialize_empty_playbook(self) -> str:
         """Initialize an empty playbook with standard sections."""
+        if self.task_type == "appworld":
+            return """## STRATEGIES AND HARD RULES
+
+## APIS TO USE FOR SPECIFIC INFORMATION
+
+## USEFUL CODE SNIPPETS AND TEMPLATES
+
+## COMMON MISTAKES AND CORRECT STRATEGIES
+
+## PROBLEM-SOLVING HEURISTICS AND WORKFLOWS
+
+## VERIFICATION CHECKLIST
+
+## TROUBLESHOOTING AND PITFALLS
+
+## OTHERS"""
+
         return """## STRATEGIES & INSIGHTS
 
 ## FORMULAS & CALCULATIONS
@@ -174,7 +194,32 @@ class ACE:
             "bulletpoint_analyzer_threshold": config.get(
                 "bulletpoint_analyzer_threshold", 0.90
             ),
+            "dataset_name": config.get("dataset_name", "train"),
+            "max_agent_steps": config.get("max_agent_steps", 30),
+            "appworld_root": config.get("appworld_root"),
+            "max_retries": config.get("max_retries", 5),
+            "ignore_multiple_calls": config.get("ignore_multiple_calls", False),
+            "max_prompt_length": config.get("max_prompt_length"),
         }
+
+    def _get_appworld_adapter(
+        self, data_processor, config: Dict[str, Any], log_dir: str
+    ):
+        cache_key = f"{id(data_processor)}::{log_dir}"
+        adapter = self._appworld_adapter_cache.get(cache_key)
+        if adapter is not None:
+            return adapter
+
+        from eval.appworld.task_adapter import AppWorldTaskAdapter
+
+        adapter = AppWorldTaskAdapter(
+            ace_system=self,
+            data_processor=data_processor,
+            config=config or {},
+            log_dir=log_dir,
+        )
+        self._appworld_adapter_cache[cache_key] = adapter
+        return adapter
 
     def _setup_paths(
         self, save_dir: str, task_name: str, mode: str, run_id: str
@@ -500,6 +545,27 @@ class ACE:
         Returns:
             Dictionary with test results
         """
+        if self.task_type == "appworld":
+            adapter = self._get_appworld_adapter(data_processor, config, log_dir)
+            test_results, test_error_log = adapter.run_test(
+                samples=test_samples,
+                playbook=playbook,
+                prefix=prefix,
+            )
+
+            test_results_path = os.path.join(save_path, f"{prefix}_test_results.json")
+            with open(test_results_path, "w") as f:
+                json.dump(
+                    {
+                        "test_results": test_results,
+                        "error_log": test_error_log,
+                    },
+                    f,
+                    indent=2,
+                )
+
+            return test_results
+
         config_params = self._extract_config_params(config)
         use_json_mode = config_params["use_json_mode"]
         test_workers = config_params["test_workers"]
@@ -558,6 +624,18 @@ class ACE:
         Returns:
             Tuple of (pre_train_answer, post_train_answer, tracking_dict)
         """
+        if self.task_type == "appworld":
+            adapter = self._get_appworld_adapter(data_processor, config_params, log_dir)
+            return adapter.train_single_sample(
+                task_dict=task_dict,
+                step_id=step_id,
+                usage_log_path=usage_log_path,
+                config_params=config_params,
+                step=step,
+                epoch=epoch,
+                total_samples=total_samples,
+            )
+
         # Extract configuration
         max_num_rounds = config_params["max_num_rounds"]
         curator_frequency = config_params["curator_frequency"]
@@ -920,17 +998,30 @@ class ACE:
 
                     # Validation evaluation
                     val_results = {}
+                    val_error_log = {"errors": []}
                     if val_samples:
-                        val_results, val_error_log = evaluate_test_set(
-                            data_processor,
-                            self.generator,
-                            self.playbook,
-                            val_samples,
-                            self.max_tokens,
-                            log_dir,
-                            max_workers=test_workers,
-                            use_json_mode=use_json_mode,
-                        )
+                        if self.task_type == "appworld":
+                            adapter = self._get_appworld_adapter(
+                                data_processor=data_processor,
+                                config=config,
+                                log_dir=log_dir,
+                            )
+                            val_results, val_error_log = adapter.run_test(
+                                samples=val_samples,
+                                playbook=self.playbook,
+                                prefix=f"val_e{epoch}_s{step}",
+                            )
+                        else:
+                            val_results, val_error_log = evaluate_test_set(
+                                data_processor,
+                                self.generator,
+                                self.playbook,
+                                val_samples,
+                                self.max_tokens,
+                                log_dir,
+                                max_workers=test_workers,
+                                use_json_mode=use_json_mode,
+                            )
 
                     result = {
                         "epoch": epoch,
@@ -1087,6 +1178,174 @@ class ACE:
         Returns:
             Dictionary with training results, test results, and final playbook
         """
+        if self.task_type == "appworld":
+            adapter = self._get_appworld_adapter(
+                data_processor=data_processor,
+                config=config,
+                log_dir=log_dir,
+            )
+            config_params = self._extract_config_params(config)
+            save_steps = config_params["save_steps"]
+            online_eval_frequency = config.get("online_eval_frequency", 100)
+
+            train_results = []
+            pre_train_post_train_results = []
+            all_test_errors = []
+            window_test_results = []
+            correct_count = 0.0
+            correct_count_sample_based = 0
+            total_count = 0
+            global_step = 0
+            num_windows = (
+                len(test_samples) + online_eval_frequency - 1
+            ) // online_eval_frequency
+
+            for window_idx in range(num_windows):
+                start_idx = window_idx * online_eval_frequency
+                end_idx = min(
+                    (window_idx + 1) * online_eval_frequency, len(test_samples)
+                )
+                window_samples = test_samples[start_idx:end_idx]
+
+                window_test_results_dict, window_test_error_log = adapter.run_test(
+                    samples=window_samples,
+                    playbook=self.playbook,
+                    prefix=f"online_window_{window_idx + 1}",
+                )
+
+                window_accuracy = float(window_test_results_dict["accuracy"])
+                window_correct = int(window_test_results_dict["correct"])
+                window_total = int(window_test_results_dict["total"])
+                correct_count_sample_based += window_correct
+                correct_count += window_accuracy * window_total
+                total_count += window_total
+
+                for error in window_test_error_log.get("errors", []):
+                    all_test_errors.append(
+                        {
+                            "window": window_idx + 1,
+                            "global_index": start_idx + int(error.get("index", 0)),
+                            "prediction": error.get("prediction"),
+                            "ground_truth": error.get("ground_truth"),
+                            "error": error.get("error"),
+                        }
+                    )
+
+                window_test_results.append(
+                    {
+                        "window": window_idx + 1,
+                        "start_idx": start_idx,
+                        "end_idx": end_idx,
+                        "window_accuracy": window_accuracy,
+                        "window_correct": window_correct,
+                        "window_total": window_total,
+                    }
+                )
+
+                epoch_answers_pre_train = []
+                epoch_targets_pre_train = []
+                epoch_answers_post_train = []
+                epoch_targets_post_train = []
+
+                for local_step, task_dict in enumerate(window_samples, start=1):
+                    global_step += 1
+                    target = task_dict.get("target", "")
+
+                    pre_train_answer, post_train_answer, tracking_dict = (
+                        adapter.train_single_sample(
+                            task_dict=task_dict,
+                            step_id=f"online_train_s_{global_step}",
+                            usage_log_path=usage_log_path,
+                            config_params=config_params,
+                            step=global_step,
+                            epoch=1,
+                            total_samples=len(test_samples),
+                        )
+                    )
+
+                    epoch_answers_pre_train.append(pre_train_answer)
+                    epoch_targets_pre_train.append(target)
+                    epoch_answers_post_train.append(post_train_answer)
+                    epoch_targets_post_train.append(target)
+
+                    pre_train_post_train_results.append(
+                        {
+                            "window": window_idx + 1,
+                            "global_step": global_step,
+                            "target": target,
+                            **tracking_dict,
+                        }
+                    )
+
+                    if global_step % save_steps == 0:
+                        intermediate_path = os.path.join(
+                            playbook_dir, f"step_{global_step}_playbook.txt"
+                        )
+                        with open(intermediate_path, "w") as f:
+                            f.write(self.playbook)
+
+                pre_train_accuracy = data_processor.evaluate_accuracy(
+                    epoch_answers_pre_train, epoch_targets_pre_train
+                )
+                post_train_accuracy = data_processor.evaluate_accuracy(
+                    epoch_answers_post_train, epoch_targets_post_train
+                )
+                cumulative_test_accuracy = (
+                    correct_count / total_count if total_count else 0.0
+                )
+
+                train_results.append(
+                    {
+                        "window": window_idx + 1,
+                        "global_step": global_step,
+                        "train_result": {
+                            "pre_train_accuracy": pre_train_accuracy,
+                            "post_train_accuracy": post_train_accuracy,
+                        },
+                        "cumulative_test_accuracy": cumulative_test_accuracy,
+                        "playbook_num_tokens": count_tokens(self.playbook),
+                        "playbook_length": len(self.playbook),
+                        "playbook_stats": get_playbook_stats(self.playbook),
+                    }
+                )
+
+            final_test_accuracy = correct_count / total_count if total_count else 0.0
+            test_results = {
+                "accuracy": final_test_accuracy,
+                "correct": correct_count_sample_based,
+                "total": total_count,
+                "window_results": window_test_results,
+            }
+            test_error_log = {
+                "accuracy": final_test_accuracy,
+                "errors": all_test_errors,
+            }
+
+            with open(os.path.join(save_path, "test_results.json"), "w") as f:
+                json.dump(
+                    {
+                        "test_accuracy": final_test_accuracy,
+                        "test_results": test_results,
+                        "test_error_log": test_error_log,
+                    },
+                    f,
+                    indent=2,
+                )
+            with open(os.path.join(save_path, "train_results.json"), "w") as f:
+                json.dump({"train_results": train_results}, f, indent=2)
+            with open(
+                os.path.join(save_path, "pre_train_post_train_results.json"), "w"
+            ) as f:
+                json.dump(pre_train_post_train_results, f, indent=2)
+            with open(os.path.join(save_path, "final_playbook.txt"), "w") as f:
+                f.write(self.playbook)
+
+            return {
+                "accuracy": final_test_accuracy,
+                "correct": correct_count_sample_based,
+                "total": total_count,
+            }
+
         # Extract configuration using helper
         config_params = self._extract_config_params(config)
         num_epochs = config_params["num_epochs"]

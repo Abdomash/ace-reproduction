@@ -63,6 +63,13 @@ def get_section_slug(section_name):
         "common_mistakes_to_avoid": "err",
         "problem_solving_heuristics": "prob",
         "context_clues_and_indicators": "ctx",
+        "strategies_and_hard_rules": "str",
+        "apis_to_use_for_specific_information": "api",
+        "useful_code_snippets_and_templates": "code",
+        "common_mistakes_and_correct_strategies": "mis",
+        "problem_solving_heuristics_and_workflows": "heur",
+        "verification_checklist": "veri",
+        "troubleshooting_and_pitfalls": "trou",
         "others": "misc",
         "meta_strategies": "meta",
     }

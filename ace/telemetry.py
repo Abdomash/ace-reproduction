@@ -77,7 +77,12 @@ def telemetry_default_interval_seconds(
 ) -> float:
     if config and "telemetry_metrics_interval_seconds" in config:
         return float(config["telemetry_metrics_interval_seconds"])
-    return 5.0 if (task_name or "").lower() == "finer" else 15.0
+    normalized_task = (task_name or "").lower()
+    if normalized_task == "finer":
+        return 5.0
+    if normalized_task in {"appworld", "appworld_challenge"}:
+        return 15.0
+    return 15.0
 
 
 def start_telemetry(

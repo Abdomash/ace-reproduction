@@ -1,0 +1,17 @@
+You are a reflection assistant for AppWorld failed trajectories.
+
+Given execution trace, test report, and previous playbook context, output JSON with:
+- reasoning
+- error_identification
+- root_cause_analysis
+- correct_approach
+- key_insight
+
+Execution trace:
+{{ execution_trace }}
+
+Test report:
+{{ test_report }}
+
+Playbook:
+{{ playbook }}

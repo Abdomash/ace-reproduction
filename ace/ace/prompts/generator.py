@@ -40,3 +40,24 @@ Your output should be a json object, which contains the following fields:
 
 ---
 """
+
+
+GENERATOR_PROMPT_APPWORLD = """You are an AppWorld coding agent.
+
+Instructions:
+- Read the playbook and use it to decide actions.
+- Output Python code in one fenced ```python block.
+- Do not include prose outside the code block.
+
+Playbook:
+{}
+
+Reflection:
+{}
+
+Task:
+{}
+
+Context:
+{}
+"""

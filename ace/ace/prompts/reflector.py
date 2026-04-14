@@ -113,3 +113,30 @@ Your output should be a json object, which contains the following fields
 
 ---
 """
+
+
+REFLECTOR_PROMPT_APPWORLD = """You are an AppWorld reflection assistant.
+
+Analyze the execution trace and test failures, then return JSON with:
+- reasoning
+- error_identification
+- root_cause_analysis
+- correct_approach
+- key_insight
+- bullet_tags
+
+Question:
+{}
+
+Execution Trace:
+{}
+
+Predicted Outcome:
+{}
+
+Environment Feedback:
+{}
+
+Bullets Used:
+{}
+"""

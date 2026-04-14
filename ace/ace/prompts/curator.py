@@ -128,3 +128,37 @@ Output ONLY a valid JSON object with these exact fields:
 
 ---
 """
+
+
+CURATOR_PROMPT_APPWORLD = """You are an AppWorld playbook curator.
+
+Return JSON only, with fields:
+- reasoning
+- operations (ADD only)
+
+Allowed sections:
+- strategies_and_hard_rules
+- apis_to_use_for_specific_information
+- useful_code_snippets_and_templates
+- common_mistakes_and_correct_strategies
+- problem_solving_heuristics_and_workflows
+- verification_checklist
+- troubleshooting_and_pitfalls
+- others
+
+Training Context:
+- Total token budget: {token_budget}
+- Training progress: Sample {current_step} out of {total_samples}
+
+Current Playbook Stats:
+{playbook_stats}
+
+Recent Reflection:
+{recent_reflection}
+
+Current Playbook:
+{current_playbook}
+
+Question Context:
+{question_context}
+"""

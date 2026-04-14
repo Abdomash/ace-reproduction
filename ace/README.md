@@ -46,6 +46,28 @@ ACE (Agentic Context Engineering) is a framework that enables large language mod
 - 📚 **Adding Dataset for Evaluation** [Link](tutorials/ExtendingDatasets.md)
 - ✨ **Extending ACE for Tool Calling** (Coming Soon) 
 
+## AppWorld Setup (Pinned ace-appworld)
+
+Use the ACE-maintained AppWorld repository directly (do not install PyPI `appworld`).
+
+```bash
+cd ace
+APPWORLD_COMMIT=<pinned-sha> ./scripts/setup_appworld.sh
+```
+
+Then run AppWorld experiments via:
+
+```bash
+python -m eval.appworld.run \
+  --task_name appworld \
+  --mode eval_only \
+  --dataset_name test_normal \
+  --api_provider openai \
+  --generator_model gpt-oss:20b \
+  --appworld_root ../ace-appworld \
+  --save_path ./results
+```
+
 ### 📊 Performance
 
 ACE consistently outperforms strong baselines, achieving average gains of **+10.6%** on agent tasks and **+8.6%** on domain-specific benchmarks, across both offline and online adaptation settings.
