@@ -56,6 +56,11 @@ def parse_args():
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--config_name", type=str, default="default")
     parser.add_argument("--run_id", type=str, default=None)
+    parser.add_argument(
+        "--sample_config_path",
+        type=str,
+        default="./eval/appworld/data/sample_config.json",
+    )
 
     parser.add_argument(
         "--dataset_name",
@@ -124,7 +129,7 @@ def load_initial_playbook(path):
 def main():
     args = parse_args()
 
-    with open("./eval/appworld/data/sample_config.json", "r", encoding="utf-8") as f:
+    with open(args.sample_config_path, "r", encoding="utf-8") as f:
         task_config = json.load(f)
 
     if args.task_name not in task_config:

@@ -169,6 +169,12 @@ def parse_args():
     parser.add_argument(
         "--run_id", type=str, default=None, help="Optional explicit run_id override"
     )
+    parser.add_argument(
+        "--sample_config_path",
+        type=str,
+        default="./eval/mind2web2/data/sample_config.json",
+        help="Path to dataset config JSON",
+    )
 
     return parser.parse_args()
 
@@ -245,7 +251,7 @@ def main():
     print(f"{'=' * 60}\n")
 
     # Load data
-    with open("./eval/mind2web2/data/sample_config.json", "r") as f:
+    with open(args.sample_config_path, "r") as f:
         task_config = json.load(f)
 
     if args.task_name not in task_config:

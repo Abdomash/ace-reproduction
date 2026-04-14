@@ -68,6 +68,18 @@ python -m eval.appworld.run \
   --save_path ./results
 ```
 
+## Unified Runner
+
+For quick subset or full-style runs across FiNER/AppWorld, use:
+
+```bash
+./scripts/run_experiments.sh --help
+```
+
+Detailed usage and examples are documented in:
+
+- `scripts/RUN_EXPERIMENTS.md`
+
 ### 📊 Performance
 
 ACE consistently outperforms strong baselines, achieving average gains of **+10.6%** on agent tasks and **+8.6%** on domain-specific benchmarks, across both offline and online adaptation settings.
