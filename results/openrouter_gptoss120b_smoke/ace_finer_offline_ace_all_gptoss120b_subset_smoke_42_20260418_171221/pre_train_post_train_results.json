@@ -1,0 +1,1022 @@
+[
+  {
+    "epoch": 1,
+    "step": 1,
+    "target": "BusinessAcquisitionEquityInterestsIssuedOrIssuableNumberOfSharesIssued,PaymentsToAcquireBusinessesGross,PaymentsToAcquireBusinessesGross,BusinessCombinationConsiderationTransferred1",
+    "pre_train_result": {
+      "final_answer": "CommonStockSharesOutstanding,PaymentsToAcquireBusinessesGross,BusinessCombinationConsiderationTransferred1,BusinessCombinationConsiderationTransferred1",
+      "is_correct": false,
+      "playbook_num_tokens": 61,
+      "playbook_length": 184
+    },
+    "post_train_result": {
+      "final_answer": "BusinessAcquisitionEquityInterestsIssuedOrIssuableNumberOfSharesIssued,PaymentsToAcquireBusinessesGross,BusinessCombinationConsiderationTransferred1,BusinessCombinationConsiderationTransferred1",
+      "is_correct": false,
+      "playbook_num_tokens": 288,
+      "playbook_length": 1263
+    }
+  },
+  {
+    "epoch": 1,
+    "step": 2,
+    "target": "ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsGrantsInPeriod,ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsGrantsInPeriod,StockIssuedDuringPeriodSharesNewIssues,DebtInstrumentConvertibleConversionPrice1",
+    "pre_train_result": {
+      "final_answer": "ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsGrantsInPeriod,ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsGrantsInPeriod,SaleOfStockNumberOfSharesIssuedInTransaction,SaleOfStockPricePerShare",
+      "is_correct": false,
+      "playbook_num_tokens": 288,
+      "playbook_length": 1263
+    },
+    "post_train_result": {
+      "final_answer": "ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsGrantsInPeriod,ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsGrantsInPeriod,StockIssuedDuringPeriodSharesNewIssues,DebtInstrumentConvertibleConversionPrice1",
+      "is_correct": true,
+      "playbook_num_tokens": 485,
+      "playbook_length": 2244
+    }
+  },
+  {
+    "epoch": 1,
+    "step": 3,
+    "target": "LineOfCreditFacilityMaximumBorrowingCapacity,DebtInstrumentBasisSpreadOnVariableRate1,DebtInstrumentBasisSpreadOnVariableRate1,DebtInstrumentBasisSpreadOnVariableRate1",
+    "pre_train_result": {
+      "final_answer": "LineOfCreditFacilityMaximumBorrowingCapacity,DebtInstrumentBasisSpreadOnVariableRate1,DebtInstrumentBasisSpreadOnVariableRate1,DebtInstrumentBasisSpreadOnVariableRate1",
+      "is_correct": true,
+      "playbook_num_tokens": 485,
+      "playbook_length": 2244
+    },
+    "post_train_result": {
+      "final_answer": "LineOfCreditFacilityMaximumBorrowingCapacity,DebtInstrumentBasisSpreadOnVariableRate1,DebtInstrumentBasisSpreadOnVariableRate1,DebtInstrumentBasisSpreadOnVariableRate1",
+      "is_correct": true,
+      "playbook_num_tokens": 662,
+      "playbook_length": 3010
+    }
+  },
+  {
+    "epoch": 1,
+    "step": 4,
+    "target": "DebtInstrumentInterestRateStatedPercentage,LineOfCreditFacilityMaximumBorrowingCapacity,LineOfCreditFacilityMaximumBorrowingCapacity,LettersOfCreditOutstandingAmount",
+    "pre_train_result": {
+      "final_answer": "DebtInstrumentInterestRateStatedPercentage,LineOfCreditFacilityMaximumBorrowingCapacity,LineOfCreditFacilityCurrentBorrowingCapacity,LettersOfCreditOutstandingAmount",
+      "is_correct": false,
+      "playbook_num_tokens": 662,
+      "playbook_length": 3010
+    },
+    "post_train_result": {
+      "final_answer": "DebtInstrumentInterestRateEffectivePercentage,LineOfCreditFacilityMaximumBorrowingCapacity,LineOfCreditFacilityMaximumBorrowingCapacity,LettersOfCreditOutstandingAmount",
+      "is_correct": false,
+      "playbook_num_tokens": 957,
+      "playbook_length": 4383
+    }
+  },
+  {
+    "epoch": 1,
+    "step": 5,
+    "target": "DebtInstrumentInterestRateStatedPercentage,InterestExpenseDebt,InterestExpenseDebt,ConcentrationRiskPercentage1",
+    "pre_train_result": {
+      "final_answer": "DebtInstrumentInterestRateStatedPercentage,InterestExpenseDebt,InterestExpenseDebt,ConcentrationRiskPercentage1",
+      "is_correct": true,
+      "playbook_num_tokens": 957,
+      "playbook_length": 4383
+    },
+    "post_train_result": {
+      "final_answer": "DebtInstrumentInterestRateStatedPercentage,InterestExpenseDebt,InterestExpenseDebt,ConcentrationRiskPercentage1",
+      "is_correct": true,
+      "playbook_num_tokens": 1154,
+      "playbook_length": 5243
+    }
+  },
+  {
+    "epoch": 1,
+    "step": 6,
+    "target": "CommonStockParOrStatedValuePerShare,CommonStockSharesOutstanding,ShareBasedCompensationArrangementByShareBasedPaymentAwardNumberOfSharesAvailableForGrant,ShareBasedCompensationArrangementByShareBasedPaymentAwardNumberOfSharesAuthorized",
+    "pre_train_result": {
+      "final_answer": "CommonStockParOrStatedValuePerShare,CommonStockSharesOutstanding,ShareBasedCompensationArrangementByShareBasedPaymentAwardNumberOfSharesAvailableForGrant,ShareBasedCompensationArrangementByShareBasedPaymentAwardNumberOfSharesAuthorized",
+      "is_correct": true,
+      "playbook_num_tokens": 1154,
+      "playbook_length": 5243
+    },
+    "post_train_result": {
+      "final_answer": "CommonStockParOrStatedValuePerShare,CommonStockSharesOutstanding,ShareBasedCompensationArrangementByShareBasedPaymentAwardNumberOfSharesAvailableForGrant,ShareBasedCompensationArrangementByShareBasedPaymentAwardNumberOfSharesAuthorized",
+      "is_correct": true,
+      "playbook_num_tokens": 1394,
+      "playbook_length": 6343
+    }
+  },
+  {
+    "epoch": 1,
+    "step": 7,
+    "target": "DebtInstrumentBasisSpreadOnVariableRate1,InterestExpenseDebt,InterestExpenseDebt,InterestExpenseDebt",
+    "pre_train_result": {
+      "final_answer": "DebtInstrumentInterestRateStatedPercentage,InterestExpenseDebt,InterestExpenseDebt,InterestExpenseDebt",
+      "is_correct": false,
+      "playbook_num_tokens": 1394,
+      "playbook_length": 6343
+    },
+    "post_train_result": {
+      "final_answer": "DebtInstrumentBasisSpreadOnVariableRate1,InterestExpenseDebt,InterestExpenseDebt,InterestExpenseDebt",
+      "is_correct": true,
+      "playbook_num_tokens": 1656,
+      "playbook_length": 7458
+    }
+  },
+  {
+    "epoch": 1,
+    "step": 8,
+    "target": "LineOfCreditFacilityCurrentBorrowingCapacity,DebtInstrumentBasisSpreadOnVariableRate1,DebtInstrumentBasisSpreadOnVariableRate1,DebtInstrumentBasisSpreadOnVariableRate1",
+    "pre_train_result": {
+      "final_answer": "LineOfCreditFacilityMaximumBorrowingCapacity,DebtInstrumentBasisSpreadOnVariableRate1,DebtInstrumentBasisSpreadOnVariableRate1,DebtInstrumentBasisSpreadOnVariableRate1",
+      "is_correct": false,
+      "playbook_num_tokens": 1656,
+      "playbook_length": 7458
+    },
+    "post_train_result": {
+      "final_answer": "LineOfCreditFacilityCurrentBorrowingCapacity,DebtInstrumentBasisSpreadOnVariableRate1,DebtInstrumentBasisSpreadOnVariableRate1,DebtInstrumentBasisSpreadOnVariableRate1",
+      "is_correct": true,
+      "playbook_num_tokens": 1750,
+      "playbook_length": 7873
+    }
+  },
+  {
+    "epoch": 1,
+    "step": 9,
+    "target": "DebtInstrumentFaceAmount,DebtInstrumentFairValue,DebtInstrumentFaceAmount,DebtInstrumentFairValue",
+    "pre_train_result": {
+      "final_answer": "DebtInstrumentFaceAmount,DebtInstrumentFairValue,DebtInstrumentFaceAmount,DebtInstrumentFairValue",
+      "is_correct": true,
+      "playbook_num_tokens": 1750,
+      "playbook_length": 7873
+    },
+    "post_train_result": {
+      "final_answer": "DebtInstrumentFaceAmount,DebtInstrumentFairValue,DebtInstrumentFaceAmount,DebtInstrumentFairValue",
+      "is_correct": true,
+      "playbook_num_tokens": 1893,
+      "playbook_length": 8522
+    }
+  },
+  {
+    "epoch": 1,
+    "step": 10,
+    "target": "SupplementalInformationForPropertyCasualtyInsuranceUnderwritersPriorYearClaimsAndClaimsAdjustmentExpense,SupplementalInformationForPropertyCasualtyInsuranceUnderwritersPriorYearClaimsAndClaimsAdjustmentExpense,SupplementalInformationForPropertyCasualtyInsuranceUnderwritersPriorYearClaimsAndClaimsAdjustmentExpense,SupplementalInformationForPropertyCasualtyInsuranceUnderwritersPriorYearClaimsAndClaimsAdjustmentExpense",
+    "pre_train_result": {
+      "final_answer": "LossContingencyEstimateOfPossibleLoss,LossContingencyEstimateOfPossibleLoss,LossContingencyEstimateOfPossibleLoss,LossContingencyEstimateOfPossibleLoss",
+      "is_correct": false,
+      "playbook_num_tokens": 1893,
+      "playbook_length": 8522
+    },
+    "post_train_result": {
+      "final_answer": "SupplementalInformationForPropertyCasualtyInsuranceUnderwritersPriorYearClaimsAndClaimsAdjustmentExpense,SupplementalInformationForPropertyCasualtyInsuranceUnderwritersPriorYearClaimsAndClaimsAdjustmentExpense,SupplementalInformationForPropertyCasualtyInsuranceUnderwritersPriorYearClaimsAndClaimsAdjustmentExpense,SupplementalInformationForPropertyCasualtyInsuranceUnderwritersPriorYearClaimsAndClaimsAdjustmentExpense",
+      "is_correct": true,
+      "playbook_num_tokens": 2110,
+      "playbook_length": 9549
+    }
+  },
+  {
+    "epoch": 1,
+    "step": 11,
+    "target": "ShareBasedCompensationArrangementByShareBasedPaymentAwardOptionsExercisesInPeriodTotalIntrinsicValue,ShareBasedCompensationArrangementByShareBasedPaymentAwardOptionsExercisesInPeriodTotalIntrinsicValue,ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsGrantsInPeriod,EmployeeServiceShareBasedCompensationNonvestedAwardsTotalCompensationCostNotYetRecognized",
+    "pre_train_result": {
+      "final_answer": "ShareBasedCompensationArrangementByShareBasedPaymentAwardOptionsExercisesInPeriodTotalIntrinsicValue,ShareBasedCompensationArrangementByShareBasedPaymentAwardOptionsExercisesInPeriodTotalIntrinsicValue,ShareBasedCompensationArrangementByShareBasedPaymentAwardNumberOfSharesAuthorized,UnrecognizedTaxBenefits",
+      "is_correct": false,
+      "playbook_num_tokens": 2110,
+      "playbook_length": 9549
+    },
+    "post_train_result": {
+      "final_answer": "ShareBasedCompensationArrangementByShareBasedPaymentAwardOptionsGrantsInPeriodWeightedAverageGrantDateFairValue,ShareBasedCompensationArrangementByShareBasedPaymentAwardOptionsGrantsInPeriodWeightedAverageGrantDateFairValue,ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsGrantsInPeriod,EmployeeServiceShareBasedCompensationNonvestedAwardsTotalCompensationCostNotYetRecognized",
+      "is_correct": false,
+      "playbook_num_tokens": 2484,
+      "playbook_length": 11153
+    }
+  },
+  {
+    "epoch": 1,
+    "step": 12,
+    "target": "FiniteLivedIntangibleAssetUsefulLife,FiniteLivedIntangibleAssetUsefulLife,LongTermDebtFairValue,LeaseAndRentalExpense",
+    "pre_train_result": {
+      "final_answer": "FiniteLivedIntangibleAssetUsefulLife,FiniteLivedIntangibleAssetUsefulLife,DebtInstrumentCarryingAmount,OperatingLeasesRentExpenseNet",
+      "is_correct": false,
+      "playbook_num_tokens": 2484,
+      "playbook_length": 11153
+    },
+    "post_train_result": {
+      "final_answer": "AcquiredFiniteLivedIntangibleAssetsWeightedAverageUsefulLife,OperatingLeaseWeightedAverageRemainingLeaseTerm1,DebtInstrumentFairValue,OperatingLeasesRentExpenseNet",
+      "is_correct": false,
+      "playbook_num_tokens": 2640,
+      "playbook_length": 11852
+    }
+  },
+  {
+    "epoch": 1,
+    "step": 13,
+    "target": "EffectiveIncomeTaxRateReconciliationAtFederalStatutoryIncomeTaxRate,EffectiveIncomeTaxRateReconciliationAtFederalStatutoryIncomeTaxRate,EffectiveIncomeTaxRateReconciliationAtFederalStatutoryIncomeTaxRate,EffectiveIncomeTaxRateReconciliationAtFederalStatutoryIncomeTaxRate",
+    "pre_train_result": {
+      "final_answer": "EffectiveIncomeTaxRateReconciliationAtFederalStatutoryIncomeTaxRate,EffectiveIncomeTaxRateReconciliationAtFederalStatutoryIncomeTaxRate,EffectiveIncomeTaxRateReconciliationAtFederalStatutoryIncomeTaxRate,EffectiveIncomeTaxRateReconciliationAtFederalStatutoryIncomeTaxRate",
+      "is_correct": true,
+      "playbook_num_tokens": 2640,
+      "playbook_length": 11852
+    },
+    "post_train_result": {
+      "final_answer": "EffectiveIncomeTaxRateReconciliationAtFederalStatutoryIncomeTaxRate,EffectiveIncomeTaxRateReconciliationAtFederalStatutoryIncomeTaxRate,EffectiveIncomeTaxRateReconciliationAtFederalStatutoryIncomeTaxRate,EffectiveIncomeTaxRateReconciliationAtFederalStatutoryIncomeTaxRate",
+      "is_correct": true,
+      "playbook_num_tokens": 2779,
+      "playbook_length": 12422
+    }
+  },
+  {
+    "epoch": 1,
+    "step": 14,
+    "target": "ConcentrationRiskPercentage1,ConcentrationRiskPercentage1,ConcentrationRiskPercentage1,ConcentrationRiskPercentage1",
+    "pre_train_result": {
+      "final_answer": "ConcentrationRiskPercentage1,ConcentrationRiskPercentage1,ConcentrationRiskPercentage1,ConcentrationRiskPercentage1",
+      "is_correct": true,
+      "playbook_num_tokens": 2779,
+      "playbook_length": 12422
+    },
+    "post_train_result": {
+      "final_answer": "ConcentrationRiskPercentage1,ConcentrationRiskPercentage1,ConcentrationRiskPercentage1,ConcentrationRiskPercentage1",
+      "is_correct": true,
+      "playbook_num_tokens": 2954,
+      "playbook_length": 13254
+    }
+  },
+  {
+    "epoch": 1,
+    "step": 15,
+    "target": "Depreciation,AmortizationOfIntangibleAssets,AmortizationOfIntangibleAssets,DebtInstrumentInterestRateStatedPercentage",
+    "pre_train_result": {
+      "final_answer": "Depreciation,AmortizationOfIntangibleAssets,AmortizationOfIntangibleAssets,DebtInstrumentInterestRateStatedPercentage",
+      "is_correct": true,
+      "playbook_num_tokens": 2954,
+      "playbook_length": 13254
+    },
+    "post_train_result": {
+      "final_answer": "Depreciation,AmortizationOfIntangibleAssets,AmortizationOfIntangibleAssets,DebtInstrumentInterestRateStatedPercentage",
+      "is_correct": true,
+      "playbook_num_tokens": 3161,
+      "playbook_length": 14174
+    }
+  },
+  {
+    "epoch": 1,
+    "step": 16,
+    "target": "EmployeeServiceShareBasedCompensationNonvestedAwardsTotalCompensationCostNotYetRecognizedPeriodForRecognition1,AllocatedShareBasedCompensationExpense,AllocatedShareBasedCompensationExpense,EmployeeServiceShareBasedCompensationNonvestedAwardsTotalCompensationCostNotYetRecognized",
+    "pre_train_result": {
+      "final_answer": "EmployeeServiceShareBasedCompensationNonvestedAwardsTotalCompensationCostNotYetRecognizedPeriodForRecognition1,AllocatedShareBasedCompensationExpense,AllocatedShareBasedCompensationExpense,EmployeeServiceShareBasedCompensationNonvestedAwardsTotalCompensationCostNotYetRecognized",
+      "is_correct": true,
+      "playbook_num_tokens": 3161,
+      "playbook_length": 14174
+    },
+    "post_train_result": {
+      "final_answer": "EmployeeServiceShareBasedCompensationNonvestedAwardsTotalCompensationCostNotYetRecognizedPeriodForRecognition1,ShareBasedCompensation,ShareBasedCompensation,EmployeeServiceShareBasedCompensationNonvestedAwardsTotalCompensationCostNotYetRecognized",
+      "is_correct": false,
+      "playbook_num_tokens": 3341,
+      "playbook_length": 14949
+    }
+  },
+  {
+    "epoch": 1,
+    "step": 17,
+    "target": "ConcentrationRiskPercentage1,ConcentrationRiskPercentage1,ConcentrationRiskPercentage1,ConcentrationRiskPercentage1",
+    "pre_train_result": {
+      "final_answer": "ConcentrationRiskPercentage1,ConcentrationRiskPercentage1,ConcentrationRiskPercentage1,ConcentrationRiskPercentage1",
+      "is_correct": true,
+      "playbook_num_tokens": 3341,
+      "playbook_length": 14949
+    },
+    "post_train_result": {
+      "final_answer": "ConcentrationRiskPercentage1,ConcentrationRiskPercentage1,ConcentrationRiskPercentage1,ConcentrationRiskPercentage1",
+      "is_correct": true,
+      "playbook_num_tokens": 3432,
+      "playbook_length": 15434
+    }
+  },
+  {
+    "epoch": 1,
+    "step": 18,
+    "target": "LongTermDebtFairValue,LongTermDebtFairValue,DebtInstrumentInterestRateStatedPercentage,DebtInstrumentFaceAmount",
+    "pre_train_result": {
+      "final_answer": "LongTermDebtFairValue,LongTermDebtFairValue,DebtInstrumentInterestRateStatedPercentage,DebtInstrumentFaceAmount",
+      "is_correct": true,
+      "playbook_num_tokens": 3432,
+      "playbook_length": 15434
+    },
+    "post_train_result": {
+      "final_answer": "LongTermDebtFairValue,LongTermDebtFairValue,DebtInstrumentInterestRateStatedPercentage,DebtInstrumentFaceAmount",
+      "is_correct": true,
+      "playbook_num_tokens": 3587,
+      "playbook_length": 16133
+    }
+  },
+  {
+    "epoch": 1,
+    "step": 19,
+    "target": "DebtInstrumentBasisSpreadOnVariableRate1,LineOfCreditFacilityMaximumBorrowingCapacity,CommonStockSharesAuthorized,CommonStockParOrStatedValuePerShare",
+    "pre_train_result": {
+      "final_answer": "DebtInstrumentBasisSpreadOnVariableRate1,LineOfCreditFacilityMaximumBorrowingCapacity,CommonStockSharesAuthorized,CommonStockParOrStatedValuePerShare",
+      "is_correct": true,
+      "playbook_num_tokens": 3587,
+      "playbook_length": 16133
+    },
+    "post_train_result": {
+      "final_answer": "DebtInstrumentBasisSpreadOnVariableRate1,LineOfCreditFacilityMaximumBorrowingCapacity,CommonStockSharesAuthorized,CommonStockParOrStatedValuePerShare",
+      "is_correct": true,
+      "playbook_num_tokens": 3697,
+      "playbook_length": 16635
+    }
+  },
+  {
+    "epoch": 1,
+    "step": 20,
+    "target": "TreasuryStockAcquiredAverageCostPerShare,TreasuryStockValueAcquiredCostMethod,StockRepurchaseProgramRemainingAuthorizedRepurchaseAmount1,ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsGrantsInPeriod",
+    "pre_train_result": {
+      "final_answer": "StockRepurchaseProgramAuthorizedAmount1,StockRepurchaseProgramAuthorizedAmount1,StockRepurchaseProgramRemainingAuthorizedRepurchaseAmount1,ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsGrantsInPeriod",
+      "is_correct": false,
+      "playbook_num_tokens": 3697,
+      "playbook_length": 16635
+    },
+    "post_train_result": {
+      "final_answer": "TreasuryStockAcquiredAverageCostPerShare,TreasuryStockValueAcquiredCostMethod,StockRepurchaseProgramRemainingAuthorizedRepurchaseAmount1,ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsGrantsInPeriod",
+      "is_correct": true,
+      "playbook_num_tokens": 3901,
+      "playbook_length": 17609
+    }
+  },
+  {
+    "epoch": 1,
+    "step": 21,
+    "target": "ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsGrantsInPeriodWeightedAverageGrantDateFairValue,ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsGrantsInPeriodWeightedAverageGrantDateFairValue,ShareBasedCompensationArrangementByShareBasedPaymentAwardOptionsExercisesInPeriodTotalIntrinsicValue,ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsGrantsInPeriod",
+    "pre_train_result": {
+      "final_answer": "ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsGrantsInPeriodWeightedAverageGrantDateFairValue,ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsGrantsInPeriodWeightedAverageGrantDateFairValue,ShareBasedCompensationArrangementByShareBasedPaymentAwardOptionsExercisesInPeriodTotalIntrinsicValue,ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsGrantsInPeriod",
+      "is_correct": true,
+      "playbook_num_tokens": 3901,
+      "playbook_length": 17609
+    },
+    "post_train_result": {
+      "final_answer": "ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsGrantsInPeriodWeightedAverageGrantDateFairValue,ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsGrantsInPeriodWeightedAverageGrantDateFairValue,ShareBasedCompensationArrangementByShareBasedPaymentAwardOptionsExercisesInPeriodTotalIntrinsicValue,ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsGrantsInPeriod",
+      "is_correct": true,
+      "playbook_num_tokens": 4124,
+      "playbook_length": 18615
+    }
+  },
+  {
+    "epoch": 1,
+    "step": 22,
+    "target": "AmortizationOfIntangibleAssets,AmortizationOfIntangibleAssets,LineOfCreditFacilityCurrentBorrowingCapacity,DebtInstrumentFaceAmount",
+    "pre_train_result": {
+      "final_answer": "AmortizationOfIntangibleAssets,AmortizationOfIntangibleAssets,LineOfCreditFacilityMaximumBorrowingCapacity,DebtInstrumentFaceAmount",
+      "is_correct": false,
+      "playbook_num_tokens": 4124,
+      "playbook_length": 18615
+    },
+    "post_train_result": {
+      "final_answer": "AmortizationOfIntangibleAssets,AmortizationOfIntangibleAssets,LineOfCreditFacilityCurrentBorrowingCapacity,DebtInstrumentFaceAmount",
+      "is_correct": true,
+      "playbook_num_tokens": 4293,
+      "playbook_length": 19391
+    }
+  },
+  {
+    "epoch": 1,
+    "step": 23,
+    "target": "LineOfCreditFacilityMaximumBorrowingCapacity,LettersOfCreditOutstandingAmount,LettersOfCreditOutstandingAmount,LettersOfCreditOutstandingAmount",
+    "pre_train_result": {
+      "final_answer": "LineOfCreditFacilityMaximumBorrowingCapacity,LettersOfCreditOutstandingAmount,LettersOfCreditOutstandingAmount,LettersOfCreditOutstandingAmount",
+      "is_correct": true,
+      "playbook_num_tokens": 4293,
+      "playbook_length": 19391
+    },
+    "post_train_result": {
+      "final_answer": "LineOfCreditFacilityMaximumBorrowingCapacity,LettersOfCreditOutstandingAmount,LettersOfCreditOutstandingAmount,LettersOfCreditOutstandingAmount",
+      "is_correct": true,
+      "playbook_num_tokens": 4497,
+      "playbook_length": 20341
+    }
+  },
+  {
+    "epoch": 1,
+    "step": 24,
+    "target": "ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsGrantsInPeriod,SharebasedCompensationArrangementBySharebasedPaymentAwardAwardVestingRightsPercentage,ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsGrantsInPeriod,ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsGrantsInPeriod",
+    "pre_train_result": {
+      "final_answer": "ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsGrantsInPeriod,SharebasedCompensationArrangementBySharebasedPaymentAwardAwardVestingRightsPercentage,ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsGrantsInPeriod,ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsGrantsInPeriod",
+      "is_correct": true,
+      "playbook_num_tokens": 4497,
+      "playbook_length": 20341
+    },
+    "post_train_result": {
+      "final_answer": "ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsGrantsInPeriod,SharebasedCompensationArrangementBySharebasedPaymentAwardAwardVestingRightsPercentage,ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsGrantsInPeriod,ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsGrantsInPeriod",
+      "is_correct": true,
+      "playbook_num_tokens": 4643,
+      "playbook_length": 20929
+    }
+  },
+  {
+    "epoch": 1,
+    "step": 25,
+    "target": "ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsVestedInPeriodTotalFairValue,ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsVestedInPeriodTotalFairValue,ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsVestedInPeriodTotalFairValue,ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsGrantsInPeriodWeightedAverageGrantDateFairValue",
+    "pre_train_result": {
+      "final_answer": "ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsVestedInPeriodTotalFairValue,ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsVestedInPeriodTotalFairValue,ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsVestedInPeriodTotalFairValue,ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsGrantsInPeriodWeightedAverageGrantDateFairValue",
+      "is_correct": true,
+      "playbook_num_tokens": 4643,
+      "playbook_length": 20929
+    },
+    "post_train_result": {
+      "final_answer": "ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsVestedInPeriodTotalFairValue,ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsVestedInPeriodTotalFairValue,ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsVestedInPeriodTotalFairValue,ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsGrantsInPeriodWeightedAverageGrantDateFairValue",
+      "is_correct": true,
+      "playbook_num_tokens": 4800,
+      "playbook_length": 21626
+    }
+  },
+  {
+    "epoch": 1,
+    "step": 26,
+    "target": "DebtInstrumentInterestRateStatedPercentage,DebtInstrumentInterestRateStatedPercentage,DebtInstrumentInterestRateStatedPercentage,DebtInstrumentRedemptionPricePercentage",
+    "pre_train_result": {
+      "final_answer": "DebtInstrumentInterestRateStatedPercentage,DebtInstrumentInterestRateStatedPercentage,DebtInstrumentInterestRateStatedPercentage,DebtInstrumentRedemptionPricePercentage",
+      "is_correct": true,
+      "playbook_num_tokens": 4800,
+      "playbook_length": 21626
+    },
+    "post_train_result": {
+      "final_answer": "DebtInstrumentInterestRateStatedPercentage,DebtInstrumentInterestRateStatedPercentage,DebtInstrumentInterestRateStatedPercentage,DebtInstrumentRedemptionPricePercentage",
+      "is_correct": true,
+      "playbook_num_tokens": 4869,
+      "playbook_length": 21920
+    }
+  },
+  {
+    "epoch": 1,
+    "step": 27,
+    "target": "LongTermDebt,DebtInstrumentFaceAmount,DebtInstrumentInterestRateStatedPercentage,DebtInstrumentInterestRateStatedPercentage",
+    "pre_train_result": {
+      "final_answer": "DebtInstrumentFaceAmount,DebtInstrumentFaceAmount,DebtInstrumentInterestRateStatedPercentage,DebtInstrumentInterestRateStatedPercentage",
+      "is_correct": false,
+      "playbook_num_tokens": 4869,
+      "playbook_length": 21920
+    },
+    "post_train_result": {
+      "final_answer": "DebtInstrumentFaceAmount,DebtInstrumentFaceAmount,DebtInstrumentInterestRateStatedPercentage,DebtInstrumentInterestRateStatedPercentage",
+      "is_correct": false,
+      "playbook_num_tokens": 5072,
+      "playbook_length": 22911
+    }
+  },
+  {
+    "epoch": 1,
+    "step": 28,
+    "target": "DebtInstrumentFaceAmount,DebtInstrumentInterestRateStatedPercentage,DebtInstrumentInterestRateStatedPercentage,DebtInstrumentFaceAmount",
+    "pre_train_result": {
+      "final_answer": "DebtInstrumentFaceAmount,DebtInstrumentInterestRateStatedPercentage,DebtInstrumentInterestRateStatedPercentage,DebtInstrumentFaceAmount",
+      "is_correct": true,
+      "playbook_num_tokens": 5072,
+      "playbook_length": 22911
+    },
+    "post_train_result": {
+      "final_answer": "DebtInstrumentFaceAmount,DebtInstrumentInterestRateStatedPercentage,DebtInstrumentInterestRateStatedPercentage,DebtInstrumentFaceAmount",
+      "is_correct": true,
+      "playbook_num_tokens": 5184,
+      "playbook_length": 23440
+    }
+  },
+  {
+    "epoch": 1,
+    "step": 29,
+    "target": "TreasuryStockSharesAcquired,SharebasedCompensationArrangementBySharebasedPaymentAwardExpirationPeriod,SharebasedCompensationArrangementBySharebasedPaymentAwardExpirationPeriod,ShareBasedCompensationArrangementByShareBasedPaymentAwardNumberOfSharesAvailableForGrant",
+    "pre_train_result": {
+      "final_answer": "StockRepurchasedDuringPeriodShares,ShareBasedCompensationArrangementByShareBasedPaymentAwardAwardVestingPeriod1,ShareBasedCompensationArrangementByShareBasedPaymentAwardAwardVestingPeriod1,ShareBasedCompensationArrangementByShareBasedPaymentAwardNumberOfSharesAvailableForGrant",
+      "is_correct": false,
+      "playbook_num_tokens": 5184,
+      "playbook_length": 23440
+    },
+    "post_train_result": {
+      "final_answer": "TreasuryStockSharesAcquired,SharebasedCompensationArrangementBySharebasedPaymentAwardExpirationPeriod,SharebasedCompensationArrangementBySharebasedPaymentAwardExpirationPeriod,ShareBasedCompensationArrangementByShareBasedPaymentAwardNumberOfSharesAvailableForGrant",
+      "is_correct": true,
+      "playbook_num_tokens": 5350,
+      "playbook_length": 24207
+    }
+  },
+  {
+    "epoch": 1,
+    "step": 30,
+    "target": "RestructuringCharges,GainsLossesOnExtinguishmentOfDebt,EquityMethodInvestmentOwnershipPercentage,EquityMethodInvestmentOwnershipPercentage",
+    "pre_train_result": {
+      "final_answer": "RestructuringCharges,LossContingencyEstimateOfPossibleLoss,EquityMethodInvestmentOwnershipPercentage,EquityMethodInvestmentOwnershipPercentage",
+      "is_correct": false,
+      "playbook_num_tokens": 5350,
+      "playbook_length": 24207
+    },
+    "post_train_result": {
+      "final_answer": "RestructuringCharges,RestructuringCharges,EquityMethodInvestmentOwnershipPercentage,EquityMethodInvestmentOwnershipPercentage",
+      "is_correct": false,
+      "playbook_num_tokens": 5598,
+      "playbook_length": 25198
+    }
+  },
+  {
+    "epoch": 1,
+    "step": 31,
+    "target": "AllocatedShareBasedCompensationExpense,AllocatedShareBasedCompensationExpense,EmployeeServiceShareBasedCompensationTaxBenefitFromCompensationExpense,EmployeeServiceShareBasedCompensationTaxBenefitFromCompensationExpense",
+    "pre_train_result": {
+      "final_answer": "AllocatedShareBasedCompensationExpense,AllocatedShareBasedCompensationExpense,IncomeTaxExpenseBenefit,IncomeTaxExpenseBenefit",
+      "is_correct": false,
+      "playbook_num_tokens": 5598,
+      "playbook_length": 25198
+    },
+    "post_train_result": {
+      "final_answer": "AllocatedShareBasedCompensationExpense,AllocatedShareBasedCompensationExpense,EmployeeServiceShareBasedCompensationTaxBenefitFromCompensationExpense,EmployeeServiceShareBasedCompensationTaxBenefitFromCompensationExpense",
+      "is_correct": true,
+      "playbook_num_tokens": 5761,
+      "playbook_length": 25997
+    }
+  },
+  {
+    "epoch": 1,
+    "step": 32,
+    "target": "IncomeTaxExpenseBenefit,IncomeTaxExpenseBenefit,UnrecognizedTaxBenefits,UnrecognizedTaxBenefitsThatWouldImpactEffectiveTaxRate",
+    "pre_train_result": {
+      "final_answer": "IncomeTaxExpenseBenefit,IncomeTaxExpenseBenefit,UnrecognizedTaxBenefits,UnrecognizedTaxBenefitsThatWouldImpactEffectiveTaxRate",
+      "is_correct": true,
+      "playbook_num_tokens": 5761,
+      "playbook_length": 25997
+    },
+    "post_train_result": {
+      "final_answer": "IncomeTaxExpenseBenefit,IncomeTaxExpenseBenefit,UnrecognizedTaxBenefits,UnrecognizedTaxBenefitsThatWouldImpactEffectiveTaxRate",
+      "is_correct": true,
+      "playbook_num_tokens": 6030,
+      "playbook_length": 27255
+    }
+  },
+  {
+    "epoch": 1,
+    "step": 33,
+    "target": "PublicUtilitiesRequestedRateIncreaseDecreaseAmount,PublicUtilitiesRequestedRateIncreaseDecreaseAmount,PublicUtilitiesRequestedRateIncreaseDecreaseAmount,PublicUtilitiesRequestedRateIncreaseDecreaseAmount",
+    "pre_train_result": {
+      "final_answer": "Revenues,Revenues,Revenues,Revenues",
+      "is_correct": false,
+      "playbook_num_tokens": 6030,
+      "playbook_length": 27255
+    },
+    "post_train_result": {
+      "final_answer": "PublicUtilitiesRequestedRateIncreaseDecreaseAmount,PublicUtilitiesRequestedRateIncreaseDecreaseAmount,PublicUtilitiesRequestedRateIncreaseDecreaseAmount,PublicUtilitiesRequestedRateIncreaseDecreaseAmount",
+      "is_correct": true,
+      "playbook_num_tokens": 6189,
+      "playbook_length": 28020
+    }
+  },
+  {
+    "epoch": 1,
+    "step": 34,
+    "target": "OperatingLeaseRightOfUseAsset,RevenueFromContractWithCustomerExcludingAssessedTax,RevenueFromContractWithCustomerExcludingAssessedTax,RevenueFromContractWithCustomerExcludingAssessedTax",
+    "pre_train_result": {
+      "final_answer": "OperatingLeaseRightOfUseAsset,Revenues,Revenues,Revenues",
+      "is_correct": false,
+      "playbook_num_tokens": 6189,
+      "playbook_length": 28020
+    },
+    "post_train_result": {
+      "final_answer": "OperatingLeaseRightOfUseAsset,RevenueFromContractWithCustomerExcludingAssessedTax,RevenueFromContractWithCustomerExcludingAssessedTax,RevenueFromContractWithCustomerExcludingAssessedTax",
+      "is_correct": true,
+      "playbook_num_tokens": 6354,
+      "playbook_length": 28803
+    }
+  },
+  {
+    "epoch": 1,
+    "step": 35,
+    "target": "LettersOfCreditOutstandingAmount,ShareBasedCompensationArrangementByShareBasedPaymentAwardOptionsGrantsInPeriodGross,ShareBasedCompensationArrangementByShareBasedPaymentAwardNumberOfSharesAuthorized,ShareBasedCompensationArrangementByShareBasedPaymentAwardOptionsGrantsInPeriodWeightedAverageGrantDateFairValue",
+    "pre_train_result": {
+      "final_answer": "LettersOfCreditOutstandingAmount,ShareBasedCompensationArrangementByShareBasedPaymentAwardNumberOfSharesAvailableForGrant,ShareBasedCompensationArrangementByShareBasedPaymentAwardNumberOfSharesAuthorized,ShareBasedCompensationArrangementByShareBasedPaymentAwardOptionsGrantsInPeriodWeightedAverageGrantDateFairValue",
+      "is_correct": false,
+      "playbook_num_tokens": 6354,
+      "playbook_length": 28803
+    },
+    "post_train_result": {
+      "final_answer": "LettersOfCreditOutstandingAmount,ShareBasedCompensationArrangementByShareBasedPaymentAwardOptionsGrantsInPeriodGross,ShareBasedCompensationArrangementByShareBasedPaymentAwardNumberOfSharesAuthorized,ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsGrantsInPeriodWeightedAverageGrantDateFairValue",
+      "is_correct": false,
+      "playbook_num_tokens": 6552,
+      "playbook_length": 29695
+    }
+  },
+  {
+    "epoch": 1,
+    "step": 36,
+    "target": "ShareBasedCompensationArrangementByShareBasedPaymentAwardAwardVestingPeriod1,ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsNonvestedNumber,ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsNonvestedNumber,ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsGrantsInPeriod",
+    "pre_train_result": {
+      "final_answer": "ShareBasedCompensationArrangementByShareBasedPaymentAwardVestingPeriod1,ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsGrantsInPeriod,ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsGrantsInPeriod,ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsGrantsInPeriod",
+      "is_correct": false,
+      "playbook_num_tokens": 6552,
+      "playbook_length": 29695
+    },
+    "post_train_result": {
+      "final_answer": "ShareBasedCompensationArrangementByShareBasedPaymentAwardAwardVestingPeriod1,ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsNonvestedNumber,ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsNonvestedNumber,ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsGrantsInPeriod",
+      "is_correct": true,
+      "playbook_num_tokens": 6831,
+      "playbook_length": 30900
+    }
+  },
+  {
+    "epoch": 1,
+    "step": 37,
+    "target": "ShareBasedCompensationArrangementByShareBasedPaymentAwardNumberOfSharesAvailableForGrant,ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsGrantsInPeriod,ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsGrantsInPeriodWeightedAverageGrantDateFairValue,CommonStockCapitalSharesReservedForFutureIssuance",
+    "pre_train_result": {
+      "final_answer": "ShareBasedCompensationArrangementByShareBasedPaymentAwardNumberOfSharesAvailableForGrant,ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsGrantsInPeriod,ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsGrantsInPeriodWeightedAverageGrantDateFairValue,ShareBasedCompensationArrangementByShareBasedPaymentAwardNumberOfSharesAvailableForGrant",
+      "is_correct": false,
+      "playbook_num_tokens": 6831,
+      "playbook_length": 30900
+    },
+    "post_train_result": {
+      "final_answer": "ShareBasedCompensationArrangementByShareBasedPaymentAwardNumberOfSharesAvailableForGrant,ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsGrantsInPeriod,ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsGrantsInPeriodWeightedAverageGrantDateFairValue,CommonStockCapitalSharesReservedForFutureIssuance",
+      "is_correct": true,
+      "playbook_num_tokens": 6917,
+      "playbook_length": 31281
+    }
+  },
+  {
+    "epoch": 1,
+    "step": 38,
+    "target": "SharebasedCompensationArrangementBySharebasedPaymentAwardExpirationPeriod,ShareBasedCompensationArrangementByShareBasedPaymentAwardOptionsExercisesInPeriodTotalIntrinsicValue,ShareBasedCompensationArrangementByShareBasedPaymentAwardOptionsExercisesInPeriodTotalIntrinsicValue,ShareBasedCompensationArrangementByShareBasedPaymentAwardOptionsGrantsInPeriodWeightedAverageGrantDateFairValue",
+    "pre_train_result": {
+      "final_answer": "ShareBasedCompensationArrangementByShareBasedPaymentAwardAwardVestingPeriod1,ShareBasedCompensationArrangementByShareBasedPaymentAwardOptionsExercisesInPeriodTotalIntrinsicValue,ShareBasedCompensationArrangementByShareBasedPaymentAwardOptionsExercisesInPeriodTotalIntrinsicValue,ShareBasedCompensationArrangementByShareBasedPaymentAwardOptionsGrantsInPeriodWeightedAverageGrantDateFairValue",
+      "is_correct": false,
+      "playbook_num_tokens": 6917,
+      "playbook_length": 31281
+    },
+    "post_train_result": {
+      "final_answer": "SharebasedCompensationArrangementBySharebasedPaymentAwardExpirationPeriod,ShareBasedCompensationArrangementByShareBasedPaymentAwardOptionsExercisesInPeriodTotalIntrinsicValue,ShareBasedCompensationArrangementByShareBasedPaymentAwardOptionsExercisesInPeriodTotalIntrinsicValue,ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsGrantsInPeriodWeightedAverageGrantDateFairValue",
+      "is_correct": false,
+      "playbook_num_tokens": 7086,
+      "playbook_length": 32014
+    }
+  },
+  {
+    "epoch": 1,
+    "step": 39,
+    "target": "AmortizationOfIntangibleAssets,CapitalizedContractCostAmortization,CapitalizedContractCostAmortization,NumberOfOperatingSegments",
+    "pre_train_result": {
+      "final_answer": "AmortizationOfIntangibleAssets,AmortizationOfIntangibleAssets,AmortizationOfIntangibleAssets,NumberOfOperatingSegments",
+      "is_correct": false,
+      "playbook_num_tokens": 7086,
+      "playbook_length": 32014
+    },
+    "post_train_result": {
+      "final_answer": "AmortizationOfIntangibleAssets,CapitalizedContractCostAmortization,CapitalizedContractCostAmortization,NumberOfOperatingSegments",
+      "is_correct": true,
+      "playbook_num_tokens": 7196,
+      "playbook_length": 32542
+    }
+  },
+  {
+    "epoch": 1,
+    "step": 40,
+    "target": "LettersOfCreditOutstandingAmount,DebtInstrumentFaceAmount,DebtInstrumentFaceAmount,LongTermDebtFairValue",
+    "pre_train_result": {
+      "final_answer": "LettersOfCreditOutstandingAmount,DebtInstrumentFaceAmount,DebtInstrumentFaceAmount,LongTermDebtFairValue",
+      "is_correct": true,
+      "playbook_num_tokens": 7196,
+      "playbook_length": 32542
+    },
+    "post_train_result": {
+      "final_answer": "LettersOfCreditOutstandingAmount,DerivativeNotionalAmount,DerivativeNotionalAmount,LongTermDebtFairValue",
+      "is_correct": false,
+      "playbook_num_tokens": 7320,
+      "playbook_length": 33059
+    }
+  },
+  {
+    "epoch": 1,
+    "step": 41,
+    "target": "SharebasedCompensationArrangementBySharebasedPaymentAwardExpirationPeriod,ShareBasedCompensationArrangementByShareBasedPaymentAwardAwardVestingPeriod1,ShareBasedCompensationArrangementByShareBasedPaymentAwardAwardVestingPeriod1,ShareBasedCompensationArrangementByShareBasedPaymentAwardAwardVestingPeriod1",
+    "pre_train_result": {
+      "final_answer": "SharebasedCompensationArrangementBySharebasedPaymentAwardExpirationPeriod,ShareBasedCompensationArrangementByShareBasedPaymentAwardAwardVestingPeriod1,ShareBasedCompensationArrangementByShareBasedPaymentAwardAwardVestingPeriod1,ShareBasedCompensationArrangementByShareBasedPaymentAwardAwardVestingPeriod1",
+      "is_correct": true,
+      "playbook_num_tokens": 7320,
+      "playbook_length": 33059
+    },
+    "post_train_result": {
+      "final_answer": "SharebasedCompensationArrangementBySharebasedPaymentAwardExpirationPeriod,ShareBasedCompensationArrangementByShareBasedPaymentAwardAwardVestingPeriod1,ShareBasedCompensationArrangementByShareBasedPaymentAwardAwardVestingPeriod1,ShareBasedCompensationArrangementByShareBasedPaymentAwardAwardVestingPeriod1",
+      "is_correct": true,
+      "playbook_num_tokens": 7402,
+      "playbook_length": 33403
+    }
+  },
+  {
+    "epoch": 1,
+    "step": 42,
+    "target": "RepaymentsOfDebt,RepaymentsOfDebt,RepaymentsOfDebt,FiniteLivedIntangibleAssetUsefulLife",
+    "pre_train_result": {
+      "final_answer": "PaymentsToAcquireBusinessesGross,PaymentsToAcquireBusinessesGross,PaymentsToAcquireBusinessesGross,FiniteLivedIntangibleAssetUsefulLife",
+      "is_correct": false,
+      "playbook_num_tokens": 7402,
+      "playbook_length": 33403
+    },
+    "post_train_result": {
+      "final_answer": "RepaymentsOfDebt,RepaymentsOfDebt,RepaymentsOfDebt,AmortizationOfIntangibleAssets",
+      "is_correct": false,
+      "playbook_num_tokens": 7603,
+      "playbook_length": 34246
+    }
+  },
+  {
+    "epoch": 1,
+    "step": 43,
+    "target": "PropertyPlantAndEquipmentUsefulLife,PropertyPlantAndEquipmentUsefulLife,PropertyPlantAndEquipmentUsefulLife,Depreciation",
+    "pre_train_result": {
+      "final_answer": "Depreciation,Depreciation,Depreciation,Depreciation",
+      "is_correct": false,
+      "playbook_num_tokens": 7603,
+      "playbook_length": 34246
+    },
+    "post_train_result": {
+      "final_answer": "PropertyPlantAndEquipmentUsefulLife,PropertyPlantAndEquipmentUsefulLife,PropertyPlantAndEquipmentUsefulLife,Depreciation",
+      "is_correct": true,
+      "playbook_num_tokens": 7770,
+      "playbook_length": 34967
+    }
+  },
+  {
+    "epoch": 1,
+    "step": 44,
+    "target": "InterestExpenseDebt,InterestExpenseDebt,InterestExpenseDebt,InterestExpenseDebt",
+    "pre_train_result": {
+      "final_answer": "InterestExpenseDebt,InterestExpenseDebt,InterestExpenseDebt,InterestExpenseDebt",
+      "is_correct": true,
+      "playbook_num_tokens": 7770,
+      "playbook_length": 34967
+    },
+    "post_train_result": {
+      "final_answer": "InterestExpenseDebt,InterestExpenseDebt,InterestExpenseDebt,InterestExpenseDebt",
+      "is_correct": true,
+      "playbook_num_tokens": 7905,
+      "playbook_length": 35598
+    }
+  },
+  {
+    "epoch": 1,
+    "step": 45,
+    "target": "ShareBasedCompensationArrangementByShareBasedPaymentAwardOptionsExercisesInPeriodTotalIntrinsicValue,ShareBasedCompensationArrangementByShareBasedPaymentAwardAwardVestingPeriod1,ShareBasedCompensationArrangementByShareBasedPaymentAwardAwardVestingPeriod1,ShareBasedCompensationArrangementByShareBasedPaymentAwardNumberOfSharesAuthorized",
+    "pre_train_result": {
+      "final_answer": "ShareBasedCompensationArrangementByShareBasedPaymentAwardOptionsExercisesInPeriodTotalIntrinsicValue,ShareBasedCompensationArrangementByShareBasedPaymentAwardAwardVestingPeriod1,ShareBasedCompensationArrangementByShareBasedPaymentAwardAwardVestingPeriod1,ShareBasedCompensationArrangementByShareBasedPaymentAwardOptionsGrantsInPeriodGross",
+      "is_correct": false,
+      "playbook_num_tokens": 7905,
+      "playbook_length": 35598
+    },
+    "post_train_result": {
+      "final_answer": "ShareBasedCompensationArrangementByShareBasedPaymentAwardOptionsExercisesInPeriodTotalIntrinsicValue,ShareBasedCompensationArrangementByShareBasedPaymentAwardAwardVestingPeriod1,ShareBasedCompensationArrangementByShareBasedPaymentAwardAwardVestingPeriod1,ShareBasedCompensationArrangementByShareBasedPaymentAwardOptionsGrantsInPeriodGross",
+      "is_correct": false,
+      "playbook_num_tokens": 8107,
+      "playbook_length": 36475
+    }
+  },
+  {
+    "epoch": 1,
+    "step": 46,
+    "target": "GainsLossesOnExtinguishmentOfDebt,NumberOfReportableSegments,MinorityInterestOwnershipPercentageByParent,CumulativeEffectOfNewAccountingPrincipleInPeriodOfAdoption",
+    "pre_train_result": {
+      "final_answer": "GainsLossesOnExtinguishmentOfDebt,NumberOfOperatingSegments,MinorityInterestOwnershipPercentageByParent,UnrecognizedTaxBenefits",
+      "is_correct": false,
+      "playbook_num_tokens": 8107,
+      "playbook_length": 36475
+    },
+    "post_train_result": {
+      "final_answer": "GainsLossesOnExtinguishmentOfDebt,NumberOfReportableSegments,MinorityInterestOwnershipPercentageByParent,UnrecognizedTaxBenefits",
+      "is_correct": false,
+      "playbook_num_tokens": 8246,
+      "playbook_length": 37109
+    }
+  },
+  {
+    "epoch": 1,
+    "step": 47,
+    "target": "ShareBasedCompensationArrangementByShareBasedPaymentAwardAwardVestingPeriod1,AllocatedShareBasedCompensationExpense,DefinedContributionPlanCostRecognized,ShareBasedCompensationArrangementByShareBasedPaymentAwardNumberOfSharesAuthorized",
+    "pre_train_result": {
+      "final_answer": "ShareBasedCompensationArrangementByShareBasedPaymentAwardAwardVestingPeriod1,AllocatedShareBasedCompensationExpense,DefinedContributionPlanCostRecognized,CommonStockCapitalSharesReservedForFutureIssuance",
+      "is_correct": false,
+      "playbook_num_tokens": 8246,
+      "playbook_length": 37109
+    },
+    "post_train_result": {
+      "final_answer": "ShareBasedCompensationArrangementByShareBasedPaymentAwardVestingPeriod1,AllocatedShareBasedCompensationExpense,DefinedContributionPlanCostRecognized,ShareBasedCompensationArrangementByShareBasedPaymentAwardNumberOfSharesAuthorized",
+      "is_correct": false,
+      "playbook_num_tokens": 8498,
+      "playbook_length": 38257
+    }
+  },
+  {
+    "epoch": 1,
+    "step": 48,
+    "target": "EffectiveIncomeTaxRateContinuingOperations,CommonStockSharesOutstanding,CommonStockSharesOutstanding,AntidilutiveSecuritiesExcludedFromComputationOfEarningsPerShareAmount",
+    "pre_train_result": {
+      "final_answer": "EffectiveIncomeTaxRateContinuingOperations,CommonStockSharesOutstanding,CommonStockSharesOutstanding,ShareBasedCompensationArrangementByShareBasedPaymentAwardOptionsGrantsInPeriodGross",
+      "is_correct": false,
+      "playbook_num_tokens": 8498,
+      "playbook_length": 38257
+    },
+    "post_train_result": {
+      "final_answer": "EffectiveIncomeTaxRateContinuingOperations,CommonStockSharesOutstanding,CommonStockSharesOutstanding,AntidilutiveSecuritiesExcludedFromComputationOfEarningsPerShareAmount",
+      "is_correct": true,
+      "playbook_num_tokens": 8597,
+      "playbook_length": 38681
+    }
+  },
+  {
+    "epoch": 1,
+    "step": 49,
+    "target": "CommonStockParOrStatedValuePerShare,PreferredStockSharesAuthorized,CommonStockSharesAuthorized,CommonStockParOrStatedValuePerShare",
+    "pre_train_result": {
+      "final_answer": "CommonStockParOrStatedValuePerShare,PreferredStockSharesAuthorized,CommonStockSharesAuthorized,CommonStockParOrStatedValuePerShare",
+      "is_correct": true,
+      "playbook_num_tokens": 8597,
+      "playbook_length": 38681
+    },
+    "post_train_result": {
+      "final_answer": "CommonStockParOrStatedValuePerShare,PreferredStockSharesAuthorized,CommonStockSharesAuthorized,CommonStockParOrStatedValuePerShare",
+      "is_correct": true,
+      "playbook_num_tokens": 8722,
+      "playbook_length": 39268
+    }
+  },
+  {
+    "epoch": 1,
+    "step": 50,
+    "target": "ShareBasedCompensation,ShareBasedCompensation,ShareBasedCompensation,EmployeeServiceShareBasedCompensationNonvestedAwardsTotalCompensationCostNotYetRecognizedShareBasedAwardsOtherThanOptions",
+    "pre_train_result": {
+      "final_answer": "AllocatedShareBasedCompensationExpense,AllocatedShareBasedCompensationExpense,AllocatedShareBasedCompensationExpense,EmployeeServiceShareBasedCompensationNonvestedAwardsTotalCompensationCostNotYetRecognized",
+      "is_correct": false,
+      "playbook_num_tokens": 8722,
+      "playbook_length": 39268
+    },
+    "post_train_result": {
+      "final_answer": "ShareBasedCompensation,ShareBasedCompensation,ShareBasedCompensation,EmployeeServiceShareBasedCompensationNonvestedAwardsTotalCompensationCostNotYetRecognized",
+      "is_correct": false,
+      "playbook_num_tokens": 8869,
+      "playbook_length": 39967
+    }
+  },
+  {
+    "epoch": 1,
+    "step": 51,
+    "target": "LineOfCreditFacilityMaximumBorrowingCapacity,LineOfCreditFacilityMaximumBorrowingCapacity,DebtInstrumentFaceAmount,DebtInstrumentBasisSpreadOnVariableRate1",
+    "pre_train_result": {
+      "final_answer": "LineOfCreditFacilityMaximumBorrowingCapacity,LineOfCreditFacilityMaximumBorrowingCapacity,LineOfCreditFacilityMaximumBorrowingCapacity,DebtInstrumentBasisSpreadOnVariableRate1",
+      "is_correct": false,
+      "playbook_num_tokens": 8869,
+      "playbook_length": 39967
+    },
+    "post_train_result": {
+      "final_answer": "LineOfCreditFacilityMaximumBorrowingCapacity,LineOfCreditFacilityMaximumBorrowingCapacity,DebtInstrumentFaceAmount,DebtInstrumentBasisSpreadOnVariableRate1",
+      "is_correct": true,
+      "playbook_num_tokens": 9026,
+      "playbook_length": 40636
+    }
+  },
+  {
+    "epoch": 1,
+    "step": 52,
+    "target": "DefinedContributionPlanCostRecognized,DefinedContributionPlanCostRecognized,ShareBasedCompensationArrangementByShareBasedPaymentAwardNumberOfSharesAuthorized,ShareBasedCompensationArrangementByShareBasedPaymentAwardNumberOfSharesAvailableForGrant",
+    "pre_train_result": {
+      "final_answer": "DefinedBenefitPlanContributionsByEmployer,DefinedBenefitPlanContributionsByEmployer,ShareBasedCompensationArrangementByShareBasedPaymentAwardNumberOfSharesAuthorized,ShareBasedCompensationArrangementByShareBasedPaymentAwardNumberOfSharesAvailableForGrant",
+      "is_correct": false,
+      "playbook_num_tokens": 9026,
+      "playbook_length": 40636
+    },
+    "post_train_result": {
+      "final_answer": "DefinedContributionPlanCostRecognized,DefinedContributionPlanCostRecognized,ShareBasedCompensationArrangementByShareBasedPaymentAwardNumberOfSharesAuthorized,ShareBasedCompensationArrangementByShareBasedPaymentAwardNumberOfSharesAvailableForGrant",
+      "is_correct": true,
+      "playbook_num_tokens": 9157,
+      "playbook_length": 41234
+    }
+  },
+  {
+    "epoch": 1,
+    "step": 53,
+    "target": "RestructuringCharges,RestructuringCharges,ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsGrantsInPeriod,ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsGrantsInPeriod",
+    "pre_train_result": {
+      "final_answer": "OperatingLeaseExpense,OperatingLeaseExpense,ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsNonvestedNumber,ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsNonvestedNumber",
+      "is_correct": false,
+      "playbook_num_tokens": 9157,
+      "playbook_length": 41234
+    },
+    "post_train_result": {
+      "final_answer": "RestructuringCharges,RestructuringCharges,ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsNonvestedNumber,ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsNonvestedNumber",
+      "is_correct": false,
+      "playbook_num_tokens": 9303,
+      "playbook_length": 41907
+    }
+  },
+  {
+    "epoch": 1,
+    "step": 54,
+    "target": "LineOfCredit,LineOfCreditFacilityRemainingBorrowingCapacity,StockIssuedDuringPeriodSharesNewIssues,DefinedBenefitPlanContributionsByEmployer",
+    "pre_train_result": {
+      "final_answer": "LineOfCreditFacilityCurrentBorrowingCapacity,LineOfCreditFacilityCurrentBorrowingCapacity,StockIssuedDuringPeriodSharesNewIssues,DefinedBenefitPlanContributionsByEmployer",
+      "is_correct": false,
+      "playbook_num_tokens": 9303,
+      "playbook_length": 41907
+    },
+    "post_train_result": {
+      "final_answer": "LineOfCredit,LineOfCreditFacilityRemainingBorrowingCapacity,StockIssuedDuringPeriodSharesNewIssues,DefinedBenefitPlanContributionsByEmployer",
+      "is_correct": true,
+      "playbook_num_tokens": 9479,
+      "playbook_length": 42664
+    }
+  },
+  {
+    "epoch": 1,
+    "step": 55,
+    "target": "DebtInstrumentInterestRateStatedPercentage,DebtInstrumentInterestRateStatedPercentage,DebtInstrumentInterestRateStatedPercentage,DebtInstrumentInterestRateStatedPercentage",
+    "pre_train_result": {
+      "final_answer": "DebtInstrumentInterestRateStatedPercentage,DebtInstrumentInterestRateStatedPercentage,DebtInstrumentInterestRateStatedPercentage,DebtInstrumentInterestRateStatedPercentage",
+      "is_correct": true,
+      "playbook_num_tokens": 9479,
+      "playbook_length": 42664
+    },
+    "post_train_result": {
+      "final_answer": "DebtInstrumentInterestRateStatedPercentage,DebtInstrumentInterestRateStatedPercentage,DebtInstrumentInterestRateStatedPercentage,DebtInstrumentInterestRateStatedPercentage",
+      "is_correct": true,
+      "playbook_num_tokens": 9573,
+      "playbook_length": 43064
+    }
+  },
+  {
+    "epoch": 1,
+    "step": 56,
+    "target": "GainsLossesOnExtinguishmentOfDebt,DebtInstrumentTerm,DebtInstrumentTerm,DebtInstrumentInterestRateStatedPercentage",
+    "pre_train_result": {
+      "final_answer": "GainsLossesOnExtinguishmentOfDebt,DebtInstrumentTerm,DebtInstrumentTerm,DebtInstrumentInterestRateStatedPercentage",
+      "is_correct": true,
+      "playbook_num_tokens": 9573,
+      "playbook_length": 43064
+    },
+    "post_train_result": {
+      "final_answer": "No final answer found",
+      "is_correct": false,
+      "playbook_num_tokens": 9729,
+      "playbook_length": 43715
+    }
+  },
+  {
+    "epoch": 1,
+    "step": 57,
+    "target": "LineOfCreditFacilityCurrentBorrowingCapacity,DebtInstrumentFaceAmount,DebtInstrumentFaceAmount,DebtInstrumentInterestRateStatedPercentage",
+    "pre_train_result": {
+      "final_answer": "LineOfCreditFacilityCurrentBorrowingCapacity,DebtInstrumentFaceAmount,DebtInstrumentFaceAmount,DebtInstrumentInterestRateStatedPercentage",
+      "is_correct": true,
+      "playbook_num_tokens": 9729,
+      "playbook_length": 43715
+    },
+    "post_train_result": {
+      "final_answer": "LineOfCreditFacilityCurrentBorrowingCapacity,DebtInstrumentFaceAmount,DebtInstrumentFaceAmount,DebtInstrumentInterestRateStatedPercentage",
+      "is_correct": true,
+      "playbook_num_tokens": 9988,
+      "playbook_length": 44735
+    }
+  },
+  {
+    "epoch": 1,
+    "step": 58,
+    "target": "OperatingLeasesRentExpenseNet,OperatingLeasesRentExpenseNet,OperatingLeasesRentExpenseNet,CommonStockCapitalSharesReservedForFutureIssuance",
+    "pre_train_result": {
+      "final_answer": "OperatingLeasesRentExpenseNet,OperatingLeasesRentExpenseNet,OperatingLeasesRentExpenseNet,CommonStockCapitalSharesReservedForFutureIssuance",
+      "is_correct": true,
+      "playbook_num_tokens": 9988,
+      "playbook_length": 44735
+    },
+    "post_train_result": {
+      "final_answer": "OperatingLeasesRentExpenseNet,OperatingLeasesRentExpenseNet,OperatingLeasesRentExpenseNet,CommonStockCapitalSharesReservedForFutureIssuance",
+      "is_correct": true,
+      "playbook_num_tokens": 10094,
+      "playbook_length": 45252
+    }
+  },
+  {
+    "epoch": 1,
+    "step": 59,
+    "target": "EffectiveIncomeTaxRateContinuingOperations,IncomeTaxExpenseBenefit,UnrecognizedTaxBenefitsThatWouldImpactEffectiveTaxRate,UnrecognizedTaxBenefitsThatWouldImpactEffectiveTaxRate",
+    "pre_train_result": {
+      "final_answer": "EffectiveIncomeTaxRateContinuingOperations,IncomeTaxExpenseBenefit,UnrecognizedTaxBenefitsThatWouldImpactEffectiveTaxRate,UnrecognizedTaxBenefitsThatWouldImpactEffectiveTaxRate",
+      "is_correct": true,
+      "playbook_num_tokens": 10094,
+      "playbook_length": 45252
+    },
+    "post_train_result": {
+      "final_answer": "EffectiveIncomeTaxRateContinuingOperations,IncomeTaxExpenseBenefit,UnrecognizedTaxBenefitsThatWouldImpactEffectiveTaxRate,UnrecognizedTaxBenefitsThatWouldImpactEffectiveTaxRate",
+      "is_correct": true,
+      "playbook_num_tokens": 10249,
+      "playbook_length": 45998
+    }
+  },
+  {
+    "epoch": 1,
+    "step": 60,
+    "target": "AmortizationOfIntangibleAssets,AmortizationOfIntangibleAssets,AmortizationOfIntangibleAssets,ShareBasedCompensationArrangementByShareBasedPaymentAwardNumberOfSharesAvailableForGrant",
+    "pre_train_result": {
+      "final_answer": "AmortizationOfIntangibleAssets,AmortizationOfIntangibleAssets,AmortizationOfIntangibleAssets,ShareBasedCompensationArrangementByShareBasedPaymentAwardNumberOfSharesAvailableForGrant",
+      "is_correct": true,
+      "playbook_num_tokens": 10249,
+      "playbook_length": 45998
+    },
+    "post_train_result": {
+      "final_answer": "AmortizationOfIntangibleAssets,AmortizationOfIntangibleAssets,AmortizationOfIntangibleAssets,ShareBasedCompensationArrangementByShareBasedPaymentAwardNumberOfSharesAvailableForGrant",
+      "is_correct": true,
+      "playbook_num_tokens": 10351,
+      "playbook_length": 46465
+    }
+  }
+]
