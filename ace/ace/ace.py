@@ -43,7 +43,7 @@ class ACE:
         generator_model: str,
         reflector_model: str,
         curator_model: str,
-        max_tokens: int = 4096,
+        max_tokens: int = 8192,
         initial_playbook: Optional[str] = None,
         use_bulletpoint_analyzer: bool = False,
         bulletpoint_analyzer_threshold: float = 0.90,

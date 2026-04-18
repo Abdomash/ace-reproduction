@@ -19,7 +19,7 @@ class Reflector:
     bullets as helpful, harmful, or neutral.
     """
 
-    def __init__(self, api_client, api_provider, model: str, max_tokens: int = 4096):
+    def __init__(self, api_client, api_provider, model: str, max_tokens: int = 8192):
         """
         Initialize the Reflector agent.
 

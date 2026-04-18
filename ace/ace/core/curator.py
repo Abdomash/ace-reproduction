@@ -22,7 +22,7 @@ class Curator:
     merging, and deleting bullets based on reflection feedback.
     """
 
-    def __init__(self, api_client, api_provider, model: str, max_tokens: int = 4096):
+    def __init__(self, api_client, api_provider, model: str, max_tokens: int = 8192):
         """
         Initialize the Curator agent.
 

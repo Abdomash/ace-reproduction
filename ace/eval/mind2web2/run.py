@@ -90,7 +90,7 @@ def parse_args():
 
     # System configuration
     parser.add_argument(
-        "--max_tokens", type=int, default=4096, help="Max tokens for LLM responses"
+        "--max_tokens", type=int, default=8192, help="Max tokens for LLM responses"
     )
     parser.add_argument(
         "--playbook_token_budget",

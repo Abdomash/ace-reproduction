@@ -72,7 +72,7 @@ class BulletpointAnalyzer:
         self,
         client,
         model: str,
-        max_tokens: int = 4096,
+        max_tokens: int = 8192,
         embedding_model_name: str = 'all-mpnet-base-v2'
     ):
         """
