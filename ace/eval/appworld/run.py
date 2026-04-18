@@ -36,7 +36,7 @@ def parse_args():
     parser.add_argument("--online_eval_frequency", type=int, default=15)
     parser.add_argument("--save_steps", type=int, default=50)
 
-    parser.add_argument("--max_tokens", type=int, default=8192)
+    parser.add_argument("--max_tokens", type=int, default=4096)
     parser.add_argument("--playbook_token_budget", type=int, default=80000)
     parser.add_argument("--test_workers", type=int, default=20)
 

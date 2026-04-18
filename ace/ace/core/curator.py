@@ -22,7 +22,7 @@ class Curator:
     merging, and deleting bullets based on reflection feedback.
     """
 
-    def __init__(self, api_client, api_provider, model: str, max_tokens: int = 8192):
+    def __init__(self, api_client, api_provider, model: str, max_tokens: int = 4096):
         """
         Initialize the Curator agent.
 
@@ -123,11 +123,15 @@ class Curator:
             use_json_mode=use_json_mode,
         )
 
-        # Check for empty response error
-        if response.startswith("INCORRECT_DUE_TO_EMPTY_RESPONSE"):
-            print(f"⏭️  Skipping curator operation due to empty response")
+        if isinstance(call_info, dict) and call_info.get("error_type"):
+            print("Skipping curator operation due to provider response failure")
             log_curator_failure(
-                log_dir, current_step, "empty_response", response[:200], 0
+                log_dir,
+                current_step,
+                call_info.get("error_type", "provider_failure"),
+                response[:200],
+                0,
+                call_info.get("error", ""),
             )
             return current_playbook, next_global_id, [], call_info
 

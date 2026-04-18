@@ -36,7 +36,6 @@ run_one() {
     --generator_model "${generator_model}" \
     --reflector_model "${reflector_model}" \
     --curator_model "${curator_model}" \
-    --json_mode \
     --telemetry_enabled \
     --telemetry_metrics_interval_seconds 15 \
     --config_name "${config_name}_offline" \

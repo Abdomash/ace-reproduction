@@ -248,7 +248,7 @@ uv run python -m eval.finance.run \
 | `--generator_model` | Model for generator | `DeepSeek-V3.1` |
 | `--reflector_model` | Model for reflector | `DeepSeek-V3.1` |
 | `--curator_model` | Model for curator | `DeepSeek-V3.1` |
-| `--json_mode` | Enable JSON mode for structured output | False |
+| `--json_mode` | Optional non-reproduction JSON mode for structured output | False |
 | `--no_ground_truth` | Don't use ground truth in reflection | False |
 | `--use_bulletpoint_analyzer` | Enable bulletpoint analyzer for playbook deduplication and merging | False |
 | `--bulletpoint_analyzer_threshold` | Similarity threshold for bulletpoint analyzer (0-1) | 0.9 |

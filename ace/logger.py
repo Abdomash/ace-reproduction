@@ -186,8 +186,18 @@ def log_curator_operation_diff(log_dir, operation, playbook_text, call_id):
         print(f"Warning: Failed to write curator operation diff log: {e}")
 
 
-def log_problematic_request(call_id, prompt, model, api_params, exception, log_dir, using_key_mixer, key_mixer):
-    """Log problematic requests that cause empty responses"""
+def log_problematic_request(
+    call_id,
+    prompt,
+    model,
+    api_params,
+    exception,
+    log_dir,
+    using_key_mixer,
+    key_mixer,
+    failure_record=None,
+):
+    """Log problematic provider responses without secrets."""
     if not log_dir:
         return
     
@@ -225,6 +235,8 @@ def log_problematic_request(call_id, prompt, model, api_params, exception, log_d
             "args": list(exception.args) if hasattr(exception, 'args') else None
         }
     }
+    if failure_record:
+        problem_info["failure_record"] = failure_record
     
     # Try to capture response details if available
     if hasattr(exception, 'response'):
@@ -250,7 +262,10 @@ def log_problematic_request(call_id, prompt, model, api_params, exception, log_d
     else:
         problem_info["response_details"] = {"has_response_object": False}
     
-    filename = f"empty_response_{call_id}_{timestamp}.json"
+    failure_type = (
+        failure_record.get("error_type") if isinstance(failure_record, dict) else None
+    ) or "provider_failure"
+    filename = f"{failure_type}_{call_id}_{timestamp}.json"
     filepath = os.path.join(problem_log_dir, filename)
     
     with open(filepath, 'w') as f:
@@ -268,6 +283,7 @@ def log_problematic_request(call_id, prompt, model, api_params, exception, log_d
         "exception_type": type(exception).__name__,
         "exception_message": str(exception),
         "json_mode": api_params.get("response_format", {}).get("type") == "json_object",
+        "error_type": failure_type,
         "api_key_used": current_api_key
     }
     

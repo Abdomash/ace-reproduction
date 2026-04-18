@@ -58,7 +58,7 @@ config = {
     "eval_steps": 10,
     "save_steps": 10,
     "playbook_token_budget": 1000,
-    "json_mode": True,
+    "json_mode": False,
     "no_ground_truth": False,
     "save_dir": str(out_dir),
     "test_workers": 1,

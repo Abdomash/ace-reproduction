@@ -30,12 +30,10 @@ Options (override defaults):
   --seed <int>
   --mode <offline|online|eval_only>  (for single-task presets)
   --eval-steps <int>       Evaluate validation every N training steps
-  --max-tokens <int>       Overall completion budget (default: 8192 for thinking models)
-  --reasoning-max-tokens <int>
-                           OpenRouter thinking budget; 0 disables explicit reasoning (default: 4096)
+  --test-workers <int>     Parallel workers for test/validation calls (default: 20)
+  --max-tokens <int>       Overall completion budget (default: 4096)
   --telemetry <0|1>
   --telemetry-interval <sec>
-  --json-mode <0|1>       Enable JSON mode for LLM calls (default: 0, matching ACE docs)
   --appworld-root <path>
   --appworld-max-steps <int>
   --dry-run
@@ -67,11 +65,10 @@ CONFIG_NAME="default"
 SEED="42"
 MODE="offline"
 EVAL_STEPS="100"
-MAX_TOKENS="${MAX_TOKENS:-8192}"
-REASONING_MAX_TOKENS="${ACE_REASONING_MAX_TOKENS:-4096}"
+TEST_WORKERS="${TEST_WORKERS:-20}"
+MAX_TOKENS="${MAX_TOKENS:-4096}"
 TELEMETRY="1"
 TELEMETRY_INTERVAL=""
-JSON_MODE="${JSON_MODE:-0}"
 APPWORLD_ROOT="${ACE_ROOT}/../ace-appworld"
 APPWORLD_MAX_STEPS="30"
 DRY_RUN="0"
@@ -87,11 +84,10 @@ while [[ $# -gt 0 ]]; do
     --seed) SEED="$2"; shift 2 ;;
     --mode) MODE="$2"; shift 2 ;;
     --eval-steps|--eval_steps) EVAL_STEPS="$2"; shift 2 ;;
+    --test-workers|--test_workers) TEST_WORKERS="$2"; shift 2 ;;
     --max-tokens|--max_tokens) MAX_TOKENS="$2"; shift 2 ;;
-    --reasoning-max-tokens|--reasoning_max_tokens) REASONING_MAX_TOKENS="$2"; shift 2 ;;
     --telemetry) TELEMETRY="$2"; shift 2 ;;
     --telemetry-interval) TELEMETRY_INTERVAL="$2"; shift 2 ;;
-    --json-mode|--json_mode) JSON_MODE="$2"; shift 2 ;;
     --appworld-root) APPWORLD_ROOT="$2"; shift 2 ;;
     --appworld-max-steps) APPWORLD_MAX_STEPS="$2"; shift 2 ;;
     --dry-run) DRY_RUN="1"; shift ;;
@@ -212,44 +208,39 @@ check_api_key
 mkdir -p "${SAVE_PATH}"
 
 TELEMETRY_ARGS="$(telemetry_args)"
-JSON_MODE_ARGS=""
-if [[ "${JSON_MODE}" == "1" ]]; then
-  JSON_MODE_ARGS="--json_mode"
-fi
-export ACE_REASONING_MAX_TOKENS="${REASONING_MAX_TOKENS}"
 
 cd "${ACE_ROOT}"
 
-common_finance_args="--api_provider ${API_PROVIDER} --generator_model ${GENERATOR_MODEL} --reflector_model ${REFLECTOR_MODEL} --curator_model ${CURATOR_MODEL} --seed ${SEED} --config_name ${CONFIG_NAME} --save_path ${SAVE_PATH} --eval_steps ${EVAL_STEPS} --max_tokens ${MAX_TOKENS} ${TELEMETRY_ARGS}"
+common_finance_args="--api_provider ${API_PROVIDER} --generator_model ${GENERATOR_MODEL} --reflector_model ${REFLECTOR_MODEL} --curator_model ${CURATOR_MODEL} --seed ${SEED} --config_name ${CONFIG_NAME} --save_path ${SAVE_PATH} --eval_steps ${EVAL_STEPS} --test_workers ${TEST_WORKERS} --max_tokens ${MAX_TOKENS} ${TELEMETRY_ARGS}"
 
 case "${PRESET}" in
   finer_subset)
     cfg_path="$(make_finer_subset_config)"
-    run_cmd "python -m eval.finance.run --task_name finer --mode ${MODE} ${JSON_MODE_ARGS} --sample_config_path ${cfg_path} ${common_finance_args}"
+    run_cmd "python -m eval.finance.run --task_name finer --mode ${MODE} --sample_config_path ${cfg_path} ${common_finance_args}"
     ;;
 
   finer_full)
-    run_cmd "python -m eval.finance.run --task_name finer --mode ${MODE} ${JSON_MODE_ARGS} ${common_finance_args}"
+    run_cmd "python -m eval.finance.run --task_name finer --mode ${MODE} ${common_finance_args}"
     ;;
 
   formula_subset)
     cfg_path="$(make_formula_subset_config)"
-    run_cmd "python -m eval.finance.run --task_name formula --mode ${MODE} ${JSON_MODE_ARGS} --sample_config_path ${cfg_path} ${common_finance_args}"
+    run_cmd "python -m eval.finance.run --task_name formula --mode ${MODE} --sample_config_path ${cfg_path} ${common_finance_args}"
     ;;
 
   appworld_subset)
-    run_cmd "python -m eval.appworld.run --task_name appworld --mode eval_only --dataset_name dev --max_agent_steps ${APPWORLD_MAX_STEPS} --api_provider ${API_PROVIDER} --generator_model ${GENERATOR_MODEL} --reflector_model ${REFLECTOR_MODEL} --curator_model ${CURATOR_MODEL} --seed ${SEED} --config_name ${CONFIG_NAME} --appworld_root ${APPWORLD_ROOT} --save_path ${SAVE_PATH} --max_tokens ${MAX_TOKENS} ${TELEMETRY_ARGS}"
+    run_cmd "python -m eval.appworld.run --task_name appworld --mode eval_only --dataset_name dev --max_agent_steps ${APPWORLD_MAX_STEPS} --api_provider ${API_PROVIDER} --generator_model ${GENERATOR_MODEL} --reflector_model ${REFLECTOR_MODEL} --curator_model ${CURATOR_MODEL} --seed ${SEED} --config_name ${CONFIG_NAME} --appworld_root ${APPWORLD_ROOT} --save_path ${SAVE_PATH} --test_workers ${TEST_WORKERS} --max_tokens ${MAX_TOKENS} ${TELEMETRY_ARGS}"
     ;;
 
   appworld_full_eval)
-    run_cmd "python -m eval.appworld.run --task_name appworld --mode eval_only --dataset_name test_normal --max_agent_steps ${APPWORLD_MAX_STEPS} --api_provider ${API_PROVIDER} --generator_model ${GENERATOR_MODEL} --reflector_model ${REFLECTOR_MODEL} --curator_model ${CURATOR_MODEL} --seed ${SEED} --config_name ${CONFIG_NAME}_test_normal --appworld_root ${APPWORLD_ROOT} --save_path ${SAVE_PATH} --max_tokens ${MAX_TOKENS} ${TELEMETRY_ARGS}"
-    run_cmd "python -m eval.appworld.run --task_name appworld --mode eval_only --dataset_name test_challenge --max_agent_steps ${APPWORLD_MAX_STEPS} --api_provider ${API_PROVIDER} --generator_model ${GENERATOR_MODEL} --reflector_model ${REFLECTOR_MODEL} --curator_model ${CURATOR_MODEL} --seed ${SEED} --config_name ${CONFIG_NAME}_test_challenge --appworld_root ${APPWORLD_ROOT} --save_path ${SAVE_PATH} --max_tokens ${MAX_TOKENS} ${TELEMETRY_ARGS}"
+    run_cmd "python -m eval.appworld.run --task_name appworld --mode eval_only --dataset_name test_normal --max_agent_steps ${APPWORLD_MAX_STEPS} --api_provider ${API_PROVIDER} --generator_model ${GENERATOR_MODEL} --reflector_model ${REFLECTOR_MODEL} --curator_model ${CURATOR_MODEL} --seed ${SEED} --config_name ${CONFIG_NAME}_test_normal --appworld_root ${APPWORLD_ROOT} --save_path ${SAVE_PATH} --test_workers ${TEST_WORKERS} --max_tokens ${MAX_TOKENS} ${TELEMETRY_ARGS}"
+    run_cmd "python -m eval.appworld.run --task_name appworld --mode eval_only --dataset_name test_challenge --max_agent_steps ${APPWORLD_MAX_STEPS} --api_provider ${API_PROVIDER} --generator_model ${GENERATOR_MODEL} --reflector_model ${REFLECTOR_MODEL} --curator_model ${CURATOR_MODEL} --seed ${SEED} --config_name ${CONFIG_NAME}_test_challenge --appworld_root ${APPWORLD_ROOT} --save_path ${SAVE_PATH} --test_workers ${TEST_WORKERS} --max_tokens ${MAX_TOKENS} ${TELEMETRY_ARGS}"
     ;;
 
   all_full)
-    run_cmd "python -m eval.finance.run --task_name finer --mode offline ${JSON_MODE_ARGS} ${common_finance_args}"
-    run_cmd "python -m eval.appworld.run --task_name appworld --mode eval_only --dataset_name test_normal --max_agent_steps ${APPWORLD_MAX_STEPS} --api_provider ${API_PROVIDER} --generator_model ${GENERATOR_MODEL} --reflector_model ${REFLECTOR_MODEL} --curator_model ${CURATOR_MODEL} --seed ${SEED} --config_name ${CONFIG_NAME}_test_normal --appworld_root ${APPWORLD_ROOT} --save_path ${SAVE_PATH} --max_tokens ${MAX_TOKENS} ${TELEMETRY_ARGS}"
-    run_cmd "python -m eval.appworld.run --task_name appworld --mode eval_only --dataset_name test_challenge --max_agent_steps ${APPWORLD_MAX_STEPS} --api_provider ${API_PROVIDER} --generator_model ${GENERATOR_MODEL} --reflector_model ${REFLECTOR_MODEL} --curator_model ${CURATOR_MODEL} --seed ${SEED} --config_name ${CONFIG_NAME}_test_challenge --appworld_root ${APPWORLD_ROOT} --save_path ${SAVE_PATH} --max_tokens ${MAX_TOKENS} ${TELEMETRY_ARGS}"
+    run_cmd "python -m eval.finance.run --task_name finer --mode offline ${common_finance_args}"
+    run_cmd "python -m eval.appworld.run --task_name appworld --mode eval_only --dataset_name test_normal --max_agent_steps ${APPWORLD_MAX_STEPS} --api_provider ${API_PROVIDER} --generator_model ${GENERATOR_MODEL} --reflector_model ${REFLECTOR_MODEL} --curator_model ${CURATOR_MODEL} --seed ${SEED} --config_name ${CONFIG_NAME}_test_normal --appworld_root ${APPWORLD_ROOT} --save_path ${SAVE_PATH} --test_workers ${TEST_WORKERS} --max_tokens ${MAX_TOKENS} ${TELEMETRY_ARGS}"
+    run_cmd "python -m eval.appworld.run --task_name appworld --mode eval_only --dataset_name test_challenge --max_agent_steps ${APPWORLD_MAX_STEPS} --api_provider ${API_PROVIDER} --generator_model ${GENERATOR_MODEL} --reflector_model ${REFLECTOR_MODEL} --curator_model ${CURATOR_MODEL} --seed ${SEED} --config_name ${CONFIG_NAME}_test_challenge --appworld_root ${APPWORLD_ROOT} --save_path ${SAVE_PATH} --test_workers ${TEST_WORKERS} --max_tokens ${MAX_TOKENS} ${TELEMETRY_ARGS}"
     ;;
 
   *)

@@ -1,0 +1,923 @@
+[
+  {
+    "epoch": 1,
+    "step": 15,
+    "val_results": {
+      "accuracy": 0.39375,
+      "correct": 9,
+      "total": 40,
+      "no_answer": 18
+    },
+    "error_log": {
+      "accuracy": 0.39375,
+      "errors": [
+        {
+          "index": 1,
+          "prediction": "DebtInstrumentInterestRateStatedPercentage,DebtInstrumentInterestRateStatedPercentage,EffectiveIncomeTaxRateReconciliationAtFederalStatutoryIncomeTaxRate,EffectiveIncomeTaxRateReconciliationAtFederalStatutoryIncomeTaxRate",
+          "ground_truth": "DebtWeightedAverageInterestRate,DebtWeightedAverageInterestRate,EffectiveIncomeTaxRateReconciliationAtFederalStatutoryIncomeTaxRate,EffectiveIncomeTaxRateReconciliationAtFederalStatutoryIncomeTaxRate",
+          "error_type": null,
+          "error": null
+        },
+        {
+          "index": 2,
+          "prediction": "SaleOfStockPricePerShare,StockIssuedDuringPeriodSharesNewIssues,StockIssuedDuringPeriodSharesNewIssues,StockIssuedDuringPeriodSharesNewIssues",
+          "ground_truth": "DebtInstrumentConvertibleConversionPrice1,StockIssuedDuringPeriodSharesNewIssues,StockIssuedDuringPeriodSharesNewIssues,StockIssuedDuringPeriodSharesNewIssues",
+          "error_type": null,
+          "error": null
+        },
+        {
+          "index": 3,
+          "prediction": "MinorityInterestOwnershipPercentageByParent,MinorityInterestOwnershipPercentageByParent,BusinessCombinationConsiderationTransferred1,PaymentsToAcquireBusinessesGross",
+          "ground_truth": "MinorityInterestOwnershipPercentageByNoncontrollingOwners,MinorityInterestOwnershipPercentageByNoncontrollingOwners,BusinessCombinationConsiderationTransferred1,PaymentsToAcquireBusinessesGross",
+          "error_type": null,
+          "error": null
+        },
+        {
+          "index": 4,
+          "prediction": "NO_VISIBLE_MODEL_OUTPUT",
+          "ground_truth": "CommonStockParOrStatedValuePerShare,ClassOfWarrantOrRightExercisePriceOfWarrantsOrRights1,SaleOfStockNumberOfSharesIssuedInTransaction,MinorityInterestOwnershipPercentageByNoncontrollingOwners",
+          "error_type": "empty_provider_response",
+          "error": "Provider returned no visible message content"
+        },
+        {
+          "index": 7,
+          "prediction": "ConcentrationRiskPercentage1,BusinessCombinationConsiderationTransferred1,NumberOfRealEstateProperties,DisposalGroupIncludingDiscontinuedOperationConsideration",
+          "ground_truth": "ConcentrationRiskPercentage1,PaymentsToAcquireBusinessesGross,AreaOfRealEstateProperty,PaymentsToAcquireBusinessesGross",
+          "error_type": null,
+          "error": null
+        },
+        {
+          "index": 6,
+          "prediction": "NO_VISIBLE_MODEL_OUTPUT",
+          "ground_truth": "EquityMethodInvestmentOwnershipPercentage,EquityMethodInvestments,EquityMethodInvestments,IncomeLossFromEquityMethodInvestments",
+          "error_type": "empty_provider_response",
+          "error": "Provider returned no visible message content"
+        },
+        {
+          "index": 8,
+          "prediction": "NO_VISIBLE_MODEL_OUTPUT",
+          "ground_truth": "EquityMethodInvestments,EquityMethodInvestmentOwnershipPercentage,IncomeLossFromEquityMethodInvestments,IncomeLossFromEquityMethodInvestments",
+          "error_type": "empty_provider_response",
+          "error": "Provider returned no visible message content"
+        },
+        {
+          "index": 11,
+          "prediction": "NO_VISIBLE_MODEL_OUTPUT",
+          "ground_truth": "ShareBasedCompensationArrangementByShareBasedPaymentAwardNumberOfSharesAvailableForGrant,ShareBasedCompensationArrangementByShareBasedPaymentAwardOptionsExercisesInPeriodTotalIntrinsicValue,EmployeeServiceShareBasedCompensationNonvestedAwardsTotalCompensationCostNotYetRecognizedPeriodForRecognition1,ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsVestedInPeriodTotalFairValue",
+          "error_type": "empty_provider_response",
+          "error": "Provider returned no visible message content"
+        },
+        {
+          "index": 14,
+          "prediction": "NO_VISIBLE_MODEL_OUTPUT",
+          "ground_truth": "LineOfCreditFacilityMaximumBorrowingCapacity,LineOfCreditFacilityMaximumBorrowingCapacity,LineOfCreditFacilityCommitmentFeePercentage,DebtInstrumentInterestRateStatedPercentage",
+          "error_type": "empty_provider_response",
+          "error": "Provider returned no visible message content"
+        },
+        {
+          "index": 12,
+          "prediction": "NO_VISIBLE_MODEL_OUTPUT",
+          "ground_truth": "AmortizationOfFinancingCosts,AmortizationOfFinancingCosts,AmortizationOfFinancingCosts,NumberOfRealEstateProperties",
+          "error_type": "empty_provider_response",
+          "error": "Provider returned no visible message content"
+        },
+        {
+          "index": 10,
+          "prediction": "LineOfCreditFacilityRemainingBorrowingCapacity,FiniteLivedIntangibleAssetUsefulLife,FiniteLivedIntangibleAssetUsefulLife,FiniteLivedIntangibleAssetUsefulLife",
+          "ground_truth": "LettersOfCreditOutstandingAmount,FiniteLivedIntangibleAssetUsefulLife,FiniteLivedIntangibleAssetUsefulLife,PropertyPlantAndEquipmentUsefulLife",
+          "error_type": null,
+          "error": null
+        },
+        {
+          "index": 16,
+          "prediction": "DebtInstrumentInterestRateStatedPercentage,PropertyPlantAndEquipmentUsefulLife,PropertyPlantAndEquipmentUsefulLife,PropertyPlantAndEquipmentUsefulLife",
+          "ground_truth": "DerivativeFixedInterestRate,PropertyPlantAndEquipmentUsefulLife,PropertyPlantAndEquipmentUsefulLife,PropertyPlantAndEquipmentUsefulLife",
+          "error_type": null,
+          "error": null
+        },
+        {
+          "index": 17,
+          "prediction": "DebtInstrumentRedemptionPricePercentage,RevenueFromContractWithCustomerExcludingAssessedTax,RevenueFromContractWithCustomerExcludingAssessedTax,RevenueFromContractWithCustomerExcludingAssessedTax",
+          "ground_truth": "DebtInstrumentRedemptionPricePercentage,RevenueFromRelatedParties,RevenueFromRelatedParties,RevenueFromRelatedParties",
+          "error_type": null,
+          "error": null
+        },
+        {
+          "index": 18,
+          "prediction": "NO_VISIBLE_MODEL_OUTPUT",
+          "ground_truth": "ShareBasedCompensationArrangementByShareBasedPaymentAwardOptionsGrantsInPeriodGross,EmployeeServiceShareBasedCompensationNonvestedAwardsTotalCompensationCostNotYetRecognized,EmployeeServiceShareBasedCompensationNonvestedAwardsTotalCompensationCostNotYetRecognizedPeriodForRecognition1,AllocatedShareBasedCompensationExpense",
+          "error_type": "empty_provider_response",
+          "error": "Provider returned no visible message content"
+        },
+        {
+          "index": 15,
+          "prediction": "NO_VISIBLE_MODEL_OUTPUT",
+          "ground_truth": "ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsGrantsInPeriodWeightedAverageGrantDateFairValue,ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsGrantsInPeriodWeightedAverageGrantDateFairValue,ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsVestedInPeriodTotalFairValue,ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsVestedInPeriodTotalFairValue",
+          "error_type": "empty_provider_response",
+          "error": "Provider returned no visible message content"
+        },
+        {
+          "index": 21,
+          "prediction": "FiniteLivedIntangibleAssetUsefulLife,Revenues,FiniteLivedIntangibleAssetUsefulLife,FiniteLivedIntangibleAssetUsefulLife",
+          "ground_truth": "FiniteLivedIntangibleAssetUsefulLife,ContractWithCustomerLiabilityRevenueRecognized,FiniteLivedIntangibleAssetUsefulLife,FiniteLivedIntangibleAssetUsefulLife",
+          "error_type": null,
+          "error": null
+        },
+        {
+          "index": 19,
+          "prediction": "NO_VISIBLE_MODEL_OUTPUT",
+          "ground_truth": "EffectiveIncomeTaxRateContinuingOperations,EffectiveIncomeTaxRateReconciliationAtFederalStatutoryIncomeTaxRate,RestructuringCharges,RestructuringCharges",
+          "error_type": "empty_provider_response",
+          "error": "Provider returned no visible message content"
+        },
+        {
+          "index": 24,
+          "prediction": "AllocatedShareBasedCompensationExpense,AllocatedShareBasedCompensationExpense,AllocatedShareBasedCompensationExpense,ShareBasedCompensationArrangementByShareBasedPaymentAwardOptionsGrantsInPeriodGross",
+          "ground_truth": "EmployeeServiceShareBasedCompensationNonvestedAwardsTotalCompensationCostNotYetRecognized,EmployeeServiceShareBasedCompensationNonvestedAwardsTotalCompensationCostNotYetRecognized,EmployeeServiceShareBasedCompensationNonvestedAwardsTotalCompensationCostNotYetRecognized,ShareBasedCompensationArrangementByShareBasedPaymentAwardOptionsGrantsInPeriodGross",
+          "error_type": null,
+          "error": null
+        },
+        {
+          "index": 22,
+          "prediction": "NO_VISIBLE_MODEL_OUTPUT",
+          "ground_truth": "RestructuringCharges,RestructuringCharges,RestructuringCharges,EffectiveIncomeTaxRateContinuingOperations",
+          "error_type": "empty_provider_response",
+          "error": "Provider returned no visible message content"
+        },
+        {
+          "index": 27,
+          "prediction": "IncomeTaxExpenseBenefit,EffectiveIncomeTaxRateContinuingOperations,SaleOfStockNumberOfSharesIssuedInTransaction,SaleOfStockPricePerShare",
+          "ground_truth": "IncomeTaxExpenseBenefit,EffectiveIncomeTaxRateReconciliationAtFederalStatutoryIncomeTaxRate,SaleOfStockNumberOfSharesIssuedInTransaction,SaleOfStockPricePerShare",
+          "error_type": null,
+          "error": null
+        },
+        {
+          "index": 20,
+          "prediction": "NO_VISIBLE_MODEL_OUTPUT",
+          "ground_truth": "LeaseAndRentalExpense,LeaseAndRentalExpense,LossContingencyDamagesSoughtValue,LossContingencyDamagesSoughtValue",
+          "error_type": "empty_provider_response",
+          "error": "Provider returned no visible message content"
+        },
+        {
+          "index": 23,
+          "prediction": "NO_VISIBLE_MODEL_OUTPUT",
+          "ground_truth": "UnrecognizedTaxBenefits,UnrecognizedTaxBenefits,UnrecognizedTaxBenefitsThatWouldImpactEffectiveTaxRate,UnrecognizedTaxBenefitsThatWouldImpactEffectiveTaxRate",
+          "error_type": "empty_provider_response",
+          "error": "Provider returned no visible message content"
+        },
+        {
+          "index": 25,
+          "prediction": "NO_VISIBLE_MODEL_OUTPUT",
+          "ground_truth": "GainsLossesOnExtinguishmentOfDebt,GainsLossesOnExtinguishmentOfDebt,RepaymentsOfDebt,RepaymentsOfDebt",
+          "error_type": "empty_provider_response",
+          "error": "Provider returned no visible message content"
+        },
+        {
+          "index": 26,
+          "prediction": "ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsNonvestedNumber,ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsNonvestedNumber,AllocatedShareBasedCompensationExpense,AllocatedShareBasedCompensationExpense",
+          "ground_truth": "ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsGrantsInPeriod,ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsGrantsInPeriod,AllocatedShareBasedCompensationExpense,AllocatedShareBasedCompensationExpense",
+          "error_type": null,
+          "error": null
+        },
+        {
+          "index": 29,
+          "prediction": "NO_VISIBLE_MODEL_OUTPUT",
+          "ground_truth": "ShareBasedCompensationArrangementByShareBasedPaymentAwardAwardVestingPeriod1,ShareBasedCompensationArrangementByShareBasedPaymentAwardAwardVestingPeriod1,ShareBasedCompensationArrangementByShareBasedPaymentAwardAwardVestingPeriod1,AllocatedShareBasedCompensationExpense",
+          "error_type": "empty_provider_response",
+          "error": "Provider returned no visible message content"
+        },
+        {
+          "index": 31,
+          "prediction": "NO_VISIBLE_MODEL_OUTPUT",
+          "ground_truth": "ShareBasedCompensationArrangementByShareBasedPaymentAwardAwardVestingPeriod1,ShareBasedCompensationArrangementByShareBasedPaymentAwardAwardVestingPeriod1,ShareBasedCompensationArrangementByShareBasedPaymentAwardOptionsGrantsInPeriodGross,ShareBasedCompensationArrangementByShareBasedPaymentAwardAwardVestingPeriod1",
+          "error_type": "empty_provider_response",
+          "error": "Provider returned no visible message content"
+        },
+        {
+          "index": 36,
+          "prediction": "LossContingencyEstimateOfPossibleLoss,LossContingencyEstimateOfPossibleLoss,LossContingencyEstimateOfPossibleLoss,NumberOfOperatingSegments",
+          "ground_truth": "AccrualForEnvironmentalLossContingencies,GuaranteeObligationsMaximumExposure,GuaranteeObligationsMaximumExposure,NumberOfOperatingSegments",
+          "error_type": null,
+          "error": null
+        },
+        {
+          "index": 33,
+          "prediction": "NO_VISIBLE_MODEL_OUTPUT",
+          "ground_truth": "GoodwillImpairmentLoss,DefinedContributionPlanCostRecognized,DefinedContributionPlanCostRecognized,DefinedContributionPlanCostRecognized",
+          "error_type": "empty_provider_response",
+          "error": "Provider returned no visible message content"
+        },
+        {
+          "index": 34,
+          "prediction": "NO_VISIBLE_MODEL_OUTPUT",
+          "ground_truth": "DebtInstrumentBasisSpreadOnVariableRate1,LineOfCreditFacilityMaximumBorrowingCapacity,LineOfCredit,OperatingLeasesRentExpenseNet",
+          "error_type": "empty_provider_response",
+          "error": "Provider returned no visible message content"
+        },
+        {
+          "index": 39,
+          "prediction": "ShareBasedCompensationArrangementByShareBasedPaymentAwardAwardVestingPeriod1,ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsNonvestedNumber,ShareBasedCompensationArrangementByShareBasedPaymentAwardAwardVestingPeriod1,ShareBasedCompensationArrangementByShareBasedPaymentAwardAwardVestingPeriod1",
+          "ground_truth": "ShareBasedCompensationArrangementByShareBasedPaymentAwardAwardVestingPeriod1,ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsGrantsInPeriod,ShareBasedCompensationArrangementByShareBasedPaymentAwardAwardVestingPeriod1,ShareBasedCompensationArrangementByShareBasedPaymentAwardAwardVestingPeriod1",
+          "error_type": null,
+          "error": null
+        },
+        {
+          "index": 30,
+          "prediction": "NO_VISIBLE_MODEL_OUTPUT",
+          "ground_truth": "CommonStockCapitalSharesReservedForFutureIssuance,AllocatedShareBasedCompensationExpense,GuaranteeObligationsMaximumExposure,DebtInstrumentFaceAmount",
+          "error_type": "empty_provider_response",
+          "error": "Provider returned no visible message content"
+        }
+      ]
+    }
+  },
+  {
+    "epoch": 1,
+    "step": 30,
+    "val_results": {
+      "accuracy": 0.43125,
+      "correct": 10,
+      "total": 40,
+      "no_answer": 17
+    },
+    "error_log": {
+      "accuracy": 0.43125,
+      "errors": [
+        {
+          "index": 2,
+          "prediction": "SaleOfStockPricePerShare,SaleOfStockNumberOfSharesIssuedInTransaction,SaleOfStockNumberOfSharesIssuedInTransaction,SaleOfStockNumberOfSharesIssuedInTransaction",
+          "ground_truth": "DebtInstrumentConvertibleConversionPrice1,StockIssuedDuringPeriodSharesNewIssues,StockIssuedDuringPeriodSharesNewIssues,StockIssuedDuringPeriodSharesNewIssues",
+          "error_type": null,
+          "error": null
+        },
+        {
+          "index": 3,
+          "prediction": "MinorityInterestOwnershipPercentageByParent,MinorityInterestOwnershipPercentageByParent,BusinessCombinationConsiderationTransferred1,PaymentsToAcquireBusinessesGross",
+          "ground_truth": "MinorityInterestOwnershipPercentageByNoncontrollingOwners,MinorityInterestOwnershipPercentageByNoncontrollingOwners,BusinessCombinationConsiderationTransferred1,PaymentsToAcquireBusinessesGross",
+          "error_type": null,
+          "error": null
+        },
+        {
+          "index": 6,
+          "prediction": "NO_VISIBLE_MODEL_OUTPUT",
+          "ground_truth": "EquityMethodInvestmentOwnershipPercentage,EquityMethodInvestments,EquityMethodInvestments,IncomeLossFromEquityMethodInvestments",
+          "error_type": "empty_provider_response",
+          "error": "Provider returned no visible message content"
+        },
+        {
+          "index": 0,
+          "prediction": "EquityMethodInvestmentOwnershipPercentage,ConcentrationRiskPercentage1,BusinessCombinationConsiderationTransferred1,PaymentsToAcquireBusinessesGross",
+          "ground_truth": "MinorityInterestOwnershipPercentageByParent,ConcentrationRiskPercentage1,BusinessCombinationConsiderationTransferred1,PaymentsToAcquireBusinessesGross",
+          "error_type": null,
+          "error": null
+        },
+        {
+          "index": 4,
+          "prediction": "NO_VISIBLE_MODEL_OUTPUT",
+          "ground_truth": "CommonStockParOrStatedValuePerShare,ClassOfWarrantOrRightExercisePriceOfWarrantsOrRights1,SaleOfStockNumberOfSharesIssuedInTransaction,MinorityInterestOwnershipPercentageByNoncontrollingOwners",
+          "error_type": "empty_provider_response",
+          "error": "Provider returned no visible message content"
+        },
+        {
+          "index": 7,
+          "prediction": "NO_VISIBLE_MODEL_OUTPUT",
+          "ground_truth": "ConcentrationRiskPercentage1,PaymentsToAcquireBusinessesGross,AreaOfRealEstateProperty,PaymentsToAcquireBusinessesGross",
+          "error_type": "empty_provider_response",
+          "error": "Provider returned no visible message content"
+        },
+        {
+          "index": 11,
+          "prediction": "ShareBasedCompensationArrangementByShareBasedPaymentAwardNumberOfSharesAvailableForGrant,ShareBasedCompensationArrangementByShareBasedPaymentAwardOptionsExercisesInPeriodTotalIntrinsicValue,ShareBasedCompensationArrangementByShareBasedPaymentAwardAwardVestingPeriod1,ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsGrantsInPeriod",
+          "ground_truth": "ShareBasedCompensationArrangementByShareBasedPaymentAwardNumberOfSharesAvailableForGrant,ShareBasedCompensationArrangementByShareBasedPaymentAwardOptionsExercisesInPeriodTotalIntrinsicValue,EmployeeServiceShareBasedCompensationNonvestedAwardsTotalCompensationCostNotYetRecognizedPeriodForRecognition1,ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsVestedInPeriodTotalFairValue",
+          "error_type": null,
+          "error": null
+        },
+        {
+          "index": 16,
+          "prediction": "DebtInstrumentInterestRateStatedPercentage,PropertyPlantAndEquipmentUsefulLife,PropertyPlantAndEquipmentUsefulLife,PropertyPlantAndEquipmentUsefulLife",
+          "ground_truth": "DerivativeFixedInterestRate,PropertyPlantAndEquipmentUsefulLife,PropertyPlantAndEquipmentUsefulLife,PropertyPlantAndEquipmentUsefulLife",
+          "error_type": null,
+          "error": null
+        },
+        {
+          "index": 10,
+          "prediction": "LettersOfCreditOutstandingAmount,FiniteLivedIntangibleAssetUsefulLife,FiniteLivedIntangibleAssetUsefulLife,FiniteLivedIntangibleAssetUsefulLife",
+          "ground_truth": "LettersOfCreditOutstandingAmount,FiniteLivedIntangibleAssetUsefulLife,FiniteLivedIntangibleAssetUsefulLife,PropertyPlantAndEquipmentUsefulLife",
+          "error_type": null,
+          "error": null
+        },
+        {
+          "index": 8,
+          "prediction": "NO_VISIBLE_MODEL_OUTPUT",
+          "ground_truth": "EquityMethodInvestments,EquityMethodInvestmentOwnershipPercentage,IncomeLossFromEquityMethodInvestments,IncomeLossFromEquityMethodInvestments",
+          "error_type": "empty_provider_response",
+          "error": "Provider returned no visible message content"
+        },
+        {
+          "index": 17,
+          "prediction": "DebtInstrumentRedemptionPricePercentage,Revenues,Revenues,Revenues",
+          "ground_truth": "DebtInstrumentRedemptionPricePercentage,RevenueFromRelatedParties,RevenueFromRelatedParties,RevenueFromRelatedParties",
+          "error_type": null,
+          "error": null
+        },
+        {
+          "index": 15,
+          "prediction": "NO_VISIBLE_MODEL_OUTPUT",
+          "ground_truth": "ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsGrantsInPeriodWeightedAverageGrantDateFairValue,ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsGrantsInPeriodWeightedAverageGrantDateFairValue,ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsVestedInPeriodTotalFairValue,ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsVestedInPeriodTotalFairValue",
+          "error_type": "empty_provider_response",
+          "error": "Provider returned no visible message content"
+        },
+        {
+          "index": 13,
+          "prediction": "NO_VISIBLE_MODEL_OUTPUT",
+          "ground_truth": "LineOfCreditFacilityMaximumBorrowingCapacity,LineOfCreditFacilityMaximumBorrowingCapacity,LineOfCreditFacilityMaximumBorrowingCapacity,DebtInstrumentBasisSpreadOnVariableRate1",
+          "error_type": "empty_provider_response",
+          "error": "Provider returned no visible message content"
+        },
+        {
+          "index": 12,
+          "prediction": "NO_VISIBLE_MODEL_OUTPUT",
+          "ground_truth": "AmortizationOfFinancingCosts,AmortizationOfFinancingCosts,AmortizationOfFinancingCosts,NumberOfRealEstateProperties",
+          "error_type": "empty_provider_response",
+          "error": "Provider returned no visible message content"
+        },
+        {
+          "index": 14,
+          "prediction": "NO_VISIBLE_MODEL_OUTPUT",
+          "ground_truth": "LineOfCreditFacilityMaximumBorrowingCapacity,LineOfCreditFacilityMaximumBorrowingCapacity,LineOfCreditFacilityCommitmentFeePercentage,DebtInstrumentInterestRateStatedPercentage",
+          "error_type": "empty_provider_response",
+          "error": "Provider returned no visible message content"
+        },
+        {
+          "index": 20,
+          "prediction": "OperatingLeasesRentExpenseNet,OperatingLeasesRentExpenseNet,LossContingencyDamagesSoughtValue,LossContingencyDamagesSoughtValue",
+          "ground_truth": "LeaseAndRentalExpense,LeaseAndRentalExpense,LossContingencyDamagesSoughtValue,LossContingencyDamagesSoughtValue",
+          "error_type": null,
+          "error": null
+        },
+        {
+          "index": 18,
+          "prediction": "NO_VISIBLE_MODEL_OUTPUT",
+          "ground_truth": "ShareBasedCompensationArrangementByShareBasedPaymentAwardOptionsGrantsInPeriodGross,EmployeeServiceShareBasedCompensationNonvestedAwardsTotalCompensationCostNotYetRecognized,EmployeeServiceShareBasedCompensationNonvestedAwardsTotalCompensationCostNotYetRecognizedPeriodForRecognition1,AllocatedShareBasedCompensationExpense",
+          "error_type": "empty_provider_response",
+          "error": "Provider returned no visible message content"
+        },
+        {
+          "index": 19,
+          "prediction": "NO_VISIBLE_MODEL_OUTPUT",
+          "ground_truth": "EffectiveIncomeTaxRateContinuingOperations,EffectiveIncomeTaxRateReconciliationAtFederalStatutoryIncomeTaxRate,RestructuringCharges,RestructuringCharges",
+          "error_type": "empty_provider_response",
+          "error": "Provider returned no visible message content"
+        },
+        {
+          "index": 21,
+          "prediction": "NO_VISIBLE_MODEL_OUTPUT",
+          "ground_truth": "FiniteLivedIntangibleAssetUsefulLife,ContractWithCustomerLiabilityRevenueRecognized,FiniteLivedIntangibleAssetUsefulLife,FiniteLivedIntangibleAssetUsefulLife",
+          "error_type": "empty_provider_response",
+          "error": "Provider returned no visible message content"
+        },
+        {
+          "index": 24,
+          "prediction": "AllocatedShareBasedCompensationExpense,AllocatedShareBasedCompensationExpense,AllocatedShareBasedCompensationExpense,ShareBasedCompensationArrangementByShareBasedPaymentAwardOptionsGrantsInPeriodGross",
+          "ground_truth": "EmployeeServiceShareBasedCompensationNonvestedAwardsTotalCompensationCostNotYetRecognized,EmployeeServiceShareBasedCompensationNonvestedAwardsTotalCompensationCostNotYetRecognized,EmployeeServiceShareBasedCompensationNonvestedAwardsTotalCompensationCostNotYetRecognized,ShareBasedCompensationArrangementByShareBasedPaymentAwardOptionsGrantsInPeriodGross",
+          "error_type": null,
+          "error": null
+        },
+        {
+          "index": 23,
+          "prediction": "NO_VISIBLE_MODEL_OUTPUT",
+          "ground_truth": "UnrecognizedTaxBenefits,UnrecognizedTaxBenefits,UnrecognizedTaxBenefitsThatWouldImpactEffectiveTaxRate,UnrecognizedTaxBenefitsThatWouldImpactEffectiveTaxRate",
+          "error_type": "empty_provider_response",
+          "error": "Provider returned no visible message content"
+        },
+        {
+          "index": 30,
+          "prediction": "NO_VISIBLE_MODEL_OUTPUT",
+          "ground_truth": "CommonStockCapitalSharesReservedForFutureIssuance,AllocatedShareBasedCompensationExpense,GuaranteeObligationsMaximumExposure,DebtInstrumentFaceAmount",
+          "error_type": "empty_provider_response",
+          "error": "Provider returned no visible message content"
+        },
+        {
+          "index": 27,
+          "prediction": "IncomeTaxExpenseBenefit,EffectiveIncomeTaxRateContinuingOperations,SaleOfStockNumberOfSharesIssuedInTransaction,SaleOfStockPricePerShare",
+          "ground_truth": "IncomeTaxExpenseBenefit,EffectiveIncomeTaxRateReconciliationAtFederalStatutoryIncomeTaxRate,SaleOfStockNumberOfSharesIssuedInTransaction,SaleOfStockPricePerShare",
+          "error_type": null,
+          "error": null
+        },
+        {
+          "index": 29,
+          "prediction": "No final answer found",
+          "ground_truth": "ShareBasedCompensationArrangementByShareBasedPaymentAwardAwardVestingPeriod1,ShareBasedCompensationArrangementByShareBasedPaymentAwardAwardVestingPeriod1,ShareBasedCompensationArrangementByShareBasedPaymentAwardAwardVestingPeriod1,AllocatedShareBasedCompensationExpense",
+          "error_type": null,
+          "error": null
+        },
+        {
+          "index": 32,
+          "prediction": "DebtInstrumentFaceAmount,DebtInstrumentBasisSpreadOnVariableRate1,DebtInstrumentConvertibleConversionPrice1,DebtInstrumentInterestRateStatedPercentage",
+          "ground_truth": "DebtInstrumentFaceAmount,DebtInstrumentInterestRateEffectivePercentage,DebtInstrumentConvertibleConversionPrice1,DebtInstrumentInterestRateStatedPercentage",
+          "error_type": null,
+          "error": null
+        },
+        {
+          "index": 31,
+          "prediction": "NO_VISIBLE_MODEL_OUTPUT",
+          "ground_truth": "ShareBasedCompensationArrangementByShareBasedPaymentAwardAwardVestingPeriod1,ShareBasedCompensationArrangementByShareBasedPaymentAwardAwardVestingPeriod1,ShareBasedCompensationArrangementByShareBasedPaymentAwardOptionsGrantsInPeriodGross,ShareBasedCompensationArrangementByShareBasedPaymentAwardAwardVestingPeriod1",
+          "error_type": "empty_provider_response",
+          "error": "Provider returned no visible message content"
+        },
+        {
+          "index": 33,
+          "prediction": "NO_VISIBLE_MODEL_OUTPUT",
+          "ground_truth": "GoodwillImpairmentLoss,DefinedContributionPlanCostRecognized,DefinedContributionPlanCostRecognized,DefinedContributionPlanCostRecognized",
+          "error_type": "empty_provider_response",
+          "error": "Provider returned no visible message content"
+        },
+        {
+          "index": 39,
+          "prediction": "ShareBasedCompensationArrangementByShareBasedPaymentAwardAwardVestingPeriod1,ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsNonvestedNumber,ShareBasedCompensationArrangementByShareBasedPaymentAwardAwardVestingPeriod1,ShareBasedCompensationArrangementByShareBasedPaymentAwardAwardVestingPeriod1",
+          "ground_truth": "ShareBasedCompensationArrangementByShareBasedPaymentAwardAwardVestingPeriod1,ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsGrantsInPeriod,ShareBasedCompensationArrangementByShareBasedPaymentAwardAwardVestingPeriod1,ShareBasedCompensationArrangementByShareBasedPaymentAwardAwardVestingPeriod1",
+          "error_type": null,
+          "error": null
+        },
+        {
+          "index": 34,
+          "prediction": "DebtInstrumentBasisSpreadOnVariableRate1,LineOfCreditFacilityMaximumBorrowingCapacity,LettersOfCreditOutstandingAmount,OperatingLeasesRentExpenseNet",
+          "ground_truth": "DebtInstrumentBasisSpreadOnVariableRate1,LineOfCreditFacilityMaximumBorrowingCapacity,LineOfCredit,OperatingLeasesRentExpenseNet",
+          "error_type": null,
+          "error": null
+        },
+        {
+          "index": 36,
+          "prediction": "NO_VISIBLE_MODEL_OUTPUT",
+          "ground_truth": "AccrualForEnvironmentalLossContingencies,GuaranteeObligationsMaximumExposure,GuaranteeObligationsMaximumExposure,NumberOfOperatingSegments",
+          "error_type": "empty_provider_response",
+          "error": "Provider returned no visible message content"
+        }
+      ]
+    }
+  },
+  {
+    "epoch": 1,
+    "step": 45,
+    "val_results": {
+      "accuracy": 0.48125,
+      "correct": 9,
+      "total": 40,
+      "no_answer": 12
+    },
+    "error_log": {
+      "accuracy": 0.48125,
+      "errors": [
+        {
+          "index": 1,
+          "prediction": "LineOfCreditFacilityInterestRateAtPeriodEnd,LineOfCreditFacilityInterestRateAtPeriodEnd,EffectiveIncomeTaxRateReconciliationAtFederalStatutoryIncomeTaxRate,EffectiveIncomeTaxRateReconciliationAtFederalStatutoryIncomeTaxRate",
+          "ground_truth": "DebtWeightedAverageInterestRate,DebtWeightedAverageInterestRate,EffectiveIncomeTaxRateReconciliationAtFederalStatutoryIncomeTaxRate,EffectiveIncomeTaxRateReconciliationAtFederalStatutoryIncomeTaxRate",
+          "error_type": null,
+          "error": null
+        },
+        {
+          "index": 2,
+          "prediction": "SaleOfStockPricePerShare,SaleOfStockNumberOfSharesIssuedInTransaction,SaleOfStockNumberOfSharesIssuedInTransaction,SaleOfStockNumberOfSharesIssuedInTransaction",
+          "ground_truth": "DebtInstrumentConvertibleConversionPrice1,StockIssuedDuringPeriodSharesNewIssues,StockIssuedDuringPeriodSharesNewIssues,StockIssuedDuringPeriodSharesNewIssues",
+          "error_type": null,
+          "error": null
+        },
+        {
+          "index": 0,
+          "prediction": "MinorityInterestOwnershipPercentageByParent,ConcentrationRiskPercentage1,BusinessCombinationConsiderationTransferred1,DebtInstrumentFaceAmount",
+          "ground_truth": "MinorityInterestOwnershipPercentageByParent,ConcentrationRiskPercentage1,BusinessCombinationConsiderationTransferred1,PaymentsToAcquireBusinessesGross",
+          "error_type": null,
+          "error": null
+        },
+        {
+          "index": 3,
+          "prediction": "MinorityInterestOwnershipPercentageByParent,MinorityInterestOwnershipPercentageByParent,BusinessCombinationConsiderationTransferred1,PaymentsToAcquireBusinessesGross",
+          "ground_truth": "MinorityInterestOwnershipPercentageByNoncontrollingOwners,MinorityInterestOwnershipPercentageByNoncontrollingOwners,BusinessCombinationConsiderationTransferred1,PaymentsToAcquireBusinessesGross",
+          "error_type": null,
+          "error": null
+        },
+        {
+          "index": 7,
+          "prediction": "ConcentrationRiskPercentage1,BusinessCombinationConsiderationTransferred1,AreaOfRealEstateProperty,DisposalGroupIncludingDiscontinuedOperationConsideration",
+          "ground_truth": "ConcentrationRiskPercentage1,PaymentsToAcquireBusinessesGross,AreaOfRealEstateProperty,PaymentsToAcquireBusinessesGross",
+          "error_type": null,
+          "error": null
+        },
+        {
+          "index": 5,
+          "prediction": "NO_VISIBLE_MODEL_OUTPUT",
+          "ground_truth": "EquityMethodInvestmentOwnershipPercentage,EquityMethodInvestmentOwnershipPercentage,EquityMethodInvestmentOwnershipPercentage,EquityMethodInvestmentOwnershipPercentage",
+          "error_type": "empty_provider_response",
+          "error": "Provider returned no visible message content"
+        },
+        {
+          "index": 4,
+          "prediction": "NO_VISIBLE_MODEL_OUTPUT",
+          "ground_truth": "CommonStockParOrStatedValuePerShare,ClassOfWarrantOrRightExercisePriceOfWarrantsOrRights1,SaleOfStockNumberOfSharesIssuedInTransaction,MinorityInterestOwnershipPercentageByNoncontrollingOwners",
+          "error_type": "empty_provider_response",
+          "error": "Provider returned no visible message content"
+        },
+        {
+          "index": 6,
+          "prediction": "NO_VISIBLE_MODEL_OUTPUT",
+          "ground_truth": "EquityMethodInvestmentOwnershipPercentage,EquityMethodInvestments,EquityMethodInvestments,IncomeLossFromEquityMethodInvestments",
+          "error_type": "empty_provider_response",
+          "error": "Provider returned no visible message content"
+        },
+        {
+          "index": 10,
+          "prediction": "LettersOfCreditOutstandingAmount,FiniteLivedIntangibleAssetUsefulLife,FiniteLivedIntangibleAssetUsefulLife,FiniteLivedIntangibleAssetUsefulLife",
+          "ground_truth": "LettersOfCreditOutstandingAmount,FiniteLivedIntangibleAssetUsefulLife,FiniteLivedIntangibleAssetUsefulLife,PropertyPlantAndEquipmentUsefulLife",
+          "error_type": null,
+          "error": null
+        },
+        {
+          "index": 8,
+          "prediction": "PaymentsToAcquireBusinessesGross,MinorityInterestOwnershipPercentageByParent,IncomeLossFromEquityMethodInvestments,IncomeLossFromEquityMethodInvestments",
+          "ground_truth": "EquityMethodInvestments,EquityMethodInvestmentOwnershipPercentage,IncomeLossFromEquityMethodInvestments,IncomeLossFromEquityMethodInvestments",
+          "error_type": null,
+          "error": null
+        },
+        {
+          "index": 9,
+          "prediction": "NO_VISIBLE_MODEL_OUTPUT",
+          "ground_truth": "EquityMethodInvestmentOwnershipPercentage,EquityMethodInvestmentOwnershipPercentage,EquityMethodInvestmentOwnershipPercentage,EquityMethodInvestmentOwnershipPercentage",
+          "error_type": "empty_provider_response",
+          "error": "Provider returned no visible message content"
+        },
+        {
+          "index": 11,
+          "prediction": "NO_VISIBLE_MODEL_OUTPUT",
+          "ground_truth": "ShareBasedCompensationArrangementByShareBasedPaymentAwardNumberOfSharesAvailableForGrant,ShareBasedCompensationArrangementByShareBasedPaymentAwardOptionsExercisesInPeriodTotalIntrinsicValue,EmployeeServiceShareBasedCompensationNonvestedAwardsTotalCompensationCostNotYetRecognizedPeriodForRecognition1,ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsVestedInPeriodTotalFairValue",
+          "error_type": "empty_provider_response",
+          "error": "Provider returned no visible message content"
+        },
+        {
+          "index": 12,
+          "prediction": "NO_VISIBLE_MODEL_OUTPUT",
+          "ground_truth": "AmortizationOfFinancingCosts,AmortizationOfFinancingCosts,AmortizationOfFinancingCosts,NumberOfRealEstateProperties",
+          "error_type": "empty_provider_response",
+          "error": "Provider returned no visible message content"
+        },
+        {
+          "index": 16,
+          "prediction": "DebtInstrumentInterestRateStatedPercentage,PropertyPlantAndEquipmentUsefulLife,PropertyPlantAndEquipmentUsefulLife,PropertyPlantAndEquipmentUsefulLife",
+          "ground_truth": "DerivativeFixedInterestRate,PropertyPlantAndEquipmentUsefulLife,PropertyPlantAndEquipmentUsefulLife,PropertyPlantAndEquipmentUsefulLife",
+          "error_type": null,
+          "error": null
+        },
+        {
+          "index": 17,
+          "prediction": "DebtInstrumentRedemptionPricePercentage,Revenues,Revenues,Revenues",
+          "ground_truth": "DebtInstrumentRedemptionPricePercentage,RevenueFromRelatedParties,RevenueFromRelatedParties,RevenueFromRelatedParties",
+          "error_type": null,
+          "error": null
+        },
+        {
+          "index": 15,
+          "prediction": "ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsGrantsInPeriodWeightedAverageGrantDateFairValue,ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsGrantsInPeriodWeightedAverageGrantDateFairValue,ShareBasedCompensationArrangementByShareBasedPaymentAwardOptionsGrantsInPeriodWeightedAverageGrantDateFairValue,ShareBasedCompensationArrangementByShareBasedPaymentAwardOptionsGrantsInPeriodWeightedAverageGrantDateFairValue",
+          "ground_truth": "ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsGrantsInPeriodWeightedAverageGrantDateFairValue,ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsGrantsInPeriodWeightedAverageGrantDateFairValue,ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsVestedInPeriodTotalFairValue,ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsVestedInPeriodTotalFairValue",
+          "error_type": null,
+          "error": null
+        },
+        {
+          "index": 20,
+          "prediction": "OperatingLeasesRentExpenseNet,OperatingLeasesRentExpenseNet,LossContingencyDamagesSoughtValue,LossContingencyDamagesSoughtValue",
+          "ground_truth": "LeaseAndRentalExpense,LeaseAndRentalExpense,LossContingencyDamagesSoughtValue,LossContingencyDamagesSoughtValue",
+          "error_type": null,
+          "error": null
+        },
+        {
+          "index": 21,
+          "prediction": "FiniteLivedIntangibleAssetUsefulLife,Revenues,FiniteLivedIntangibleAssetUsefulLife,FiniteLivedIntangibleAssetUsefulLife",
+          "ground_truth": "FiniteLivedIntangibleAssetUsefulLife,ContractWithCustomerLiabilityRevenueRecognized,FiniteLivedIntangibleAssetUsefulLife,FiniteLivedIntangibleAssetUsefulLife",
+          "error_type": null,
+          "error": null
+        },
+        {
+          "index": 24,
+          "prediction": "AllocatedShareBasedCompensationExpense,AllocatedShareBasedCompensationExpense,AllocatedShareBasedCompensationExpense,ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsGrantsInPeriod",
+          "ground_truth": "EmployeeServiceShareBasedCompensationNonvestedAwardsTotalCompensationCostNotYetRecognized,EmployeeServiceShareBasedCompensationNonvestedAwardsTotalCompensationCostNotYetRecognized,EmployeeServiceShareBasedCompensationNonvestedAwardsTotalCompensationCostNotYetRecognized,ShareBasedCompensationArrangementByShareBasedPaymentAwardOptionsGrantsInPeriodGross",
+          "error_type": null,
+          "error": null
+        },
+        {
+          "index": 19,
+          "prediction": "NO_VISIBLE_MODEL_OUTPUT",
+          "ground_truth": "EffectiveIncomeTaxRateContinuingOperations,EffectiveIncomeTaxRateReconciliationAtFederalStatutoryIncomeTaxRate,RestructuringCharges,RestructuringCharges",
+          "error_type": "empty_provider_response",
+          "error": "Provider returned no visible message content"
+        },
+        {
+          "index": 22,
+          "prediction": "NO_VISIBLE_MODEL_OUTPUT",
+          "ground_truth": "RestructuringCharges,RestructuringCharges,RestructuringCharges,EffectiveIncomeTaxRateContinuingOperations",
+          "error_type": "empty_provider_response",
+          "error": "Provider returned no visible message content"
+        },
+        {
+          "index": 23,
+          "prediction": "NO_VISIBLE_MODEL_OUTPUT",
+          "ground_truth": "UnrecognizedTaxBenefits,UnrecognizedTaxBenefits,UnrecognizedTaxBenefitsThatWouldImpactEffectiveTaxRate,UnrecognizedTaxBenefitsThatWouldImpactEffectiveTaxRate",
+          "error_type": "empty_provider_response",
+          "error": "Provider returned no visible message content"
+        },
+        {
+          "index": 27,
+          "prediction": "IncomeTaxExpenseBenefit,EffectiveIncomeTaxRateContinuingOperations,SaleOfStockNumberOfSharesIssuedInTransaction,SaleOfStockPricePerShare",
+          "ground_truth": "IncomeTaxExpenseBenefit,EffectiveIncomeTaxRateReconciliationAtFederalStatutoryIncomeTaxRate,SaleOfStockNumberOfSharesIssuedInTransaction,SaleOfStockPricePerShare",
+          "error_type": null,
+          "error": null
+        },
+        {
+          "index": 26,
+          "prediction": "NO_VISIBLE_MODEL_OUTPUT",
+          "ground_truth": "ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsGrantsInPeriod,ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsGrantsInPeriod,AllocatedShareBasedCompensationExpense,AllocatedShareBasedCompensationExpense",
+          "error_type": "empty_provider_response",
+          "error": "Provider returned no visible message content"
+        },
+        {
+          "index": 30,
+          "prediction": "ShareBasedCompensationArrangementByShareBasedPaymentAwardOptionsGrantsInPeriodGross,AllocatedShareBasedCompensationExpense,GuaranteeObligationsMaximumExposure,DebtInstrumentFaceAmount",
+          "ground_truth": "CommonStockCapitalSharesReservedForFutureIssuance,AllocatedShareBasedCompensationExpense,GuaranteeObligationsMaximumExposure,DebtInstrumentFaceAmount",
+          "error_type": null,
+          "error": null
+        },
+        {
+          "index": 31,
+          "prediction": "ShareBasedCompensationArrangementByShareBasedPaymentAwardAwardVestingPeriod1,ShareBasedCompensationArrangementByShareBasedPaymentAwardAwardVestingPeriod1,ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsGrantsInPeriod,ShareBasedCompensationArrangementByShareBasedPaymentAwardAwardVestingPeriod1",
+          "ground_truth": "ShareBasedCompensationArrangementByShareBasedPaymentAwardAwardVestingPeriod1,ShareBasedCompensationArrangementByShareBasedPaymentAwardAwardVestingPeriod1,ShareBasedCompensationArrangementByShareBasedPaymentAwardOptionsGrantsInPeriodGross,ShareBasedCompensationArrangementByShareBasedPaymentAwardAwardVestingPeriod1",
+          "error_type": null,
+          "error": null
+        },
+        {
+          "index": 34,
+          "prediction": "DebtInstrumentBasisSpreadOnVariableRate1,LineOfCreditFacilityMaximumBorrowingCapacity,DebtInstrumentCarryingAmount,OperatingLeasesRentExpenseNet",
+          "ground_truth": "DebtInstrumentBasisSpreadOnVariableRate1,LineOfCreditFacilityMaximumBorrowingCapacity,LineOfCredit,OperatingLeasesRentExpenseNet",
+          "error_type": null,
+          "error": null
+        },
+        {
+          "index": 33,
+          "prediction": "NO_VISIBLE_MODEL_OUTPUT",
+          "ground_truth": "GoodwillImpairmentLoss,DefinedContributionPlanCostRecognized,DefinedContributionPlanCostRecognized,DefinedContributionPlanCostRecognized",
+          "error_type": "empty_provider_response",
+          "error": "Provider returned no visible message content"
+        },
+        {
+          "index": 36,
+          "prediction": "LossContingencyEstimateOfPossibleLoss,LossContingencyEstimateOfPossibleLoss,LossContingencyEstimateOfPossibleLoss,NumberOfOperatingSegments",
+          "ground_truth": "AccrualForEnvironmentalLossContingencies,GuaranteeObligationsMaximumExposure,GuaranteeObligationsMaximumExposure,NumberOfOperatingSegments",
+          "error_type": null,
+          "error": null
+        },
+        {
+          "index": 18,
+          "prediction": "NO_VISIBLE_MODEL_OUTPUT",
+          "ground_truth": "ShareBasedCompensationArrangementByShareBasedPaymentAwardOptionsGrantsInPeriodGross,EmployeeServiceShareBasedCompensationNonvestedAwardsTotalCompensationCostNotYetRecognized,EmployeeServiceShareBasedCompensationNonvestedAwardsTotalCompensationCostNotYetRecognizedPeriodForRecognition1,AllocatedShareBasedCompensationExpense",
+          "error_type": "empty_provider_response",
+          "error": "Provider returned no visible message content"
+        },
+        {
+          "index": 39,
+          "prediction": "ShareBasedCompensationArrangementByShareBasedPaymentAwardAwardVestingPeriod1,ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsNonvestedNumber,ShareBasedCompensationArrangementByShareBasedPaymentAwardAwardVestingPeriod1,ShareBasedCompensationArrangementByShareBasedPaymentAwardAwardVestingPeriod1",
+          "ground_truth": "ShareBasedCompensationArrangementByShareBasedPaymentAwardAwardVestingPeriod1,ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsGrantsInPeriod,ShareBasedCompensationArrangementByShareBasedPaymentAwardAwardVestingPeriod1,ShareBasedCompensationArrangementByShareBasedPaymentAwardAwardVestingPeriod1",
+          "error_type": null,
+          "error": null
+        }
+      ]
+    }
+  },
+  {
+    "epoch": 1,
+    "step": 60,
+    "val_results": {
+      "accuracy": 0.35625,
+      "correct": 9,
+      "total": 40,
+      "no_answer": 21
+    },
+    "error_log": {
+      "accuracy": 0.35625,
+      "errors": [
+        {
+          "index": 3,
+          "prediction": "MinorityInterestOwnershipPercentageByNoncontrollingOwners,EquityMethodInvestmentOwnershipPercentage,BusinessCombinationConsiderationTransferred1,PaymentsToAcquireBusinessesGross",
+          "ground_truth": "MinorityInterestOwnershipPercentageByNoncontrollingOwners,MinorityInterestOwnershipPercentageByNoncontrollingOwners,BusinessCombinationConsiderationTransferred1,PaymentsToAcquireBusinessesGross",
+          "error_type": null,
+          "error": null
+        },
+        {
+          "index": 6,
+          "prediction": "NO_VISIBLE_MODEL_OUTPUT",
+          "ground_truth": "EquityMethodInvestmentOwnershipPercentage,EquityMethodInvestments,EquityMethodInvestments,IncomeLossFromEquityMethodInvestments",
+          "error_type": "empty_provider_response",
+          "error": "Provider returned no visible message content"
+        },
+        {
+          "index": 4,
+          "prediction": "NO_VISIBLE_MODEL_OUTPUT",
+          "ground_truth": "CommonStockParOrStatedValuePerShare,ClassOfWarrantOrRightExercisePriceOfWarrantsOrRights1,SaleOfStockNumberOfSharesIssuedInTransaction,MinorityInterestOwnershipPercentageByNoncontrollingOwners",
+          "error_type": "empty_provider_response",
+          "error": "Provider returned no visible message content"
+        },
+        {
+          "index": 2,
+          "prediction": "SaleOfStockPricePerShare,SaleOfStockNumberOfSharesIssuedInTransaction,SaleOfStockNumberOfSharesIssuedInTransaction,SaleOfStockNumberOfSharesIssuedInTransaction",
+          "ground_truth": "DebtInstrumentConvertibleConversionPrice1,StockIssuedDuringPeriodSharesNewIssues,StockIssuedDuringPeriodSharesNewIssues,StockIssuedDuringPeriodSharesNewIssues",
+          "error_type": null,
+          "error": null
+        },
+        {
+          "index": 7,
+          "prediction": "NO_VISIBLE_MODEL_OUTPUT",
+          "ground_truth": "ConcentrationRiskPercentage1,PaymentsToAcquireBusinessesGross,AreaOfRealEstateProperty,PaymentsToAcquireBusinessesGross",
+          "error_type": "empty_provider_response",
+          "error": "Provider returned no visible message content"
+        },
+        {
+          "index": 10,
+          "prediction": "LettersOfCreditOutstandingAmount,FiniteLivedIntangibleAssetUsefulLife,FiniteLivedIntangibleAssetUsefulLife,FiniteLivedIntangibleAssetUsefulLife",
+          "ground_truth": "LettersOfCreditOutstandingAmount,FiniteLivedIntangibleAssetUsefulLife,FiniteLivedIntangibleAssetUsefulLife,PropertyPlantAndEquipmentUsefulLife",
+          "error_type": null,
+          "error": null
+        },
+        {
+          "index": 12,
+          "prediction": "InterestExpense,InterestExpense,InterestExpense,NumberOfRealEstateProperties",
+          "ground_truth": "AmortizationOfFinancingCosts,AmortizationOfFinancingCosts,AmortizationOfFinancingCosts,NumberOfRealEstateProperties",
+          "error_type": null,
+          "error": null
+        },
+        {
+          "index": 8,
+          "prediction": "NO_VISIBLE_MODEL_OUTPUT",
+          "ground_truth": "EquityMethodInvestments,EquityMethodInvestmentOwnershipPercentage,IncomeLossFromEquityMethodInvestments,IncomeLossFromEquityMethodInvestments",
+          "error_type": "empty_provider_response",
+          "error": "Provider returned no visible message content"
+        },
+        {
+          "index": 11,
+          "prediction": "NO_VISIBLE_MODEL_OUTPUT",
+          "ground_truth": "ShareBasedCompensationArrangementByShareBasedPaymentAwardNumberOfSharesAvailableForGrant,ShareBasedCompensationArrangementByShareBasedPaymentAwardOptionsExercisesInPeriodTotalIntrinsicValue,EmployeeServiceShareBasedCompensationNonvestedAwardsTotalCompensationCostNotYetRecognizedPeriodForRecognition1,ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsVestedInPeriodTotalFairValue",
+          "error_type": "empty_provider_response",
+          "error": "Provider returned no visible message content"
+        },
+        {
+          "index": 9,
+          "prediction": "No final answer found",
+          "ground_truth": "EquityMethodInvestmentOwnershipPercentage,EquityMethodInvestmentOwnershipPercentage,EquityMethodInvestmentOwnershipPercentage,EquityMethodInvestmentOwnershipPercentage",
+          "error_type": null,
+          "error": null
+        },
+        {
+          "index": 16,
+          "prediction": "DebtInstrumentInterestRateStatedPercentage,PropertyPlantAndEquipmentUsefulLife,PropertyPlantAndEquipmentUsefulLife,PropertyPlantAndEquipmentUsefulLife",
+          "ground_truth": "DerivativeFixedInterestRate,PropertyPlantAndEquipmentUsefulLife,PropertyPlantAndEquipmentUsefulLife,PropertyPlantAndEquipmentUsefulLife",
+          "error_type": null,
+          "error": null
+        },
+        {
+          "index": 15,
+          "prediction": "NO_VISIBLE_MODEL_OUTPUT",
+          "ground_truth": "ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsGrantsInPeriodWeightedAverageGrantDateFairValue,ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsGrantsInPeriodWeightedAverageGrantDateFairValue,ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsVestedInPeriodTotalFairValue,ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsVestedInPeriodTotalFairValue",
+          "error_type": "empty_provider_response",
+          "error": "Provider returned no visible message content"
+        },
+        {
+          "index": 14,
+          "prediction": "NO_VISIBLE_MODEL_OUTPUT",
+          "ground_truth": "LineOfCreditFacilityMaximumBorrowingCapacity,LineOfCreditFacilityMaximumBorrowingCapacity,LineOfCreditFacilityCommitmentFeePercentage,DebtInstrumentInterestRateStatedPercentage",
+          "error_type": "empty_provider_response",
+          "error": "Provider returned no visible message content"
+        },
+        {
+          "index": 18,
+          "prediction": "NO_VISIBLE_MODEL_OUTPUT",
+          "ground_truth": "ShareBasedCompensationArrangementByShareBasedPaymentAwardOptionsGrantsInPeriodGross,EmployeeServiceShareBasedCompensationNonvestedAwardsTotalCompensationCostNotYetRecognized,EmployeeServiceShareBasedCompensationNonvestedAwardsTotalCompensationCostNotYetRecognizedPeriodForRecognition1,AllocatedShareBasedCompensationExpense",
+          "error_type": "empty_provider_response",
+          "error": "Provider returned no visible message content"
+        },
+        {
+          "index": 17,
+          "prediction": "NO_VISIBLE_MODEL_OUTPUT",
+          "ground_truth": "DebtInstrumentRedemptionPricePercentage,RevenueFromRelatedParties,RevenueFromRelatedParties,RevenueFromRelatedParties",
+          "error_type": "empty_provider_response",
+          "error": "Provider returned no visible message content"
+        },
+        {
+          "index": 20,
+          "prediction": "NO_VISIBLE_MODEL_OUTPUT",
+          "ground_truth": "LeaseAndRentalExpense,LeaseAndRentalExpense,LossContingencyDamagesSoughtValue,LossContingencyDamagesSoughtValue",
+          "error_type": "empty_provider_response",
+          "error": "Provider returned no visible message content"
+        },
+        {
+          "index": 19,
+          "prediction": "NO_VISIBLE_MODEL_OUTPUT",
+          "ground_truth": "EffectiveIncomeTaxRateContinuingOperations,EffectiveIncomeTaxRateReconciliationAtFederalStatutoryIncomeTaxRate,RestructuringCharges,RestructuringCharges",
+          "error_type": "empty_provider_response",
+          "error": "Provider returned no visible message content"
+        },
+        {
+          "index": 24,
+          "prediction": "AllocatedShareBasedCompensationExpense,AllocatedShareBasedCompensationExpense,AllocatedShareBasedCompensationExpense,ShareBasedCompensationArrangementByShareBasedPaymentAwardOptionsGrantsInPeriodGross",
+          "ground_truth": "EmployeeServiceShareBasedCompensationNonvestedAwardsTotalCompensationCostNotYetRecognized,EmployeeServiceShareBasedCompensationNonvestedAwardsTotalCompensationCostNotYetRecognized,EmployeeServiceShareBasedCompensationNonvestedAwardsTotalCompensationCostNotYetRecognized,ShareBasedCompensationArrangementByShareBasedPaymentAwardOptionsGrantsInPeriodGross",
+          "error_type": null,
+          "error": null
+        },
+        {
+          "index": 23,
+          "prediction": "NO_VISIBLE_MODEL_OUTPUT",
+          "ground_truth": "UnrecognizedTaxBenefits,UnrecognizedTaxBenefits,UnrecognizedTaxBenefitsThatWouldImpactEffectiveTaxRate,UnrecognizedTaxBenefitsThatWouldImpactEffectiveTaxRate",
+          "error_type": "empty_provider_response",
+          "error": "Provider returned no visible message content"
+        },
+        {
+          "index": 21,
+          "prediction": "NO_VISIBLE_MODEL_OUTPUT",
+          "ground_truth": "FiniteLivedIntangibleAssetUsefulLife,ContractWithCustomerLiabilityRevenueRecognized,FiniteLivedIntangibleAssetUsefulLife,FiniteLivedIntangibleAssetUsefulLife",
+          "error_type": "empty_provider_response",
+          "error": "Provider returned no visible message content"
+        },
+        {
+          "index": 27,
+          "prediction": "IncomeTaxExpenseBenefit,EffectiveIncomeTaxRateContinuingOperations,SaleOfStockNumberOfSharesIssuedInTransaction,SaleOfStockPricePerShare",
+          "ground_truth": "IncomeTaxExpenseBenefit,EffectiveIncomeTaxRateReconciliationAtFederalStatutoryIncomeTaxRate,SaleOfStockNumberOfSharesIssuedInTransaction,SaleOfStockPricePerShare",
+          "error_type": null,
+          "error": null
+        },
+        {
+          "index": 25,
+          "prediction": "NO_VISIBLE_MODEL_OUTPUT",
+          "ground_truth": "GainsLossesOnExtinguishmentOfDebt,GainsLossesOnExtinguishmentOfDebt,RepaymentsOfDebt,RepaymentsOfDebt",
+          "error_type": "empty_provider_response",
+          "error": "Provider returned no visible message content"
+        },
+        {
+          "index": 31,
+          "prediction": "ShareBasedCompensationArrangementByShareBasedPaymentAwardAwardVestingPeriod1,ShareBasedCompensationArrangementByShareBasedPaymentAwardAwardVestingPeriod1,ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsGrantsInPeriod,ShareBasedCompensationArrangementByShareBasedPaymentAwardAwardVestingPeriod1",
+          "ground_truth": "ShareBasedCompensationArrangementByShareBasedPaymentAwardAwardVestingPeriod1,ShareBasedCompensationArrangementByShareBasedPaymentAwardAwardVestingPeriod1,ShareBasedCompensationArrangementByShareBasedPaymentAwardOptionsGrantsInPeriodGross,ShareBasedCompensationArrangementByShareBasedPaymentAwardAwardVestingPeriod1",
+          "error_type": null,
+          "error": null
+        },
+        {
+          "index": 26,
+          "prediction": "NO_VISIBLE_MODEL_OUTPUT",
+          "ground_truth": "ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsGrantsInPeriod,ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsGrantsInPeriod,AllocatedShareBasedCompensationExpense,AllocatedShareBasedCompensationExpense",
+          "error_type": "empty_provider_response",
+          "error": "Provider returned no visible message content"
+        },
+        {
+          "index": 29,
+          "prediction": "NO_VISIBLE_MODEL_OUTPUT",
+          "ground_truth": "ShareBasedCompensationArrangementByShareBasedPaymentAwardAwardVestingPeriod1,ShareBasedCompensationArrangementByShareBasedPaymentAwardAwardVestingPeriod1,ShareBasedCompensationArrangementByShareBasedPaymentAwardAwardVestingPeriod1,AllocatedShareBasedCompensationExpense",
+          "error_type": "empty_provider_response",
+          "error": "Provider returned no visible message content"
+        },
+        {
+          "index": 32,
+          "prediction": "DebtInstrumentFaceAmount,DebtInstrumentInterestRateStatedPercentage,DebtInstrumentConvertibleConversionPrice1,DebtInstrumentInterestRateStatedPercentage",
+          "ground_truth": "DebtInstrumentFaceAmount,DebtInstrumentInterestRateEffectivePercentage,DebtInstrumentConvertibleConversionPrice1,DebtInstrumentInterestRateStatedPercentage",
+          "error_type": null,
+          "error": null
+        },
+        {
+          "index": 30,
+          "prediction": "NO_VISIBLE_MODEL_OUTPUT",
+          "ground_truth": "CommonStockCapitalSharesReservedForFutureIssuance,AllocatedShareBasedCompensationExpense,GuaranteeObligationsMaximumExposure,DebtInstrumentFaceAmount",
+          "error_type": "empty_provider_response",
+          "error": "Provider returned no visible message content"
+        },
+        {
+          "index": 36,
+          "prediction": "LossContingencyEstimateOfPossibleLoss,LossContingencyEstimateOfPossibleLoss,LossContingencyEstimateOfPossibleLoss,NumberOfOperatingSegments",
+          "ground_truth": "AccrualForEnvironmentalLossContingencies,GuaranteeObligationsMaximumExposure,GuaranteeObligationsMaximumExposure,NumberOfOperatingSegments",
+          "error_type": null,
+          "error": null
+        },
+        {
+          "index": 33,
+          "prediction": "NO_VISIBLE_MODEL_OUTPUT",
+          "ground_truth": "GoodwillImpairmentLoss,DefinedContributionPlanCostRecognized,DefinedContributionPlanCostRecognized,DefinedContributionPlanCostRecognized",
+          "error_type": "empty_provider_response",
+          "error": "Provider returned no visible message content"
+        },
+        {
+          "index": 39,
+          "prediction": "NO_VISIBLE_MODEL_OUTPUT",
+          "ground_truth": "ShareBasedCompensationArrangementByShareBasedPaymentAwardAwardVestingPeriod1,ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsGrantsInPeriod,ShareBasedCompensationArrangementByShareBasedPaymentAwardAwardVestingPeriod1,ShareBasedCompensationArrangementByShareBasedPaymentAwardAwardVestingPeriod1",
+          "error_type": "empty_provider_response",
+          "error": "Provider returned no visible message content"
+        },
+        {
+          "index": 34,
+          "prediction": "NO_VISIBLE_MODEL_OUTPUT",
+          "ground_truth": "DebtInstrumentBasisSpreadOnVariableRate1,LineOfCreditFacilityMaximumBorrowingCapacity,LineOfCredit,OperatingLeasesRentExpenseNet",
+          "error_type": "empty_provider_response",
+          "error": "Provider returned no visible message content"
+        }
+      ]
+    }
+  }
+]

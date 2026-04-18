@@ -8,7 +8,6 @@ This file contains the LLM class for the project.
 """
 
 import json
-import os
 import time
 import random
 from datetime import datetime
@@ -49,71 +48,8 @@ def _set_span_error(span, error_text: str) -> None:
         pass
 
 
-def _is_training_call(call_id: str) -> bool:
-    return call_id.startswith("train_") or call_id.startswith("online_train_")
-
-
-def _is_test_call(call_id: str) -> bool:
-    return call_id.startswith("test_") or call_id.startswith("test_eval_")
-
-
-def _env_int(name: str, default: int) -> int:
-    value = os.getenv(name)
-    if value is None or value.strip() == "":
-        return default
-    try:
-        return int(value)
-    except ValueError:
-        print(f"[LLM] Ignoring invalid integer for {name}: {value!r}")
-        return default
-
-
-def _env_flag(name: str, default: bool = False) -> bool:
-    value = os.getenv(name)
-    if value is None:
-        return default
-    return value.strip().lower() in {"1", "true", "yes", "on"}
-
-
-def _is_openrouter_request(api_provider: str) -> bool:
-    if api_provider == "minimax":
-        return "openrouter.ai" in os.getenv("MINIMAX_BASE_URL", "").lower()
-    return False
-
-
-def _reasoning_max_tokens() -> Optional[int]:
-    value = os.getenv(
-        "ACE_REASONING_MAX_TOKENS",
-        os.getenv("ACE_OPENROUTER_REASONING_MAX_TOKENS", "4096"),
-    )
-    try:
-        parsed = int(value)
-    except (TypeError, ValueError):
-        print(f"[LLM] Ignoring invalid reasoning token budget: {value!r}")
-        return 4096
-    if parsed <= 0:
-        return None
-    return parsed
-
-
-def _openrouter_reasoning_extra_body(api_provider: str) -> Optional[Dict[str, Any]]:
-    if not _is_openrouter_request(api_provider):
-        return None
-
-    max_tokens = _reasoning_max_tokens()
-    if max_tokens is None:
-        return None
-
-    reasoning: Dict[str, Any] = {"max_tokens": max_tokens}
-
-    effort = os.getenv("ACE_REASONING_EFFORT")
-    if effort:
-        reasoning["effort"] = effort
-
-    if os.getenv("ACE_REASONING_EXCLUDE") is not None:
-        reasoning["exclude"] = _env_flag("ACE_REASONING_EXCLUDE")
-
-    return {"reasoning": reasoning}
+NO_VISIBLE_MODEL_OUTPUT = "NO_VISIBLE_MODEL_OUTPUT"
+REFLECTION_FAILED_NO_VISIBLE_OUTPUT = "REFLECTION_FAILED_NO_VISIBLE_OUTPUT"
 
 
 def _usage_value(usage, field: str, default=0):
@@ -131,29 +67,145 @@ def _reasoning_token_count(usage) -> int:
     return getattr(details, "reasoning_tokens", 0) or 0
 
 
-def _jsonable(value):
-    if value is None or isinstance(value, (str, int, float, bool)):
-        return value
-    if isinstance(value, list):
-        return [_jsonable(item) for item in value]
-    if isinstance(value, tuple):
-        return [_jsonable(item) for item in value]
-    if isinstance(value, dict):
-        return {str(key): _jsonable(item) for key, item in value.items()}
-    if hasattr(value, "model_dump"):
-        try:
-            return _jsonable(value.model_dump())
-        except Exception:
-            pass
-    return str(value)
-
-
 def _message_reasoning(message) -> Optional[str]:
     for field in ("reasoning", "reasoning_content"):
         value = getattr(message, field, None)
         if isinstance(value, str) and value:
             return value
     return None
+
+
+def _response_usage_counts(response) -> Dict[str, int]:
+    usage = getattr(response, "usage", None) if response is not None else None
+    prompt_tokens = _usage_value(usage, "prompt_tokens", 0)
+    completion_tokens = _usage_value(usage, "completion_tokens", 0)
+    total_tokens = _usage_value(usage, "total_tokens", None)
+    if total_tokens is None:
+        total_tokens = prompt_tokens + completion_tokens
+    return {
+        "prompt_num_tokens": prompt_tokens,
+        "response_num_tokens": completion_tokens,
+        "total_num_tokens": total_tokens,
+        "reasoning_num_tokens": _reasoning_token_count(usage),
+    }
+
+
+def _failure_response_text(role: str) -> str:
+    if role == "reflector":
+        return REFLECTION_FAILED_NO_VISIBLE_OUTPUT
+    return NO_VISIBLE_MODEL_OUTPUT
+
+
+def _exception_response_text(exc: Exception) -> Optional[str]:
+    response = getattr(exc, "response", None)
+    if response is None:
+        return None
+    text = getattr(response, "text", None)
+    if text:
+        return str(text)
+    content = getattr(response, "content", None)
+    if content:
+        try:
+            return content.decode("utf-8", errors="replace")
+        except AttributeError:
+            return str(content)
+    return None
+
+
+def _is_malformed_provider_json(exc: Exception) -> bool:
+    error_text = f"{type(exc).__name__}: {exc}".lower()
+    return (
+        isinstance(exc, json.JSONDecodeError)
+        or "jsondecodeerror" in error_text
+        or "expecting value" in error_text
+        or "invalid json" in error_text
+    )
+
+
+def _build_failure_call_info(
+    *,
+    error_type: str,
+    role: str,
+    call_id: str,
+    model: str,
+    prompt: str,
+    start_time: float,
+    prompt_time: float,
+    use_json_mode: bool,
+    response=None,
+    choice=None,
+    exception: Optional[Exception] = None,
+    message: str = "",
+) -> Dict[str, Any]:
+    now = datetime.now()
+    finish_reason = getattr(choice, "finish_reason", None) if choice is not None else None
+    native_finish_reason = (
+        getattr(choice, "native_finish_reason", None) if choice is not None else None
+    )
+    provider_reasoning = None
+    if choice is not None and getattr(choice, "message", None) is not None:
+        provider_reasoning = _message_reasoning(choice.message)
+
+    call_info = {
+        "role": role,
+        "call_id": call_id,
+        "model": model,
+        "prompt": prompt,
+        "response": _failure_response_text(role),
+        "error": message,
+        "error_type": error_type,
+        "finish_reason": finish_reason,
+        "native_finish_reason": native_finish_reason,
+        "prompt_time": prompt_time - start_time,
+        "response_time": now.timestamp() - prompt_time,
+        "total_time": now.timestamp() - start_time,
+        "prompt_length": len(prompt),
+        "response_length": 0,
+        "provider_reasoning_length": (
+            len(provider_reasoning) if isinstance(provider_reasoning, str) else 0
+        ),
+        "json_mode": bool(use_json_mode),
+        "timestamp": now.strftime("%Y%m%d_%H%M%S_%f")[:-3],
+        "datetime": now.isoformat(),
+    }
+    call_info.update(_response_usage_counts(response))
+
+    if exception is not None:
+        call_info["exception_type"] = type(exception).__name__
+        call_info["exception_message"] = str(exception)
+        call_info["exception_repr"] = repr(exception)
+        raw_response = _exception_response_text(exception)
+        if raw_response is not None:
+            call_info["raw_response_body"] = raw_response
+
+    return call_info
+
+
+def _log_provider_failure(
+    *,
+    log_dir: Optional[str],
+    call_info: Dict[str, Any],
+    call_id: str,
+    prompt: str,
+    model: str,
+    api_params: Dict[str, Any],
+    exception: Exception,
+    using_key_mixer: bool,
+    key_mixer,
+) -> None:
+    if log_dir:
+        log_llm_call(log_dir, call_info)
+    log_problematic_request(
+        call_id,
+        prompt,
+        model,
+        api_params,
+        exception,
+        log_dir,
+        using_key_mixer,
+        key_mixer,
+        failure_record=call_info,
+    )
 
 
 def timed_llm_call(
@@ -163,7 +215,7 @@ def timed_llm_call(
     prompt,
     role,
     call_id,
-    max_tokens=8192,
+    max_tokens=4096,
     log_dir=None,
     sleep_seconds=15,
     retries_on_timeout=1000,
@@ -171,15 +223,7 @@ def timed_llm_call(
     use_json_mode=False,
 ):
     """
-    Make a timed LLM call with error handling and retry logic.
-
-    EMPTY RESPONSE HANDLING STRATEGY:
-    - Training calls (call_id starts with 'train_'): Skip the entire training sample
-    - Test calls (call_id starts with 'test_'): Mark as incorrect (return wrong answers)
-    - All empty responses are logged to problematic_requests/ for SambaNova support analysis
-
-    For test calls specifically: Returns "INCORRECT_DUE_TO_EMPTY_RESPONSE" repeated 4 times
-    (comma-separated) to handle the 4-question format used in financial NER evaluation.
+    Make a timed LLM call with logging and narrow provider failure handling.
 
     Args:
         client: API client
@@ -190,16 +234,12 @@ def timed_llm_call(
         max_tokens: Maximum tokens to generate
         log_dir: Directory for detailed logging
         sleep_seconds: Base sleep time between retries
-        retries_on_timeout: Maximum number of retries for timeouts/rate limits/empty responses
+        retries_on_timeout: Maximum number of retries for timeouts/rate limits/server errors
         attempt: Current attempt number (for recursive calls)
         use_json_mode: Whether to use JSON mode for structured output
 
     Returns:
         tuple: (response_text, call_info_dict)
-
-    Special return values for empty responses:
-        - Training: ("INCORRECT_DUE_TO_EMPTY_RESPONSE, INCORRECT_DUE_TO_EMPTY_RESPONSE, ...", call_info)
-        - Testing: ("INCORRECT_DUE_TO_EMPTY_RESPONSE, INCORRECT_DUE_TO_EMPTY_RESPONSE, ...", call_info)
     """
     start_time = time.time()
     prompt_time = time.time()
@@ -211,7 +251,7 @@ def timed_llm_call(
 
     while True:
         span = None
-        reasoning_config = None
+        api_params = {}
         try:
             # Get client
             active_client = client
@@ -233,11 +273,6 @@ def timed_llm_call(
             if use_json_mode:
                 api_params["response_format"] = {"type": "json_object"}
 
-            reasoning_extra_body = _openrouter_reasoning_extra_body(api_provider)
-            if reasoning_extra_body:
-                api_params["extra_body"] = reasoning_extra_body
-                reasoning_config = reasoning_extra_body.get("reasoning")
-
             tracer = _current_tracer()
             if tracer is not None:
                 span_attributes = {
@@ -249,11 +284,6 @@ def timed_llm_call(
                     "communication.is_in_process_call": False,
                     "llm.attempt": attempt,
                 }
-                if reasoning_config:
-                    span_attributes["llm.reasoning.enabled"] = True
-                    span_attributes["llm.reasoning.max_tokens"] = int(
-                        reasoning_config.get("max_tokens", 0)
-                    )
                 span = tracer.start_span(
                     "call_llm",
                     attributes=span_attributes,
@@ -264,43 +294,81 @@ def timed_llm_call(
             call_end = time.time()
 
             # Check if response is valid
-            if not response or not response.choices or len(response.choices) == 0:
-                raise Exception("Empty response from API")
+            if not response or not getattr(response, "choices", None):
+                failure_message = "Provider returned no response object or choices"
+                failure_exception = RuntimeError(failure_message)
+                call_info = _build_failure_call_info(
+                    error_type="empty_provider_response",
+                    role=role,
+                    call_id=call_id,
+                    model=model,
+                    prompt=prompt,
+                    start_time=start_time,
+                    prompt_time=prompt_time,
+                    use_json_mode=use_json_mode,
+                    response=response,
+                    message=failure_message,
+                )
+                print(f"[{role.upper()}] {failure_message} for {call_id}")
+                _set_span_error(span, failure_message)
+                _log_provider_failure(
+                    log_dir=log_dir,
+                    call_info=call_info,
+                    call_id=call_id,
+                    prompt=prompt,
+                    model=model,
+                    api_params=api_params,
+                    exception=failure_exception,
+                    using_key_mixer=using_key_mixer,
+                    key_mixer=client if using_key_mixer else None,
+                )
+                return _failure_response_text(role), call_info
 
             response_time = time.time()
             total_time = response_time - start_time
             choice = response.choices[0]
             response_content = choice.message.content
             response_reasoning = _message_reasoning(choice.message)
-            response_reasoning_details = _jsonable(
-                getattr(choice.message, "reasoning_details", None)
+            response_reasoning_details_present = (
+                getattr(choice.message, "reasoning_details", None) is not None
             )
             finish_reason = getattr(choice, "finish_reason", None)
             native_finish_reason = getattr(choice, "native_finish_reason", None)
 
-            if response_content is None:
-                reasoning_chars = (
-                    len(response_reasoning)
-                    if isinstance(response_reasoning, str)
-                    else 0
+            if response_content is None or response_content == "":
+                failure_message = (
+                    "Provider returned no visible message content"
+                    if response_content is None
+                    else "Provider returned empty visible message content"
                 )
-                usage = getattr(response, "usage", None)
-                raise Exception(
-                    "API returned None content "
-                    f"(finish_reason={finish_reason}, "
-                    f"native_finish_reason={native_finish_reason}, "
-                    f"completion_tokens={_usage_value(usage, 'completion_tokens', 0)}, "
-                    f"reasoning_tokens={_reasoning_token_count(usage)}, "
-                    f"reasoning_chars={reasoning_chars})"
+                failure_exception = RuntimeError(failure_message)
+                call_info = _build_failure_call_info(
+                    error_type="empty_provider_response",
+                    role=role,
+                    call_id=call_id,
+                    model=model,
+                    prompt=prompt,
+                    start_time=start_time,
+                    prompt_time=prompt_time,
+                    use_json_mode=use_json_mode,
+                    response=response,
+                    choice=choice,
+                    message=failure_message,
                 )
-            if response_content == "":
-                usage = getattr(response, "usage", None)
-                raise Exception(
-                    "API returned empty content "
-                    f"(finish_reason={finish_reason}, "
-                    f"completion_tokens={_usage_value(usage, 'completion_tokens', 0)}, "
-                    f"reasoning_tokens={_reasoning_token_count(usage)})"
+                print(f"[{role.upper()}] {failure_message} for {call_id}")
+                _set_span_error(span, failure_message)
+                _log_provider_failure(
+                    log_dir=log_dir,
+                    call_info=call_info,
+                    call_id=call_id,
+                    prompt=prompt,
+                    model=model,
+                    api_params=api_params,
+                    exception=failure_exception,
+                    using_key_mixer=using_key_mixer,
+                    key_mixer=client if using_key_mixer else None,
                 )
+                return _failure_response_text(role), call_info
 
             prompt_tokens = (
                 getattr(response.usage, "prompt_tokens", 0)
@@ -368,8 +436,6 @@ def timed_llm_call(
                 "model": model,
                 "prompt": prompt,
                 "response": response_content,
-                "reasoning": response_reasoning,
-                "reasoning_details": response_reasoning_details,
                 "finish_reason": finish_reason,
                 "native_finish_reason": native_finish_reason,
                 "prompt_time": prompt_time - start_time,
@@ -383,10 +449,10 @@ def timed_llm_call(
                 "response_num_tokens": completion_tokens,
                 "reasoning_num_tokens": reasoning_tokens,
                 "total_num_tokens": total_tokens,
-                "reasoning_enabled": bool(reasoning_config),
-                "reasoning_max_tokens": (
-                    reasoning_config.get("max_tokens") if reasoning_config else None
+                "provider_reasoning_length": (
+                    len(response_reasoning) if response_reasoning else 0
                 ),
+                "provider_reasoning_details_present": response_reasoning_details_present,
             }
 
             print(f"[{role.upper()}] Call {call_id} completed in {total_time:.2f}s")
@@ -405,16 +471,7 @@ def timed_llm_call(
                 k in str(e).lower()
                 for k in ["rate limit", "429", "rate_limit_exceeded"]
             )
-            is_empty_response = (
-                "empty response" in str(e).lower()
-                or "api returned none content" in str(e).lower()
-                or "api returned empty content" in str(e).lower()
-            )
-            is_malformed_response = (
-                isinstance(e, json.JSONDecodeError)
-                or "jsondecodeerror" in type(e).__name__.lower()
-                or "expecting value" in str(e).lower()
-            )
+            is_malformed_response = _is_malformed_provider_json(e)
 
             # Check for server errors (500, 502, 503, etc.) that should be retried
             is_server_error = False
@@ -457,67 +514,47 @@ def timed_llm_call(
                 is_server_error = True
                 print(f"[{role.upper()}] OpenAI InternalServerError detected")
 
-            # Debug empty response issues
-            if is_empty_response or is_malformed_response:
-                debug_label = (
-                    "Empty response"
-                    if is_empty_response
-                    else "Malformed API response"
+            if is_malformed_response:
+                print(f"\n[LLM] Malformed provider JSON detected for {call_id}")
+                print(f"[LLM] Exception type: {type(e).__name__}")
+                print(f"[LLM] Exception message: {str(e)}")
+                print(f"[LLM] JSON mode: {use_json_mode}")
+                print(f"[LLM] Model: {model}")
+                print(f"[LLM] Prompt length: {len(prompt)}")
+                call_info = _build_failure_call_info(
+                    error_type="malformed_provider_json",
+                    role=role,
+                    call_id=call_id,
+                    model=model,
+                    prompt=prompt,
+                    start_time=start_time,
+                    prompt_time=prompt_time,
+                    use_json_mode=use_json_mode,
+                    exception=e,
+                    message=str(e),
                 )
-                print(f"\n🚨 DEBUG: {debug_label} detected for {call_id}")
-                print(f"📝 Exception type: {type(e).__name__}")
-                print(f"📝 Exception message: {str(e)}")
-                print(f"📝 Using JSON mode: {use_json_mode}")
-                print(f"📝 Model: {model}")
-                print(f"📝 Prompt length: {len(prompt)}")
-                print(f"📝 Prompt preview (first 500 chars):")
-                print(f"    {prompt[:500]}...")
-                print(f"📝 Full exception details: {repr(e)}")
-                if hasattr(e, "response"):
-                    print(f"📝 Raw response object: {e.response}")
-                    if hasattr(e.response, "text"):
-                        print(f"📝 Raw response text: {e.response.text}")
-                    if hasattr(e.response, "content"):
-                        print(f"📝 Raw response content: {e.response.content}")
-                print("-" * 60)
-                if not is_empty_response:
-                    print(
-                        f"[{role.upper()}] {debug_label} will be treated as "
-                        "retryable provider/transport failure"
-                    )
-
-                # Log the problematic request once per failed attempt.
-                log_problematic_request(
-                    call_id,
-                    prompt,
-                    model,
-                    api_params,
-                    e,
-                    log_dir,
-                    using_key_mixer,
-                    client if using_key_mixer else None,
+                _set_span_error(span, str(e))
+                _log_provider_failure(
+                    log_dir=log_dir,
+                    call_info=call_info,
+                    call_id=call_id,
+                    prompt=prompt,
+                    model=model,
+                    api_params=api_params,
+                    exception=e,
+                    using_key_mixer=using_key_mixer,
+                    key_mixer=client if using_key_mixer else None,
                 )
+                return _failure_response_text(role), call_info
 
             retryable_error = (
                 is_timeout
                 or is_rate_limit
                 or is_server_error
-                or is_empty_response
-                or is_malformed_response
             )
-            max_attempts_for_error = retries_on_timeout
-            if is_empty_response:
-                max_attempts_for_error = min(
-                    retries_on_timeout, _env_int("ACE_EMPTY_RESPONSE_MAX_ATTEMPTS", 3)
-                )
-            elif is_malformed_response:
-                max_attempts_for_error = min(
-                    retries_on_timeout,
-                    _env_int("ACE_MALFORMED_RESPONSE_MAX_ATTEMPTS", 3),
-                )
 
             # Retry transient provider failures before turning them into task errors.
-            if retryable_error and attempt < max_attempts_for_error:
+            if retryable_error and attempt < retries_on_timeout:
                 attempt += 1
                 if is_rate_limit:
                     error_type = "rate limited"
@@ -525,12 +562,6 @@ def timed_llm_call(
                 elif is_server_error:
                     error_type = "server error (500+)"
                     base_sleep = sleep_seconds * 1.5
-                elif is_malformed_response:
-                    error_type = "returned malformed API JSON"
-                    base_sleep = sleep_seconds
-                elif is_empty_response:
-                    error_type = "returned empty response"
-                    base_sleep = sleep_seconds
                 else:
                     error_type = "timed out"
                     base_sleep = sleep_seconds
@@ -552,83 +583,10 @@ def timed_llm_call(
                 print(
                     f"[{role.upper()}] Call {call_id} {error_type}, sleeping "
                     f"{sleep_time:.1f}s then retrying "
-                    f"({attempt}/{max_attempts_for_error})..."
+                    f"({attempt}/{retries_on_timeout})..."
                 )
                 time.sleep(sleep_time)
                 continue
-
-            # For empty responses, we handle differently based on context
-            if is_empty_response:
-                # Check if this is a training or test call to decide behavior
-                if _is_training_call(call_id):
-                    # In training: Mark as incorrect answer (same as testing)
-                    print(
-                        f"[{role.upper()}] 🚨 Empty response in training - marking as INCORRECT for {call_id}"
-                    )
-                    error_time = time.time()
-                    call_info = {
-                        "role": role,
-                        "call_id": call_id,
-                        "model": model,
-                        "prompt": prompt,
-                        "error": "TRAINING_INCORRECT: " + str(e),
-                        "total_time": error_time - start_time,
-                        "prompt_length": len(prompt),
-                        "response_length": 0,
-                        "timestamp": datetime.now().strftime("%Y%m%d_%H%M%S_%f")[:-3],
-                        "datetime": datetime.now().isoformat(),
-                        "training_marked_incorrect_due_to_empty_response": True,
-                        "reasoning_enabled": bool(reasoning_config),
-                        "reasoning_max_tokens": (
-                            reasoning_config.get("max_tokens")
-                            if reasoning_config
-                            else None
-                        ),
-                    }
-                    if log_dir:
-                        log_llm_call(log_dir, call_info)
-
-                    _set_span_error(span, str(e))
-
-                    # Return a response that will be marked as incorrect
-                    # For the 4-question format, we return 4 wrong answers
-                    incorrect_response = "INCORRECT_DUE_TO_EMPTY_RESPONSE, INCORRECT_DUE_TO_EMPTY_RESPONSE, INCORRECT_DUE_TO_EMPTY_RESPONSE, INCORRECT_DUE_TO_EMPTY_RESPONSE"
-                    return incorrect_response, call_info
-
-                elif _is_test_call(call_id):
-                    # In testing: Treat as incorrect answer
-                    print(
-                        f"[{role.upper()}] 🚨 Empty response in testing - marking as INCORRECT for {call_id}"
-                    )
-                    error_time = time.time()
-                    call_info = {
-                        "role": role,
-                        "call_id": call_id,
-                        "model": model,
-                        "prompt": prompt,
-                        "error": "TEST_INCORRECT: " + str(e),
-                        "total_time": error_time - start_time,
-                        "prompt_length": len(prompt),
-                        "response_length": 0,
-                        "timestamp": datetime.now().strftime("%Y%m%d_%H%M%S_%f")[:-3],
-                        "datetime": datetime.now().isoformat(),
-                        "test_marked_incorrect_due_to_empty_response": True,
-                        "reasoning_enabled": bool(reasoning_config),
-                        "reasoning_max_tokens": (
-                            reasoning_config.get("max_tokens")
-                            if reasoning_config
-                            else None
-                        ),
-                    }
-                    if log_dir:
-                        log_llm_call(log_dir, call_info)
-
-                    _set_span_error(span, str(e))
-
-                    # Return a response that will be marked as incorrect
-                    # For the 4-question format, we return 4 wrong answers
-                    incorrect_response = "INCORRECT_DUE_TO_EMPTY_RESPONSE, INCORRECT_DUE_TO_EMPTY_RESPONSE, INCORRECT_DUE_TO_EMPTY_RESPONSE, INCORRECT_DUE_TO_EMPTY_RESPONSE"
-                    return incorrect_response, call_info
 
             error_time = time.time()
             call_info = {
@@ -640,10 +598,6 @@ def timed_llm_call(
                 "total_time": error_time - start_time,
                 "prompt_length": len(prompt),
                 "attempt": attempt,
-                "reasoning_enabled": bool(reasoning_config),
-                "reasoning_max_tokens": (
-                    reasoning_config.get("max_tokens") if reasoning_config else None
-                ),
             }
 
             print(

@@ -34,7 +34,6 @@ python -m eval.appworld.run \
   --generator_model "${GENERATOR_MODEL}" \
   --reflector_model "${REFLECTOR_MODEL}" \
   --curator_model "${CURATOR_MODEL}" \
-  --json_mode \
   --telemetry_enabled \
   --telemetry_metrics_interval_seconds 15 \
   --config_name "${CONFIG_NAME}" \

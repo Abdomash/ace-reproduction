@@ -31,6 +31,7 @@ cd "${PROJECT_ROOT}/ace"
   --generator openai/gpt-oss-20b:nitro \
   --reflector openai/gpt-oss-20b:nitro \
   --curator openai/gpt-oss-20b:nitro \
+  --test-workers 7 \
   --config-name "${CONFIG_NAME:-ace_all_gptoss20b_subset_smoke}" \
   --save-path "${SAVE_PATH:-../results/openrouter_gptoss20b_smoke}" \
   --seed "${SEED:-42}" \

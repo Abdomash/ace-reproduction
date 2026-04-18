@@ -112,6 +112,12 @@ def extract_boxed_content(text):
 
 def extract_answer(response):
     """Extract final answer from model response"""
+    if response in {
+        "NO_VISIBLE_MODEL_OUTPUT",
+        "REFLECTION_FAILED_NO_VISIBLE_OUTPUT",
+    }:
+        return response
+
     try:
         # First try JSON parsing
         parsed = json.loads(response)
@@ -185,10 +191,10 @@ def evaluate_single_test_sample(args_tuple, data_processor) -> Tuple[Dict, str]:
         data_processor: DataProcessor instance with answer_is_correct method
     """
     (i, task_dict, generator, playbook, max_tokens, log_dir, use_json_mode) = args_tuple
+    target = task_dict.get("target", "")
     try:
         context = task_dict["context"]
         question = task_dict["question"]
-        target = task_dict["target"]
 
         gen_response, bullet_ids, call_info = generator.generate(
             question=question,
@@ -209,10 +215,22 @@ def evaluate_single_test_sample(args_tuple, data_processor) -> Tuple[Dict, str]:
             "target": target,
             "is_correct": is_correct,
             "success": True,
+            "error_type": (
+                call_info.get("error_type") if isinstance(call_info, dict) else None
+            ),
+            "error": call_info.get("error") if isinstance(call_info, dict) else None,
         }, None
 
     except Exception as e:
-        return None, f"Error evaluating sample {i}: {type(e).__name__}: {str(e)}"
+        return {
+            "index": i,
+            "final_answer": "NO_VISIBLE_MODEL_OUTPUT",
+            "target": target,
+            "is_correct": False,
+            "success": True,
+            "error_type": "provider_call_exception",
+            "error": f"{type(e).__name__}: {str(e)}",
+        }, f"Error evaluating sample {i}: {type(e).__name__}: {str(e)}"
 
 
 def evaluate_test_set(
@@ -273,7 +291,6 @@ def evaluate_test_set(
 
             if error:
                 print(error)
-                continue
 
             if result and result["success"]:
                 results["correct"] += 1 if result["is_correct"] else 0
@@ -287,10 +304,15 @@ def evaluate_test_set(
                             "index": result["index"],
                             "prediction": result["final_answer"],
                             "ground_truth": result["target"],
+                            "error_type": result.get("error_type"),
+                            "error": result.get("error") or error,
                         }
                     )
 
-                if result["final_answer"] == "No final answer found":
+                if result["final_answer"] in {
+                    "No final answer found",
+                    "NO_VISIBLE_MODEL_OUTPUT",
+                }:
                     results["no_answer"] += 1
 
             if i % 50 == 0:
@@ -317,8 +339,13 @@ def evaluate_test_set(
             f"\n📊 Final Accuracy: {accuracy:.3f} ({results['correct']}/{results['total']})"
         )
     else:
-        results = {"accuracy": 0.0, "correct": 0, "total": 0}
-        error_logs = {}
+        final_results = {
+            "accuracy": 0.0,
+            "correct": 0,
+            "total": 0,
+            "no_answer": results["no_answer"],
+        }
+        error_logs = {"accuracy": 0.0, "errors": results["errors"]}
         print(f"\n📊 No valid results!")
 
     return final_results, error_logs

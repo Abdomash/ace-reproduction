@@ -33,7 +33,6 @@ python -m eval.finance.run \
   --reflector_model "${REFLECTOR_MODEL}" \
   --curator_model "${CURATOR_MODEL}" \
   --num_epochs 1 \
-  --json_mode \
   --telemetry_enabled \
   --telemetry_metrics_interval_seconds 5 \
   --config_name "${CONFIG_NAME}" \

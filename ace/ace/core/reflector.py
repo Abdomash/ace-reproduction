@@ -19,7 +19,7 @@ class Reflector:
     bullets as helpful, harmful, or neutral.
     """
 
-    def __init__(self, api_client, api_provider, model: str, max_tokens: int = 8192):
+    def __init__(self, api_client, api_provider, model: str, max_tokens: int = 4096):
         """
         Initialize the Reflector agent.
 
@@ -106,6 +106,9 @@ class Reflector:
             log_dir=log_dir,
             use_json_mode=use_json_mode,
         )
+
+        if isinstance(call_info, dict) and call_info.get("error_type"):
+            return response, [], call_info
 
         # Extract bullet tags
         bullet_tags = self._extract_bullet_tags(response, use_json_mode)

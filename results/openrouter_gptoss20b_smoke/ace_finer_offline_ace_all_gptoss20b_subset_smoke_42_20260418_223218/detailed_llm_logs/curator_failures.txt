@@ -1,0 +1,100 @@
+
+============================================================
+CURATOR FAILURE LOG
+============================================================
+Timestamp: 2026-04-18 22:37:05
+Epoch: 0
+Step: 11
+Failure Type: empty_provider_response
+Error Details: Provider returned no visible message content
+
+Raw Curator Response (first 1000 chars):
+----------------------------------------
+NO_VISIBLE_MODEL_OUTPUT
+----------------------------------------
+
+Full Raw Curator Response:
+----------------------------------------
+NO_VISIBLE_MODEL_OUTPUT
+----------------------------------------
+
+
+============================================================
+CURATOR FAILURE LOG
+============================================================
+Timestamp: 2026-04-18 22:45:10
+Epoch: 0
+Step: 28
+Failure Type: empty_provider_response
+Error Details: Provider returned no visible message content
+
+Raw Curator Response (first 1000 chars):
+----------------------------------------
+NO_VISIBLE_MODEL_OUTPUT
+----------------------------------------
+
+Full Raw Curator Response:
+----------------------------------------
+NO_VISIBLE_MODEL_OUTPUT
+----------------------------------------
+
+
+============================================================
+CURATOR FAILURE LOG
+============================================================
+Timestamp: 2026-04-18 22:49:02
+Epoch: 0
+Step: 35
+Failure Type: empty_provider_response
+Error Details: Provider returned no visible message content
+
+Raw Curator Response (first 1000 chars):
+----------------------------------------
+NO_VISIBLE_MODEL_OUTPUT
+----------------------------------------
+
+Full Raw Curator Response:
+----------------------------------------
+NO_VISIBLE_MODEL_OUTPUT
+----------------------------------------
+
+
+============================================================
+CURATOR FAILURE LOG
+============================================================
+Timestamp: 2026-04-18 22:51:13
+Epoch: 0
+Step: 41
+Failure Type: empty_provider_response
+Error Details: Provider returned no visible message content
+
+Raw Curator Response (first 1000 chars):
+----------------------------------------
+NO_VISIBLE_MODEL_OUTPUT
+----------------------------------------
+
+Full Raw Curator Response:
+----------------------------------------
+NO_VISIBLE_MODEL_OUTPUT
+----------------------------------------
+
+
+============================================================
+CURATOR FAILURE LOG
+============================================================
+Timestamp: 2026-04-18 22:56:29
+Epoch: 0
+Step: 50
+Failure Type: empty_provider_response
+Error Details: Provider returned no visible message content
+
+Raw Curator Response (first 1000 chars):
+----------------------------------------
+NO_VISIBLE_MODEL_OUTPUT
+----------------------------------------
+
+Full Raw Curator Response:
+----------------------------------------
+NO_VISIBLE_MODEL_OUTPUT
+----------------------------------------
+

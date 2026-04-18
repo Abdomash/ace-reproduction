@@ -16,7 +16,7 @@ class Generator:
     from a playbook and previous reflections.
     """
 
-    def __init__(self, api_client, api_provider, model: str, max_tokens: int = 8192):
+    def __init__(self, api_client, api_provider, model: str, max_tokens: int = 4096):
         """
         Initialize the Generator agent.
 
@@ -70,6 +70,9 @@ class Generator:
             log_dir=log_dir,
             use_json_mode=use_json_mode,
         )
+
+        if isinstance(call_info, dict) and call_info.get("error_type"):
+            return response, [], call_info
 
         # Extract bullet IDs if using retrieval and reason mode
         bullet_ids = []
@@ -141,6 +144,9 @@ class Generator:
             log_dir=log_dir,
             use_json_mode=False,
         )
+
+        if isinstance(call_info, dict) and call_info.get("error_type"):
+            return response, [], call_info
 
         code_blocks = re.findall(
             r"```python\s*(.*?)```", response, re.DOTALL | re.IGNORECASE

@@ -1,0 +1,43 @@
+{
+  "run_id": "ace_finer_offline_ace_all_gptoss120b_subset_smoke_42_20260418_221428",
+  "telemetry": {
+    "enabled": true,
+    "trace_path": "../results/openrouter_gptoss120b_smoke/ace_finer_offline_ace_all_gptoss120b_subset_smoke_42_20260418_221428/telemetry/run_ace_finer_offline_ace_all_gptoss120b_subset_smoke_42_20260418_221428.otel.jsonl",
+    "metrics_path": "../results/openrouter_gptoss120b_smoke/ace_finer_offline_ace_all_gptoss120b_subset_smoke_42_20260418_221428/telemetry/ace_ace_finer_offline_ace_all_gptoss120b_subset_smoke_42_20260418_221428.metrics.jsonl",
+    "metrics_interval_seconds": 5.0,
+    "task_name": "finer",
+    "mode": "offline"
+  },
+  "results": {
+    "initial_test_results": {
+      "accuracy": 0.546875,
+      "correct": 19,
+      "total": 80,
+      "no_answer": 1
+    },
+    "training_results": {
+      "best_validation_accuracy": 0.80625
+    },
+    "final_test_results": {
+      "accuracy": 0.6625,
+      "correct": 27,
+      "total": 80,
+      "no_answer": 0
+    }
+  },
+  "initial_test_results": {
+    "accuracy": 0.546875,
+    "correct": 19,
+    "total": 80,
+    "no_answer": 1
+  },
+  "training_results": {
+    "best_validation_accuracy": 0.80625
+  },
+  "final_test_results": {
+    "accuracy": 0.6625,
+    "correct": 27,
+    "total": 80,
+    "no_answer": 0
+  }
+}

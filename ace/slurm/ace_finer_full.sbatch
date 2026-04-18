@@ -34,7 +34,6 @@ run_one() {
     --reflector_model "${reflector_model}" \
     --curator_model "${curator_model}" \
     --num_epochs 1 \
-    --json_mode \
     --telemetry_enabled \
     --telemetry_metrics_interval_seconds 5 \
     --config_name "${config_name}" \

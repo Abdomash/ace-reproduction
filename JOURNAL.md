@@ -1,6 +1,22 @@
 # Journal
 
-## 2026-04-18 - Thinking-model support
+## 2026-04-19 - OpenRouter FiNER smoke comparison
+
+Finished the 2026-04-19 FiNER smoke experiments comparing `minimax/minimax-m2.7`,
+`openai/gpt-oss-120b:nitro`, and `openai/gpt-oss-20b:nitro` on the same subset
+setup.
+
+At the tag-accuracy level, `minimax/minimax-m2.7` showed the strongest improvement:
+51.88% initial to 68.44% final, a +16.56pp gain. The two GPT-OSS 120B smoke runs
+were also clearly useful, improving from 52.19% to 61.56% (+9.38pp) and from 54.69%
+to 66.25% (+11.56pp). By contrast, GPT-OSS 20B only moved from 38.12% to 40.00%
+(+1.88pp) and from 40.94% to 41.88% (+0.94pp).
+
+The high-level takeaway is that MiniMax M2.7 had a substantial ACE improvement on
+this subset, while GPT-OSS 120B was also pretty good and much stronger than GPT-OSS
+20B in these runs.
+
+## 2026-04-18 - Paper-faithful ACE defaults
 
 Several FiNER smoke runs started failing in a strange way: the API call returned a
 valid-looking chat completion object, but `message.content` was `None`, so ACE logged
@@ -10,23 +26,18 @@ more common on thinking models such as `openai/gpt-oss-20b` and
 Curator calls also occasionally crashed while the OpenAI client was parsing malformed
 provider JSON.
 
-The important distinction is that the original ACE paper used DeepSeek-V3.1 in
-non-thinking mode. That path expects the model's visible answer to arrive directly in
-`message.content`. Our current OpenRouter runs use thinking models. Those models can
-spend the completion budget on hidden or provider-exposed reasoning first, and if the
-overall completion cap is too small, the provider may return reasoning without a
-visible answer. That looks like an empty response to the original ACE integration even
-though the model did produce tokens.
+The important distinction is that the original ACE paper/released-code path uses
+standard non-thinking chat-completion behavior. ACE should consume only visible
+`message.content` from Generator, Reflector, and Curator calls. Provider-returned
+reasoning is diagnostic metadata only and is not passed to the Curator or used to
+update the playbook.
 
-We kept the ACE prompts neutral and did not add thinking-model-specific prompt
-instructions. Instead, the integration now gives thinking models a separate default
-reasoning budget of 4096 tokens and a larger default overall completion budget of
-8192 tokens. The visible answer remains the only text consumed by ACE's Generator,
-Reflector, and Curator logic, while any provider-returned reasoning is recorded
-separately in detailed call logs.
+The default reproduction path is restored to `max_tokens=4096`, provider JSON mode
+off, no OpenRouter reasoning controls, no prompt rewriting, and no hidden/provider
+reasoning inputs to ACE agents. The unified experiment runner no longer exposes
+thinking/reasoning flags or a JSON-mode preset.
 
-The MAESTRO/OpenTelemetry spans now track the same split: visible output size,
-reasoning size, finish reason, total token usage, and reasoning token usage when the
-provider reports it. This keeps non-thinking and thinking runs comparable at the ACE
-algorithm level while making the transport behavior observable enough to diagnose
-provider failures, budget exhaustion, and malformed API responses.
+The retained robustness layer is deliberately narrow: empty visible content and
+malformed provider JSON are logged as provider-call failures, counted as failed
+calls/samples where the workflow can continue, and are not retried. Timeout,
+rate-limit, and server-error retry behavior remains operational transport handling.

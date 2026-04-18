@@ -5,6 +5,8 @@ This document explains how to run quick subsets or broader runs using:
 - `scripts/run_experiments.sh`
 
 It supports FiNER subsets, Formula subsets, AppWorld subsets, and combined full-style runs.
+The runner is paper-faithful by default: standard chat-completion calls,
+`max_tokens=4096`, provider JSON mode off, and no OpenRouter reasoning controls.
 
 ## 1) Prerequisites
 
@@ -48,6 +50,10 @@ Available presets:
   --telemetry 1 \
   --telemetry-interval 5
 ```
+
+Provider-returned hidden reasoning is not consumed by ACE agents. If a provider
+returns no visible content or malformed provider JSON, the failed call/sample is
+logged and counted as failed where the workflow can continue.
 
 ### B) AppWorld subset
 
@@ -96,6 +102,7 @@ Each run creates a canonical run folder (`ace_<task>_<mode>_<config>_<seed>_<tim
 - `run_config.json`
 - `final_results.json`
 - `detailed_llm_logs/`
+- `detailed_llm_logs/problematic_requests/` for empty or malformed provider responses
 - `telemetry/` (if telemetry enabled)
 - plus mode-specific artifacts like intermediate playbooks and test result JSON files.
 

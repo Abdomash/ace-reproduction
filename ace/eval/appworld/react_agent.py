@@ -202,7 +202,7 @@ class AppWorldReActAgent:
 
         for step in range(1, self.max_steps + 1):
             reflection = "\n\n".join(message_history[-6:])
-            response, code_blocks, _ = self.generator.generate_for_appworld(
+            response, code_blocks, call_info = self.generator.generate_for_appworld(
                 question=sample.get("question", ""),
                 playbook=playbook,
                 context=sample.get("context", ""),
@@ -218,6 +218,16 @@ class AppWorldReActAgent:
                 "code_blocks": code_candidates,
                 "executions": [],
             }
+            if isinstance(call_info, dict) and call_info.get("error_type"):
+                final_error = "Generator failed: no visible model output"
+                step_record["provider_failure"] = {
+                    "error_type": call_info.get("error_type"),
+                    "error": call_info.get("error"),
+                    "call_id": call_info.get("call_id"),
+                }
+                message_history.append(f"OBSERVATION_ERROR:\n{final_error}")
+                execution_trace.append(step_record)
+                continue
 
             executed_any = False
             for code in code_candidates:

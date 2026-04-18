@@ -43,7 +43,7 @@ class ACE:
         generator_model: str,
         reflector_model: str,
         curator_model: str,
-        max_tokens: int = 8192,
+        max_tokens: int = 4096,
         initial_playbook: Optional[str] = None,
         use_bulletpoint_analyzer: bool = False,
         bulletpoint_analyzer_threshold: float = 0.90,
@@ -110,6 +110,9 @@ class ACE:
         self._invoke_agent_span = None
         self._record_invoke_agent_output = None
         self._appworld_adapter_cache = {}
+
+    def _provider_call_failed(self, call_info: Optional[Dict[str, Any]]) -> bool:
+        return isinstance(call_info, dict) and bool(call_info.get("error_type"))
 
     def _resolve_run_id(self, config: Dict[str, Any], task_name: str, mode: str) -> str:
         configured_run_id = config.get("run_id") if config else None
@@ -670,7 +673,12 @@ class ACE:
         )
 
         # Extract answer and check correctness
-        final_answer = extract_answer(gen_response)
+        initial_generation_failed = self._provider_call_failed(call_info)
+        if initial_generation_failed:
+            final_answer = "NO_VISIBLE_MODEL_OUTPUT"
+            gen_response = "Generator failed: no visible model output"
+        else:
+            final_answer = extract_answer(gen_response)
         is_correct = data_processor.answer_is_correct(final_answer, target)
         pre_train_answer = final_answer
 
@@ -698,6 +706,7 @@ class ACE:
         }
 
         reflection_content = "(empty)"
+        skip_curator_for_sample = False
 
         # STEP 2: Reflection and regeneration
         if not is_correct:
@@ -709,7 +718,7 @@ class ACE:
                 playbook_bullets = extract_playbook_bullets(self.playbook, bullet_ids)
 
                 # Reflect on error
-                reflection_content, bullet_tags, _ = self._invoke_agent(
+                reflection_content, bullet_tags, reflect_call_info = self._invoke_agent(
                     "reflector",
                     {
                         "question": question,
@@ -730,13 +739,18 @@ class ACE:
                         log_dir=log_dir,
                     ),
                 )
+                reflector_failed = self._provider_call_failed(reflect_call_info)
 
                 # Update bullet counts
-                if bullet_tags:
+                if bullet_tags and not reflector_failed:
                     self.playbook = update_bullet_counts(self.playbook, bullet_tags)
+                if reflector_failed:
+                    reflection_content = "REFLECTION_FAILED_NO_VISIBLE_OUTPUT"
+                    skip_curator_for_sample = True
+                    break
 
                 # Regenerate with reflection
-                gen_response, bullet_ids, _ = self._invoke_agent(
+                gen_response, bullet_ids, regen_call_info = self._invoke_agent(
                     "generator",
                     {
                         "question": question,
@@ -756,7 +770,10 @@ class ACE:
                     ),
                 )
 
-                final_answer = extract_answer(gen_response)
+                if self._provider_call_failed(regen_call_info):
+                    final_answer = "NO_VISIBLE_MODEL_OUTPUT"
+                else:
+                    final_answer = extract_answer(gen_response)
 
                 if data_processor.answer_is_correct(final_answer, target):
                     print(f"Corrected after reflection round {round_num + 1}!")
@@ -767,7 +784,7 @@ class ACE:
             # For correct answers - still run reflector to tag helpful bullets
             playbook_bullets = extract_playbook_bullets(self.playbook, bullet_ids)
 
-            reflection_content, bullet_tags, _ = self._invoke_agent(
+            reflection_content, bullet_tags, reflect_call_info = self._invoke_agent(
                 "reflector",
                 {
                     "question": question,
@@ -787,10 +804,14 @@ class ACE:
                     log_dir=log_dir,
                 ),
             )
+            reflector_failed = self._provider_call_failed(reflect_call_info)
 
             # Update bullet counts
-            if bullet_tags:
+            if bullet_tags and not reflector_failed:
                 self.playbook = update_bullet_counts(self.playbook, bullet_tags)
+            if reflector_failed:
+                reflection_content = "REFLECTION_FAILED_NO_VISIBLE_OUTPUT"
+                skip_curator_for_sample = True
 
             # Log with reflection
             log_bullet_usage(
@@ -805,7 +826,7 @@ class ACE:
             )
 
         # STEP 3: Curator - Periodically update playbook
-        if step % curator_frequency == 0:
+        if step % curator_frequency == 0 and not skip_curator_for_sample:
             print(f"\n--- Running Curator at step {step} ---")
 
             stats = get_playbook_stats(self.playbook)
@@ -845,7 +866,7 @@ class ACE:
                 )
 
         # STEP 4: Post-curator generation
-        gen_response, _, _ = self._invoke_agent(
+        gen_response, _, post_call_info = self._invoke_agent(
             "generator",
             {
                 "question": question,
@@ -864,7 +885,10 @@ class ACE:
             ),
         )
 
-        final_answer = extract_answer(gen_response)
+        if self._provider_call_failed(post_call_info):
+            final_answer = "NO_VISIBLE_MODEL_OUTPUT"
+        else:
+            final_answer = extract_answer(gen_response)
         post_train_answer = final_answer
 
         post_train_is_correct = data_processor.answer_is_correct(final_answer, target)

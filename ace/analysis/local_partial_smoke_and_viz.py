@@ -350,7 +350,7 @@ def run_partial_smoke_and_visualize(output_root: Path) -> RunArtifacts:
         "eval_steps": 1,
         "save_steps": 5,
         "playbook_token_budget": 3000,
-        "json_mode": True,
+        "json_mode": False,
         "no_ground_truth": False,
         "save_dir": str(output_root),
         "test_workers": 1,

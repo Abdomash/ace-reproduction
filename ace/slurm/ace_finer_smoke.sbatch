@@ -34,7 +34,6 @@ python -m eval.finance.run \
   --num_epochs 1 \
   --eval_steps 10 \
   --save_steps 10 \
-  --json_mode \
   --telemetry_enabled \
   --telemetry_metrics_interval_seconds 5 \
   --config_name "${CONFIG_NAME}" \

@@ -156,7 +156,7 @@ class AppWorldTaskAdapter:
             env_feedback = pre_result.get("final_error") or str(
                 pre_result.get("evaluation", {})
             )
-            reflection_content, bullet_tags, _ = self.ace._invoke_agent(
+            reflection_content, bullet_tags, reflect_call_info = self.ace._invoke_agent(
                 "reflector",
                 {
                     "step_id": step_id,
@@ -177,34 +177,40 @@ class AppWorldTaskAdapter:
                     log_dir=self.log_dir,
                 ),
             )
+            reflector_failed = self.ace._provider_call_failed(reflect_call_info)
 
-            if bullet_tags:
+            if bullet_tags and not reflector_failed:
                 self.ace.playbook = update_bullet_counts(self.ace.playbook, bullet_tags)
 
-            stats = get_playbook_stats(self.ace.playbook)
-            self.ace.playbook, self.ace.next_global_id, _, _ = self.ace._invoke_agent(
-                "curator",
-                {
-                    "step_id": step_id,
-                    "phase": "appworld_curate",
-                    "task_id": task_identifier,
-                },
-                lambda: self.ace.curator.curate(
-                    current_playbook=self.ace.playbook,
-                    recent_reflection=reflection_content,
-                    question_context=task_dict.get("context", ""),
-                    current_step=step,
-                    total_samples=total_samples,
-                    token_budget=token_budget,
-                    playbook_stats=stats,
-                    use_ground_truth=not no_ground_truth,
-                    use_json_mode=use_json_mode,
-                    task_type="appworld",
-                    call_id=f"{step_id}_app_curate",
-                    log_dir=self.log_dir,
-                    next_global_id=self.ace.next_global_id,
-                ),
-            )
+            if not reflector_failed:
+                stats = get_playbook_stats(self.ace.playbook)
+                self.ace.playbook, self.ace.next_global_id, _, _ = (
+                    self.ace._invoke_agent(
+                        "curator",
+                        {
+                            "step_id": step_id,
+                            "phase": "appworld_curate",
+                            "task_id": task_identifier,
+                        },
+                        lambda: self.ace.curator.curate(
+                            current_playbook=self.ace.playbook,
+                            recent_reflection=reflection_content,
+                            question_context=task_dict.get("context", ""),
+                            current_step=step,
+                            total_samples=total_samples,
+                            token_budget=token_budget,
+                            playbook_stats=stats,
+                            use_ground_truth=not no_ground_truth,
+                            use_json_mode=use_json_mode,
+                            task_type="appworld",
+                            call_id=f"{step_id}_app_curate",
+                            log_dir=self.log_dir,
+                            next_global_id=self.ace.next_global_id,
+                        ),
+                    )
+                )
+            else:
+                reflection_content = "REFLECTION_FAILED_NO_VISIBLE_OUTPUT"
 
         post_result = self.agent.solve_task(
             task_dict, self.ace.playbook, f"{step_id}_post"
