@@ -1,0 +1,622 @@
+[
+  {
+    "epoch": 1,
+    "step": 15,
+    "val_results": {
+      "accuracy": 0.375,
+      "correct": 7,
+      "total": 40,
+      "no_answer": 15
+    },
+    "error_log": {
+      "accuracy": 0.375,
+      "errors": [
+        {
+          "index": 12,
+          "prediction": "InterestExpenseDebt,InterestExpenseDebt,InterestExpenseDebt,NumberOfRealEstateProperties",
+          "ground_truth": "AmortizationOfFinancingCosts,AmortizationOfFinancingCosts,AmortizationOfFinancingCosts,NumberOfRealEstateProperties"
+        },
+        {
+          "index": 3,
+          "prediction": "MinorityInterestOwnershipPercentageByParent,MinorityInterestOwnershipPercentageByParent,BusinessCombinationConsiderationTransferred1,PaymentsToAcquireBusinessesGross",
+          "ground_truth": "MinorityInterestOwnershipPercentageByNoncontrollingOwners,MinorityInterestOwnershipPercentageByNoncontrollingOwners,BusinessCombinationConsiderationTransferred1,PaymentsToAcquireBusinessesGross"
+        },
+        {
+          "index": 16,
+          "prediction": "DebtInstrumentInterestRateStatedPercentage,FiniteLivedIntangibleAssetUsefulLife,FiniteLivedIntangibleAssetUsefulLife,FiniteLivedIntangibleAssetUsefulLife",
+          "ground_truth": "DerivativeFixedInterestRate,PropertyPlantAndEquipmentUsefulLife,PropertyPlantAndEquipmentUsefulLife,PropertyPlantAndEquipmentUsefulLife"
+        },
+        {
+          "index": 17,
+          "prediction": "DebtInstrumentInterestRateStatedPercentage,Revenues,Revenues,Revenues",
+          "ground_truth": "DebtInstrumentRedemptionPricePercentage,RevenueFromRelatedParties,RevenueFromRelatedParties,RevenueFromRelatedParties"
+        },
+        {
+          "index": 20,
+          "prediction": "OperatingLeaseRentExpenseNet,OperatingLeaseRentExpenseNet,LossContingencyDamagesSoughtValue,LossContingencyDamagesSoughtValue",
+          "ground_truth": "LeaseAndRentalExpense,LeaseAndRentalExpense,LossContingencyDamagesSoughtValue,LossContingencyDamagesSoughtValue"
+        },
+        {
+          "index": 14,
+          "prediction": "LineOfCreditFacilityMaximumBorrowingCapacity,LineOfCreditFacilityMaximumBorrowingCapacity,LineOfCreditFacilityInterestRateAtPeriodEnd,DebtInstrumentInterestRateStatedPercentage",
+          "ground_truth": "LineOfCreditFacilityMaximumBorrowingCapacity,LineOfCreditFacilityMaximumBorrowingCapacity,LineOfCreditFacilityCommitmentFeePercentage,DebtInstrumentInterestRateStatedPercentage"
+        },
+        {
+          "index": 15,
+          "prediction": "No final answer found",
+          "ground_truth": "ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsGrantsInPeriodWeightedAverageGrantDateFairValue,ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsGrantsInPeriodWeightedAverageGrantDateFairValue,ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsVestedInPeriodTotalFairValue,ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsVestedInPeriodTotalFairValue"
+        },
+        {
+          "index": 6,
+          "prediction": "No final answer found",
+          "ground_truth": "EquityMethodInvestmentOwnershipPercentage,EquityMethodInvestments,EquityMethodInvestments,IncomeLossFromEquityMethodInvestments"
+        },
+        {
+          "index": 0,
+          "prediction": "EquityMethodInvestmentOwnershipPercentage,ConcentrationRiskPercentage1,BusinessCombinationConsiderationTransferred1,LineOfCreditFacilityMaximumBorrowingCapacity",
+          "ground_truth": "MinorityInterestOwnershipPercentageByParent,ConcentrationRiskPercentage1,BusinessCombinationConsiderationTransferred1,PaymentsToAcquireBusinessesGross"
+        },
+        {
+          "index": 19,
+          "prediction": "No final answer found",
+          "ground_truth": "EffectiveIncomeTaxRateContinuingOperations,EffectiveIncomeTaxRateReconciliationAtFederalStatutoryIncomeTaxRate,RestructuringCharges,RestructuringCharges"
+        },
+        {
+          "index": 24,
+          "prediction": "AllocatedShareBasedCompensationExpense,AllocatedShareBasedCompensationExpense,AllocatedShareBasedCompensationExpense,ShareBasedCompensationArrangementByShareBasedPaymentAwardOptionsGrantsInPeriodGross",
+          "ground_truth": "EmployeeServiceShareBasedCompensationNonvestedAwardsTotalCompensationCostNotYetRecognized,EmployeeServiceShareBasedCompensationNonvestedAwardsTotalCompensationCostNotYetRecognized,EmployeeServiceShareBasedCompensationNonvestedAwardsTotalCompensationCostNotYetRecognized,ShareBasedCompensationArrangementByShareBasedPaymentAwardOptionsGrantsInPeriodGross"
+        },
+        {
+          "index": 18,
+          "prediction": "No final answer found",
+          "ground_truth": "ShareBasedCompensationArrangementByShareBasedPaymentAwardOptionsGrantsInPeriodGross,EmployeeServiceShareBasedCompensationNonvestedAwardsTotalCompensationCostNotYetRecognized,EmployeeServiceShareBasedCompensationNonvestedAwardsTotalCompensationCostNotYetRecognizedPeriodForRecognition1,AllocatedShareBasedCompensationExpense"
+        },
+        {
+          "index": 7,
+          "prediction": "No final answer found",
+          "ground_truth": "ConcentrationRiskPercentage1,PaymentsToAcquireBusinessesGross,AreaOfRealEstateProperty,PaymentsToAcquireBusinessesGross"
+        },
+        {
+          "index": 11,
+          "prediction": "ShareBasedCompensationArrangementByShareBasedPaymentAwardNumberOfSharesAvailableForGrant,ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsVestedInPeriodTotalIntrinsicValue,ShareBasedCompensationArrangementByShareBasedPaymentAwardAwardVestingPeriod1,ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsVestedInPeriodTotalFairValue",
+          "ground_truth": "ShareBasedCompensationArrangementByShareBasedPaymentAwardNumberOfSharesAvailableForGrant,ShareBasedCompensationArrangementByShareBasedPaymentAwardOptionsExercisesInPeriodTotalIntrinsicValue,EmployeeServiceShareBasedCompensationNonvestedAwardsTotalCompensationCostNotYetRecognizedPeriodForRecognition1,ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsVestedInPeriodTotalFairValue"
+        },
+        {
+          "index": 9,
+          "prediction": "No final answer found",
+          "ground_truth": "EquityMethodInvestmentOwnershipPercentage,EquityMethodInvestmentOwnershipPercentage,EquityMethodInvestmentOwnershipPercentage,EquityMethodInvestmentOwnershipPercentage"
+        },
+        {
+          "index": 4,
+          "prediction": "No final answer found",
+          "ground_truth": "CommonStockParOrStatedValuePerShare,ClassOfWarrantOrRightExercisePriceOfWarrantsOrRights1,SaleOfStockNumberOfSharesIssuedInTransaction,MinorityInterestOwnershipPercentageByNoncontrollingOwners"
+        },
+        {
+          "index": 8,
+          "prediction": "No final answer found",
+          "ground_truth": "EquityMethodInvestments,EquityMethodInvestmentOwnershipPercentage,IncomeLossFromEquityMethodInvestments,IncomeLossFromEquityMethodInvestments"
+        },
+        {
+          "index": 30,
+          "prediction": "ShareBasedCompensationArrangementByShareBasedPaymentAwardNumberOfSharesAuthorized,AllocatedShareBasedCompensationExpense,GuaranteeObligationsMaximumExposure,DebtInstrumentCarryingAmount",
+          "ground_truth": "CommonStockCapitalSharesReservedForFutureIssuance,AllocatedShareBasedCompensationExpense,GuaranteeObligationsMaximumExposure,DebtInstrumentFaceAmount"
+        },
+        {
+          "index": 22,
+          "prediction": "No final answer found",
+          "ground_truth": "RestructuringCharges,RestructuringCharges,RestructuringCharges,EffectiveIncomeTaxRateContinuingOperations"
+        },
+        {
+          "index": 21,
+          "prediction": "No final answer found",
+          "ground_truth": "FiniteLivedIntangibleAssetUsefulLife,ContractWithCustomerLiabilityRevenueRecognized,FiniteLivedIntangibleAssetUsefulLife,FiniteLivedIntangibleAssetUsefulLife"
+        },
+        {
+          "index": 10,
+          "prediction": "LettersOfCreditOutstandingAmount,FiniteLivedIntangibleAssetUsefulLife,FiniteLivedIntangibleAssetUsefulLife,FiniteLivedIntangibleAssetUsefulLife",
+          "ground_truth": "LettersOfCreditOutstandingAmount,FiniteLivedIntangibleAssetUsefulLife,FiniteLivedIntangibleAssetUsefulLife,PropertyPlantAndEquipmentUsefulLife"
+        },
+        {
+          "index": 35,
+          "prediction": "AllocatedShareBasedCompensationExpense,AllocatedShareBasedCompensationExpense,DebtInstrumentFaceAmount,DebtInstrumentInterestRateEffectivePercentage",
+          "ground_truth": "AllocatedShareBasedCompensationExpense,AllocatedShareBasedCompensationExpense,DebtInstrumentFaceAmount,DebtInstrumentInterestRateStatedPercentage"
+        },
+        {
+          "index": 34,
+          "prediction": "DebtInstrumentBasisSpreadOnVariableRate1,LineOfCreditFacilityMaximumBorrowingCapacity,LineOfCreditFacilityCurrentBorrowingCapacity,OperatingLeasesRentExpenseNet",
+          "ground_truth": "DebtInstrumentBasisSpreadOnVariableRate1,LineOfCreditFacilityMaximumBorrowingCapacity,LineOfCredit,OperatingLeasesRentExpenseNet"
+        },
+        {
+          "index": 29,
+          "prediction": "ShareBasedCompensationArrangementByShareBasedPaymentAwardVestingPeriod1,ShareBasedCompensationArrangementByShareBasedPaymentAwardVestingPeriod1,ShareBasedCompensationArrangementByShareBasedPaymentAwardVestingPeriod1,AllocatedShareBasedCompensationExpense",
+          "ground_truth": "ShareBasedCompensationArrangementByShareBasedPaymentAwardAwardVestingPeriod1,ShareBasedCompensationArrangementByShareBasedPaymentAwardAwardVestingPeriod1,ShareBasedCompensationArrangementByShareBasedPaymentAwardAwardVestingPeriod1,AllocatedShareBasedCompensationExpense"
+        },
+        {
+          "index": 33,
+          "prediction": "GoodwillImpairmentLoss,DefinedContributionPlanContributionsByEmployer,DefinedContributionPlanContributionsByEmployer,DefinedContributionPlanContributionsByEmployer",
+          "ground_truth": "GoodwillImpairmentLoss,DefinedContributionPlanCostRecognized,DefinedContributionPlanCostRecognized,DefinedContributionPlanCostRecognized"
+        },
+        {
+          "index": 13,
+          "prediction": "No final answer found",
+          "ground_truth": "LineOfCreditFacilityMaximumBorrowingCapacity,LineOfCreditFacilityMaximumBorrowingCapacity,LineOfCreditFacilityMaximumBorrowingCapacity,DebtInstrumentBasisSpreadOnVariableRate1"
+        },
+        {
+          "index": 27,
+          "prediction": "IncomeTaxExpenseBenefit,EffectiveIncomeTaxRateContinuingOperations,SaleOfStockNumberOfSharesIssuedInTransaction,SaleOfStockPricePerShare",
+          "ground_truth": "IncomeTaxExpenseBenefit,EffectiveIncomeTaxRateReconciliationAtFederalStatutoryIncomeTaxRate,SaleOfStockNumberOfSharesIssuedInTransaction,SaleOfStockPricePerShare"
+        },
+        {
+          "index": 2,
+          "prediction": "No final answer found",
+          "ground_truth": "DebtInstrumentConvertibleConversionPrice1,StockIssuedDuringPeriodSharesNewIssues,StockIssuedDuringPeriodSharesNewIssues,StockIssuedDuringPeriodSharesNewIssues"
+        },
+        {
+          "index": 1,
+          "prediction": "No final answer found",
+          "ground_truth": "DebtWeightedAverageInterestRate,DebtWeightedAverageInterestRate,EffectiveIncomeTaxRateReconciliationAtFederalStatutoryIncomeTaxRate,EffectiveIncomeTaxRateReconciliationAtFederalStatutoryIncomeTaxRate"
+        },
+        {
+          "index": 36,
+          "prediction": "AccrualForEnvironmentalLossContingencies,AccrualForEnvironmentalLossContingencies,CapitalizedContractCostAmortization,NumberOfOperatingSegments",
+          "ground_truth": "AccrualForEnvironmentalLossContingencies,GuaranteeObligationsMaximumExposure,GuaranteeObligationsMaximumExposure,NumberOfOperatingSegments"
+        },
+        {
+          "index": 31,
+          "prediction": "ShareBasedCompensationArrangementByShareBasedPaymentAwardVestingPeriod1,ShareBasedCompensationArrangementByShareBasedPaymentAwardVestingPeriod1,ShareBasedCompensationArrangementByShareBasedPaymentAwardOptionsGrantsInPeriodGross,ShareBasedCompensationArrangementByShareBasedPaymentAwardVestingPeriod1",
+          "ground_truth": "ShareBasedCompensationArrangementByShareBasedPaymentAwardAwardVestingPeriod1,ShareBasedCompensationArrangementByShareBasedPaymentAwardAwardVestingPeriod1,ShareBasedCompensationArrangementByShareBasedPaymentAwardOptionsGrantsInPeriodGross,ShareBasedCompensationArrangementByShareBasedPaymentAwardAwardVestingPeriod1"
+        },
+        {
+          "index": 39,
+          "prediction": "No final answer found",
+          "ground_truth": "ShareBasedCompensationArrangementByShareBasedPaymentAwardAwardVestingPeriod1,ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsGrantsInPeriod,ShareBasedCompensationArrangementByShareBasedPaymentAwardAwardVestingPeriod1,ShareBasedCompensationArrangementByShareBasedPaymentAwardAwardVestingPeriod1"
+        },
+        {
+          "index": 38,
+          "prediction": "No final answer found",
+          "ground_truth": "DebtInstrumentInterestRateStatedPercentage,RepaymentsOfDebt,ClassOfWarrantOrRightExercisePriceOfWarrantsOrRights1,RepaymentsOfDebt"
+        }
+      ]
+    }
+  },
+  {
+    "epoch": 1,
+    "step": 30,
+    "val_results": {
+      "accuracy": 0.4,
+      "correct": 11,
+      "total": 40,
+      "no_answer": 18
+    },
+    "error_log": {
+      "accuracy": 0.4,
+      "errors": [
+        {
+          "index": 11,
+          "prediction": "ShareBasedCompensationArrangementByShareBasedPaymentAwardNumberOfSharesAvailableForGrant,ShareBasedCompensationArrangementByShareBasedPaymentAwardOptionsGrantsInPeriodGross,ShareBasedCompensationArrangementByShareBasedPaymentAwardAwardVestingPeriod1,ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsVestedInPeriodTotalFairValue",
+          "ground_truth": "ShareBasedCompensationArrangementByShareBasedPaymentAwardNumberOfSharesAvailableForGrant,ShareBasedCompensationArrangementByShareBasedPaymentAwardOptionsExercisesInPeriodTotalIntrinsicValue,EmployeeServiceShareBasedCompensationNonvestedAwardsTotalCompensationCostNotYetRecognizedPeriodForRecognition1,ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsVestedInPeriodTotalFairValue"
+        },
+        {
+          "index": 12,
+          "prediction": "InterestExpenseDebt,InterestExpenseDebt,InterestExpenseDebt,NumberOfRealEstateProperties",
+          "ground_truth": "AmortizationOfFinancingCosts,AmortizationOfFinancingCosts,AmortizationOfFinancingCosts,NumberOfRealEstateProperties"
+        },
+        {
+          "index": 1,
+          "prediction": "DebtInstrumentInterestRateStatedPercentage,DebtInstrumentInterestRateStatedPercentage,EffectiveIncomeTaxRateReconciliationAtFederalStatutoryIncomeTaxRate,EffectiveIncomeTaxRateReconciliationAtFederalStatutoryIncomeTaxRate",
+          "ground_truth": "DebtWeightedAverageInterestRate,DebtWeightedAverageInterestRate,EffectiveIncomeTaxRateReconciliationAtFederalStatutoryIncomeTaxRate,EffectiveIncomeTaxRateReconciliationAtFederalStatutoryIncomeTaxRate"
+        },
+        {
+          "index": 17,
+          "prediction": "DebtInstrumentRedemptionPricePercentage,Revenues,Revenues,Revenues",
+          "ground_truth": "DebtInstrumentRedemptionPricePercentage,RevenueFromRelatedParties,RevenueFromRelatedParties,RevenueFromRelatedParties"
+        },
+        {
+          "index": 3,
+          "prediction": "MinorityInterestOwnershipPercentageByParent,EquityMethodInvestmentOwnershipPercentage,BusinessCombinationConsiderationTransferred1,PaymentsToAcquireBusinessesGross",
+          "ground_truth": "MinorityInterestOwnershipPercentageByNoncontrollingOwners,MinorityInterestOwnershipPercentageByNoncontrollingOwners,BusinessCombinationConsiderationTransferred1,PaymentsToAcquireBusinessesGross"
+        },
+        {
+          "index": 16,
+          "prediction": "DebtInstrumentInterestRateStatedPercentage,FiniteLivedIntangibleAssetUsefulLife,FiniteLivedIntangibleAssetUsefulLife,FiniteLivedIntangibleAssetUsefulLife",
+          "ground_truth": "DerivativeFixedInterestRate,PropertyPlantAndEquipmentUsefulLife,PropertyPlantAndEquipmentUsefulLife,PropertyPlantAndEquipmentUsefulLife"
+        },
+        {
+          "index": 0,
+          "prediction": "No final answer found",
+          "ground_truth": "MinorityInterestOwnershipPercentageByParent,ConcentrationRiskPercentage1,BusinessCombinationConsiderationTransferred1,PaymentsToAcquireBusinessesGross"
+        },
+        {
+          "index": 10,
+          "prediction": "LettersOfCreditOutstandingAmount,AmortizationOfIntangibleAssets,AmortizationOfIntangibleAssets,AmortizationOfIntangibleAssets",
+          "ground_truth": "LettersOfCreditOutstandingAmount,FiniteLivedIntangibleAssetUsefulLife,FiniteLivedIntangibleAssetUsefulLife,PropertyPlantAndEquipmentUsefulLife"
+        },
+        {
+          "index": 14,
+          "prediction": "No final answer found",
+          "ground_truth": "LineOfCreditFacilityMaximumBorrowingCapacity,LineOfCreditFacilityMaximumBorrowingCapacity,LineOfCreditFacilityCommitmentFeePercentage,DebtInstrumentInterestRateStatedPercentage"
+        },
+        {
+          "index": 6,
+          "prediction": "No final answer found",
+          "ground_truth": "EquityMethodInvestmentOwnershipPercentage,EquityMethodInvestments,EquityMethodInvestments,IncomeLossFromEquityMethodInvestments"
+        },
+        {
+          "index": 4,
+          "prediction": "No final answer found",
+          "ground_truth": "CommonStockParOrStatedValuePerShare,ClassOfWarrantOrRightExercisePriceOfWarrantsOrRights1,SaleOfStockNumberOfSharesIssuedInTransaction,MinorityInterestOwnershipPercentageByNoncontrollingOwners"
+        },
+        {
+          "index": 18,
+          "prediction": "ShareBasedCompensationArrangementByShareBasedPaymentAwardOptionsGrantsInPeriodGross,EmployeeServiceShareBasedCompensationNonvestedAwardsTotalCompensationCostNotYetRecognized,ShareBasedCompensationArrangementByShareBasedPaymentAwardAwardVestingPeriod1,AllocatedShareBasedCompensationExpense",
+          "ground_truth": "ShareBasedCompensationArrangementByShareBasedPaymentAwardOptionsGrantsInPeriodGross,EmployeeServiceShareBasedCompensationNonvestedAwardsTotalCompensationCostNotYetRecognized,EmployeeServiceShareBasedCompensationNonvestedAwardsTotalCompensationCostNotYetRecognizedPeriodForRecognition1,AllocatedShareBasedCompensationExpense"
+        },
+        {
+          "index": 2,
+          "prediction": "No final answer found",
+          "ground_truth": "DebtInstrumentConvertibleConversionPrice1,StockIssuedDuringPeriodSharesNewIssues,StockIssuedDuringPeriodSharesNewIssues,StockIssuedDuringPeriodSharesNewIssues"
+        },
+        {
+          "index": 19,
+          "prediction": "No final answer found",
+          "ground_truth": "EffectiveIncomeTaxRateContinuingOperations,EffectiveIncomeTaxRateReconciliationAtFederalStatutoryIncomeTaxRate,RestructuringCharges,RestructuringCharges"
+        },
+        {
+          "index": 7,
+          "prediction": "No final answer found",
+          "ground_truth": "ConcentrationRiskPercentage1,PaymentsToAcquireBusinessesGross,AreaOfRealEstateProperty,PaymentsToAcquireBusinessesGross"
+        },
+        {
+          "index": 27,
+          "prediction": "IncomeTaxExpenseBenefit,EffectiveIncomeTaxRateContinuingOperations,SaleOfStockNumberOfSharesIssuedInTransaction,SaleOfStockPricePerShare",
+          "ground_truth": "IncomeTaxExpenseBenefit,EffectiveIncomeTaxRateReconciliationAtFederalStatutoryIncomeTaxRate,SaleOfStockNumberOfSharesIssuedInTransaction,SaleOfStockPricePerShare"
+        },
+        {
+          "index": 21,
+          "prediction": "No final answer found",
+          "ground_truth": "FiniteLivedIntangibleAssetUsefulLife,ContractWithCustomerLiabilityRevenueRecognized,FiniteLivedIntangibleAssetUsefulLife,FiniteLivedIntangibleAssetUsefulLife"
+        },
+        {
+          "index": 26,
+          "prediction": "No final answer found",
+          "ground_truth": "ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsGrantsInPeriod,ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsGrantsInPeriod,AllocatedShareBasedCompensationExpense,AllocatedShareBasedCompensationExpense"
+        },
+        {
+          "index": 24,
+          "prediction": "No final answer found",
+          "ground_truth": "EmployeeServiceShareBasedCompensationNonvestedAwardsTotalCompensationCostNotYetRecognized,EmployeeServiceShareBasedCompensationNonvestedAwardsTotalCompensationCostNotYetRecognized,EmployeeServiceShareBasedCompensationNonvestedAwardsTotalCompensationCostNotYetRecognized,ShareBasedCompensationArrangementByShareBasedPaymentAwardOptionsGrantsInPeriodGross"
+        },
+        {
+          "index": 30,
+          "prediction": "No final answer found",
+          "ground_truth": "CommonStockCapitalSharesReservedForFutureIssuance,AllocatedShareBasedCompensationExpense,GuaranteeObligationsMaximumExposure,DebtInstrumentFaceAmount"
+        },
+        {
+          "index": 8,
+          "prediction": "No final answer found",
+          "ground_truth": "EquityMethodInvestments,EquityMethodInvestmentOwnershipPercentage,IncomeLossFromEquityMethodInvestments,IncomeLossFromEquityMethodInvestments"
+        },
+        {
+          "index": 34,
+          "prediction": "No final answer found",
+          "ground_truth": "DebtInstrumentBasisSpreadOnVariableRate1,LineOfCreditFacilityMaximumBorrowingCapacity,LineOfCredit,OperatingLeasesRentExpenseNet"
+        },
+        {
+          "index": 36,
+          "prediction": "No final answer found",
+          "ground_truth": "AccrualForEnvironmentalLossContingencies,GuaranteeObligationsMaximumExposure,GuaranteeObligationsMaximumExposure,NumberOfOperatingSegments"
+        },
+        {
+          "index": 35,
+          "prediction": "AllocatedShareBasedCompensationExpense,AllocatedShareBasedCompensationExpense,D debtInstrumentFaceAmount,DebtInstrumentInterestRateStatedPercentage",
+          "ground_truth": "AllocatedShareBasedCompensationExpense,AllocatedShareBasedCompensationExpense,DebtInstrumentFaceAmount,DebtInstrumentInterestRateStatedPercentage"
+        },
+        {
+          "index": 33,
+          "prediction": "No final answer found",
+          "ground_truth": "GoodwillImpairmentLoss,DefinedContributionPlanCostRecognized,DefinedContributionPlanCostRecognized,DefinedContributionPlanCostRecognized"
+        },
+        {
+          "index": 38,
+          "prediction": "No final answer found",
+          "ground_truth": "DebtInstrumentInterestRateStatedPercentage,RepaymentsOfDebt,ClassOfWarrantOrRightExercisePriceOfWarrantsOrRights1,RepaymentsOfDebt"
+        },
+        {
+          "index": 20,
+          "prediction": "OperatingLeaseExpense,OperatingLeaseExpense,LossContingencyDamagesSoughtValue,LossContingencyDamagesSoughtValue",
+          "ground_truth": "LeaseAndRentalExpense,LeaseAndRentalExpense,LossContingencyDamagesSoughtValue,LossContingencyDamagesSoughtValue"
+        },
+        {
+          "index": 25,
+          "prediction": "No final answer found",
+          "ground_truth": "GainsLossesOnExtinguishmentOfDebt,GainsLossesOnExtinguishmentOfDebt,RepaymentsOfDebt,RepaymentsOfDebt"
+        },
+        {
+          "index": 13,
+          "prediction": "No final answer found",
+          "ground_truth": "LineOfCreditFacilityMaximumBorrowingCapacity,LineOfCreditFacilityMaximumBorrowingCapacity,LineOfCreditFacilityMaximumBorrowingCapacity,DebtInstrumentBasisSpreadOnVariableRate1"
+        }
+      ]
+    }
+  },
+  {
+    "epoch": 1,
+    "step": 45,
+    "val_results": {
+      "accuracy": 0.5625,
+      "correct": 15,
+      "total": 40,
+      "no_answer": 10
+    },
+    "error_log": {
+      "accuracy": 0.5625,
+      "errors": [
+        {
+          "index": 10,
+          "prediction": "LettersOfCreditOutstandingAmount,PropertyPlantAndEquipmentUsefulLife,PropertyPlantAndEquipmentUsefulLife,PropertyPlantAndEquipmentUsefulLife",
+          "ground_truth": "LettersOfCreditOutstandingAmount,FiniteLivedIntangibleAssetUsefulLife,FiniteLivedIntangibleAssetUsefulLife,PropertyPlantAndEquipmentUsefulLife"
+        },
+        {
+          "index": 13,
+          "prediction": "LineOfCreditFacilityMaximumBorrowingCapacity,LineOfCreditFacilityMaximumBorrowingCapacity,LineOfCreditFacilityMaximumBorrowingCapacity,DebtInstrumentInterestRateStatedPercentage",
+          "ground_truth": "LineOfCreditFacilityMaximumBorrowingCapacity,LineOfCreditFacilityMaximumBorrowingCapacity,LineOfCreditFacilityMaximumBorrowingCapacity,DebtInstrumentBasisSpreadOnVariableRate1"
+        },
+        {
+          "index": 8,
+          "prediction": "BusinessCombinationConsiderationTransferred1,BusinessCombinationAcquisitionPercentageOfVotingInterestsAcquired,IncomeLossFromEquityMethodInvestments,IncomeLossFromEquityMethodInvestments",
+          "ground_truth": "EquityMethodInvestments,EquityMethodInvestmentOwnershipPercentage,IncomeLossFromEquityMethodInvestments,IncomeLossFromEquityMethodInvestments"
+        },
+        {
+          "index": 16,
+          "prediction": "DebtInstrumentInterestRateStatedPercentage,PropertyPlantAndEquipmentUsefulLife,PropertyPlantAndEquipmentUsefulLife,PropertyPlantAndEquipmentUsefulLife",
+          "ground_truth": "DerivativeFixedInterestRate,PropertyPlantAndEquipmentUsefulLife,PropertyPlantAndEquipmentUsefulLife,PropertyPlantAndEquipmentUsefulLife"
+        },
+        {
+          "index": 14,
+          "prediction": "LineOfCreditFacilityMaximumBorrowingCapacity,LineOfCreditFacilityMaximumBorrowingCapacity,DebtInstrumentInterestRateStatedPercentage,DebtInstrumentInterestRateStatedPercentage",
+          "ground_truth": "LineOfCreditFacilityMaximumBorrowingCapacity,LineOfCreditFacilityMaximumBorrowingCapacity,LineOfCreditFacilityCommitmentFeePercentage,DebtInstrumentInterestRateStatedPercentage"
+        },
+        {
+          "index": 12,
+          "prediction": "InterestExpenseDebt,InterestExpenseDebt,InterestExpenseDebt,NumberOfRealEstateProperties",
+          "ground_truth": "AmortizationOfFinancingCosts,AmortizationOfFinancingCosts,AmortizationOfFinancingCosts,NumberOfRealEstateProperties"
+        },
+        {
+          "index": 17,
+          "prediction": "DebtInstrumentRedemptionPricePercentage,RevenueFromContractWithCustomerExcludingAssessedTax,RevenueFromContractWithCustomerExcludingAssessedTax,RevenueFromContractWithCustomerExcludingAssessedTax",
+          "ground_truth": "DebtInstrumentRedemptionPricePercentage,RevenueFromRelatedParties,RevenueFromRelatedParties,RevenueFromRelatedParties"
+        },
+        {
+          "index": 3,
+          "prediction": "EquityMethodInvestmentOwnershipPercentage,EquityMethodInvestmentOwnershipPercentage,BusinessCombinationConsiderationTransferred1,PaymentsToAcquireBusinessesGross",
+          "ground_truth": "MinorityInterestOwnershipPercentageByNoncontrollingOwners,MinorityInterestOwnershipPercentageByNoncontrollingOwners,BusinessCombinationConsiderationTransferred1,PaymentsToAcquireBusinessesGross"
+        },
+        {
+          "index": 2,
+          "prediction": "SharePrice,SaleOfStockNumberOfSharesIssuedInTransaction,SaleOfStockNumberOfSharesIssuedInTransaction,SaleOfStockNumberOfSharesIssuedInTransaction",
+          "ground_truth": "DebtInstrumentConvertibleConversionPrice1,StockIssuedDuringPeriodSharesNewIssues,StockIssuedDuringPeriodSharesNewIssues,StockIssuedDuringPeriodSharesNewIssues"
+        },
+        {
+          "index": 11,
+          "prediction": "ShareBasedCompensationArrangementByShareBasedPaymentAwardNumberOfSharesAvailableForGrant,ShareBasedCompensationArrangementByShareBasedPaymentAwardOptionsExercisesInPeriodTotalIntrinsicValue,ShareBasedCompensationArrangementByShareBasedPaymentAwardAwardVestingPeriod1,ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsVestedInPeriodTotalFairValue",
+          "ground_truth": "ShareBasedCompensationArrangementByShareBasedPaymentAwardNumberOfSharesAvailableForGrant,ShareBasedCompensationArrangementByShareBasedPaymentAwardOptionsExercisesInPeriodTotalIntrinsicValue,EmployeeServiceShareBasedCompensationNonvestedAwardsTotalCompensationCostNotYetRecognizedPeriodForRecognition1,ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsVestedInPeriodTotalFairValue"
+        },
+        {
+          "index": 20,
+          "prediction": "OperatingLeaseExpense,OperatingLeaseExpense,LossContingencyDamagesSoughtValue,LossContingencyDamagesSoughtValue",
+          "ground_truth": "LeaseAndRentalExpense,LeaseAndRentalExpense,LossContingencyDamagesSoughtValue,LossContingencyDamagesSoughtValue"
+        },
+        {
+          "index": 19,
+          "prediction": "No final answer found",
+          "ground_truth": "EffectiveIncomeTaxRateContinuingOperations,EffectiveIncomeTaxRateReconciliationAtFederalStatutoryIncomeTaxRate,RestructuringCharges,RestructuringCharges"
+        },
+        {
+          "index": 6,
+          "prediction": "No final answer found",
+          "ground_truth": "EquityMethodInvestmentOwnershipPercentage,EquityMethodInvestments,EquityMethodInvestments,IncomeLossFromEquityMethodInvestments"
+        },
+        {
+          "index": 21,
+          "prediction": "FiniteLivedIntangibleAssetUsefulLife,RevenueFromContractWithCustomerExcludingAssessedTax,FiniteLivedIntangibleAssetUsefulLife,FiniteLivedIntangibleAssetUsefulLife",
+          "ground_truth": "FiniteLivedIntangibleAssetUsefulLife,ContractWithCustomerLiabilityRevenueRecognized,FiniteLivedIntangibleAssetUsefulLife,FiniteLivedIntangibleAssetUsefulLife"
+        },
+        {
+          "index": 1,
+          "prediction": "DebtInstrumentInterestRateStatedPercentage,DebtInstrumentInterestRateStatedPercentage,EffectiveIncomeTaxRateReconciliationAtFederalStatutoryIncomeTaxRate,EffectiveIncomeTaxRateReconciliationAtFederalStatutoryIncomeTaxRate",
+          "ground_truth": "DebtWeightedAverageInterestRate,DebtWeightedAverageInterestRate,EffectiveIncomeTaxRateReconciliationAtFederalStatutoryIncomeTaxRate,EffectiveIncomeTaxRateReconciliationAtFederalStatutoryIncomeTaxRate"
+        },
+        {
+          "index": 33,
+          "prediction": "No final answer found",
+          "ground_truth": "GoodwillImpairmentLoss,DefinedContributionPlanCostRecognized,DefinedContributionPlanCostRecognized,DefinedContributionPlanCostRecognized"
+        },
+        {
+          "index": 30,
+          "prediction": "ShareBasedCompensationArrangementByShareBasedPaymentAwardOptionsGrantsInPeriodGross,AllocatedShareBasedCompensationExpense,GuaranteeObligationsMaximumExposure,DebtInstrumentCarryingAmount",
+          "ground_truth": "CommonStockCapitalSharesReservedForFutureIssuance,AllocatedShareBasedCompensationExpense,GuaranteeObligationsMaximumExposure,DebtInstrumentFaceAmount"
+        },
+        {
+          "index": 4,
+          "prediction": "No final answer found",
+          "ground_truth": "CommonStockParOrStatedValuePerShare,ClassOfWarrantOrRightExercisePriceOfWarrantsOrRights1,SaleOfStockNumberOfSharesIssuedInTransaction,MinorityInterestOwnershipPercentageByNoncontrollingOwners"
+        },
+        {
+          "index": 7,
+          "prediction": "No final answer found",
+          "ground_truth": "ConcentrationRiskPercentage1,PaymentsToAcquireBusinessesGross,AreaOfRealEstateProperty,PaymentsToAcquireBusinessesGross"
+        },
+        {
+          "index": 18,
+          "prediction": "No final answer found",
+          "ground_truth": "ShareBasedCompensationArrangementByShareBasedPaymentAwardOptionsGrantsInPeriodGross,EmployeeServiceShareBasedCompensationNonvestedAwardsTotalCompensationCostNotYetRecognized,EmployeeServiceShareBasedCompensationNonvestedAwardsTotalCompensationCostNotYetRecognizedPeriodForRecognition1,AllocatedShareBasedCompensationExpense"
+        },
+        {
+          "index": 0,
+          "prediction": "No final answer found",
+          "ground_truth": "MinorityInterestOwnershipPercentageByParent,ConcentrationRiskPercentage1,BusinessCombinationConsiderationTransferred1,PaymentsToAcquireBusinessesGross"
+        },
+        {
+          "index": 36,
+          "prediction": "LossContingencyEstimateOfPossibleLoss,LossContingencyEstimateOfPossibleLoss,LossContingencyEstimateOfPossibleLoss,NumberOfOperatingSegments",
+          "ground_truth": "AccrualForEnvironmentalLossContingencies,GuaranteeObligationsMaximumExposure,GuaranteeObligationsMaximumExposure,NumberOfOperatingSegments"
+        },
+        {
+          "index": 37,
+          "prediction": "No final answer found",
+          "ground_truth": "DebtInstrumentFaceAmount,DebtInstrumentInterestRateStatedPercentage,DebtInstrumentInterestRateStatedPercentage,DebtInstrumentInterestRateEffectivePercentage"
+        },
+        {
+          "index": 27,
+          "prediction": "No final answer found",
+          "ground_truth": "IncomeTaxExpenseBenefit,EffectiveIncomeTaxRateReconciliationAtFederalStatutoryIncomeTaxRate,SaleOfStockNumberOfSharesIssuedInTransaction,SaleOfStockPricePerShare"
+        },
+        {
+          "index": 34,
+          "prediction": "No final answer found",
+          "ground_truth": "DebtInstrumentBasisSpreadOnVariableRate1,LineOfCreditFacilityMaximumBorrowingCapacity,LineOfCredit,OperatingLeasesRentExpenseNet"
+        }
+      ]
+    }
+  },
+  {
+    "epoch": 1,
+    "step": 60,
+    "val_results": {
+      "accuracy": 0.5875,
+      "correct": 15,
+      "total": 40,
+      "no_answer": 11
+    },
+    "error_log": {
+      "accuracy": 0.5875,
+      "errors": [
+        {
+          "index": 10,
+          "prediction": "LettersOfCreditOutstandingAmount,FiniteLivedIntangibleAssetUsefulLife,FiniteLivedIntangibleAssetUsefulLife,FiniteLivedIntangibleAssetUsefulLife",
+          "ground_truth": "LettersOfCreditOutstandingAmount,FiniteLivedIntangibleAssetUsefulLife,FiniteLivedIntangibleAssetUsefulLife,PropertyPlantAndEquipmentUsefulLife"
+        },
+        {
+          "index": 1,
+          "prediction": "DebtInstrumentInterestRateStatedPercentage,DebtInstrumentInterestRateStatedPercentage,EffectiveIncomeTaxRateReconciliationAtFederalStatutoryIncomeTaxRate,EffectiveIncomeTaxRateReconciliationAtFederalStatutoryIncomeTaxRate",
+          "ground_truth": "DebtWeightedAverageInterestRate,DebtWeightedAverageInterestRate,EffectiveIncomeTaxRateReconciliationAtFederalStatutoryIncomeTaxRate,EffectiveIncomeTaxRateReconciliationAtFederalStatutoryIncomeTaxRate"
+        },
+        {
+          "index": 0,
+          "prediction": "MinorityInterestOwnershipPercentageByParent,ConcentrationRiskPercentage1,BusinessCombinationConsiderationTransferred1,DebtInstrumentFaceAmount",
+          "ground_truth": "MinorityInterestOwnershipPercentageByParent,ConcentrationRiskPercentage1,BusinessCombinationConsiderationTransferred1,PaymentsToAcquireBusinessesGross"
+        },
+        {
+          "index": 18,
+          "prediction": "ShareBasedCompensationArrangementByShareBasedPaymentAwardOptionsGrantsInPeriodGross,EmployeeServiceShareBasedCompensationNonvestedAwardsTotalCompensationCostNotYetRecognized,ShareBasedCompensationArrangementByShareBasedPaymentAwardAwardVestingPeriod1,AllocatedShareBasedCompensationExpense",
+          "ground_truth": "ShareBasedCompensationArrangementByShareBasedPaymentAwardOptionsGrantsInPeriodGross,EmployeeServiceShareBasedCompensationNonvestedAwardsTotalCompensationCostNotYetRecognized,EmployeeServiceShareBasedCompensationNonvestedAwardsTotalCompensationCostNotYetRecognizedPeriodForRecognition1,AllocatedShareBasedCompensationExpense"
+        },
+        {
+          "index": 12,
+          "prediction": "InterestExpenseDebt,InterestExpenseDebt,InterestExpenseDebt,NumberOfRealEstateProperties",
+          "ground_truth": "AmortizationOfFinancingCosts,AmortizationOfFinancingCosts,AmortizationOfFinancingCosts,NumberOfRealEstateProperties"
+        },
+        {
+          "index": 16,
+          "prediction": "DebtInstrumentInterestRateStatedPercentage,PropertyPlantAndEquipmentUsefulLife,PropertyPlantAndEquipmentUsefulLife,PropertyPlantAndEquipmentUsefulLife",
+          "ground_truth": "DerivativeFixedInterestRate,PropertyPlantAndEquipmentUsefulLife,PropertyPlantAndEquipmentUsefulLife,PropertyPlantAndEquipmentUsefulLife"
+        },
+        {
+          "index": 8,
+          "prediction": "BusinessCombinationConsiderationTransferred1,BusinessAcquisitionPercentageOfVotingInterestsAcquired,IncomeLossFromEquityMethodInvestments,IncomeLossFromEquityMethodInvestments",
+          "ground_truth": "EquityMethodInvestments,EquityMethodInvestmentOwnershipPercentage,IncomeLossFromEquityMethodInvestments,IncomeLossFromEquityMethodInvestments"
+        },
+        {
+          "index": 14,
+          "prediction": "LineOfCreditFacilityMaximumBorrowingCapacity,LineOfCreditFacilityMaximumBorrowingCapacity,DebtInstrumentInterestRateStatedPercentage,DebtInstrumentInterestRateStatedPercentage",
+          "ground_truth": "LineOfCreditFacilityMaximumBorrowingCapacity,LineOfCreditFacilityMaximumBorrowingCapacity,LineOfCreditFacilityCommitmentFeePercentage,DebtInstrumentInterestRateStatedPercentage"
+        },
+        {
+          "index": 21,
+          "prediction": "FiniteLivedIntangibleAssetUsefulLife,RevenueFromContractWithCustomerExcludingAssessedTax,FiniteLivedIntangibleAssetUsefulLife,FiniteLivedIntangibleAssetUsefulLife",
+          "ground_truth": "FiniteLivedIntangibleAssetUsefulLife,ContractWithCustomerLiabilityRevenueRecognized,FiniteLivedIntangibleAssetUsefulLife,FiniteLivedIntangibleAssetUsefulLife"
+        },
+        {
+          "index": 6,
+          "prediction": "No final answer found",
+          "ground_truth": "EquityMethodInvestmentOwnershipPercentage,EquityMethodInvestments,EquityMethodInvestments,IncomeLossFromEquityMethodInvestments"
+        },
+        {
+          "index": 2,
+          "prediction": "No final answer found",
+          "ground_truth": "DebtInstrumentConvertibleConversionPrice1,StockIssuedDuringPeriodSharesNewIssues,StockIssuedDuringPeriodSharesNewIssues,StockIssuedDuringPeriodSharesNewIssues"
+        },
+        {
+          "index": 19,
+          "prediction": "No final answer found",
+          "ground_truth": "EffectiveIncomeTaxRateContinuingOperations,EffectiveIncomeTaxRateReconciliationAtFederalStatutoryIncomeTaxRate,RestructuringCharges,RestructuringCharges"
+        },
+        {
+          "index": 13,
+          "prediction": "No final answer found",
+          "ground_truth": "LineOfCreditFacilityMaximumBorrowingCapacity,LineOfCreditFacilityMaximumBorrowingCapacity,LineOfCreditFacilityMaximumBorrowingCapacity,DebtInstrumentBasisSpreadOnVariableRate1"
+        },
+        {
+          "index": 23,
+          "prediction": "UnrecognizedTaxBenefits,UnrecognizedTaxBenefits,UnrecognizedTaxBenefitsThatWouldImpactEffectiveTaxRate,UnrecognizedTaxBenefits",
+          "ground_truth": "UnrecognizedTaxBenefits,UnrecognizedTaxBenefits,UnrecognizedTaxBenefitsThatWouldImpactEffectiveTaxRate,UnrecognizedTaxBenefitsThatWouldImpactEffectiveTaxRate"
+        },
+        {
+          "index": 24,
+          "prediction": "EmployeeServiceShareBasedCompensationNonvestedAwardsTotalCompensationCostNotYetRecognized,EmployeeServiceShareBasedCompensationNonvestedAwardsTotalCompensationCostNotYetRecognizedShareBasedAwardsOtherThanOptions,EmployeeServiceShareBasedCompensationNonvestedAwardsTotalCompensationCostNotYetRecognizedShareBasedAwardsOtherThanOptions,ShareBasedCompensationArrangementByShareBasedPaymentAwardOptionsGrantsInPeriodGross",
+          "ground_truth": "EmployeeServiceShareBasedCompensationNonvestedAwardsTotalCompensationCostNotYetRecognized,EmployeeServiceShareBasedCompensationNonvestedAwardsTotalCompensationCostNotYetRecognized,EmployeeServiceShareBasedCompensationNonvestedAwardsTotalCompensationCostNotYetRecognized,ShareBasedCompensationArrangementByShareBasedPaymentAwardOptionsGrantsInPeriodGross"
+        },
+        {
+          "index": 7,
+          "prediction": "No final answer found",
+          "ground_truth": "ConcentrationRiskPercentage1,PaymentsToAcquireBusinessesGross,AreaOfRealEstateProperty,PaymentsToAcquireBusinessesGross"
+        },
+        {
+          "index": 27,
+          "prediction": "IncomeTaxExpenseBenefit,EffectiveIncomeTaxRateContinuingOperations,StockIssuedDuringPeriodSharesNewIssues,SharePrice",
+          "ground_truth": "IncomeTaxExpenseBenefit,EffectiveIncomeTaxRateReconciliationAtFederalStatutoryIncomeTaxRate,SaleOfStockNumberOfSharesIssuedInTransaction,SaleOfStockPricePerShare"
+        },
+        {
+          "index": 4,
+          "prediction": "No final answer found",
+          "ground_truth": "CommonStockParOrStatedValuePerShare,ClassOfWarrantOrRightExercisePriceOfWarrantsOrRights1,SaleOfStockNumberOfSharesIssuedInTransaction,MinorityInterestOwnershipPercentageByNoncontrollingOwners"
+        },
+        {
+          "index": 17,
+          "prediction": "No final answer found",
+          "ground_truth": "DebtInstrumentRedemptionPricePercentage,RevenueFromRelatedParties,RevenueFromRelatedParties,RevenueFromRelatedParties"
+        },
+        {
+          "index": 3,
+          "prediction": "No final answer found",
+          "ground_truth": "MinorityInterestOwnershipPercentageByNoncontrollingOwners,MinorityInterestOwnershipPercentageByNoncontrollingOwners,BusinessCombinationConsiderationTransferred1,PaymentsToAcquireBusinessesGross"
+        },
+        {
+          "index": 34,
+          "prediction": "DebtInstrumentInterestRateStatedPercentage,LineOfCreditFacilityMaximumBorrowingCapacity,LettersOfCreditOutstandingAmount,OperatingLeasesRentExpenseNet",
+          "ground_truth": "DebtInstrumentBasisSpreadOnVariableRate1,LineOfCreditFacilityMaximumBorrowingCapacity,LineOfCredit,OperatingLeasesRentExpenseNet"
+        },
+        {
+          "index": 20,
+          "prediction": "No final answer found",
+          "ground_truth": "LeaseAndRentalExpense,LeaseAndRentalExpense,LossContingencyDamagesSoughtValue,LossContingencyDamagesSoughtValue"
+        },
+        {
+          "index": 30,
+          "prediction": "No final answer found",
+          "ground_truth": "CommonStockCapitalSharesReservedForFutureIssuance,AllocatedShareBasedCompensationExpense,GuaranteeObligationsMaximumExposure,DebtInstrumentFaceAmount"
+        },
+        {
+          "index": 36,
+          "prediction": "No final answer found",
+          "ground_truth": "AccrualForEnvironmentalLossContingencies,GuaranteeObligationsMaximumExposure,GuaranteeObligationsMaximumExposure,NumberOfOperatingSegments"
+        },
+        {
+          "index": 11,
+          "prediction": "ShareBasedCompensationArrangementByShareBasedPaymentAwardNumberOfSharesAvailableForGrant,ShareBasedCompensationArrangementByShareBasedPaymentAwardOptionsExercisesInPeriodTotalIntrinsicValue,ShareBasedCompensationArrangementByShareBasedPaymentAwardAwardVestingPeriod1,ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsVestedInPeriodTotalFairValue",
+          "ground_truth": "ShareBasedCompensationArrangementByShareBasedPaymentAwardNumberOfSharesAvailableForGrant,ShareBasedCompensationArrangementByShareBasedPaymentAwardOptionsExercisesInPeriodTotalIntrinsicValue,EmployeeServiceShareBasedCompensationNonvestedAwardsTotalCompensationCostNotYetRecognizedPeriodForRecognition1,ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsVestedInPeriodTotalFairValue"
+        }
+      ]
+    }
+  }
+]
