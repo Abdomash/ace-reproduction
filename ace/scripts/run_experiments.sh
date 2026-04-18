@@ -29,6 +29,7 @@ Options (override defaults):
   --config-name <label>
   --seed <int>
   --mode <offline|online|eval_only>  (for single-task presets)
+  --eval-steps <int>       Evaluate validation every N training steps
   --telemetry <0|1>
   --telemetry-interval <sec>
   --appworld-root <path>
@@ -61,6 +62,7 @@ SAVE_PATH="${ACE_ROOT}/results"
 CONFIG_NAME="default"
 SEED="42"
 MODE="offline"
+EVAL_STEPS="100"
 TELEMETRY="1"
 TELEMETRY_INTERVAL=""
 APPWORLD_ROOT="${ACE_ROOT}/../ace-appworld"
@@ -77,6 +79,7 @@ while [[ $# -gt 0 ]]; do
     --config-name) CONFIG_NAME="$2"; shift 2 ;;
     --seed) SEED="$2"; shift 2 ;;
     --mode) MODE="$2"; shift 2 ;;
+    --eval-steps|--eval_steps) EVAL_STEPS="$2"; shift 2 ;;
     --telemetry) TELEMETRY="$2"; shift 2 ;;
     --telemetry-interval) TELEMETRY_INTERVAL="$2"; shift 2 ;;
     --appworld-root) APPWORLD_ROOT="$2"; shift 2 ;;
@@ -139,7 +142,7 @@ subset = lines[:count]
 with open(dest, "w", encoding="utf-8") as f:
     for ln in subset:
         f.write(ln)
-print(f"Wrote {len(subset)} lines -> {dest}")
+print(f"Wrote {len(subset)} lines -> {dest}", file=sys.stderr)
 PY
 }
 
@@ -202,7 +205,7 @@ TELEMETRY_ARGS="$(telemetry_args)"
 
 cd "${ACE_ROOT}"
 
-common_finance_args="--api_provider ${API_PROVIDER} --generator_model ${GENERATOR_MODEL} --reflector_model ${REFLECTOR_MODEL} --curator_model ${CURATOR_MODEL} --seed ${SEED} --config_name ${CONFIG_NAME} --save_path ${SAVE_PATH} ${TELEMETRY_ARGS}"
+common_finance_args="--api_provider ${API_PROVIDER} --generator_model ${GENERATOR_MODEL} --reflector_model ${REFLECTOR_MODEL} --curator_model ${CURATOR_MODEL} --seed ${SEED} --config_name ${CONFIG_NAME} --save_path ${SAVE_PATH} --eval_steps ${EVAL_STEPS} ${TELEMETRY_ARGS}"
 
 case "${PRESET}" in
   finer_subset)
