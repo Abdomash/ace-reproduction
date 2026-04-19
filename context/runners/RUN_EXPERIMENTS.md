@@ -18,11 +18,16 @@ The runner is paper-faithful by default: standard chat-completion calls,
   - `TOGETHER_API_KEY` for `--provider together`
   - `SAMBANOVA_API_KEY` for `--provider sambanova`
 
-For AppWorld, make sure `ace-appworld` is installed and prepared (pinned commit recommended):
+For AppWorld, make sure the vendored `ace-appworld` package and its experiment
+extras are installed in a Python 3.11 environment:
 
 ```bash
-APPWORLD_COMMIT=<pinned-sha> runners/ace/setup_appworld.sh
+runners/ace/setup_appworld.sh
 ```
+
+The runner uses `projects/ace-appworld/.venv/bin/appworld` by default when it
+exists. Set `APPWORLD_BIN=/path/to/appworld` if you use another prepared
+environment.
 
 ## 2) Presets
 
@@ -84,7 +89,8 @@ runners/ace/run_experiments.sh all_full \
 
 - The script calls task-specific run modules:
   - `python -m eval.finance.run ...`
-  - `python -m eval.appworld.run ...`
+- AppWorld presets run through the vendored `ace-appworld` package:
+  - `appworld run ... --root projects/ace-appworld --override ...`
 - For subset presets, it passes ACE slicing flags with:
   - `--sample_config_path projects/ace/eval/finance/data/sample_config.json`
   - `--train_limit`, `--val_limit`, and `--test_limit`
@@ -94,6 +100,8 @@ runners/ace/run_experiments.sh all_full \
 By default, outputs go to:
 
 - `results/`
+- AppWorld writes canonical AppWorld outputs directly under the selected
+  `results/ace-appworld/...` path.
 
 Each run creates a canonical run folder (`ace_<task>_<mode>_<config>_<seed>_<timestamp>`) containing:
 

@@ -73,6 +73,13 @@ pip install -e .
 pip install -e "experiments[simplified]"
 ```
 
+The repository setup helper performs these steps and rebuilds the local
+virtualenv if it has stale paths:
+
+```bash
+runners/ace/setup_appworld.sh
+```
+
 The `experiments[simplified]` extra installs the ACE experiment dependencies,
 including the OpenTelemetry packages required by the MAESTRO instrumentation.
 
@@ -133,10 +140,12 @@ export TOGETHER_API_KEY="..."
 
 ## MAESTRO Telemetry Controls
 
-Telemetry is enabled by default. It writes JSONL traces and metrics under:
+Telemetry is enabled by default. The repository runner sets
+`APPWORLD_EXPERIMENT_OUTPUTS` so traces and metrics are written under the
+selected `results/ace-appworld/...` path:
 
 ```text
-projects/ace-appworld/experiments/outputs/<experiment_name>/telemetry/
+results/ace-appworld/<run_type>/<config_slug>/<experiment_name>/telemetry/
 ```
 
 Useful controls:
@@ -207,6 +216,9 @@ experiments/outputs/ACE_online_no_GT/telemetry/
   run_ACE_online_no_GT_50e1ac9_1.otel.jsonl
   ace-appworld_ACE_online_no_GT_50e1ac9_1.metrics.jsonl
 ```
+
+When launched through `runners/ace/run_experiments.sh`, the same artifact tree
+is redirected to `results/ace-appworld/...` via `APPWORLD_EXPERIMENT_OUTPUTS`.
 
 ## Running Experiments
 
@@ -293,7 +305,8 @@ These paths are local runtime/install artifacts and should remain ignored:
 
 - `projects/ace-appworld/.venv/`
 - `projects/ace-appworld/data/`
-- `projects/ace-appworld/experiments/outputs/`
+- `projects/ace-appworld/experiments/outputs/` if you run `appworld` manually
+  without the repository runner
 - `projects/ace-appworld/experiments/appworld_experiments.egg-info/`
 - `projects/ace-appworld/src/appworld/apps/`
 - `projects/ace-appworld/tests/package/apps/`
