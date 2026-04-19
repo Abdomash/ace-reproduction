@@ -4,3 +4,10 @@ __pycache__
 report/
 .DS_Store
 latex/
+**/tasks/*/dbs/
+**/tasks/*/checkpoints/
+**/tasks/*/logs/lm_calls.jsonl
+**/tasks/*/logs/api_calls.jsonl
+**/detailed_llm_logs/
+environment_io.md
+loggger.log
