@@ -33,8 +33,18 @@ from _provenance import (  # noqa: E402
 def find_telemetry_files(campaign_dir: Path) -> tuple[list[Path], list[Path]]:
     if (campaign_dir / "run_config.json").exists():
         roots = [campaign_dir]
+    elif (campaign_dir / "telemetry").exists():
+        roots = [campaign_dir]
     else:
         roots = sorted(path.parent for path in campaign_dir.rglob("run_config.json"))
+        appworld_roots = sorted(
+            {
+                path.parent.parent
+                for path in campaign_dir.rglob("telemetry/*.otel.jsonl")
+                if path.parent.name == "telemetry"
+            }
+        )
+        roots.extend(root for root in appworld_roots if root not in roots)
 
     trace_files: list[Path] = []
     metrics_files: list[Path] = []

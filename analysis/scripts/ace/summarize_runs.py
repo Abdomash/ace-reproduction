@@ -301,6 +301,14 @@ def summarize_llm_logs(log_dir: Path) -> dict[str, Any]:
     return {"roles": roles, "total": total}
 
 
+def is_appworld_run(run_dir: Path) -> bool:
+    return (
+        (run_dir / "summary" / "run_summary.json").exists()
+        or (run_dir / "evaluations").exists()
+        or (run_dir / "tasks").exists()
+    )
+
+
 def find_run(identifier: str, results_root: Path) -> Path:
     reject_old_layout(identifier)
     candidate = Path(identifier)
@@ -321,20 +329,58 @@ def find_runs(identifier: str, results_root: Path) -> list[Path]:
     candidate = Path(identifier)
     if candidate.exists() and candidate.is_dir():
         root = candidate.resolve()
-        if (root / "run_config.json").exists():
+        if (root / "run_config.json").exists() or is_appworld_run(root):
             return [root]
         runs = sorted(p.parent for p in root.rglob("run_config.json"))
         if runs:
             return runs
+        appworld_runs = sorted(
+            {
+                p.parent.parent
+                for p in root.rglob("summary/run_summary.json")
+                if p.parent.name == "summary"
+            }
+        )
+        appworld_runs.extend(
+            sorted(
+                {
+                    p.parent.parent
+                    for p in root.rglob("evaluations/*.json")
+                    if p.parent.name == "evaluations"
+                }
+            )
+        )
+        appworld_runs = sorted(set(appworld_runs))
+        if appworld_runs:
+            return appworld_runs
         raise FileNotFoundError(f"No run_config.json files found under {identifier}")
 
     campaign = results_root / identifier
     if campaign.exists() and campaign.is_dir():
-        if (campaign / "run_config.json").exists():
+        if (campaign / "run_config.json").exists() or is_appworld_run(campaign):
             return [campaign.resolve()]
         runs = sorted(p.parent for p in campaign.rglob("run_config.json"))
         if runs:
             return runs
+        appworld_runs = sorted(
+            {
+                p.parent.parent
+                for p in campaign.rglob("summary/run_summary.json")
+                if p.parent.name == "summary"
+            }
+        )
+        appworld_runs.extend(
+            sorted(
+                {
+                    p.parent.parent
+                    for p in campaign.rglob("evaluations/*.json")
+                    if p.parent.name == "evaluations"
+                }
+            )
+        )
+        appworld_runs = sorted(set(appworld_runs))
+        if appworld_runs:
+            return appworld_runs
 
     return [find_run(identifier, results_root)]
 
@@ -356,12 +402,59 @@ def input_paths_for_run(run_dir: Path) -> list[tuple[Path, str]]:
         (run_dir / "detailed_llm_logs" / "curator_failures.txt", "curator_failures"),
     ]
     paths.extend((path, "llm_log") for path in sorted((run_dir / "detailed_llm_logs").glob("*.json")))
+    paths.extend((path, "appworld_summary") for path in sorted((run_dir / "summary").glob("*")))
+    paths.extend((path, "appworld_evaluation") for path in sorted((run_dir / "evaluations").glob("*")))
     paths.extend((path, "telemetry_trace") for path in sorted((run_dir / "telemetry").glob("*.otel.jsonl")))
     paths.extend((path, "telemetry_metrics") for path in sorted((run_dir / "telemetry").glob("*.metrics.jsonl")))
     return paths
 
 
+def load_first_json(paths: list[Path]) -> Any | None:
+    for path in paths:
+        data = load_json(path)
+        if data:
+            return data
+    return None
+
+
+def summarize_appworld_run(run_dir: Path) -> dict[str, Any]:
+    summary_dir = run_dir / "summary"
+    evaluation_summary = load_json(summary_dir / "evaluation_summary.json")
+    if not evaluation_summary:
+        evaluation_summary = {"available": False}
+        evaluation_data = load_first_json(sorted((run_dir / "evaluations").glob("*.json")))
+        if isinstance(evaluation_data, dict):
+            evaluation_summary = {
+                "available": True,
+                "aggregate": evaluation_data.get("aggregate", {}),
+                "task_count": len(evaluation_data.get("individual", {})),
+            }
+    llm_summary = load_json(summary_dir / "llm_summary.json") or {}
+    api_summary = load_json(summary_dir / "api_summary.json") or {}
+    telemetry_summary = load_json(summary_dir / "telemetry_summary.json") or {}
+    run_summary = load_json(summary_dir / "run_summary.json") or {}
+    config_candidates = sorted((run_dir.parent / "_appworld_configs").glob(f"{run_dir.name}.jsonnet"))
+
+    return {
+        "benchmark": "ace-appworld",
+        "run_id": run_dir.name,
+        "path": str(run_dir),
+        "appworld": {
+            "dataset": run_summary.get("dataset"),
+            "evaluation": evaluation_summary,
+            "llm": llm_summary,
+            "api": api_summary,
+            "telemetry": telemetry_summary,
+            "run": run_summary,
+            "config_paths": [str(path) for path in config_candidates],
+        },
+    }
+
+
 def analyze_run(run_dir: Path) -> dict[str, Any]:
+    if is_appworld_run(run_dir) and not (run_dir / "run_config.json").exists():
+        return summarize_appworld_run(run_dir)
+
     run_config = load_json(run_dir / "run_config.json") or {}
     path_identity = load_json(run_dir / "result_path.json") or {}
     config = run_config.get("config") or {}
@@ -520,6 +613,10 @@ def build_notes(report: dict[str, Any]) -> list[str]:
 
 
 def print_run_report(report: dict[str, Any], verbose: bool = False) -> None:
+    if report.get("benchmark") == "ace-appworld":
+        print_appworld_report(report, verbose=verbose)
+        return
+
     print(f"# {report['run_id']}")
     print(f"Path: {report['path']}")
     print(
@@ -709,9 +806,123 @@ def print_run_report(report: dict[str, Any], verbose: bool = False) -> None:
     print()
 
 
+def print_appworld_report(report: dict[str, Any], verbose: bool = False) -> None:
+    appworld = report.get("appworld") or {}
+    evaluation = appworld.get("evaluation") or {}
+    llm = appworld.get("llm") or {}
+    api = appworld.get("api") or {}
+    telemetry = appworld.get("telemetry") or {}
+    run = appworld.get("run") or {}
+    aggregate = evaluation.get("aggregate") or {}
+    totals = llm.get("totals") or {}
+
+    print(f"# {report['run_id']}")
+    print(f"Path: {report['path']}")
+    print(f"Task: ace-appworld | Dataset: {appworld.get('dataset') or run.get('dataset')}")
+
+    print("\nEvaluation:")
+    print(
+        "  task_goal_completion={task_goal} scenario_goal_completion={scenario_goal}".format(
+            task_goal=aggregate.get("task_goal_completion", "n/a"),
+            scenario_goal=aggregate.get("scenario_goal_completion", "n/a"),
+        )
+    )
+    if evaluation.get("task_count") is not None:
+        print(
+            "  tasks={passed}/{total} scenarios={scenario_passed}/{scenario_total} failures={failures}".format(
+                passed=evaluation.get("task_success_count", "n/a"),
+                total=evaluation.get("task_count", "n/a"),
+                scenario_passed=evaluation.get("scenario_success_count", "n/a"),
+                scenario_total=evaluation.get("scenario_count", "n/a"),
+                failures=evaluation.get("failure_count", "n/a"),
+            )
+        )
+    if evaluation.get("difficulty"):
+        print(f"  difficulty: {evaluation.get('difficulty')}")
+
+    print("\nLLM usage and cost:")
+    print(
+        "  calls={calls} cost={cost} prompt_tokens={prompt} response_tokens={response} total_tokens={total} calls_with_cost={priced}".format(
+            calls=llm.get("call_count", "n/a"),
+            cost=money_fmt(totals.get("cost_usd")),
+            prompt=int(totals.get("prompt_num_tokens") or 0),
+            response=int(totals.get("response_num_tokens") or 0),
+            total=int(totals.get("total_num_tokens") or 0),
+            priced=llm.get("nonzero_cost_call_count", "n/a"),
+        )
+    )
+    if llm.get("role_counts"):
+        print(f"  role_counts: {llm.get('role_counts')}")
+    if totals.get("wall_time_seconds") or totals.get("call_time"):
+        print(
+            "  wall_time={wall:.2f}s call_time={call:.2f}s".format(
+                wall=float(totals.get("wall_time_seconds") or 0.0),
+                call=float(totals.get("call_time") or 0.0),
+            )
+        )
+
+    print("\nAPI and telemetry:")
+    print(f"  api_calls={api.get('api_call_count', 'n/a')}")
+    print(
+        "  spans={spans} trace_files={trace_files} metric_files={metric_files}".format(
+            spans=telemetry.get("span_count", "n/a"),
+            trace_files=telemetry.get("trace_file_count", "n/a"),
+            metric_files=telemetry.get("metric_file_count", "n/a"),
+        )
+    )
+    metrics = telemetry.get("metrics") or {}
+    for metric_name in ("process.cpu.usage", "process.memory.usage_bytes"):
+        metric = metrics.get(metric_name)
+        if metric:
+            print(
+                "  {name}: avg={avg:.2f} max={max:.2f} {unit}".format(
+                    name=metric_name,
+                    avg=float(metric.get("avg") or 0.0),
+                    max=float(metric.get("max") or 0.0),
+                    unit=metric.get("unit") or "",
+                )
+            )
+
+    if run:
+        print("\nArtifacts:")
+        print(
+            "  size={size} post_export_size={post} tasks={tasks}".format(
+                size=run.get("total_size_bytes", "n/a"),
+                post=run.get("post_export_size_bytes", "n/a"),
+                tasks=run.get("task_directory_count", "n/a"),
+            )
+        )
+
+    if verbose:
+        print("\nRaw summary:")
+        print(json.dumps(appworld, indent=2, sort_keys=True))
+    print()
+
+
 def print_comparison(reports: list[dict[str, Any]]) -> None:
     if len(reports) < 2:
         return
+    if all(report.get("benchmark") == "ace-appworld" for report in reports):
+        print("# Comparison")
+        print("run_id")
+        print("  task_goal  scenario_goal  calls  cost")
+        for report in reports:
+            appworld = report.get("appworld") or {}
+            aggregate = ((appworld.get("evaluation") or {}).get("aggregate") or {})
+            llm = appworld.get("llm") or {}
+            totals = llm.get("totals") or {}
+            print(report["run_id"])
+            print(
+                "  {task_goal:<10} {scenario_goal:<14} {calls:<6} {cost}".format(
+                    task_goal=aggregate.get("task_goal_completion", "n/a"),
+                    scenario_goal=aggregate.get("scenario_goal_completion", "n/a"),
+                    calls=llm.get("call_count", "n/a"),
+                    cost=money_fmt(totals.get("cost_usd")),
+                )
+            )
+        print()
+        return
+
     print("# Comparison")
     print("run_id")
     print("  initial_tag  final_tag   delta_tag_acc  delta_tags  exact_i  exact_f  best_val")
