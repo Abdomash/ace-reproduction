@@ -4,7 +4,7 @@ This directory contains operational entrypoints for experiments.
 
 - `ace/run_experiments.sh`: unified local ACE runner for FiNER, Formula, and AppWorld presets.
 - `ace/setup_appworld.sh`: pinned AppWorld setup helper.
-- `ace/subset/`: OpenRouter FiNER subset launchers.
+- `ace/subset/`: OpenRouter subset launchers with model-slug based wrappers.
 - `ace/slurm/`: SLURM jobs for cluster runs.
 - `ace-appworld/configs/`: AppWorld experiment configs added for this reproduction.
 
@@ -28,5 +28,7 @@ Common variables:
 ```bash
 runners/ace/run_experiments.sh finer_subset --dry-run
 runners/ace/run_experiments.sh appworld_subset --dry-run
-runners/ace/subset/run-finar-gptoss20b-subset.sh
+runners/ace/subset/run-finar-subset.sh minimax/minimax-m2.7
+runners/ace/subset/run-finar-subset.sh openai/gpt-oss-20b:nitro --config-name ace_all_gptoss20b_subset
+runners/ace/subset/run-appworld-subset.sh openai/gpt-oss-120b:nitro --appworld-max-steps 10
 ```
