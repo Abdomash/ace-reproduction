@@ -1,0 +1,4 @@
+/home/abdo/ace-reproduction/projects/maestro/plot/lib/visualizers.py:226: UserWarning: set_ticklabels() should only be used with a fixed number of ticks, i.e. after set_ticks() or using a FixedLocator.
+  ax3.set_xticklabels(agents, rotation=45, ha='right', fontsize=8)
+/home/abdo/ace-reproduction/projects/maestro/plot/lib/per_run_analyzer.py:1591: UserWarning: This figure includes Axes that are not compatible with tight_layout, so results might be incorrect.
+  plt.tight_layout()

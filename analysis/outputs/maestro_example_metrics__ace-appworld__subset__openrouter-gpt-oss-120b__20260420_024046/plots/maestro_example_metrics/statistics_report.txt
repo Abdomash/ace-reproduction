@@ -1,0 +1,66 @@
+================================================================================
+Per-Run Analysis Statistics Report
+================================================================================
+
+Number of runs analyzed: 1
+
+E2E Delay Statistics:
+  Mean ± Std: 1270518.12 ± 0.00 ms
+  Min: 1270518.12 ms, Max: 1270518.12 ms
+  Percentiles: p50=1270518.12 ms, p95=1270518.12 ms, p99=1270518.12 ms
+  Coefficient of Variation (CV): 0.000 (0.0%)
+  Number of runs: 1
+
+Token Consumption Statistics:
+  Total across all runs: 20,267,207 tokens
+    - Prompt: 20,031,349 tokens
+    - Completion: 235,858 tokens
+  Mean per run: 20267207 tokens
+  Std per run: 0 tokens
+
+Agent-LLM Delay Statistics:
+  Mean ± Std: 1945.90 ± 1211.24 ms
+  Min: 702.43 ms, Max: 10110.14 ms
+  p95: 3641.90 ms
+  Total observations: 591
+
+CPU Usage Statistics (Process-Level):
+  Mean CPU Usage per Run:
+    Mean ± Std: 163.72 ± 0.00%
+    Min: 163.72%, Max: 163.72%
+    p50: 163.72%, p95: 163.72%
+  Peak CPU Usage per Run:
+    Mean ± Std: 24704.20 ± 0.00%
+    Min: 24704.20%, Max: 24704.20%
+    p50: 24704.20%, p95: 24704.20%
+  Number of runs: 1
+
+Memory Usage Statistics (Process-Level):
+  Mean Memory Usage per Run:
+    Mean ± Std: 734.63 ± 0.00 MB
+    Min: 734.63 MB, Max: 734.63 MB
+    p50: 734.63 MB, p95: 734.63 MB
+  Peak Memory Usage per Run:
+    Mean ± Std: 815.34 ± 0.00 MB
+    Min: 815.34 MB, Max: 815.34 MB
+    p50: 815.34 MB, p95: 815.34 MB
+  Number of runs: 1
+
+Message Size Statistics:
+  Inter-Agent Input (Total per Run):
+    Mean ± Std: 0.00 ± 0.00 KB
+    Min: 0.00 KB, Max: 0.00 KB
+    p50: 0.00 KB, p95: 0.00 KB
+  Inter-Agent Output (Total per Run):
+    Mean ± Std: 0.00 ± 0.00 KB
+    Min: 0.00 KB, Max: 0.00 KB
+    p50: 0.00 KB, p95: 0.00 KB
+  Agent-LLM Input (Total per Run):
+    Mean ± Std: 97677.50 ± 0.00 KB
+    Min: 97677.50 KB, Max: 97677.50 KB
+    p50: 97677.50 KB, p95: 97677.50 KB
+  Agent-LLM Output (Total per Run):
+    Mean ± Std: 1840.51 ± 0.00 KB
+    Min: 1840.51 KB, Max: 1840.51 KB
+    p50: 1840.51 KB, p95: 1840.51 KB
+
