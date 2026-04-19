@@ -1,0 +1,278 @@
+{
+  "analysis_id": "summarize_runs__ace-appworld__subset__openrouter-gpt-oss-120b__ace-appworld-gptoss120b-subset__20260420_011431",
+  "analysis_kind": "summarize_runs",
+  "command": "python analysis/scripts/ace/summarize_runs.py results/ace-appworld/subset/openrouter-gpt-oss-120b/ace_appworld_gptoss120b_subset",
+  "created_at": "2026-04-20T01:14:31.786085+03:00",
+  "git_commit": "ad2d975908a6e05c92757a7098e49442adff7f70",
+  "inputs": [
+    {
+      "files": [
+        {
+          "bytes": 138408,
+          "path": "results/ace-appworld/subset/openrouter-gpt-oss-120b/ace_appworld_gptoss120b_subset/telemetry/run_ace_appworld_gptoss120b_subset_p0_of_20.otel.jsonl",
+          "sha256": "698f66afd699706abb232ed5690a6ac1e236c1b9f82bb9a0a2b0706822446170"
+        },
+        {
+          "bytes": 180652,
+          "path": "results/ace-appworld/subset/openrouter-gpt-oss-120b/ace_appworld_gptoss120b_subset/telemetry/run_ace_appworld_gptoss120b_subset_p10_of_20.otel.jsonl",
+          "sha256": "0cfe9a57c69b7920779355417cb0fd7fb977d4ff2d8b9506b053d4e06bb93277"
+        },
+        {
+          "bytes": 277347,
+          "path": "results/ace-appworld/subset/openrouter-gpt-oss-120b/ace_appworld_gptoss120b_subset/telemetry/run_ace_appworld_gptoss120b_subset_p11_of_20.otel.jsonl",
+          "sha256": "64c9e7ce57cdb08918ce69d94d1809e33a6280fabc8f42705f15af42f850ea5d"
+        },
+        {
+          "bytes": 150486,
+          "path": "results/ace-appworld/subset/openrouter-gpt-oss-120b/ace_appworld_gptoss120b_subset/telemetry/run_ace_appworld_gptoss120b_subset_p12_of_20.otel.jsonl",
+          "sha256": "1cb96c34db91a84824c3ef6af047a1c2de0ec1724711f551369c31df50b855d6"
+        },
+        {
+          "bytes": 114264,
+          "path": "results/ace-appworld/subset/openrouter-gpt-oss-120b/ace_appworld_gptoss120b_subset/telemetry/run_ace_appworld_gptoss120b_subset_p13_of_20.otel.jsonl",
+          "sha256": "18c3889f4ac08c190654d06d1cc6f9ad0bbc80d830eb0a79b89013b1c0e2371e"
+        },
+        {
+          "bytes": 162540,
+          "path": "results/ace-appworld/subset/openrouter-gpt-oss-120b/ace_appworld_gptoss120b_subset/telemetry/run_ace_appworld_gptoss120b_subset_p14_of_20.otel.jsonl",
+          "sha256": "f39804f6aa70964b8baa6680cfde318fef7d00cce0dec6aa600841a18bfc3cc2"
+        },
+        {
+          "bytes": 120282,
+          "path": "results/ace-appworld/subset/openrouter-gpt-oss-120b/ace_appworld_gptoss120b_subset/telemetry/run_ace_appworld_gptoss120b_subset_p15_of_20.otel.jsonl",
+          "sha256": "8a6bd0f57d2e37885e5c579534f36d0a292ff8d407ff26a700de4a5663d52894"
+        },
+        {
+          "bytes": 65962,
+          "path": "results/ace-appworld/subset/openrouter-gpt-oss-120b/ace_appworld_gptoss120b_subset/telemetry/run_ace_appworld_gptoss120b_subset_p16_of_20.otel.jsonl",
+          "sha256": "19001e67ce2bbeca1faa3c14e7e2456601232b241f593635c3759a78ea9f2c63"
+        },
+        {
+          "bytes": 78027,
+          "path": "results/ace-appworld/subset/openrouter-gpt-oss-120b/ace_appworld_gptoss120b_subset/telemetry/run_ace_appworld_gptoss120b_subset_p17_of_20.otel.jsonl",
+          "sha256": "5e71285c9970928cffaca56c62609edcb90c89bef7fa73c3f34ac61537555599"
+        },
+        {
+          "bytes": 132351,
+          "path": "results/ace-appworld/subset/openrouter-gpt-oss-120b/ace_appworld_gptoss120b_subset/telemetry/run_ace_appworld_gptoss120b_subset_p18_of_20.otel.jsonl",
+          "sha256": "c90c4a465b4cfb6331498169cc5f3f58196680adcfb2e02927c1e7b8c12ed4eb"
+        },
+        {
+          "bytes": 1226272,
+          "path": "results/ace-appworld/subset/openrouter-gpt-oss-120b/ace_appworld_gptoss120b_subset/telemetry/run_ace_appworld_gptoss120b_subset_p19_of_20.otel.jsonl",
+          "sha256": "7c332f60974179146023205bf9ae65306f4d640490be20722313b821de80d8c7"
+        },
+        {
+          "bytes": 120296,
+          "path": "results/ace-appworld/subset/openrouter-gpt-oss-120b/ace_appworld_gptoss120b_subset/telemetry/run_ace_appworld_gptoss120b_subset_p1_of_20.otel.jsonl",
+          "sha256": "c06ae8b0f0a4e1159ebea0bf0927164237669c2ef6dbef3fc7223e95a939543b"
+        },
+        {
+          "bytes": 78050,
+          "path": "results/ace-appworld/subset/openrouter-gpt-oss-120b/ace_appworld_gptoss120b_subset/telemetry/run_ace_appworld_gptoss120b_subset_p2_of_20.otel.jsonl",
+          "sha256": "8562e36669f4b7f32373e54eaf1181c21e7d83bbb75ed0bb6b9981eeb4613002"
+        },
+        {
+          "bytes": 168588,
+          "path": "results/ace-appworld/subset/openrouter-gpt-oss-120b/ace_appworld_gptoss120b_subset/telemetry/run_ace_appworld_gptoss120b_subset_p3_of_20.otel.jsonl",
+          "sha256": "b7d1a22b60cac01f15a8fe6da190159c728a5dd90ad46c7ed41c33a150f52d61"
+        },
+        {
+          "bytes": 114264,
+          "path": "results/ace-appworld/subset/openrouter-gpt-oss-120b/ace_appworld_gptoss120b_subset/telemetry/run_ace_appworld_gptoss120b_subset_p4_of_20.otel.jsonl",
+          "sha256": "fce14e32d6ad46dc3ed8822288d09e6785e2fa0c6b34628f57281931e2282936"
+        },
+        {
+          "bytes": 72016,
+          "path": "results/ace-appworld/subset/openrouter-gpt-oss-120b/ace_appworld_gptoss120b_subset/telemetry/run_ace_appworld_gptoss120b_subset_p5_of_20.otel.jsonl",
+          "sha256": "8081c2103d6daf107dfb9af94989bcfa97084054ead0607e563d23afe88c00f0"
+        },
+        {
+          "bytes": 53912,
+          "path": "results/ace-appworld/subset/openrouter-gpt-oss-120b/ace_appworld_gptoss120b_subset/telemetry/run_ace_appworld_gptoss120b_subset_p6_of_20.otel.jsonl",
+          "sha256": "f25f39e45e859cdaeab331383fea6574a4c1f5aa1b04575bcb83619917560c9d"
+        },
+        {
+          "bytes": 102198,
+          "path": "results/ace-appworld/subset/openrouter-gpt-oss-120b/ace_appworld_gptoss120b_subset/telemetry/run_ace_appworld_gptoss120b_subset_p7_of_20.otel.jsonl",
+          "sha256": "b06ed0c5912cb5b53e7425fa0776ac6390fd4651a8efca30267ec18b3779df19"
+        },
+        {
+          "bytes": 132379,
+          "path": "results/ace-appworld/subset/openrouter-gpt-oss-120b/ace_appworld_gptoss120b_subset/telemetry/run_ace_appworld_gptoss120b_subset_p8_of_20.otel.jsonl",
+          "sha256": "55ac7d066da416eea21d18a7822fa893d149db0aadf46b913578534d3045d775"
+        },
+        {
+          "bytes": 126347,
+          "path": "results/ace-appworld/subset/openrouter-gpt-oss-120b/ace_appworld_gptoss120b_subset/telemetry/run_ace_appworld_gptoss120b_subset_p9_of_20.otel.jsonl",
+          "sha256": "0f4ebe2f3db37273340ad646e106c76fb03ea11613ea0a91079656319fedeccf"
+        },
+        {
+          "bytes": 3284,
+          "path": "results/ace-appworld/subset/openrouter-gpt-oss-120b/ace_appworld_gptoss120b_subset/telemetry/ace-appworld_ace_appworld_gptoss120b_subset_p0_of_20.metrics.jsonl",
+          "sha256": "3fc5743f70c930a2c41ecda98c370515c4c857506ee4370368cfc69810619ac5"
+        },
+        {
+          "bytes": 4345,
+          "path": "results/ace-appworld/subset/openrouter-gpt-oss-120b/ace_appworld_gptoss120b_subset/telemetry/ace-appworld_ace_appworld_gptoss120b_subset_p10_of_20.metrics.jsonl",
+          "sha256": "fadc05aa22ea8b5e4a4c518b503b7753fbdcfa518c0f1442145ef091e76bc6e6"
+        },
+        {
+          "bytes": 3269,
+          "path": "results/ace-appworld/subset/openrouter-gpt-oss-120b/ace_appworld_gptoss120b_subset/telemetry/ace-appworld_ace_appworld_gptoss120b_subset_p11_of_20.metrics.jsonl",
+          "sha256": "409754dcfc01a71db081da1e54519e902e559234cf918e0ff6d1935ae639c724"
+        },
+        {
+          "bytes": 3280,
+          "path": "results/ace-appworld/subset/openrouter-gpt-oss-120b/ace_appworld_gptoss120b_subset/telemetry/ace-appworld_ace_appworld_gptoss120b_subset_p12_of_20.metrics.jsonl",
+          "sha256": "7b3e80d0eb1d78a6a9396ff2bf06cdd9288e1305bf29cc194ebad69d27b6e1a1"
+        },
+        {
+          "bytes": 3282,
+          "path": "results/ace-appworld/subset/openrouter-gpt-oss-120b/ace_appworld_gptoss120b_subset/telemetry/ace-appworld_ace_appworld_gptoss120b_subset_p13_of_20.metrics.jsonl",
+          "sha256": "7b56a7e4ca3f74108212f78730fdcd876c96117e3f9c5ed4276ab74a5b1a919e"
+        },
+        {
+          "bytes": 4362,
+          "path": "results/ace-appworld/subset/openrouter-gpt-oss-120b/ace_appworld_gptoss120b_subset/telemetry/ace-appworld_ace_appworld_gptoss120b_subset_p14_of_20.metrics.jsonl",
+          "sha256": "ae5c4263d557d0c5a90604003554b5ff0d7632c5efa68a697be17d6abac3c6bb"
+        },
+        {
+          "bytes": 4346,
+          "path": "results/ace-appworld/subset/openrouter-gpt-oss-120b/ace_appworld_gptoss120b_subset/telemetry/ace-appworld_ace_appworld_gptoss120b_subset_p15_of_20.metrics.jsonl",
+          "sha256": "3256caee761a0e71b53cb070d9dd4d718b1e072e7383faf7179aa0f3fb3ca6b1"
+        },
+        {
+          "bytes": 3280,
+          "path": "results/ace-appworld/subset/openrouter-gpt-oss-120b/ace_appworld_gptoss120b_subset/telemetry/ace-appworld_ace_appworld_gptoss120b_subset_p16_of_20.metrics.jsonl",
+          "sha256": "a780adf86e957027c2fb96eef15521fa292ffb5eafd45cb87a3dcf04b2c3f709"
+        },
+        {
+          "bytes": 4380,
+          "path": "results/ace-appworld/subset/openrouter-gpt-oss-120b/ace_appworld_gptoss120b_subset/telemetry/ace-appworld_ace_appworld_gptoss120b_subset_p17_of_20.metrics.jsonl",
+          "sha256": "5b2d6de442bade48d0c0ac75869c1b6dd1fa99600792d9d8ea335fa9916c6fc3"
+        },
+        {
+          "bytes": 5441,
+          "path": "results/ace-appworld/subset/openrouter-gpt-oss-120b/ace_appworld_gptoss120b_subset/telemetry/ace-appworld_ace_appworld_gptoss120b_subset_p18_of_20.metrics.jsonl",
+          "sha256": "87eb89a2b8f30388c4938ebc96a0b295b468a6445c3ace81c947593e3d39e90a"
+        },
+        {
+          "bytes": 7627,
+          "path": "results/ace-appworld/subset/openrouter-gpt-oss-120b/ace_appworld_gptoss120b_subset/telemetry/ace-appworld_ace_appworld_gptoss120b_subset_p19_of_20.metrics.jsonl",
+          "sha256": "1ca0e17a8a5fc36db98520106967ffde86f3783e1572f3628b620d9a3d5e20de"
+        },
+        {
+          "bytes": 3281,
+          "path": "results/ace-appworld/subset/openrouter-gpt-oss-120b/ace_appworld_gptoss120b_subset/telemetry/ace-appworld_ace_appworld_gptoss120b_subset_p1_of_20.metrics.jsonl",
+          "sha256": "bee69160130af705588d8f65a93306e8bf192c55938ec9bf00d1558ce704c3c1"
+        },
+        {
+          "bytes": 4362,
+          "path": "results/ace-appworld/subset/openrouter-gpt-oss-120b/ace_appworld_gptoss120b_subset/telemetry/ace-appworld_ace_appworld_gptoss120b_subset_p2_of_20.metrics.jsonl",
+          "sha256": "5253e2e27afa22de9abf7f811f2b8d40fa51e22de8e9c0ea83b66129ef6040bc"
+        },
+        {
+          "bytes": 4359,
+          "path": "results/ace-appworld/subset/openrouter-gpt-oss-120b/ace_appworld_gptoss120b_subset/telemetry/ace-appworld_ace_appworld_gptoss120b_subset_p3_of_20.metrics.jsonl",
+          "sha256": "08f6e6bc51d8aa3c36f024a04eebb5e5dbb4c7f76232f13655507905388c2da0"
+        },
+        {
+          "bytes": 4377,
+          "path": "results/ace-appworld/subset/openrouter-gpt-oss-120b/ace_appworld_gptoss120b_subset/telemetry/ace-appworld_ace_appworld_gptoss120b_subset_p4_of_20.metrics.jsonl",
+          "sha256": "f61ab9a68101e29f29926fe58947831c311505916e953ea03d8602094da6514c"
+        },
+        {
+          "bytes": 4374,
+          "path": "results/ace-appworld/subset/openrouter-gpt-oss-120b/ace_appworld_gptoss120b_subset/telemetry/ace-appworld_ace_appworld_gptoss120b_subset_p5_of_20.metrics.jsonl",
+          "sha256": "f6f961351451dc9e86195f6d5d199977e19e67897769e253add3f271fd383a85"
+        },
+        {
+          "bytes": 4380,
+          "path": "results/ace-appworld/subset/openrouter-gpt-oss-120b/ace_appworld_gptoss120b_subset/telemetry/ace-appworld_ace_appworld_gptoss120b_subset_p6_of_20.metrics.jsonl",
+          "sha256": "d051faadf67d774692a4ccc62e282d3cb7177696e5e1d605df9134b0e2ed048b"
+        },
+        {
+          "bytes": 4360,
+          "path": "results/ace-appworld/subset/openrouter-gpt-oss-120b/ace_appworld_gptoss120b_subset/telemetry/ace-appworld_ace_appworld_gptoss120b_subset_p7_of_20.metrics.jsonl",
+          "sha256": "9df847cc74275ea875e0dafae99b6dd812d1a92f5ad9b637a94d7fa0993515c9"
+        },
+        {
+          "bytes": 4359,
+          "path": "results/ace-appworld/subset/openrouter-gpt-oss-120b/ace_appworld_gptoss120b_subset/telemetry/ace-appworld_ace_appworld_gptoss120b_subset_p8_of_20.metrics.jsonl",
+          "sha256": "228a43ce1fe06e8cbc20ad6bc724e0733285578be492043bb29aed2c31cc3af0"
+        },
+        {
+          "bytes": 4361,
+          "path": "results/ace-appworld/subset/openrouter-gpt-oss-120b/ace_appworld_gptoss120b_subset/telemetry/ace-appworld_ace_appworld_gptoss120b_subset_p9_of_20.metrics.jsonl",
+          "sha256": "7d0b80c48d72d07ee8ab03d513910e57f95bc7ef6e21283a48c61c54b85b4de3"
+        }
+      ],
+      "run_dir": "results/ace-appworld/subset/openrouter-gpt-oss-120b/ace_appworld_gptoss120b_subset"
+    },
+    {
+      "files": [
+        {
+          "bytes": 211403,
+          "path": "results/ace-appworld/subset/openrouter-gpt-oss-120b/ace_appworld_gptoss120b_subset/evaluations/dev.json",
+          "sha256": "00fce7d867c7c30f8238f4b47de5771db208a06658ead03b674e2a75c13b8c3a"
+        },
+        {
+          "bytes": 378,
+          "path": "results/ace-appworld/subset/openrouter-gpt-oss-120b/ace_appworld_gptoss120b_subset/evaluations/dev.txt",
+          "sha256": "863e176cd45a7e9639090b2f2d6da84cf6e6699e659966127b8e35637725dc6f"
+        }
+      ],
+      "run_dir": "results/ace-appworld/subset/openrouter-gpt-oss-120b/ace_appworld_gptoss120b_subset/evaluations"
+    },
+    {
+      "files": [
+        {
+          "bytes": 48761,
+          "path": "results/ace-appworld/subset/openrouter-gpt-oss-120b/ace_appworld_gptoss120b_subset/summary/api_calls.summary.jsonl",
+          "sha256": "7ea86e778b9a5e2eb13ff49c3d6da534ff397e2d1b7728c6910512f000181188"
+        },
+        {
+          "bytes": 30771,
+          "path": "results/ace-appworld/subset/openrouter-gpt-oss-120b/ace_appworld_gptoss120b_subset/summary/api_summary.json",
+          "sha256": "90a8798e729413d8a68ac990fbbbc6f644775b5a58868ae3b41aa2e853fd4ec7"
+        },
+        {
+          "bytes": 150096,
+          "path": "results/ace-appworld/subset/openrouter-gpt-oss-120b/ace_appworld_gptoss120b_subset/summary/evaluation_summary.json",
+          "sha256": "3127e4e8ad35dc856cdd92f3805d523637382171b9434e7097ae96fed738f38e"
+        },
+        {
+          "bytes": 476974,
+          "path": "results/ace-appworld/subset/openrouter-gpt-oss-120b/ace_appworld_gptoss120b_subset/summary/llm_calls.compact.jsonl",
+          "sha256": "380b7d3ef6ef0ac3ecbc7c2627e7c1fa114290b4a3cf376aee40cdc1c87ce91c"
+        },
+        {
+          "bytes": 61614,
+          "path": "results/ace-appworld/subset/openrouter-gpt-oss-120b/ace_appworld_gptoss120b_subset/summary/llm_summary.json",
+          "sha256": "baf441378a00e9398c8d64030f50ce9ade757519b9e445711268f4fb4a1be161"
+        },
+        {
+          "bytes": 939,
+          "path": "results/ace-appworld/subset/openrouter-gpt-oss-120b/ace_appworld_gptoss120b_subset/summary/run_summary.json",
+          "sha256": "beafd8c936fb4ae0e2f34a4e39254a7a8bf051fcc1e9cda3574cfd7f7820553f"
+        },
+        {
+          "bytes": 1204,
+          "path": "results/ace-appworld/subset/openrouter-gpt-oss-120b/ace_appworld_gptoss120b_subset/summary/telemetry_summary.json",
+          "sha256": "0f081647c909b4431963742a579540d9f0820e1433e959539fe711dc8b9701f4"
+        }
+      ],
+      "run_dir": "results/ace-appworld/subset/openrouter-gpt-oss-120b/ace_appworld_gptoss120b_subset/summary"
+    }
+  ],
+  "outputs": [
+    "reports/summary.md"
+  ],
+  "parameters": {
+    "results_root": "results",
+    "runs": [
+      "results/ace-appworld/subset/openrouter-gpt-oss-120b/ace_appworld_gptoss120b_subset"
+    ]
+  }
+}
