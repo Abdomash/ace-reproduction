@@ -7,6 +7,7 @@ Example usage script for the ACE system.
 import os
 import json
 import argparse
+import random
 from .data_processor import DataProcessor
 
 from ace import ACE
@@ -194,6 +195,23 @@ def parse_args():
         default="./eval/finance/data/sample_config.json",
         help="Path to dataset config JSON",
     )
+    parser.add_argument("--train_limit", type=int, default=None)
+    parser.add_argument("--val_limit", type=int, default=None)
+    parser.add_argument("--test_limit", type=int, default=None)
+    parser.add_argument("--train_offset", type=int, default=0)
+    parser.add_argument("--val_offset", type=int, default=0)
+    parser.add_argument("--test_offset", type=int, default=0)
+    parser.add_argument(
+        "--sample_seed",
+        type=int,
+        default=42,
+        help="Seed for deterministic shuffled sample slicing",
+    )
+    parser.add_argument(
+        "--shuffle_samples",
+        action="store_true",
+        help="Shuffle each split deterministically before applying offset/limit",
+    )
 
     return parser.parse_args()
 
@@ -276,6 +294,75 @@ def preprocess_data(task_name, config, mode):
     return train_samples, val_samples, test_samples, processor
 
 
+def slice_samples(samples, split_name, limit, offset, shuffle_samples, sample_seed):
+    """Apply deterministic offset/limit slicing and return selected source indices."""
+    if samples is None:
+        return None, None
+    original_count = len(samples)
+    offset = max(0, int(offset or 0))
+    indices = list(range(original_count))
+    if shuffle_samples:
+        rng = random.Random(f"{sample_seed}:{split_name}")
+        rng.shuffle(indices)
+    sliced_indices = indices[offset:]
+    if limit is not None:
+        sliced_indices = sliced_indices[: max(0, int(limit))]
+    sliced_samples = [samples[idx] for idx in sliced_indices]
+    metadata = {
+        "split": split_name,
+        "original_count": original_count,
+        "selected_count": len(sliced_samples),
+        "limit": limit,
+        "offset": offset,
+        "shuffle_samples": bool(shuffle_samples),
+        "sample_seed": sample_seed,
+        "selected_indices": sliced_indices,
+    }
+    return sliced_samples, metadata
+
+
+def apply_sample_slicing(args, train_samples, val_samples, test_samples):
+    train_samples, train_meta = slice_samples(
+        train_samples,
+        "train",
+        args.train_limit,
+        args.train_offset,
+        args.shuffle_samples,
+        args.sample_seed,
+    )
+    val_samples, val_meta = slice_samples(
+        val_samples,
+        "val",
+        args.val_limit,
+        args.val_offset,
+        args.shuffle_samples,
+        args.sample_seed,
+    )
+    test_samples, test_meta = slice_samples(
+        test_samples,
+        "test",
+        args.test_limit,
+        args.test_offset,
+        args.shuffle_samples,
+        args.sample_seed,
+    )
+    metadata = {
+        "train": train_meta,
+        "val": val_meta,
+        "test": test_meta,
+    }
+    if any(meta is not None for meta in metadata.values()):
+        print("Sample slicing:")
+        for split, meta in metadata.items():
+            if meta:
+                print(
+                    f"  {split}: {meta['selected_count']}/{meta['original_count']} "
+                    f"(offset={meta['offset']}, limit={meta['limit']}, "
+                    f"shuffle={meta['shuffle_samples']})"
+                )
+    return train_samples, val_samples, test_samples, metadata
+
+
 def load_initial_playbook(path):
     """Load initial playbook if provided."""
     if path and os.path.exists(path):
@@ -302,6 +389,9 @@ def main():
 
     train_samples, val_samples, test_samples, data_processor = preprocess_data(
         args.task_name, task_config[args.task_name], args.mode
+    )
+    train_samples, val_samples, test_samples, slicing_metadata = apply_sample_slicing(
+        args, train_samples, val_samples, test_samples
     )
 
     # Load initial playbook (or use empty if None provided)
@@ -351,6 +441,7 @@ def main():
         "generator_model": args.generator_model,
         "reflector_model": args.reflector_model,
         "curator_model": args.curator_model,
+        "sample_slicing": slicing_metadata,
     }
 
     config["telemetry_enabled"] = args.telemetry_enabled
