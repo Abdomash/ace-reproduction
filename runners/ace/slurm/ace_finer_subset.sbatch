@@ -1,5 +1,5 @@
 #!/bin/bash --login
-#SBATCH --job-name=ace_finer_smoke
+#SBATCH --job-name=ace_finer_subset
 #SBATCH --output=%x-%j.out
 #SBATCH --error=%x-%j.err
 #SBATCH --qos=normal
@@ -15,7 +15,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd "${SCRIPT_DIR}/../../.." && pwd)"
 : "${ACE_ROOT:=${REPO_ROOT}/projects/ace}"
 : "${APPWORLD_ROOT:=${REPO_ROOT}/projects/ace-appworld}"
-: "${SAVE_PATH:=${REPO_ROOT}/results}"
+: "${RESULTS_ROOT:=${REPO_ROOT}/results}"
 
 if [ -n "${MAMBA_ENV:-}" ]; then
   mamba activate "${MAMBA_ENV}"
@@ -26,8 +26,10 @@ fi
 : "${REFLECTOR_MODEL:=openai/gpt-oss-120b:nitro}"
 : "${CURATOR_MODEL:=openai/gpt-oss-120b:nitro}"
 : "${TASK_NAME:=finer}"
-: "${CONFIG_NAME:=ace_all_openrouter_gptoss120b}"
+: "${CONFIG_NAME:=ace_all_openrouter_gptoss120b_subset}"
+: "${CONFIG_SLUG:=openrouter-gpt-oss-120b}"
 : "${SEED:=42}"
+: "${SAVE_PATH:=${RESULTS_ROOT}/ace-finer/subset/${CONFIG_SLUG}}"
 
 cd "${ACE_ROOT}"
 
@@ -44,5 +46,8 @@ python -m eval.finance.run \
   --telemetry_enabled \
   --telemetry_metrics_interval_seconds 5 \
   --config_name "${CONFIG_NAME}" \
+  --benchmark ace-finer \
+  --run_type subset \
+  --config_slug "${CONFIG_SLUG}" \
   --seed "${SEED}" \
   --save_path "${SAVE_PATH}"

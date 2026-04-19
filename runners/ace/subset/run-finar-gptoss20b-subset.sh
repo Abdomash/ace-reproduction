@@ -22,11 +22,14 @@ fi
 
 "${REPO_ROOT}/runners/ace/run_experiments.sh" finer_subset \
   --provider openrouter \
-  --generator openai/gpt-oss-120b:nitro \
-  --reflector openai/gpt-oss-120b:nitro \
-  --curator openai/gpt-oss-120b:nitro \
-  --config-name "${CONFIG_NAME:-ace_all_gptoss120b_subset_smoke}" \
-  --save-path "${SAVE_PATH:-${REPO_ROOT}/results/openrouter_gptoss120b_smoke}" \
+  --generator openai/gpt-oss-20b:nitro \
+  --reflector openai/gpt-oss-20b:nitro \
+  --curator openai/gpt-oss-20b:nitro \
+  --test-workers 7 \
+  --config-name "${CONFIG_NAME:-ace_all_gptoss20b_subset}" \
+  --results-root "${RESULTS_ROOT:-${REPO_ROOT}/results}" \
+  --run-type "${RUN_TYPE:-subset}" \
+  --config-slug "${CONFIG_SLUG:-openrouter-gpt-oss-20b}" \
   --seed "${SEED:-42}" \
   --mode "${MODE:-offline}" \
   --eval-steps "${EVAL_STEPS:-15}" \

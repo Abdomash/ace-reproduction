@@ -15,7 +15,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd "${SCRIPT_DIR}/../../.." && pwd)"
 : "${ACE_ROOT:=${REPO_ROOT}/projects/ace}"
 : "${APPWORLD_ROOT:=${REPO_ROOT}/projects/ace-appworld}"
-: "${SAVE_PATH:=${REPO_ROOT}/results}"
+: "${RESULTS_ROOT:=${REPO_ROOT}/results}"
 
 if [ -n "${MAMBA_ENV:-}" ]; then
   mamba activate "${MAMBA_ENV}"
@@ -32,6 +32,8 @@ run_one() {
   local generator_model="$4"
   local reflector_model="$5"
   local curator_model="$6"
+  local config_slug="$7"
+  local save_path="${RESULTS_ROOT}/ace-finer/full/${config_slug}"
 
   python -m eval.finance.run \
     --task_name "${TASK_NAME}" \
@@ -44,12 +46,15 @@ run_one() {
     --telemetry_enabled \
     --telemetry_metrics_interval_seconds 5 \
     --config_name "${config_name}" \
+    --benchmark ace-finer \
+    --run_type full \
+    --config_slug "${config_slug}" \
     --seed "${seed}" \
-    --save_path "${SAVE_PATH}"
+    --save_path "${save_path}"
 }
 
 for seed in 42 43 44; do
-  run_one "ace_all_openrouter_gptoss120b" "${seed}" "openrouter" "openai/gpt-oss-120b:nitro" "openai/gpt-oss-120b:nitro" "openai/gpt-oss-120b:nitro"
-  run_one "ace_all_openrouter_minimax_m27" "${seed}" "openrouter" "minimax/minimax-m2.7" "minimax/minimax-m2.7" "minimax/minimax-m2.7"
-  run_one "ace_mixed_openrouter_minimax_m27_reflector" "${seed}" "openrouter" "openai/gpt-oss-120b:nitro" "minimax/minimax-m2.7" "openai/gpt-oss-120b:nitro"
+  run_one "ace_all_openrouter_gptoss120b" "${seed}" "openrouter" "openai/gpt-oss-120b:nitro" "openai/gpt-oss-120b:nitro" "openai/gpt-oss-120b:nitro" "openrouter-gpt-oss-120b"
+  run_one "ace_all_openrouter_minimax_m27" "${seed}" "openrouter" "minimax/minimax-m2.7" "minimax/minimax-m2.7" "minimax/minimax-m2.7" "openrouter-minimax-m2-7"
+  run_one "ace_mixed_openrouter_minimax_m27_reflector" "${seed}" "openrouter" "openai/gpt-oss-120b:nitro" "minimax/minimax-m2.7" "openai/gpt-oss-120b:nitro" "openrouter-gpt-oss-120b-minimax-reflector"
 done

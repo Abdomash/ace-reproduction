@@ -22,15 +22,18 @@ fi
 
 "${REPO_ROOT}/runners/ace/run_experiments.sh" finer_subset \
   --provider openrouter \
-  --generator openai/gpt-oss-20b:nitro \
-  --reflector openai/gpt-oss-20b:nitro \
-  --curator openai/gpt-oss-20b:nitro \
-  --test-workers 7 \
-  --config-name "${CONFIG_NAME:-ace_all_gptoss20b_subset_smoke}" \
-  --save-path "${SAVE_PATH:-${REPO_ROOT}/results/openrouter_gptoss20b_smoke}" \
+  --generator minimax/minimax-m2.7 \
+  --reflector minimax/minimax-m2.7 \
+  --curator minimax/minimax-m2.7 \
+  --config-name "${CONFIG_NAME:-ace_all_openrouter_minimax_m27_subset}" \
+  --results-root "${RESULTS_ROOT:-${REPO_ROOT}/results}" \
+  --run-type "${RUN_TYPE:-subset}" \
+  --config-slug "${CONFIG_SLUG:-openrouter-minimax-m2-7}" \
   --seed "${SEED:-42}" \
   --mode "${MODE:-offline}" \
   --eval-steps "${EVAL_STEPS:-15}" \
+  --test-workers "${TEST_WORKERS:-5}" \
+  --max-tokens "${MAX_TOKENS:-4096}" \
   --telemetry "${TELEMETRY:-1}" \
   --telemetry-interval "${TELEMETRY_INTERVAL:-5}" \
   "$@"

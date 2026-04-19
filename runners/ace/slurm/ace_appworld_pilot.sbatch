@@ -15,7 +15,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd "${SCRIPT_DIR}/../../.." && pwd)"
 : "${ACE_ROOT:=${REPO_ROOT}/projects/ace}"
 : "${APPWORLD_ROOT:=${REPO_ROOT}/projects/ace-appworld}"
-: "${SAVE_PATH:=${REPO_ROOT}/results}"
+: "${RESULTS_ROOT:=${REPO_ROOT}/results}"
 
 if [ -n "${MAMBA_ENV:-}" ]; then
   mamba activate "${MAMBA_ENV}"
@@ -27,7 +27,9 @@ fi
 : "${CURATOR_MODEL:=openai/gpt-oss-120b:nitro}"
 : "${TASK_NAME:=appworld}"
 : "${CONFIG_NAME:=pilot}"
+: "${CONFIG_SLUG:=pilot}"
 : "${SEED:=42}"
+: "${SAVE_PATH:=${RESULTS_ROOT}/ace-appworld/debug/${CONFIG_SLUG}}"
 
 cd "${ACE_ROOT}"
 
@@ -43,6 +45,9 @@ python -m eval.appworld.run \
   --telemetry_enabled \
   --telemetry_metrics_interval_seconds 15 \
   --config_name "${CONFIG_NAME}" \
+  --benchmark ace-appworld \
+  --run_type debug \
+  --config_slug "${CONFIG_SLUG}" \
   --seed "${SEED}" \
   --appworld_root "${APPWORLD_ROOT}" \
   --save_path "${SAVE_PATH}"

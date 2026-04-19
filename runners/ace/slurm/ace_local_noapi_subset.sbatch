@@ -1,5 +1,5 @@
 #!/bin/bash --login
-#SBATCH --job-name=ace_local_noapi_smoke
+#SBATCH --job-name=ace_local_noapi_subset
 #SBATCH --output=%x-%j.out
 #SBATCH --error=%x-%j.err
 #SBATCH --qos=normal
@@ -45,7 +45,7 @@ class DummyProcessor:
         return sum(a == b for a, b in zip(answers, targets)) / len(answers)
 
 
-out_dir = Path(tempfile.mkdtemp(prefix="ace_slurm_smoke_", dir="/tmp"))
+out_dir = Path(tempfile.mkdtemp(prefix="ace_slurm_subset_", dir="/tmp"))
 
 ace_system = ACE(
     api_provider="openai",
@@ -71,7 +71,10 @@ config = {
     "telemetry_enabled": True,
     "telemetry_metrics_interval_seconds": 1,
     "seed": 42,
-    "config_name": "slurm_noapi_smoke",
+    "benchmark": "ace-finer",
+    "run_type": "subset",
+    "config_slug": "local-noapi",
+    "config_name": "slurm_noapi_subset",
 }
 
 results = ace_system.run(
@@ -88,7 +91,9 @@ run_config = json.loads((run_dir / "run_config.json").read_text())
 final_results = json.loads((run_dir / "final_results.json").read_text())
 
 telemetry = run_config.get("telemetry", {})
-assert run_config.get("run_id", "").startswith("ace_finer_offline_"), run_config.get("run_id")
+assert run_config.get("run_id", "").startswith("offline_seed-42_"), run_config.get("run_id")
+assert (run_dir / "result_path.json").exists(), run_dir
+assert (out_dir / "run_group.json").exists(), out_dir
 assert telemetry.get("enabled") is True, telemetry
 assert Path(telemetry.get("trace_path", "")).exists(), telemetry
 assert Path(telemetry.get("metrics_path", "")).exists(), telemetry
@@ -96,7 +101,7 @@ assert "training_results" in final_results, final_results.keys()
 assert "results" in final_results, final_results.keys()
 assert "training_results" in results, results.keys()
 
-print("SLURM_SMOKE_OK")
+print("SLURM_SUBSET_OK")
 print(f"run_dir={run_dir}")
 print(f"run_id={run_config.get('run_id')}")
 print(f"trace_path={telemetry.get('trace_path')}")
