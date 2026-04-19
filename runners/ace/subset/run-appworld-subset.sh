@@ -46,6 +46,7 @@ MODEL_SLUG="${MODEL_SLUG:-}"
 PROVIDER="${PROVIDER:-${API_PROVIDER:-openrouter}}"
 CONFIG_NAME_OVERRIDE="${CONFIG_NAME:-}"
 CONFIG_SLUG_OVERRIDE="${CONFIG_SLUG:-}"
+DRY_RUN_REQUESTED=0
 EXTRA_ARGS=()
 
 if [[ -f "${ENV_FILE}" ]]; then
@@ -77,6 +78,11 @@ while [[ $# -gt 0 ]]; do
     --config-slug|--config_slug)
       CONFIG_SLUG_OVERRIDE="$2"
       shift 2
+      ;;
+    --dry-run)
+      DRY_RUN_REQUESTED=1
+      EXTRA_ARGS+=("$1")
+      shift
       ;;
     -h|--help)
       usage
@@ -135,6 +141,12 @@ esac
 
 config_name="${CONFIG_NAME_OVERRIDE:-${default_config_name}}"
 config_slug="${CONFIG_SLUG_OVERRIDE:-${default_config_slug}}"
+if [[ -z "${CONFIG_NAME_OVERRIDE}" && "${APPWORLD_UNIQUE_RUNS:-1}" != "0" ]]; then
+  config_name="${config_name}_$(date -u +%Y%m%d_%H%M%S)"
+fi
+results_root="${RESULTS_ROOT:-${REPO_ROOT}/results}"
+run_type="${RUN_TYPE:-subset}"
+appworld_root="${APPWORLD_ROOT:-${REPO_ROOT}/projects/ace-appworld}"
 
 RUN_ARGS=(
   appworld_subset
@@ -144,10 +156,10 @@ RUN_ARGS=(
   --curator "${CURATOR_MODEL:-${MODEL_SLUG}}"
   --config-name "${config_name}"
   --config-slug "${config_slug}"
-  --results-root "${RESULTS_ROOT:-${REPO_ROOT}/results}"
-  --run-type "${RUN_TYPE:-subset}"
+  --results-root "${results_root}"
+  --run-type "${run_type}"
   --seed "${SEED:-42}"
-  --appworld-root "${APPWORLD_ROOT:-${REPO_ROOT}/projects/ace-appworld}"
+  --appworld-root "${appworld_root}"
   --appworld-max-steps "${APPWORLD_MAX_STEPS:-30}"
   --max-tokens "${MAX_TOKENS:-4096}"
   --telemetry "${TELEMETRY:-1}"
@@ -159,3 +171,17 @@ if [[ -n "${TEST_WORKERS:-}" ]]; then
 fi
 
 "${REPO_ROOT}/runners/ace/run_experiments.sh" "${RUN_ARGS[@]}" "${EXTRA_ARGS[@]}"
+
+if [[ "${DRY_RUN_REQUESTED}" == "0" && "${APPWORLD_EXPORT_SUMMARY:-1}" != "0" ]]; then
+  run_dir="${results_root}/ace-appworld/${run_type}/${config_slug}/${config_name}"
+  export_args=(
+    --run-dir "${run_dir}"
+    --dataset "${APPWORLD_SUMMARY_DATASET:-dev}"
+    --experiment-name "${config_name}"
+    --appworld-root "${appworld_root}"
+  )
+  if [[ "${APPWORLD_PRUNE_RAW_TASKS:-1}" != "0" ]]; then
+    export_args+=(--prune)
+  fi
+  python3 "${REPO_ROOT}/runners/ace/export_appworld_summary.py" "${export_args[@]}"
+fi

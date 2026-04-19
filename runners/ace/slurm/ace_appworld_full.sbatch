@@ -13,17 +13,12 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd "${SCRIPT_DIR}/../../.." && pwd)"
-: "${ACE_ROOT:=${REPO_ROOT}/projects/ace}"
 : "${APPWORLD_ROOT:=${REPO_ROOT}/projects/ace-appworld}"
 : "${RESULTS_ROOT:=${REPO_ROOT}/results}"
 
 if [ -n "${MAMBA_ENV:-}" ]; then
   mamba activate "${MAMBA_ENV}"
 fi
-
-: "${TASK_NAME:=appworld}"
-
-cd "${ACE_ROOT}"
 
 run_one() {
   local config_name="$1"
@@ -34,63 +29,42 @@ run_one() {
   local curator_model="$6"
   local config_slug="$7"
   local save_path="${RESULTS_ROOT}/ace-appworld/full/${config_slug}"
+  local playbook_path="${APPWORLD_ROOT}/experiments/playbooks/${config_name}_${seed}_playbook.txt"
 
-  python -m eval.appworld.run \
-    --task_name "${TASK_NAME}" \
-    --mode offline \
-    --dataset_name train \
-    --max_agent_steps 30 \
-    --api_provider "${api_provider}" \
-    --generator_model "${generator_model}" \
-    --reflector_model "${reflector_model}" \
-    --curator_model "${curator_model}" \
-    --telemetry_enabled \
-    --telemetry_metrics_interval_seconds 15 \
-    --config_name "${config_name}_offline" \
-    --benchmark ace-appworld \
-    --run_type full \
-    --config_slug "${config_slug}" \
-    --seed "${seed}" \
-    --appworld_root "${APPWORLD_ROOT}" \
-    --save_path "${save_path}"
+  APPWORLD_PLAYBOOK_PATH="${playbook_path}" \
+    "${REPO_ROOT}/runners/ace/run_experiments.sh" appworld_adaptation \
+      --mode offline \
+      --provider "${api_provider}" \
+      --generator "${generator_model}" \
+      --reflector "${reflector_model}" \
+      --curator "${curator_model}" \
+      --config-name "${config_name}_offline" \
+      --config-slug "${config_slug}" \
+      --results-root "${RESULTS_ROOT}" \
+      --run-type full \
+      --seed "${seed}" \
+      --appworld-root "${APPWORLD_ROOT}" \
+      --appworld-max-steps 30 \
+      --save-path "${save_path}" \
+      --telemetry 1 \
+      --telemetry-interval 15
 
-  python -m eval.appworld.run \
-    --task_name "${TASK_NAME}" \
-    --mode eval_only \
-    --dataset_name test_normal \
-    --max_agent_steps 30 \
-    --api_provider "${api_provider}" \
-    --generator_model "${generator_model}" \
-    --reflector_model "${reflector_model}" \
-    --curator_model "${curator_model}" \
-    --telemetry_enabled \
-    --telemetry_metrics_interval_seconds 15 \
-    --config_name "${config_name}_eval_test_normal" \
-    --benchmark ace-appworld \
-    --run_type full \
-    --config_slug "${config_slug}" \
-    --seed "${seed}" \
-    --appworld_root "${APPWORLD_ROOT}" \
-    --save_path "${save_path}"
-
-  python -m eval.appworld.run \
-    --task_name "${TASK_NAME}" \
-    --mode eval_only \
-    --dataset_name test_challenge \
-    --max_agent_steps 30 \
-    --api_provider "${api_provider}" \
-    --generator_model "${generator_model}" \
-    --reflector_model "${reflector_model}" \
-    --curator_model "${curator_model}" \
-    --telemetry_enabled \
-    --telemetry_metrics_interval_seconds 15 \
-    --config_name "${config_name}_eval_test_challenge" \
-    --benchmark ace-appworld \
-    --run_type full \
-    --config_slug "${config_slug}" \
-    --seed "${seed}" \
-    --appworld_root "${APPWORLD_ROOT}" \
-    --save_path "${save_path}"
+  APPWORLD_PLAYBOOK_PATH="${playbook_path}" \
+    "${REPO_ROOT}/runners/ace/run_experiments.sh" appworld_full_eval \
+      --provider "${api_provider}" \
+      --generator "${generator_model}" \
+      --reflector "${reflector_model}" \
+      --curator "${curator_model}" \
+      --config-name "${config_name}_eval" \
+      --config-slug "${config_slug}" \
+      --results-root "${RESULTS_ROOT}" \
+      --run-type full \
+      --seed "${seed}" \
+      --appworld-root "${APPWORLD_ROOT}" \
+      --appworld-max-steps 30 \
+      --save-path "${save_path}" \
+      --telemetry 1 \
+      --telemetry-interval 15
 }
 
 for seed in 42 43 44; do

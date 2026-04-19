@@ -13,7 +13,6 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd "${SCRIPT_DIR}/../../.." && pwd)"
-: "${ACE_ROOT:=${REPO_ROOT}/projects/ace}"
 : "${APPWORLD_ROOT:=${REPO_ROOT}/projects/ace-appworld}"
 : "${RESULTS_ROOT:=${REPO_ROOT}/results}"
 
@@ -25,29 +24,24 @@ fi
 : "${GENERATOR_MODEL:=openai/gpt-oss-120b:nitro}"
 : "${REFLECTOR_MODEL:=openai/gpt-oss-120b:nitro}"
 : "${CURATOR_MODEL:=openai/gpt-oss-120b:nitro}"
-: "${TASK_NAME:=appworld}"
 : "${CONFIG_NAME:=pilot}"
 : "${CONFIG_SLUG:=pilot}"
 : "${SEED:=42}"
 : "${SAVE_PATH:=${RESULTS_ROOT}/ace-appworld/debug/${CONFIG_SLUG}}"
 
-cd "${ACE_ROOT}"
-
-python -m eval.appworld.run \
-  --task_name "${TASK_NAME}" \
+"${REPO_ROOT}/runners/ace/run_experiments.sh" appworld_adaptation \
   --mode offline \
-  --dataset_name train \
-  --max_agent_steps 20 \
-  --api_provider "${API_PROVIDER}" \
-  --generator_model "${GENERATOR_MODEL}" \
-  --reflector_model "${REFLECTOR_MODEL}" \
-  --curator_model "${CURATOR_MODEL}" \
-  --telemetry_enabled \
-  --telemetry_metrics_interval_seconds 15 \
-  --config_name "${CONFIG_NAME}" \
-  --benchmark ace-appworld \
-  --run_type debug \
-  --config_slug "${CONFIG_SLUG}" \
+  --provider "${API_PROVIDER}" \
+  --generator "${GENERATOR_MODEL}" \
+  --reflector "${REFLECTOR_MODEL}" \
+  --curator "${CURATOR_MODEL}" \
+  --config-name "${CONFIG_NAME}" \
+  --config-slug "${CONFIG_SLUG}" \
+  --results-root "${RESULTS_ROOT}" \
+  --run-type debug \
   --seed "${SEED}" \
-  --appworld_root "${APPWORLD_ROOT}" \
-  --save_path "${SAVE_PATH}"
+  --appworld-root "${APPWORLD_ROOT}" \
+  --appworld-max-steps 20 \
+  --save-path "${SAVE_PATH}" \
+  --telemetry 1 \
+  --telemetry-interval 15
