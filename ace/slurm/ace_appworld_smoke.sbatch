@@ -15,8 +15,10 @@ if [ -n "${MAMBA_ENV:-}" ]; then
   mamba activate "${MAMBA_ENV}"
 fi
 
-: "${API_PROVIDER:=openai}"
-: "${GENERATOR_MODEL:=gpt-oss:20b}"
+: "${API_PROVIDER:=openrouter}"
+: "${GENERATOR_MODEL:=openai/gpt-oss-120b:nitro}"
+: "${REFLECTOR_MODEL:=openai/gpt-oss-120b:nitro}"
+: "${CURATOR_MODEL:=openai/gpt-oss-120b:nitro}"
 : "${SAVE_PATH:=./results}"
 : "${TASK_NAME:=appworld}"
 : "${CONFIG_NAME:=smoke}"
@@ -30,6 +32,8 @@ python -m eval.appworld.run \
   --max_agent_steps 10 \
   --api_provider "${API_PROVIDER}" \
   --generator_model "${GENERATOR_MODEL}" \
+  --reflector_model "${REFLECTOR_MODEL}" \
+  --curator_model "${CURATOR_MODEL}" \
   --telemetry_enabled \
   --telemetry_metrics_interval_seconds 15 \
   --config_name "${CONFIG_NAME}" \

@@ -13,10 +13,10 @@ The runner is paper-faithful by default: standard chat-completion calls,
 - You are in the ACE root directory: `ace/`
 - Python dependencies are installed (for example via `uv sync`)
 - API key for your selected provider is exported:
+  - `OPENROUTER_API_KEY` for `--provider openrouter`
   - `OPENAI_API_KEY` for `--provider openai`
   - `TOGETHER_API_KEY` for `--provider together`
   - `SAMBANOVA_API_KEY` for `--provider sambanova`
-  - `MINIMAX_API_KEY` for `--provider minimax`
 
 For AppWorld, make sure `ace-appworld` is installed and prepared (pinned commit recommended):
 
@@ -41,11 +41,11 @@ Available presets:
 
 ```bash
 ./scripts/run_experiments.sh finer_subset \
-  --provider openai \
-  --generator gpt-oss:20b \
-  --reflector gpt-oss:20b \
-  --curator gpt-oss:20b \
-  --config-name finer_subset_gptoss20b \
+  --provider openrouter \
+  --generator openai/gpt-oss-120b:nitro \
+  --reflector openai/gpt-oss-120b:nitro \
+  --curator openai/gpt-oss-120b:nitro \
+  --config-name ace_all_openrouter_gptoss120b_subset \
   --seed 42 \
   --telemetry 1 \
   --telemetry-interval 5
@@ -59,10 +59,10 @@ logged and counted as failed where the workflow can continue.
 
 ```bash
 ./scripts/run_experiments.sh appworld_subset \
-  --provider openai \
-  --generator gpt-oss:20b \
-  --reflector gpt-oss:20b \
-  --curator gpt-oss:20b \
+  --provider openrouter \
+  --generator openai/gpt-oss-120b:nitro \
+  --reflector openai/gpt-oss-120b:nitro \
+  --curator openai/gpt-oss-120b:nitro \
   --appworld-root ../ace-appworld \
   --appworld-max-steps 20 \
   --config-name appworld_subset_gptoss20b \
@@ -73,11 +73,11 @@ logged and counted as failed where the workflow can continue.
 
 ```bash
 ./scripts/run_experiments.sh all_full \
-  --provider minimax \
-  --generator MiniMax-M2.5 \
-  --reflector MiniMax-M2.5 \
-  --curator MiniMax-M2.5 \
-  --config-name all_minimax \
+  --provider openrouter \
+  --generator minimax/minimax-m2.7 \
+  --reflector minimax/minimax-m2.7 \
+  --curator minimax/minimax-m2.7 \
+  --config-name ace_all_openrouter_minimax_m27 \
   --seed 42
 ```
 

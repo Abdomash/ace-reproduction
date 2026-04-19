@@ -21,7 +21,10 @@ Presets:
   all_full              Runs finer_full then appworld_full_eval
 
 Options (override defaults):
-  --provider <name>         API provider: openai|together|sambanova|minimax
+  --provider <name>         API provider: openrouter|openai|together|sambanova
+  --generator-provider <name>
+  --reflector-provider <name>
+  --curator-provider <name>
   --generator <model>
   --reflector <model>
   --curator <model>
@@ -39,12 +42,12 @@ Options (override defaults):
   --dry-run
 
 Environment variables for API keys (depending on --provider):
-  OPENAI_API_KEY, TOGETHER_API_KEY, SAMBANOVA_API_KEY, MINIMAX_API_KEY
+  OPENROUTER_API_KEY, OPENAI_API_KEY, TOGETHER_API_KEY, SAMBANOVA_API_KEY
 
 Examples:
-  ./scripts/run_experiments.sh finer_subset --provider openai --generator gpt-oss:20b
-  ./scripts/run_experiments.sh appworld_subset --provider openai --generator gpt-oss:20b --appworld-root ../ace-appworld
-  ./scripts/run_experiments.sh all_full --provider minimax --generator MiniMax-M2.5 --reflector MiniMax-M2.5 --curator MiniMax-M2.5
+  ./scripts/run_experiments.sh finer_subset --provider openrouter --generator openai/gpt-oss-120b:nitro
+  ./scripts/run_experiments.sh appworld_subset --provider openrouter --generator openai/gpt-oss-120b:nitro --appworld-root ../ace-appworld
+  ./scripts/run_experiments.sh all_full --provider openrouter --generator minimax/minimax-m2.7 --reflector minimax/minimax-m2.7 --curator minimax/minimax-m2.7
 EOF
 }
 
@@ -56,10 +59,13 @@ fi
 PRESET="$1"
 shift
 
-API_PROVIDER="openai"
-GENERATOR_MODEL="gpt-oss:20b"
-REFLECTOR_MODEL="gpt-oss:20b"
-CURATOR_MODEL="gpt-oss:20b"
+API_PROVIDER="openrouter"
+GENERATOR_PROVIDER=""
+REFLECTOR_PROVIDER=""
+CURATOR_PROVIDER=""
+GENERATOR_MODEL="openai/gpt-oss-120b:nitro"
+REFLECTOR_MODEL="openai/gpt-oss-120b:nitro"
+CURATOR_MODEL="openai/gpt-oss-120b:nitro"
 SAVE_PATH="${ACE_ROOT}/results"
 CONFIG_NAME="default"
 SEED="42"
@@ -76,6 +82,9 @@ DRY_RUN="0"
 while [[ $# -gt 0 ]]; do
   case "$1" in
     --provider) API_PROVIDER="$2"; shift 2 ;;
+    --generator-provider|--generator_provider) GENERATOR_PROVIDER="$2"; shift 2 ;;
+    --reflector-provider|--reflector_provider) REFLECTOR_PROVIDER="$2"; shift 2 ;;
+    --curator-provider|--curator_provider) CURATOR_PROVIDER="$2"; shift 2 ;;
     --generator) GENERATOR_MODEL="$2"; shift 2 ;;
     --reflector) REFLECTOR_MODEL="$2"; shift 2 ;;
     --curator) CURATOR_MODEL="$2"; shift 2 ;;
@@ -105,7 +114,8 @@ check_api_key() {
     openai) [[ -n "${OPENAI_API_KEY:-}" ]] || { echo "Missing OPENAI_API_KEY"; exit 1; } ;;
     together) [[ -n "${TOGETHER_API_KEY:-}" ]] || { echo "Missing TOGETHER_API_KEY"; exit 1; } ;;
     sambanova) [[ -n "${SAMBANOVA_API_KEY:-}" ]] || { echo "Missing SAMBANOVA_API_KEY"; exit 1; } ;;
-    minimax) [[ -n "${MINIMAX_API_KEY:-}" ]] || { echo "Missing MINIMAX_API_KEY"; exit 1; } ;;
+    openrouter) [[ -n "${OPENROUTER_API_KEY:-}" ]] || { echo "Missing OPENROUTER_API_KEY"; exit 1; } ;;
+    minimax) echo "Provider 'minimax' is deprecated; use '--provider openrouter' with model 'minimax/minimax-m2.7'"; exit 1 ;;
     *) echo "Unsupported provider: ${API_PROVIDER}"; exit 1 ;;
   esac
 }
@@ -213,6 +223,27 @@ cd "${ACE_ROOT}"
 
 common_finance_args="--api_provider ${API_PROVIDER} --generator_model ${GENERATOR_MODEL} --reflector_model ${REFLECTOR_MODEL} --curator_model ${CURATOR_MODEL} --seed ${SEED} --config_name ${CONFIG_NAME} --save_path ${SAVE_PATH} --eval_steps ${EVAL_STEPS} --test_workers ${TEST_WORKERS} --max_tokens ${MAX_TOKENS} ${TELEMETRY_ARGS}"
 
+if [[ -n "${GENERATOR_PROVIDER}" ]]; then
+  common_finance_args="${common_finance_args} --generator_provider ${GENERATOR_PROVIDER}"
+fi
+if [[ -n "${REFLECTOR_PROVIDER}" ]]; then
+  common_finance_args="${common_finance_args} --reflector_provider ${REFLECTOR_PROVIDER}"
+fi
+if [[ -n "${CURATOR_PROVIDER}" ]]; then
+  common_finance_args="${common_finance_args} --curator_provider ${CURATOR_PROVIDER}"
+fi
+
+role_provider_args=""
+if [[ -n "${GENERATOR_PROVIDER}" ]]; then
+  role_provider_args="${role_provider_args} --generator_provider ${GENERATOR_PROVIDER}"
+fi
+if [[ -n "${REFLECTOR_PROVIDER}" ]]; then
+  role_provider_args="${role_provider_args} --reflector_provider ${REFLECTOR_PROVIDER}"
+fi
+if [[ -n "${CURATOR_PROVIDER}" ]]; then
+  role_provider_args="${role_provider_args} --curator_provider ${CURATOR_PROVIDER}"
+fi
+
 case "${PRESET}" in
   finer_subset)
     cfg_path="$(make_finer_subset_config)"
@@ -229,18 +260,18 @@ case "${PRESET}" in
     ;;
 
   appworld_subset)
-    run_cmd "python -m eval.appworld.run --task_name appworld --mode eval_only --dataset_name dev --max_agent_steps ${APPWORLD_MAX_STEPS} --api_provider ${API_PROVIDER} --generator_model ${GENERATOR_MODEL} --reflector_model ${REFLECTOR_MODEL} --curator_model ${CURATOR_MODEL} --seed ${SEED} --config_name ${CONFIG_NAME} --appworld_root ${APPWORLD_ROOT} --save_path ${SAVE_PATH} --test_workers ${TEST_WORKERS} --max_tokens ${MAX_TOKENS} ${TELEMETRY_ARGS}"
+    run_cmd "python -m eval.appworld.run --task_name appworld --mode eval_only --dataset_name dev --max_agent_steps ${APPWORLD_MAX_STEPS} --api_provider ${API_PROVIDER} ${role_provider_args} --generator_model ${GENERATOR_MODEL} --reflector_model ${REFLECTOR_MODEL} --curator_model ${CURATOR_MODEL} --seed ${SEED} --config_name ${CONFIG_NAME} --appworld_root ${APPWORLD_ROOT} --save_path ${SAVE_PATH} --test_workers ${TEST_WORKERS} --max_tokens ${MAX_TOKENS} ${TELEMETRY_ARGS}"
     ;;
 
   appworld_full_eval)
-    run_cmd "python -m eval.appworld.run --task_name appworld --mode eval_only --dataset_name test_normal --max_agent_steps ${APPWORLD_MAX_STEPS} --api_provider ${API_PROVIDER} --generator_model ${GENERATOR_MODEL} --reflector_model ${REFLECTOR_MODEL} --curator_model ${CURATOR_MODEL} --seed ${SEED} --config_name ${CONFIG_NAME}_test_normal --appworld_root ${APPWORLD_ROOT} --save_path ${SAVE_PATH} --test_workers ${TEST_WORKERS} --max_tokens ${MAX_TOKENS} ${TELEMETRY_ARGS}"
-    run_cmd "python -m eval.appworld.run --task_name appworld --mode eval_only --dataset_name test_challenge --max_agent_steps ${APPWORLD_MAX_STEPS} --api_provider ${API_PROVIDER} --generator_model ${GENERATOR_MODEL} --reflector_model ${REFLECTOR_MODEL} --curator_model ${CURATOR_MODEL} --seed ${SEED} --config_name ${CONFIG_NAME}_test_challenge --appworld_root ${APPWORLD_ROOT} --save_path ${SAVE_PATH} --test_workers ${TEST_WORKERS} --max_tokens ${MAX_TOKENS} ${TELEMETRY_ARGS}"
+    run_cmd "python -m eval.appworld.run --task_name appworld --mode eval_only --dataset_name test_normal --max_agent_steps ${APPWORLD_MAX_STEPS} --api_provider ${API_PROVIDER} ${role_provider_args} --generator_model ${GENERATOR_MODEL} --reflector_model ${REFLECTOR_MODEL} --curator_model ${CURATOR_MODEL} --seed ${SEED} --config_name ${CONFIG_NAME}_test_normal --appworld_root ${APPWORLD_ROOT} --save_path ${SAVE_PATH} --test_workers ${TEST_WORKERS} --max_tokens ${MAX_TOKENS} ${TELEMETRY_ARGS}"
+    run_cmd "python -m eval.appworld.run --task_name appworld --mode eval_only --dataset_name test_challenge --max_agent_steps ${APPWORLD_MAX_STEPS} --api_provider ${API_PROVIDER} ${role_provider_args} --generator_model ${GENERATOR_MODEL} --reflector_model ${REFLECTOR_MODEL} --curator_model ${CURATOR_MODEL} --seed ${SEED} --config_name ${CONFIG_NAME}_test_challenge --appworld_root ${APPWORLD_ROOT} --save_path ${SAVE_PATH} --test_workers ${TEST_WORKERS} --max_tokens ${MAX_TOKENS} ${TELEMETRY_ARGS}"
     ;;
 
   all_full)
     run_cmd "python -m eval.finance.run --task_name finer --mode offline ${common_finance_args}"
-    run_cmd "python -m eval.appworld.run --task_name appworld --mode eval_only --dataset_name test_normal --max_agent_steps ${APPWORLD_MAX_STEPS} --api_provider ${API_PROVIDER} --generator_model ${GENERATOR_MODEL} --reflector_model ${REFLECTOR_MODEL} --curator_model ${CURATOR_MODEL} --seed ${SEED} --config_name ${CONFIG_NAME}_test_normal --appworld_root ${APPWORLD_ROOT} --save_path ${SAVE_PATH} --test_workers ${TEST_WORKERS} --max_tokens ${MAX_TOKENS} ${TELEMETRY_ARGS}"
-    run_cmd "python -m eval.appworld.run --task_name appworld --mode eval_only --dataset_name test_challenge --max_agent_steps ${APPWORLD_MAX_STEPS} --api_provider ${API_PROVIDER} --generator_model ${GENERATOR_MODEL} --reflector_model ${REFLECTOR_MODEL} --curator_model ${CURATOR_MODEL} --seed ${SEED} --config_name ${CONFIG_NAME}_test_challenge --appworld_root ${APPWORLD_ROOT} --save_path ${SAVE_PATH} --test_workers ${TEST_WORKERS} --max_tokens ${MAX_TOKENS} ${TELEMETRY_ARGS}"
+    run_cmd "python -m eval.appworld.run --task_name appworld --mode eval_only --dataset_name test_normal --max_agent_steps ${APPWORLD_MAX_STEPS} --api_provider ${API_PROVIDER} ${role_provider_args} --generator_model ${GENERATOR_MODEL} --reflector_model ${REFLECTOR_MODEL} --curator_model ${CURATOR_MODEL} --seed ${SEED} --config_name ${CONFIG_NAME}_test_normal --appworld_root ${APPWORLD_ROOT} --save_path ${SAVE_PATH} --test_workers ${TEST_WORKERS} --max_tokens ${MAX_TOKENS} ${TELEMETRY_ARGS}"
+    run_cmd "python -m eval.appworld.run --task_name appworld --mode eval_only --dataset_name test_challenge --max_agent_steps ${APPWORLD_MAX_STEPS} --api_provider ${API_PROVIDER} ${role_provider_args} --generator_model ${GENERATOR_MODEL} --reflector_model ${REFLECTOR_MODEL} --curator_model ${CURATOR_MODEL} --seed ${SEED} --config_name ${CONFIG_NAME}_test_challenge --appworld_root ${APPWORLD_ROOT} --save_path ${SAVE_PATH} --test_workers ${TEST_WORKERS} --max_tokens ${MAX_TOKENS} ${TELEMETRY_ARGS}"
     ;;
 
   *)

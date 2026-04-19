@@ -19,19 +19,14 @@ if [[ -z "${OPENROUTER_API_KEY:-}" ]]; then
   exit 1
 fi
 
-# The current ACE runner does not expose an explicit OpenRouter provider yet.
-# Reuse its OpenAI-compatible MiniMax provider path with OpenRouter credentials.
-export MINIMAX_API_KEY="${OPENROUTER_API_KEY}"
-export MINIMAX_BASE_URL="${OPENROUTER_BASE_URL:-https://openrouter.ai/api/v1}"
-
 cd "${PROJECT_ROOT}/ace"
 
 ./scripts/run_experiments.sh finer_subset \
-  --provider minimax \
+  --provider openrouter \
   --generator minimax/minimax-m2.7 \
   --reflector minimax/minimax-m2.7 \
   --curator minimax/minimax-m2.7 \
-  --config-name "${CONFIG_NAME:-ace_all_minimax-m2.7_subset_smoke}" \
+  --config-name "${CONFIG_NAME:-ace_all_openrouter_minimax_m27_subset_smoke}" \
   --save-path "${SAVE_PATH:-../results/openrouter_minimax-m2.7_smoke}" \
   --seed "${SEED:-42}" \
   --mode "${MODE:-offline}" \

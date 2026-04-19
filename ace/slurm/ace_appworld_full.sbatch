@@ -50,6 +50,8 @@ run_one() {
     --max_agent_steps 30 \
     --api_provider "${api_provider}" \
     --generator_model "${generator_model}" \
+    --reflector_model "${reflector_model}" \
+    --curator_model "${curator_model}" \
     --telemetry_enabled \
     --telemetry_metrics_interval_seconds 15 \
     --config_name "${config_name}_eval_test_normal" \
@@ -64,6 +66,8 @@ run_one() {
     --max_agent_steps 30 \
     --api_provider "${api_provider}" \
     --generator_model "${generator_model}" \
+    --reflector_model "${reflector_model}" \
+    --curator_model "${curator_model}" \
     --telemetry_enabled \
     --telemetry_metrics_interval_seconds 15 \
     --config_name "${config_name}_eval_test_challenge" \
@@ -73,7 +77,7 @@ run_one() {
 }
 
 for seed in 42 43 44; do
-  run_one "all_gptoss20b" "${seed}" "openai" "gpt-oss:20b" "gpt-oss:20b" "gpt-oss:20b"
-  run_one "all_minimax" "${seed}" "minimax" "MiniMax-M2.5" "MiniMax-M2.5" "MiniMax-M2.5"
-  run_one "mixed_reflector_strong" "${seed}" "openai" "gpt-oss:20b" "MiniMax-M2.5" "gpt-oss:20b"
+  run_one "ace_all_openrouter_gptoss120b" "${seed}" "openrouter" "openai/gpt-oss-120b:nitro" "openai/gpt-oss-120b:nitro" "openai/gpt-oss-120b:nitro"
+  run_one "ace_all_openrouter_minimax_m27" "${seed}" "openrouter" "minimax/minimax-m2.7" "minimax/minimax-m2.7" "minimax/minimax-m2.7"
+  run_one "ace_mixed_openrouter_minimax_m27_reflector" "${seed}" "openrouter" "openai/gpt-oss-120b:nitro" "minimax/minimax-m2.7" "openai/gpt-oss-120b:nitro"
 done

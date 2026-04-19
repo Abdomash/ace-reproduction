@@ -15,10 +15,10 @@ if [ -n "${MAMBA_ENV:-}" ]; then
   mamba activate "${MAMBA_ENV}"
 fi
 
-: "${API_PROVIDER:=openai}"
-: "${GENERATOR_MODEL:=gpt-oss:20b}"
-: "${REFLECTOR_MODEL:=gpt-oss:20b}"
-: "${CURATOR_MODEL:=gpt-oss:20b}"
+: "${API_PROVIDER:=openrouter}"
+: "${GENERATOR_MODEL:=openai/gpt-oss-120b:nitro}"
+: "${REFLECTOR_MODEL:=openai/gpt-oss-120b:nitro}"
+: "${CURATOR_MODEL:=openai/gpt-oss-120b:nitro}"
 : "${SAVE_PATH:=./results}"
 : "${TASK_NAME:=appworld}"
 : "${CONFIG_NAME:=pilot}"

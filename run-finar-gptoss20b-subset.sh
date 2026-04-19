@@ -19,15 +19,10 @@ if [[ -z "${OPENROUTER_API_KEY:-}" ]]; then
   exit 1
 fi
 
-# The current ACE runner does not expose an explicit OpenRouter provider yet.
-# Reuse its OpenAI-compatible MiniMax provider path with OpenRouter credentials.
-export MINIMAX_API_KEY="${OPENROUTER_API_KEY}"
-export MINIMAX_BASE_URL="${OPENROUTER_BASE_URL:-https://openrouter.ai/api/v1}"
-
 cd "${PROJECT_ROOT}/ace"
 
 ./scripts/run_experiments.sh finer_subset \
-  --provider minimax \
+  --provider openrouter \
   --generator openai/gpt-oss-20b:nitro \
   --reflector openai/gpt-oss-20b:nitro \
   --curator openai/gpt-oss-20b:nitro \
