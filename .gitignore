@@ -2,3 +2,4 @@
 *.tex
 __pycache__
 report/
+.DS_Store
