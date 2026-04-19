@@ -156,6 +156,23 @@ def non_cached_chat_completion(
     elif provider.strip().lower() == "openai":
         from openai import OpenAI
         client = OpenAI()
+    elif provider.strip().lower() == "openrouter":
+        api_key = os.getenv("OPENROUTER_API_KEY", "")
+        if not api_key:
+            raise ValueError("OPENROUTER_API_KEY is required for provider='openrouter'.")
+        base_url = os.getenv("OPENROUTER_BASE_URL", "https://openrouter.ai/api/v1")
+        default_headers = {}
+        http_referer = os.getenv("OPENROUTER_HTTP_REFERER")
+        app_title = os.getenv("OPENROUTER_APP_TITLE")
+        if http_referer:
+            default_headers["HTTP-Referer"] = http_referer
+        if app_title:
+            default_headers["X-Title"] = app_title
+        from openai import OpenAI
+        client_kwargs = {"api_key": api_key, "base_url": base_url}
+        if default_headers:
+            client_kwargs["default_headers"] = default_headers
+        client = OpenAI(**client_kwargs)
     else:
         raise ValueError(
             f"Invalid provider: {provider}."

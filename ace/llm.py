@@ -55,16 +55,18 @@ REFLECTION_FAILED_NO_VISIBLE_OUTPUT = "REFLECTION_FAILED_NO_VISIBLE_OUTPUT"
 def _usage_value(usage, field: str, default=0):
     if usage is None:
         return default
+    if isinstance(usage, dict):
+        return usage.get(field, default)
     return getattr(usage, field, default)
 
 
 def _reasoning_token_count(usage) -> int:
     if usage is None:
         return 0
-    details = getattr(usage, "completion_tokens_details", None)
+    details = _field_value(usage, "completion_tokens_details")
     if details is None:
         return 0
-    return getattr(details, "reasoning_tokens", 0) or 0
+    return _field_value(details, "reasoning_tokens", 0) or 0
 
 
 def _message_reasoning(message) -> Optional[str]:
@@ -88,6 +90,34 @@ def _response_usage_counts(response) -> Dict[str, int]:
         "total_num_tokens": total_tokens,
         "reasoning_num_tokens": _reasoning_token_count(usage),
     }
+
+
+def _field_value(obj, field: str, default=None):
+    if obj is None:
+        return default
+    if isinstance(obj, dict):
+        return obj.get(field, default)
+    return getattr(obj, field, default)
+
+
+def _response_cost_usd(response) -> Optional[float]:
+    """Extract provider-supplied cost metadata when present."""
+    usage = _field_value(response, "usage")
+    candidates = [
+        _field_value(response, "cost"),
+        _field_value(response, "cost_usd"),
+        _field_value(usage, "cost"),
+        _field_value(usage, "cost_usd"),
+        _field_value(usage, "total_cost"),
+    ]
+    for candidate in candidates:
+        if candidate is None:
+            continue
+        try:
+            return float(candidate)
+        except (TypeError, ValueError):
+            continue
+    return None
 
 
 def _failure_response_text(role: str) -> str:
@@ -169,6 +199,9 @@ def _build_failure_call_info(
         "datetime": now.isoformat(),
     }
     call_info.update(_response_usage_counts(response))
+    cost_usd = _response_cost_usd(response)
+    if cost_usd is not None:
+        call_info["cost_usd"] = cost_usd
 
     if exception is not None:
         call_info["exception_type"] = type(exception).__name__
@@ -388,6 +421,7 @@ def timed_llm_call(
             if total_tokens is None:
                 total_tokens = prompt_tokens + completion_tokens
             reasoning_tokens = _reasoning_token_count(getattr(response, "usage", None))
+            cost_usd = _response_cost_usd(response)
 
             input_bytes = len(prompt.encode("utf-8"))
             output_bytes = len(response_content.encode("utf-8"))
@@ -429,6 +463,8 @@ def timed_llm_call(
                 span.set_attribute(
                     "llm.call_time_seconds", float(call_end - call_start)
                 )
+                if cost_usd is not None:
+                    span.set_attribute("llm.cost_usd", float(cost_usd))
 
             call_info = {
                 "role": role,
@@ -454,6 +490,8 @@ def timed_llm_call(
                 ),
                 "provider_reasoning_details_present": response_reasoning_details_present,
             }
+            if cost_usd is not None:
+                call_info["cost_usd"] = cost_usd
 
             print(f"[{role.upper()}] Call {call_id} completed in {total_time:.2f}s")
 

@@ -43,6 +43,9 @@ class ACE:
         generator_model: str,
         reflector_model: str,
         curator_model: str,
+        generator_provider: Optional[str] = None,
+        reflector_provider: Optional[str] = None,
+        curator_provider: Optional[str] = None,
         max_tokens: int = 4096,
         initial_playbook: Optional[str] = None,
         use_bulletpoint_analyzer: bool = False,
@@ -57,24 +60,37 @@ class ACE:
             generator_model: Model name for generator
             reflector_model: Model name for reflector
             curator_model: Model name for curator
+            generator_provider: Optional provider override for generator calls
+            reflector_provider: Optional provider override for reflector calls
+            curator_provider: Optional provider override for curator calls
             max_tokens: Maximum tokens for LLM calls
             initial_playbook: Initial playbook content (optional)
             use_bulletpoint_analyzer: Whether to use bulletpoint analyzer for deduplication
             bulletpoint_analyzer_threshold: Similarity threshold for bulletpoint analyzer (0-1)
         """
+        self.api_provider = api_provider
+        self.generator_provider = generator_provider or api_provider
+        self.reflector_provider = reflector_provider or api_provider
+        self.curator_provider = curator_provider or api_provider
+
         # Initialize API clients
         generator_client, reflector_client, curator_client = initialize_clients(
-            api_provider
+            api_provider,
+            generator_provider=self.generator_provider,
+            reflector_provider=self.reflector_provider,
+            curator_provider=self.curator_provider,
         )
 
         # Initialize the three agents
         self.generator = Generator(
-            generator_client, api_provider, generator_model, max_tokens
+            generator_client, self.generator_provider, generator_model, max_tokens
         )
         self.reflector = Reflector(
-            reflector_client, api_provider, reflector_model, max_tokens
+            reflector_client, self.reflector_provider, reflector_model, max_tokens
         )
-        self.curator = Curator(curator_client, api_provider, curator_model, max_tokens)
+        self.curator = Curator(
+            curator_client, self.curator_provider, curator_model, max_tokens
+        )
 
         # Initialize bulletpoint analyzer if requested and available
         self.use_bulletpoint_analyzer = use_bulletpoint_analyzer
@@ -110,6 +126,18 @@ class ACE:
         self._invoke_agent_span = None
         self._record_invoke_agent_output = None
         self._appworld_adapter_cache = {}
+
+    def _provider_run_metadata(self) -> Dict[str, Any]:
+        providers = {
+            "api": self.api_provider,
+            "generator": self.generator_provider,
+            "reflector": self.reflector_provider,
+            "curator": self.curator_provider,
+        }
+        return {
+            role: provider_metadata(provider)
+            for role, provider in providers.items()
+        }
 
     def _provider_call_failed(self, call_info: Optional[Dict[str, Any]]) -> bool:
         return isinstance(call_info, dict) and bool(call_info.get("error_type"))
@@ -319,15 +347,32 @@ class ACE:
 
         # Save configuration
         config_path = os.path.join(save_path, "run_config.json")
+        provider_run_metadata = self._provider_run_metadata()
         with open(config_path, "w") as f:
             json.dump(
                 {
                     "run_id": run_id,
                     "task_name": task_name,
                     "mode": mode,
+                    "api_provider": self.api_provider,
+                    "generator_provider": self.generator_provider,
+                    "reflector_provider": self.reflector_provider,
+                    "curator_provider": self.curator_provider,
                     "generator_model": self.generator.model,
                     "reflector_model": self.reflector.model,
                     "curator_model": self.curator.model,
+                    "provider_metadata": provider_run_metadata,
+                    "provider_base_url_labels": {
+                        role: meta.get("base_url_label")
+                        for role, meta in provider_run_metadata.items()
+                    },
+                    "pricing_snapshot": pricing_snapshot(
+                        {
+                            "generator": self.generator.model,
+                            "reflector": self.reflector.model,
+                            "curator": self.curator.model,
+                        }
+                    ),
                     "telemetry": telemetry_runtime_metadata(self._telemetry_runtime),
                     "config": config,
                 },

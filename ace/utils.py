@@ -2,6 +2,9 @@
 import os
 import re
 import json
+from datetime import datetime
+from urllib.parse import urlsplit, urlunsplit
+
 import openai
 import tiktoken
 from dotenv import load_dotenv
@@ -12,45 +15,138 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 load_dotenv()
 
 
-def initialize_clients(api_provider):
-    """Initialize separate clients for generator, reflector, and curator"""
+SUPPORTED_API_PROVIDERS = ("sambanova", "together", "openai", "openrouter")
+OPENROUTER_DEFAULT_BASE_URL = "https://openrouter.ai/api/v1"
+
+
+def _reject_deprecated_provider(api_provider: str) -> None:
+    if api_provider == "minimax":
+        raise ValueError(
+            "api_provider='minimax' is deprecated. Use api_provider='openrouter' "
+            "with model 'minimax/minimax-m2.7'."
+        )
+
+
+def sanitized_base_url_label(base_url: str) -> str:
+    """Return a non-secret base URL label for run metadata."""
+    parts = urlsplit(base_url)
+    hostname = parts.hostname or ""
+    netloc = hostname
+    if parts.port:
+        netloc = f"{netloc}:{parts.port}"
+    return urlunsplit((parts.scheme, netloc, parts.path.rstrip("/"), "", ""))
+
+
+def _provider_settings(api_provider: str) -> Dict[str, Any]:
+    _reject_deprecated_provider(api_provider)
     if api_provider == "sambanova":
-        # Use SambaNova API
         base_url = "https://api.sambanova.ai/v1"
         api_key = os.getenv("SAMBANOVA_API_KEY", "")
         if not api_key:
             raise ValueError("SambaNova api key not found in environment variables")
+        default_headers = None
     elif api_provider == "together":
-        # Use Together API
         base_url = "https://api.together.xyz/v1"
         api_key = os.getenv("TOGETHER_API_KEY", "")
         if not api_key:
             raise ValueError("Together api key not found in environment variables")
+        default_headers = None
     elif api_provider == "openai":
-        # Use OpenAI API
         base_url = "https://api.openai.com/v1"
         api_key = os.getenv("OPENAI_API_KEY", "")
         if not api_key:
             raise ValueError("OpenAI api key not found in environment variables")
-    elif api_provider == "minimax":
-        # Use MiniMax OpenAI-compatible API
-        base_url = os.getenv("MINIMAX_BASE_URL", "https://api.minimax.chat/v1")
-        api_key = os.getenv("MINIMAX_API_KEY", "")
+        default_headers = None
+    elif api_provider == "openrouter":
+        base_url = os.getenv("OPENROUTER_BASE_URL", OPENROUTER_DEFAULT_BASE_URL)
+        api_key = os.getenv("OPENROUTER_API_KEY", "")
         if not api_key:
-            raise ValueError("MiniMax api key not found in environment variables")
+            raise ValueError("OpenRouter api key not found in OPENROUTER_API_KEY")
+        default_headers = {}
+        http_referer = os.getenv("OPENROUTER_HTTP_REFERER")
+        app_title = os.getenv("OPENROUTER_APP_TITLE")
+        if http_referer:
+            default_headers["HTTP-Referer"] = http_referer
+        if app_title:
+            default_headers["X-Title"] = app_title
     else:
         raise ValueError(
             (
-                f"Invalid api_provider name: {api_provider}. Must be 'sambanova', 'together', 'openai', or 'minimax'"
+                f"Invalid api_provider name: {api_provider}. "
+                f"Must be one of {SUPPORTED_API_PROVIDERS}"
             )
         )
+    return {
+        "api_provider": api_provider,
+        "api_key": api_key,
+        "base_url": base_url,
+        "base_url_label": sanitized_base_url_label(base_url),
+        "default_headers": default_headers,
+    }
 
-    generator_client = openai.OpenAI(api_key=api_key, base_url=base_url)
-    reflector_client = openai.OpenAI(api_key=api_key, base_url=base_url)
-    curator_client = openai.OpenAI(api_key=api_key, base_url=base_url)
 
-    print(f"Using {api_provider} API for all models")
+def provider_metadata(api_provider: str) -> Dict[str, Any]:
+    """Return provider metadata safe to write to run artifacts."""
+    settings = _provider_settings(api_provider)
+    return {
+        "api_provider": settings["api_provider"],
+        "base_url_label": settings["base_url_label"],
+        "default_header_names": sorted((settings.get("default_headers") or {}).keys()),
+    }
+
+
+def initialize_client(api_provider: str):
+    """Initialize one OpenAI-compatible client for the selected provider."""
+    settings = _provider_settings(api_provider)
+    kwargs = {
+        "api_key": settings["api_key"],
+        "base_url": settings["base_url"],
+    }
+    if settings.get("default_headers"):
+        kwargs["default_headers"] = settings["default_headers"]
+    return openai.OpenAI(**kwargs)
+
+
+def initialize_clients(
+    api_provider,
+    generator_provider=None,
+    reflector_provider=None,
+    curator_provider=None,
+):
+    """Initialize separate clients for generator, reflector, and curator."""
+    generator_provider = generator_provider or api_provider
+    reflector_provider = reflector_provider or api_provider
+    curator_provider = curator_provider or api_provider
+
+    generator_client = initialize_client(generator_provider)
+    reflector_client = initialize_client(reflector_provider)
+    curator_client = initialize_client(curator_provider)
+
+    print(
+        "Using API providers: "
+        f"generator={generator_provider}, "
+        f"reflector={reflector_provider}, curator={curator_provider}"
+    )
     return generator_client, reflector_client, curator_client
+
+
+def pricing_snapshot(models: Dict[str, str]) -> Dict[str, Any]:
+    """Record the pricing basis without hard-coding volatile provider prices."""
+    return {
+        "source": (
+            "OpenRouter/OpenAI-compatible response usage and cost metadata when "
+            "available; no hard-coded final prices."
+        ),
+        "source_date": os.getenv("ACE_PRICING_SOURCE_DATE", datetime.now().date().isoformat()),
+        "models": {
+            role: {
+                "model": model,
+                "input_usd_per_million_tokens": None,
+                "output_usd_per_million_tokens": None,
+            }
+            for role, model in models.items()
+        },
+    }
 
 
 def get_section_slug(section_name):

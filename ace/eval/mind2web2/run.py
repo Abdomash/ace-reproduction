@@ -4,6 +4,7 @@ import argparse
 from .data_processor import DataProcessor, load_data
 
 from ace import ACE
+from utils import SUPPORTED_API_PROVIDERS
 
 
 def parse_args():
@@ -40,8 +41,29 @@ def parse_args():
         "--api_provider",
         type=str,
         default="sambanova",
-        choices=["sambanova", "together", "openai", "minimax"],
-        help="API provider",
+        choices=SUPPORTED_API_PROVIDERS,
+        help="Default API provider",
+    )
+    parser.add_argument(
+        "--generator_provider",
+        type=str,
+        default=None,
+        choices=SUPPORTED_API_PROVIDERS,
+        help="API provider override for generator",
+    )
+    parser.add_argument(
+        "--reflector_provider",
+        type=str,
+        default=None,
+        choices=SUPPORTED_API_PROVIDERS,
+        help="API provider override for reflector",
+    )
+    parser.add_argument(
+        "--curator_provider",
+        type=str,
+        default=None,
+        choices=SUPPORTED_API_PROVIDERS,
+        help="API provider override for curator",
     )
     parser.add_argument(
         "--generator_model",
@@ -276,6 +298,9 @@ def main():
         generator_model=args.generator_model,
         reflector_model=args.reflector_model,
         curator_model=args.curator_model,
+        generator_provider=args.generator_provider,
+        reflector_provider=args.reflector_provider,
+        curator_provider=args.curator_provider,
         max_tokens=args.max_tokens,
         initial_playbook=initial_playbook,
         use_bulletpoint_analyzer=args.use_bulletpoint_analyzer,
@@ -301,6 +326,12 @@ def main():
         "use_bulletpoint_analyzer": args.use_bulletpoint_analyzer,
         "bulletpoint_analyzer_threshold": args.bulletpoint_analyzer_threshold,
         "api_provider": args.api_provider,
+        "generator_provider": args.generator_provider or args.api_provider,
+        "reflector_provider": args.reflector_provider or args.api_provider,
+        "curator_provider": args.curator_provider or args.api_provider,
+        "generator_model": args.generator_model,
+        "reflector_model": args.reflector_model,
+        "curator_model": args.curator_model,
     }
 
     config["telemetry_enabled"] = args.telemetry_enabled
