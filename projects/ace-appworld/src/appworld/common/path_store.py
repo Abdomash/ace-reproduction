@@ -31,6 +31,8 @@ class PathStore:
     @property
     def experiment_outputs(self) -> str:
         self.reload()
+        if "APPWORLD_EXPERIMENT_OUTPUTS" in os.environ:
+            return os.environ["APPWORLD_EXPERIMENT_OUTPUTS"]
         return os.path.join(self.root, "experiments", "outputs")
 
     @property
@@ -44,6 +46,8 @@ class PathStore:
 
     @property
     def experiment_configs(self) -> str:
+        if "APPWORLD_EXPERIMENT_CONFIGS" in os.environ:
+            return os.environ["APPWORLD_EXPERIMENT_CONFIGS"]
         from appworld.common.utils import ensure_package_installed
 
         ensure_package_installed("appworld_experiments")
