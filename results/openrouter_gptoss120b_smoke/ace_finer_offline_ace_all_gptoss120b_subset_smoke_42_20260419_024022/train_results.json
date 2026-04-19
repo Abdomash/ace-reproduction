@@ -1,0 +1,181 @@
+{
+  "best_accuracy": 0.8125,
+  "results": [
+    {
+      "epoch": 1,
+      "step": 15,
+      "train_result": {
+        "pre_train_accuracy": 0.7666666666666667,
+        "post_train_accuracy": 0.95
+      },
+      "val_result": {
+        "accuracy": 0.73125,
+        "correct": 17,
+        "total": 40,
+        "no_answer": 0
+      },
+      "playbook_num_tokens": 2741,
+      "playbook_length": 12258,
+      "playbook_stats": {
+        "total_bullets": 35,
+        "high_performing": 0,
+        "problematic": 0,
+        "unused": 31,
+        "by_section": {
+          "STRATEGIES & INSIGHTS": {
+            "count": 16,
+            "helpful": 1,
+            "harmful": 0
+          },
+          "COMMON MISTAKES TO AVOID": {
+            "count": 6,
+            "helpful": 1,
+            "harmful": 0
+          },
+          "CONTEXT CLUES & INDICATORS": {
+            "count": 10,
+            "helpful": 1,
+            "harmful": 0
+          },
+          "OTHERS": {
+            "count": 3,
+            "helpful": 2,
+            "harmful": 0
+          }
+        }
+      }
+    },
+    {
+      "epoch": 1,
+      "step": 30,
+      "train_result": {
+        "pre_train_accuracy": 0.775,
+        "post_train_accuracy": 0.9416666666666667
+      },
+      "val_result": {
+        "accuracy": 0.8125,
+        "correct": 24,
+        "total": 40,
+        "no_answer": 0
+      },
+      "playbook_num_tokens": 5471,
+      "playbook_length": 24337,
+      "playbook_stats": {
+        "total_bullets": 68,
+        "high_performing": 0,
+        "problematic": 0,
+        "unused": 60,
+        "by_section": {
+          "STRATEGIES & INSIGHTS": {
+            "count": 34,
+            "helpful": 4,
+            "harmful": 0
+          },
+          "COMMON MISTAKES TO AVOID": {
+            "count": 12,
+            "helpful": 1,
+            "harmful": 0
+          },
+          "CONTEXT CLUES & INDICATORS": {
+            "count": 19,
+            "helpful": 2,
+            "harmful": 0
+          },
+          "OTHERS": {
+            "count": 3,
+            "helpful": 3,
+            "harmful": 0
+          }
+        }
+      }
+    },
+    {
+      "epoch": 1,
+      "step": 45,
+      "train_result": {
+        "pre_train_accuracy": 0.7222222222222222,
+        "post_train_accuracy": 0.95
+      },
+      "val_result": {
+        "accuracy": 0.80625,
+        "correct": 22,
+        "total": 40,
+        "no_answer": 1
+      },
+      "playbook_num_tokens": 8131,
+      "playbook_length": 36299,
+      "playbook_stats": {
+        "total_bullets": 98,
+        "high_performing": 0,
+        "problematic": 0,
+        "unused": 85,
+        "by_section": {
+          "STRATEGIES & INSIGHTS": {
+            "count": 51,
+            "helpful": 12,
+            "harmful": 0
+          },
+          "COMMON MISTAKES TO AVOID": {
+            "count": 14,
+            "helpful": 1,
+            "harmful": 0
+          },
+          "CONTEXT CLUES & INDICATORS": {
+            "count": 30,
+            "helpful": 2,
+            "harmful": 0
+          },
+          "OTHERS": {
+            "count": 3,
+            "helpful": 3,
+            "harmful": 1
+          }
+        }
+      }
+    },
+    {
+      "epoch": 1,
+      "step": 60,
+      "train_result": {
+        "pre_train_accuracy": 0.7208333333333333,
+        "post_train_accuracy": 0.9375
+      },
+      "val_result": {
+        "accuracy": 0.76875,
+        "correct": 22,
+        "total": 40,
+        "no_answer": 0
+      },
+      "playbook_num_tokens": 10205,
+      "playbook_length": 45634,
+      "playbook_stats": {
+        "total_bullets": 122,
+        "high_performing": 0,
+        "problematic": 1,
+        "unused": 108,
+        "by_section": {
+          "STRATEGIES & INSIGHTS": {
+            "count": 70,
+            "helpful": 13,
+            "harmful": 1
+          },
+          "COMMON MISTAKES TO AVOID": {
+            "count": 17,
+            "helpful": 1,
+            "harmful": 0
+          },
+          "CONTEXT CLUES & INDICATORS": {
+            "count": 32,
+            "helpful": 3,
+            "harmful": 0
+          },
+          "OTHERS": {
+            "count": 3,
+            "helpful": 3,
+            "harmful": 1
+          }
+        }
+      }
+    }
+  ]
+}

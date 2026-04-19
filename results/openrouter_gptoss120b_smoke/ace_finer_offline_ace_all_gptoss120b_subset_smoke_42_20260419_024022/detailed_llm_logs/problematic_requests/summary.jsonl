@@ -1,0 +1,1 @@
+{"timestamp": "20260419_024439_670", "call_id": "test_eval_19", "model": "openai/gpt-oss-120b:nitro", "prompt_length": 44848, "exception_type": "RuntimeError", "exception_message": "Provider returned no visible message content", "json_mode": false, "error_type": "empty_provider_response", "api_key_used": null}
