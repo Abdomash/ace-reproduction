@@ -142,7 +142,7 @@ def main() -> None:
             "label_jaccard",
             "normalized_lcs",
         ]
-        writer = csv.DictWriter(f, fieldnames=fieldnames)
+        writer = csv.DictWriter(f, fieldnames=fieldnames, lineterminator="\n")
         writer.writeheader()
         writer.writerows(rows)
 
@@ -155,7 +155,7 @@ def main() -> None:
     }
     for path, metric in matrices.items():
         with path.open("w", encoding="utf-8", newline="") as f:
-            writer = csv.writer(f)
+            writer = csv.writer(f, lineterminator="\n")
             writer.writerow(["run_id", *run_names])
             for left in runs:
                 writer.writerow([left.name, *[metric(left, right) for right in runs]])

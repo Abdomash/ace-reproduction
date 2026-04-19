@@ -792,7 +792,7 @@ def main() -> int:
         payload = buffer.getvalue()
         print(payload, end="")
         report_path = reports_dir / "summary.md"
-        report_path.write_text(payload, encoding="utf-8")
+        report_path.write_text(payload.rstrip() + "\n", encoding="utf-8")
 
     input_records = existing_file_records(
         item for run_dir in run_dirs for item in input_paths_for_run(run_dir)
