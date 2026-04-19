@@ -1,0 +1,37 @@
+================================================================================
+OpenTelemetry Metrics Visualization (Legacy Mode)
+================================================================================
+Analysis mode: per_run
+Traces directory: /home/abdo/ace-reproduction/analysis/outputs/maestro_example_metrics__ace-appworld__subset__openrouter-gpt-oss-120b__20260420_022804/logs/maestro_inputs/traces
+Metrics directory: /home/abdo/ace-reproduction/analysis/outputs/maestro_example_metrics__ace-appworld__subset__openrouter-gpt-oss-120b__20260420_022804/logs/maestro_inputs/metrics
+Output directory: /home/abdo/ace-reproduction/analysis/outputs/maestro_example_metrics__ace-appworld__subset__openrouter-gpt-oss-120b__20260420_022804/plots/maestro_example_metrics
+
+Detected distributed system: grouping 40 trace files into runs by timestamp...
+  Run 1 (timestamp: 20260419_221723): 20 files
+  Run 2 (timestamp: 20260419_231443): 20 files
+
+Loading 2 runs for per-run analysis...
+  Run 1: 1802 spans, 56 metrics
+  Run 2: 1850 spans, 522 metrics
+Loaded 3652 total trace spans across 2 run(s)
+Loaded 578 total metric records across 2 run(s)
+
+Generating visualizations...
+
+================================================================================
+Per-Run Analysis Mode (Recommended for Academic Papers)
+================================================================================
+
+   ⚠️  Warning: Run run_ace_appworld_gptoss120b_subset_20260419_221723_p3_of_20.otel has large time difference: 92225853.28 seconds
+      Trace start: 1684411200.00, Metric start: 1776637053.28
+✓ Per-run delay breakdown chart saved to /home/abdo/ace-reproduction/analysis/outputs/maestro_example_metrics__ace-appworld__subset__openrouter-gpt-oss-120b__20260420_022804/plots/maestro_example_metrics/2_delay_breakdown_per_run.pdf
+✓ Per-run token consumption chart saved to /home/abdo/ace-reproduction/analysis/outputs/maestro_example_metrics__ace-appworld__subset__openrouter-gpt-oss-120b__20260420_022804/plots/maestro_example_metrics/1_token_consumption_per_run.pdf
+✓ Per-run CPU/Memory usage chart saved to /home/abdo/ace-reproduction/analysis/outputs/maestro_example_metrics__ace-appworld__subset__openrouter-gpt-oss-120b__20260420_022804/plots/maestro_example_metrics/3_cpu_memory_usage_per_run.pdf
+✓ Per-run message size chart saved to /home/abdo/ace-reproduction/analysis/outputs/maestro_example_metrics__ace-appworld__subset__openrouter-gpt-oss-120b__20260420_022804/plots/maestro_example_metrics/4_message_sizes_per_run.pdf
+✓ Statistics report saved to /home/abdo/ace-reproduction/analysis/outputs/maestro_example_metrics__ace-appworld__subset__openrouter-gpt-oss-120b__20260420_022804/plots/maestro_example_metrics/statistics_report.txt
+✓ Call graph similarity chart saved to /home/abdo/ace-reproduction/analysis/outputs/maestro_example_metrics__ace-appworld__subset__openrouter-gpt-oss-120b__20260420_022804/plots/maestro_example_metrics/5_call_graph_similarity.pdf
+
+================================================================================
+All visualizations generated successfully!
+Output directory: /home/abdo/ace-reproduction/analysis/outputs/maestro_example_metrics__ace-appworld__subset__openrouter-gpt-oss-120b__20260420_022804/plots/maestro_example_metrics
+================================================================================

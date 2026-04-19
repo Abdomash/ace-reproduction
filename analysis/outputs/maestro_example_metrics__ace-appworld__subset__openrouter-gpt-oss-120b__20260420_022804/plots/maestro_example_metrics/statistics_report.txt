@@ -1,0 +1,94 @@
+================================================================================
+Per-Run Analysis Statistics Report
+================================================================================
+
+Number of runs analyzed: 2
+
+E2E Delay Statistics:
+  Mean ± Std: 731773.57 ± 538744.55 ms
+  Min: 193029.02 ms, Max: 1270518.12 ms
+  Percentiles: p50=731773.57 ms, p95=1216643.66 ms, p99=1259743.23 ms
+  Coefficient of Variation (CV): 0.736 (73.6%)
+  Number of runs: 2
+
+Token Consumption Statistics:
+  Total across all runs: 40,055,008 tokens
+    - Prompt: 39,537,119 tokens
+    - Completion: 517,889 tokens
+  Mean per run: 20027504 tokens
+  Std per run: 239703 tokens
+
+Agent-LLM Delay Statistics:
+  Mean ± Std: 986.30 ± 1300.03 ms
+  Min: 0.00 ms, Max: 10110.14 ms
+  p95: 3017.93 ms
+  Total observations: 1166
+
+CPU Usage Statistics (Process-Level):
+  Mean CPU Usage per Run:
+    Mean ± Std: 1070.36 ± 906.64%
+    Min: 163.72%, Max: 1977.00%
+    p50: 1070.36%, p95: 1886.34%
+  Peak CPU Usage per Run:
+    Mean ± Std: 21354.15 ± 3350.05%
+    Min: 18004.10%, Max: 24704.20%
+    p50: 21354.15%, p95: 24369.19%
+  Number of runs: 2
+
+Memory Usage Statistics (Process-Level):
+  Mean Memory Usage per Run:
+    Mean ± Std: 576.09 ± 158.54 MB
+    Min: 417.55 MB, Max: 734.63 MB
+    p50: 576.09 MB, p95: 718.78 MB
+  Peak Memory Usage per Run:
+    Mean ± Std: 789.44 ± 25.91 MB
+    Min: 763.53 MB, Max: 815.34 MB
+    p50: 789.44 MB, p95: 812.75 MB
+  Number of runs: 2
+
+Call Graph Similarity Statistics:
+============================================================
+Multi-Graph Similarity Metrics:
+  Overall Consistency: 1.0000
+    (Intersection of all graphs / Union of all graphs)
+  Core Edge Ratio: 1.0000
+    (Edges appearing in all runs / Total unique edges)
+  Core Edges: 6 edges
+    [('appworld-environment', 'ace'), ('generator', 'ace'), ('appworld-environment', 'generator'), ('ace', 'appworld-environment'), ('generator', 'appworld-environment'), ('ace', 'generator')]
+  Total Unique Edges: 6 edges
+  Mean Pairwise Similarity: 1.0000
+    (Average of all pairwise Jaccard similarities)
+  Stability Index: 0.0000
+    (Std dev of pairwise similarities, lower = more stable)
+
+Consecutive Pairwise Similarities (for reference):
+  Mean: 1.0000
+  Min: 1.0000
+  Max: 1.0000
+  Run 1 vs Run 2: 1.0000 (6 common, 6 total)
+
+
+Call Sequence Similarity Statistics (LCS - Sequence Order):
+  Mean LCS similarity: 0.7028
+  Min LCS similarity: 0.7028
+  Max LCS similarity: 0.7028
+  Run 1 vs Run 2: 0.7028 (seq1 length: 1328, seq2 length: 1393)
+
+Message Size Statistics:
+  Inter-Agent Input (Total per Run):
+    Mean ± Std: 0.00 ± 0.00 KB
+    Min: 0.00 KB, Max: 0.00 KB
+    p50: 0.00 KB, p95: 0.00 KB
+  Inter-Agent Output (Total per Run):
+    Mean ± Std: 0.00 ± 0.00 KB
+    Min: 0.00 KB, Max: 0.00 KB
+    p50: 0.00 KB, p95: 0.00 KB
+  Agent-LLM Input (Total per Run):
+    Mean ± Std: 96355.97 ± 1321.53 KB
+    Min: 95034.44 KB, Max: 97677.50 KB
+    p50: 96355.97 KB, p95: 97545.35 KB
+  Agent-LLM Output (Total per Run):
+    Mean ± Std: 1887.54 ± 47.04 KB
+    Min: 1840.51 KB, Max: 1934.58 KB
+    p50: 1887.54 KB, p95: 1929.87 KB
+
