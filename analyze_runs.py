@@ -247,6 +247,49 @@ def summarize_playbook(path: Path) -> dict[str, Any] | None:
     }
 
 
+def summarize_llm_logs(log_dir: Path) -> dict[str, Any]:
+    roles: dict[str, dict[str, Any]] = {}
+    for path in sorted(log_dir.glob("*.json")) if log_dir.exists() else []:
+        data = load_json(path)
+        if not isinstance(data, dict):
+            continue
+        role = str(data.get("role") or "unknown")
+        row = roles.setdefault(
+            role,
+            {
+                "calls": 0,
+                "prompt_tokens": 0,
+                "response_tokens": 0,
+                "reasoning_tokens": 0,
+                "total_tokens": 0,
+                "total_time": 0.0,
+                "cost_usd": 0.0,
+                "calls_with_cost": 0,
+            },
+        )
+        row["calls"] += 1
+        row["prompt_tokens"] += int(data.get("prompt_num_tokens") or 0)
+        row["response_tokens"] += int(data.get("response_num_tokens") or 0)
+        row["reasoning_tokens"] += int(data.get("reasoning_num_tokens") or 0)
+        row["total_tokens"] += int(data.get("total_num_tokens") or 0)
+        row["total_time"] += float(data.get("total_time") or data.get("call_time") or 0.0)
+        if data.get("cost_usd") is not None:
+            row["cost_usd"] += float(data.get("cost_usd") or 0.0)
+            row["calls_with_cost"] += 1
+
+    total = {
+        "calls": sum(role["calls"] for role in roles.values()),
+        "prompt_tokens": sum(role["prompt_tokens"] for role in roles.values()),
+        "response_tokens": sum(role["response_tokens"] for role in roles.values()),
+        "reasoning_tokens": sum(role["reasoning_tokens"] for role in roles.values()),
+        "total_tokens": sum(role["total_tokens"] for role in roles.values()),
+        "total_time": sum(role["total_time"] for role in roles.values()),
+        "cost_usd": sum(role["cost_usd"] for role in roles.values()),
+        "calls_with_cost": sum(role["calls_with_cost"] for role in roles.values()),
+    }
+    return {"roles": roles, "total": total}
+
+
 def find_run(identifier: str, results_root: Path) -> Path:
     candidate = Path(identifier)
     if candidate.exists() and candidate.is_dir():
@@ -341,6 +384,7 @@ def analyze_run(run_dir: Path) -> dict[str, Any]:
             "trace_lines": sum(count_lines(p) or 0 for p in trace_files),
             "metrics_lines": sum(count_lines(p) or 0 for p in metrics_files),
         },
+        "llm_usage": summarize_llm_logs(run_dir / "detailed_llm_logs"),
     }
 
 
@@ -368,6 +412,15 @@ def count_fmt(numer: Any, denom: Any) -> str:
     return f"{numer}/{denom}"
 
 
+def money_fmt(value: Any) -> str:
+    if value is None:
+        return "n/a"
+    try:
+        return f"${float(value):.6f}"
+    except Exception:
+        return str(value)
+
+
 def build_notes(report: dict[str, Any]) -> list[str]:
     notes = []
     train_results = report.get("train_results") or {}
@@ -376,6 +429,8 @@ def build_notes(report: dict[str, Any]) -> list[str]:
     final_playbook = playbooks.get("final") or {}
     initial = report.get("initial_test") or {}
     final = report.get("final_test") or {}
+    llm_usage = report.get("llm_usage") or {}
+    llm_total = llm_usage.get("total") or {}
 
     if train_results and train_results.get("checkpoint_count") == 0:
         notes.append(
@@ -398,6 +453,10 @@ def build_notes(report: dict[str, Any]) -> list[str]:
             notes.append(
                 "Tag-level accuracy improved, but exact-sample accuracy did not improve."
             )
+    if llm_total.get("calls") and llm_total.get("calls_with_cost") == 0:
+        notes.append(
+            "No provider cost metadata was found in LLM logs; cost totals are $0.000000."
+        )
     return notes
 
 
@@ -521,6 +580,48 @@ def print_run_report(report: dict[str, Any], verbose: bool = False) -> None:
                 )
             )
         print(f"  best_equals_final: {playbooks.get('best_equals_final')}")
+
+    llm_usage = report.get("llm_usage") or {}
+    roles = llm_usage.get("roles") or {}
+    total = llm_usage.get("total") or {}
+    if total.get("calls"):
+        print("\nLLM usage and cost:")
+        print("  role       calls  cost        tokens      prompt     response   reasoning   avg_time")
+        for role in ["generator", "reflector", "curator", "unknown"]:
+            data = roles.get(role)
+            if not data:
+                continue
+            calls = data.get("calls") or 0
+            avg_time = (data.get("total_time") or 0.0) / calls if calls else 0.0
+            print(
+                "  {role:<10} {calls:<6} {cost:<11} {tokens:<11} {prompt:<10} {response:<10} {reasoning:<11} {avg_time:.2f}s".format(
+                    role=role,
+                    calls=calls,
+                    cost=money_fmt(data.get("cost_usd")),
+                    tokens=data.get("total_tokens"),
+                    prompt=data.get("prompt_tokens"),
+                    response=data.get("response_tokens"),
+                    reasoning=data.get("reasoning_tokens"),
+                    avg_time=avg_time,
+                )
+            )
+        print(
+            "  {role:<10} {calls:<6} {cost:<11} {tokens:<11} {prompt:<10} {response:<10} {reasoning:<11} {avg_time:.2f}s".format(
+                role="total",
+                calls=total.get("calls"),
+                cost=money_fmt(total.get("cost_usd")),
+                tokens=total.get("total_tokens"),
+                prompt=total.get("prompt_tokens"),
+                response=total.get("response_tokens"),
+                reasoning=total.get("reasoning_tokens"),
+                avg_time=(total.get("total_time") or 0.0) / total.get("calls")
+                if total.get("calls")
+                else 0.0,
+            )
+        )
+        print(
+            f"  calls_with_provider_cost={total.get('calls_with_cost')}/{total.get('calls')}"
+        )
 
     exact_changes = report.get("exact_changes")
     if exact_changes:
