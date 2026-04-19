@@ -15,6 +15,7 @@ from _provenance import (
     existing_file_records,
     output_dir_for,
     repo_relative,
+    result_label,
     result_path,
 )
 
@@ -100,13 +101,15 @@ def main() -> None:
     )
     args = parser.parse_args()
 
+    campaign_dir = result_path(args.campaign)
     runs = find_runs(args.campaign)
     if not runs:
         raise FileNotFoundError("No run_config.json files found")
 
+    label = result_label(args.campaign, campaign_dir)
     analysis_id, created_at, output_dir = output_dir_for(
         "call_graph",
-        Path(args.campaign).name,
+        label,
         args.output_dir,
     )
     tables_dir = output_dir / "tables"
@@ -173,6 +176,7 @@ def main() -> None:
         for run_dir in runs
         for item in [
             (run_dir / "run_config.json", "run_config"),
+            (run_dir / "result_path.json", "result_path"),
             *[(path, "telemetry_trace") for path in sorted((run_dir / "telemetry").glob("*.otel.jsonl"))],
         ]
     )
@@ -180,7 +184,7 @@ def main() -> None:
         output_dir,
         analysis_id=analysis_id,
         analysis_kind="call_graph",
-        label=Path(args.campaign).name,
+        label=label,
         created_at=created_at,
         command="python " + " ".join(sys.argv),
         parameters={"campaign": args.campaign},
@@ -198,4 +202,8 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except (FileNotFoundError, RuntimeError, ValueError) as exc:
+        print(f"error: {exc}", file=sys.stderr)
+        raise SystemExit(1)

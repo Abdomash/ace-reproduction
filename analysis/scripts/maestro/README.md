@@ -7,10 +7,10 @@ These scripts run compatible MAESTRO analysis utilities against this repo's ACE 
 `plot_example_metrics.py` wraps MAESTRO's JSONL plotting entrypoint:
 
 ```bash
-python analysis/scripts/maestro/plot_example_metrics.py openrouter_gptoss20b_smoke
+python analysis/scripts/maestro/plot_example_metrics.py ace-finer/subset/openrouter-gpt-oss-20b
 ```
 
-It stages symlinks to telemetry files from `results/<campaign>/*/telemetry/` into the flat `traces/` and `metrics/` directories expected by MAESTRO, then writes derived plots/logs under `analysis/outputs/<analysis_id>/`.
+It stages symlinks to telemetry files from `results/<benchmark>/<run_type>/<config_slug>/*/telemetry/` into the flat `traces/` and `metrics/` directories expected by MAESTRO, then writes derived plots/logs under `analysis/outputs/<analysis_id>/`.
 
 ## Not Directly Compatible
 

@@ -9,10 +9,10 @@ This directory contains analysis code and generated derived outputs.
 Analysis scripts resolve campaign names against `<repo>/results`. For example:
 
 ```bash
-python analysis/scripts/ace/summarize_runs.py results/openrouter_gptoss20b_smoke
-python analysis/scripts/ace/aggregate_experiments.py openrouter_gptoss20b_smoke
-python analysis/scripts/ace/call_graph_similarity.py openrouter_gptoss120b_smoke
-python analysis/scripts/maestro/plot_example_metrics.py openrouter_gptoss20b_smoke
+python analysis/scripts/ace/summarize_runs.py results/ace-finer/subset/openrouter-gpt-oss-20b
+python analysis/scripts/ace/aggregate_experiments.py ace-finer/subset/openrouter-gpt-oss-20b
+python analysis/scripts/ace/call_graph_similarity.py ace-finer/subset/openrouter-gpt-oss-120b
+python analysis/scripts/maestro/plot_example_metrics.py ace-finer/subset/openrouter-gpt-oss-20b
 ```
 
 Each generated output directory must include:

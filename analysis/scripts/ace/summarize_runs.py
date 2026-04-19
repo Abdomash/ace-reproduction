@@ -23,7 +23,9 @@ from _provenance import (
     finalize_output,
     existing_file_records,
     output_dir_for,
+    reject_old_layout,
     repo_relative,
+    result_label,
 )
 
 REPO_ROOT = Path(__file__).resolve().parents[3]
@@ -300,6 +302,7 @@ def summarize_llm_logs(log_dir: Path) -> dict[str, Any]:
 
 
 def find_run(identifier: str, results_root: Path) -> Path:
+    reject_old_layout(identifier)
     candidate = Path(identifier)
     if candidate.exists() and candidate.is_dir():
         return candidate.resolve()
@@ -314,6 +317,7 @@ def find_run(identifier: str, results_root: Path) -> Path:
 
 
 def find_runs(identifier: str, results_root: Path) -> list[Path]:
+    reject_old_layout(identifier)
     candidate = Path(identifier)
     if candidate.exists() and candidate.is_dir():
         root = candidate.resolve()
@@ -338,6 +342,7 @@ def find_runs(identifier: str, results_root: Path) -> list[Path]:
 def input_paths_for_run(run_dir: Path) -> list[tuple[Path, str]]:
     paths: list[tuple[Path, str]] = [
         (run_dir / "run_config.json", "run_config"),
+        (run_dir / "result_path.json", "result_path"),
         (run_dir / "initial_test_results.json", "initial_test_results"),
         (run_dir / "final_test_results.json", "final_test_results"),
         (run_dir / "test_results.json", "test_results"),
@@ -358,6 +363,7 @@ def input_paths_for_run(run_dir: Path) -> list[tuple[Path, str]]:
 
 def analyze_run(run_dir: Path) -> dict[str, Any]:
     run_config = load_json(run_dir / "run_config.json") or {}
+    path_identity = load_json(run_dir / "result_path.json") or {}
     config = run_config.get("config") or {}
 
     initial_file = load_json(run_dir / "initial_test_results.json")
@@ -397,6 +403,7 @@ def analyze_run(run_dir: Path) -> dict[str, Any]:
     return {
         "run_id": run_dir.name,
         "path": str(run_dir),
+        "path_identity": path_identity,
         "task_name": run_config.get("task_name"),
         "mode": run_config.get("mode"),
         "models": {
@@ -763,13 +770,22 @@ def main() -> int:
     reports = []
 
     run_dirs = []
+    label_parts = []
     for identifier in args.runs:
-        run_dirs.extend(find_runs(identifier, results_root))
+        resolved_runs = find_runs(identifier, results_root)
+        run_dirs.extend(resolved_runs)
+        candidate = Path(identifier)
+        if candidate.exists() and candidate.is_dir():
+            label_parts.append(result_label(identifier, candidate.resolve()))
+        elif (results_root / identifier).exists():
+            label_parts.append(result_label(identifier, (results_root / identifier).resolve()))
+        elif resolved_runs:
+            label_parts.append(result_label(identifier, resolved_runs[0]))
 
     for run_dir in run_dirs:
         reports.append(analyze_run(run_dir))
 
-    label = "_vs_".join(Path(item).name for item in args.runs)
+    label = "_vs_".join(label_parts)
     analysis_id, created_at, output_dir = output_dir_for(
         "summarize_runs",
         label,
@@ -813,4 +829,8 @@ def main() -> int:
 
 
 if __name__ == "__main__":
-    raise SystemExit(main())
+    try:
+        raise SystemExit(main())
+    except (FileNotFoundError, RuntimeError, ValueError) as exc:
+        print(f"error: {exc}", file=sys.stderr)
+        raise SystemExit(1)

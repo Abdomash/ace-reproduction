@@ -14,4 +14,7 @@ analysis/outputs/
     logs/
 ```
 
+For ACE result groups, labels use the sanitized path under `results/`, for example
+`ace-finer__subset__openrouter-gpt-oss-20b`.
+
 `manifest.json` records the command, parameters, git commit, outputs, and all consumed raw result files. `inputs.jsonl` contains one row per input file with `path`, `sha256`, `bytes`, and `role`.

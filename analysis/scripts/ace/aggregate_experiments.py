@@ -16,6 +16,7 @@ from _provenance import (
     existing_file_records,
     output_dir_for,
     repo_relative,
+    result_label,
     result_path,
 )
 
@@ -169,6 +170,7 @@ def flatten_role_metrics(prefix: str, logs: dict[str, Any], row: dict[str, Any])
 
 def summarize_run(run_dir: Path) -> dict[str, Any]:
     run_config = load_json(run_dir / "run_config.json") or {}
+    path_identity = load_json(run_dir / "result_path.json") or {}
     config = run_config.get("config") or {}
     accuracy = accuracy_result(run_dir)
     initial_playbook = summarize_playbook(run_dir / "initial_playbook.txt")
@@ -179,6 +181,11 @@ def summarize_run(run_dir: Path) -> dict[str, Any]:
     row = {
         "run_id": run_config.get("run_id") or run_dir.name,
         "run_dir": repo_relative(run_dir),
+        "benchmark": path_identity.get("benchmark"),
+        "run_type": path_identity.get("run_type"),
+        "config_slug": path_identity.get("config_slug"),
+        "run_leaf": path_identity.get("run_leaf") or run_dir.name,
+        "result_path": path_identity.get("run_dir") or repo_relative(run_dir),
         "task_name": run_config.get("task_name"),
         "mode": run_config.get("mode"),
         "config_name": config.get("config_name"),
@@ -211,6 +218,7 @@ def summarize_run(run_dir: Path) -> dict[str, Any]:
 def input_paths_for_run(run_dir: Path) -> list[tuple[Path, str]]:
     paths: list[tuple[Path, str]] = [
         (run_dir / "run_config.json", "run_config"),
+        (run_dir / "result_path.json", "result_path"),
         (run_dir / "final_results.json", "final_results"),
         (run_dir / "final_test_results.json", "final_test_results"),
         (run_dir / "test_results.json", "test_results"),
@@ -247,9 +255,10 @@ def main() -> None:
         raise FileNotFoundError(f"No run_config.json files found under {campaign_dir}")
 
     rows = [summarize_run(run_dir) for run_dir in runs]
+    label = result_label(args.campaign, campaign_dir)
     analysis_id, created_at, output_dir = output_dir_for(
         "aggregate_experiments",
-        Path(args.campaign).name,
+        label,
         args.output_dir,
     )
     tables_dir = output_dir / "tables"
@@ -282,7 +291,7 @@ def main() -> None:
         output_dir,
         analysis_id=analysis_id,
         analysis_kind="aggregate_experiments",
-        label=Path(args.campaign).name,
+        label=label,
         created_at=created_at,
         command="python " + " ".join(sys.argv),
         parameters={"campaigns": [args.campaign]},
@@ -293,4 +302,8 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except (FileNotFoundError, RuntimeError, ValueError) as exc:
+        print(f"error: {exc}", file=sys.stderr)
+        raise SystemExit(1)

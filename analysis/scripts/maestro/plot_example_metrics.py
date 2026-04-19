@@ -25,6 +25,7 @@ from _provenance import (  # noqa: E402
     existing_file_records,
     output_dir_for,
     repo_relative,
+    result_label,
     result_path,
 )
 
@@ -78,9 +79,10 @@ def main() -> int:
     if not trace_files:
         raise FileNotFoundError(f"No telemetry trace files found under {campaign_dir}")
 
+    label = result_label(args.campaign, campaign_dir)
     analysis_id, created_at, output_dir = output_dir_for(
         "maestro_example_metrics",
-        Path(args.campaign).name,
+        label,
         args.output_dir,
     )
     staging_dir = output_dir / "logs" / "maestro_inputs"
@@ -160,7 +162,7 @@ def main() -> int:
         output_dir,
         analysis_id=analysis_id,
         analysis_kind="maestro_example_metrics",
-        label=Path(args.campaign).name,
+        label=label,
         created_at=created_at,
         command="python " + " ".join(sys.argv),
         parameters={
@@ -178,4 +180,8 @@ def main() -> int:
 
 
 if __name__ == "__main__":
-    raise SystemExit(main())
+    try:
+        raise SystemExit(main())
+    except (FileNotFoundError, RuntimeError, ValueError) as exc:
+        print(f"error: {exc}", file=sys.stderr)
+        raise SystemExit(1)

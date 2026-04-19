@@ -16,8 +16,30 @@ ANALYSIS_OUTPUTS_ROOT = REPO_ROOT / "analysis" / "outputs"
 
 
 def slugify(value: str) -> str:
-    slug = re.sub(r"[^A-Za-z0-9]+", "_", value.strip().lower()).strip("_")
+    slug = re.sub(r"[^A-Za-z0-9._-]+", "_", value.strip().lower()).strip("_")
     return slug or "analysis"
+
+
+def reject_old_layout(path_or_name: str | Path) -> None:
+    parts = Path(path_or_name).parts or (str(path_or_name),)
+    if any("smoke" in part.lower() for part in parts):
+        raise ValueError(
+            "Old smoke result layouts are not supported. Use "
+            "results/<benchmark>/<run_type>/<config_slug>."
+        )
+
+
+def result_label(path_or_name: str | Path, resolved_path: Path | None = None) -> str:
+    path = (resolved_path or Path(path_or_name)).resolve()
+    try:
+        rel = path.relative_to(RESULTS_ROOT.resolve())
+        parts = rel.parts
+    except ValueError:
+        parts = Path(path_or_name).parts
+        if parts and parts[0] == "results":
+            parts = parts[1:]
+    cleaned = [slugify(part).replace("_", "-") for part in parts if part not in {"", "."}]
+    return "__".join(cleaned) or slugify(str(path_or_name)).replace("_", "-")
 
 
 def make_analysis_id(
@@ -50,10 +72,14 @@ def repo_relative(path: Path) -> str:
 
 
 def result_path(path_or_name: str | Path) -> Path:
+    reject_old_layout(path_or_name)
     path = Path(path_or_name)
     if path.exists():
         return path.resolve()
-    return (RESULTS_ROOT / path).resolve()
+    candidate = (RESULTS_ROOT / path).resolve()
+    if not candidate.exists():
+        raise FileNotFoundError(f"Result path not found: {path_or_name}")
+    return candidate
 
 
 def output_dir_for(

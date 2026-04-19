@@ -201,26 +201,38 @@ The `finance/run.py` script provides a unified interface for training and evalua
 uv run python -m eval.finance.run \
     --task_name finer \
     --mode offline \
-    --save_path results
+    --save_path results/ace-finer/subset/openrouter-gpt-oss-20b \
+    --benchmark ace-finer \
+    --run_type subset \
+    --config_slug openrouter-gpt-oss-20b
 
 # Online training and testing
 uv run python -m eval.finance.run \
     --task_name finer \
     --mode online \
-    --save_path results
+    --save_path results/ace-finer/subset/openrouter-gpt-oss-20b \
+    --benchmark ace-finer \
+    --run_type subset \
+    --config_slug openrouter-gpt-oss-20b
 
 # Run evaluation on the test split only. Provide a pre-trained playbook or leave initial_playbook_path empty to evaluate an uninitialized playbook.
 uv run python -m eval.finance.run \
     --task_name finer \
     --mode eval_only \
-    --initial_playbook_path results/ace_run_TIMESTAMP_finer_offline/best_playbook.txt \
-    --save_path test_results
+    --initial_playbook_path results/ace-finer/subset/openrouter-gpt-oss-20b/offline_seed-42_YYYYMMDD_HHMMSS/best_playbook.txt \
+    --save_path results/ace-finer/subset/openrouter-gpt-oss-20b \
+    --benchmark ace-finer \
+    --run_type subset \
+    --config_slug openrouter-gpt-oss-20b
 
 # Training with custom configuration
 uv run python -m eval.finance.run \
     --task_name finer \
     --mode offline \
-    --save_path results \
+    --save_path results/ace-finer/full/openrouter-gpt-oss-20b \
+    --benchmark ace-finer \
+    --run_type full \
+    --config_slug openrouter-gpt-oss-20b \
     --num_epochs 3 \
     --eval_steps 100 \
     --max_tokens 4096
@@ -233,7 +245,10 @@ uv run python -m eval.finance.run \
 | Argument | Description | Default |
 |----------|-------------|---------|
 | `--task_name` | Task to train on (e.g., `finer`, `formula`) | Required |
-| `--save_path` | Directory to save results | Required |
+| `--save_path` | Config directory where ACE appends `<mode>_seed-<seed>_<timestamp>` | Required |
+| `--benchmark` | Benchmark slug recorded in `result_path.json` | Inferred from task |
+| `--run_type` | Run type slug such as `subset`, `full`, or `debug` | `manual` |
+| `--config_slug` | Explicit config identity recorded in result paths | Slugified `config_name` |
 | `--initial_playbook_path` | Path to initial playbook | Optional |
 | `--mode` | Run mode: 'offline' for offline training with validation, 'online' for online training and testing on test split, 'eval_only' for evaluation only | `offline` |
 | `--api_provider` | API provider for LLM calls. Choose from ['sambanova', 'together', 'openai'] | `sambanova` |

@@ -63,7 +63,7 @@ class FakeCompletions:
             "bullet_ids": [],
             "reflection": "No correction needed.",
             "bullet_tags": [],
-            "reasoning": "Keep playbook unchanged for this synthetic smoke run.",
+            "reasoning": "Keep playbook unchanged for this synthetic subset run.",
             "operations": [],
         }
         response_text = json.dumps(response_payload)
@@ -328,7 +328,7 @@ def _plot_cpu_memory_timeline(
     return {"avg_cpu_pct": avg_cpu, "peak_mem_mb": peak_mem}
 
 
-def run_partial_smoke_and_visualize(output_root: Path, analysis_output_dir: Path) -> RunArtifacts:
+def run_partial_subset_and_visualize(output_root: Path, analysis_output_dir: Path) -> RunArtifacts:
     os.environ.setdefault("OPENAI_API_KEY", "dummy-key")
 
     ace_system = ACE(
@@ -369,6 +369,9 @@ def run_partial_smoke_and_visualize(output_root: Path, analysis_output_dir: Path
         "telemetry_enabled": True,
         "telemetry_metrics_interval_seconds": 1,
         "seed": 42,
+        "benchmark": "ace-finer",
+        "run_type": "subset",
+        "config_slug": "local-partial-viz",
         "config_name": "partial_local_viz",
     }
 
@@ -434,13 +437,13 @@ def run_partial_smoke_and_visualize(output_root: Path, analysis_output_dir: Path
 
 def main() -> int:
     parser = argparse.ArgumentParser(
-        description="Run local partial ACE smoke and generate visualization artifacts."
+        description="Run local partial ACE subset and generate visualization artifacts."
     )
     parser.add_argument(
         "--output-root",
         type=Path,
-        default=REPO_ROOT / "results" / "local_partial_run",
-        help="Directory where the smoke run output folder will be created.",
+        default=REPO_ROOT / "results" / "ace-finer" / "subset" / "local-partial-viz",
+        help="Directory where the subset run output folder will be created.",
     )
     parser.add_argument(
         "--analysis-output-dir",
@@ -457,7 +460,7 @@ def main() -> int:
     )
     args.output_root.mkdir(parents=True, exist_ok=True)
     analysis_output_dir.mkdir(parents=True, exist_ok=True)
-    artifacts = run_partial_smoke_and_visualize(args.output_root, analysis_output_dir)
+    artifacts = run_partial_subset_and_visualize(args.output_root, analysis_output_dir)
 
     input_records = existing_file_records(
         [
