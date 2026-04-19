@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "benchmark": "ace-finer",
+  "run_type": "subset",
+  "config_slug": "openrouter-minimax-m2-7",
+  "runs": [
+    {
+      "run_leaf": "offline_seed-42_20260418_230446",
+      "mode": "offline",
+      "seed": 42,
+      "timestamp": "20260418_230446",
+      "run_dir": "results/ace-finer/subset/openrouter-minimax-m2-7/offline_seed-42_20260418_230446"
+    }
+  ]
+}
