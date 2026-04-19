@@ -1,2 +1,0 @@
-{"timestamp": "20260418_172536_993", "call_id": "train_e_1_s_56_post_curate", "model": "openai/gpt-oss-120b:nitro", "prompt_length": 52316, "exception_type": "Exception", "exception_message": "API returned None content", "json_mode": true, "api_key_used": null}
-{"timestamp": "20260418_172536_994", "call_id": "train_e_1_s_56_post_curate", "model": "openai/gpt-oss-120b:nitro", "prompt_length": 52316, "exception_type": "Exception", "exception_message": "API returned None content", "json_mode": true, "api_key_used": null}
