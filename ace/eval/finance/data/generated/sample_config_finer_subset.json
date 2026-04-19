@@ -1,7 +1,0 @@
-{
-  "finer": {
-    "train_data": "./eval/finance/data/generated/finer_train_60.jsonl",
-    "val_data": "./eval/finance/data/generated/finer_val_40.jsonl",
-    "test_data": "./eval/finance/data/generated/finer_test_80.jsonl"
-  }
-}
