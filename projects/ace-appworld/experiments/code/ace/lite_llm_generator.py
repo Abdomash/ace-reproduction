@@ -30,6 +30,7 @@ from appworld import AppWorld
 from appworld.common.path_store import path_store
 from appworld.common.utils import rprint, write_jsonl
 from appworld_experiments.code.ace.telemetry import (
+    _real_perf_counter,
     record_llm_response,
     telemetry_span,
 )
@@ -54,7 +55,9 @@ RETRY_ERROR = (
     UnprocessableEntityError,
 )
 CHAT_COMPLETION = {  # These are lambda so set environment variables take effect at runtime
-    "openai": lambda: OpenAI(api_key="9b419298-ffce-4d50-a42c-0b4a0b911a89", base_url="https://api.sambanova.ai/v1").chat.completions.create,
+    "openai": lambda: OpenAI(
+        api_key="9b419298-ffce-4d50-a42c-0b4a0b911a89", base_url="https://api.sambanova.ai/v1"
+    ).chat.completions.create,
     "litellm": lambda: litellm.completion,
 }
 
@@ -105,7 +108,9 @@ def _usage_counts(response: dict[str, Any]) -> dict[str, int]:
             ),
         )
     )
-    total_tokens = _field_value(usage, "total_tokens", _field_value(usage, "total_token_count", None))
+    total_tokens = _field_value(
+        usage, "total_tokens", _field_value(usage, "total_token_count", None)
+    )
     if total_tokens is None:
         total_tokens = prompt_tokens + completion_tokens
     return {
@@ -166,6 +171,7 @@ def _cost_from_usage_and_pricing(
             "reasoning_cost_per_token": reasoning_cost_per_token or 0.0,
         },
     )
+
 
 def non_cached_chat_completion(
     completion_method: str,
@@ -258,12 +264,15 @@ def non_cached_chat_completion(
 
     if provider.strip().lower() == "sambanova":
         from sambanova import SambaNova
+
         client = SambaNova()
     elif provider.strip().lower() == "together":
         from together import Together
+
         client = Together()
     elif provider.strip().lower() == "openai":
         from openai import OpenAI
+
         client = OpenAI()
     elif provider.strip().lower() == "openrouter":
         api_key = os.getenv("OPENROUTER_API_KEY", "")
@@ -278,14 +287,13 @@ def non_cached_chat_completion(
         if app_title:
             default_headers["X-Title"] = app_title
         from openai import OpenAI
+
         client_kwargs = {"api_key": api_key, "base_url": base_url}
         if default_headers:
             client_kwargs["default_headers"] = default_headers
         client = OpenAI(**client_kwargs)
     else:
-        raise ValueError(
-            f"Invalid provider: {provider}."
-        )
+        raise ValueError(f"Invalid provider: {provider}.")
 
     response = client.chat.completions.create(**kwargs)
     response = to_dict(response)
@@ -325,7 +333,6 @@ def cached_chat_completion(
     custom_llm_provider: str | None = None,
     **kwargs: Any,
 ) -> dict[str, Any]:
-
     return non_cached_chat_completion(
         completion_method=completion_method,
         provider=provider,
@@ -394,7 +401,9 @@ class LiteLLMGenerator:
                 "Valid values are: 'openai' or 'litellm'."
             )
         self.max_input_tokens = litellm.model_cost.get(self.model, {}).get("max_input_tokens", None)
-        self.max_output_tokens = litellm.model_cost.get(self.model, {}).get("max_output_tokens", None)
+        self.max_output_tokens = litellm.model_cost.get(self.model, {}).get(
+            "max_output_tokens", None
+        )
         self.retry_after_n_seconds = retry_after_n_seconds
         self.max_retries = max_retries
         self.chat_completion = {
@@ -466,9 +475,9 @@ class LiteLLMGenerator:
                 try:
                     if span is not None:
                         span.set_attribute("llm.attempt", attempt_number)
-                    call_start = time.perf_counter()
+                    call_start = _real_perf_counter()
                     response = self.chat_completion(**arguments)
-                    call_end = time.perf_counter()
+                    call_end = _real_perf_counter()
                     response["call_time"] = call_end - call_start
                     response["total_time"] = response["call_time"]
                     response["wall_time_seconds"] = response["call_time"]
@@ -502,9 +511,11 @@ class LiteLLMGenerator:
 
         if not success:
             raise Exception("Could not complete LM call")
-        
+
         if "chat_template_kwargs" in self.generation_kwargs:
-            response["choices"][0]["message"]["content"] = response["choices"][0]["message"]["content"].split("<think>\n")[-1]
+            response["choices"][0]["message"]["content"] = response["choices"][0]["message"][
+                "content"
+            ].split("<think>\n")[-1]
 
         output = {**response["choices"][0]["message"], "cost": response["cost"]}
         return output
@@ -554,9 +565,7 @@ class LiteLLMGenerator:
             raise ValueError("Either world or file_path must be provided.")
         if world:
             file_path = os.path.join(world.output_logs_directory, "lm_calls.jsonl")
-            self.detailed_log_dir = os.path.join(
-                world.base_output_directory, "detailed_llm_logs"
-            )
+            self.detailed_log_dir = os.path.join(world.base_output_directory, "detailed_llm_logs")
         self.log_file_path = file_path
 
     def add_cost_metadata(self, response: dict[str, Any]) -> None:
@@ -576,9 +585,15 @@ class LiteLLMGenerator:
             response["cost_usd"] = litellm_cost
             response["cost_source"] = "litellm"
             pricing = litellm.model_cost.get(self.model, {})
-            for key in ("input_cost_per_token", "output_cost_per_token", "output_cost_per_reasoning_token"):
+            for key in (
+                "input_cost_per_token",
+                "output_cost_per_token",
+                "output_cost_per_reasoning_token",
+            ):
                 if key in pricing:
-                    response[key.replace("output_cost_per_reasoning_token", "reasoning_cost_per_token")] = pricing[key]
+                    response[
+                        key.replace("output_cost_per_reasoning_token", "reasoning_cost_per_token")
+                    ] = pricing[key]
             return
 
         pricing_cost, pricing_fields = _cost_from_usage_and_pricing(

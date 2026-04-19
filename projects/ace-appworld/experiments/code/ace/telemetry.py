@@ -12,6 +12,33 @@ from typing import Any, Iterator
 from appworld.common.path_store import path_store
 
 
+def _make_real_time_helpers() -> dict:
+    try:
+        from freezegun.api import (
+            real_time_ns as _real_time_ns,
+            real_perf_counter as _real_perf_counter,
+        )
+
+        return {"time_ns": _real_time_ns, "perf_counter": _real_perf_counter}
+    except ImportError:
+        pass
+    _helpers: dict = {}
+    _helpers["time_ns"] = time.time_ns
+    _helpers["perf_counter"] = time.perf_counter
+    return _helpers
+
+
+_REAL_TIME: dict = _make_real_time_helpers()
+
+
+def _real_time_ns() -> int:
+    return _REAL_TIME["time_ns"]()
+
+
+def _real_perf_counter() -> float:
+    return _REAL_TIME["perf_counter"]()
+
+
 _RUNTIME: dict[str, Any] = {
     "enabled": False,
     "tracer": None,
@@ -168,7 +195,14 @@ def start_telemetry(
     )
     metadata_path = telemetry_dir / f"metadata_{run_id}.json"
     metadata_path.write_text(
-        json.dumps({k: v for k, v in _RUNTIME.items() if k not in {"tracer", "provider", "metrics_recorder"}}, indent=2),
+        json.dumps(
+            {
+                k: v
+                for k, v in _RUNTIME.items()
+                if k not in {"tracer", "provider", "metrics_recorder"}
+            },
+            indent=2,
+        ),
         encoding="utf-8",
     )
     return _RUNTIME
@@ -217,7 +251,7 @@ def telemetry_span(
     in_process_call: bool = True,
 ) -> Iterator[Any]:
     tracer = _RUNTIME.get("tracer")
-    wall_start = time.perf_counter()
+    wall_start = _real_perf_counter()
     if not _RUNTIME.get("enabled") or tracer is None:
         try:
             yield None
@@ -232,7 +266,9 @@ def telemetry_span(
     if attributes:
         span_attributes.update(attributes)
 
-    with tracer.start_as_current_span(span_name, attributes=span_attributes) as span:
+    with tracer.start_as_current_span(
+        span_name, start_time=_real_time_ns(), end_on_exit=False, attributes=span_attributes
+    ) as span:
         span.set_attribute("communication.is_in_process_call", in_process_call)
         input_bytes = 0
         if payload is not None:
@@ -249,9 +285,10 @@ def telemetry_span(
             span.set_attribute("agent.failure.reason", str(exc))
             raise
         finally:
-            wall_seconds = time.perf_counter() - wall_start
+            wall_seconds = _real_perf_counter() - wall_start
             span.set_attribute("wall_time_seconds", wall_seconds)
             span.set_attribute("duration.wall_time_seconds", wall_seconds)
+            span.end(end_time=_real_time_ns())
 
 
 def record_span_output(span: Any, output: Any) -> None:
@@ -269,9 +306,7 @@ def record_llm_response(span: Any, arguments: dict[str, Any], response: dict[str
     usage = response.get("usage") if isinstance(response, dict) else None
     if isinstance(usage, dict):
         prompt_tokens = int(usage.get("prompt_tokens") or usage.get("input_tokens") or 0)
-        completion_tokens = int(
-            usage.get("completion_tokens") or usage.get("output_tokens") or 0
-        )
+        completion_tokens = int(usage.get("completion_tokens") or usage.get("output_tokens") or 0)
         details = usage.get("completion_tokens_details") or {}
         reasoning_tokens = int(
             details.get("reasoning_tokens")
@@ -288,8 +323,12 @@ def record_llm_response(span: Any, arguments: dict[str, Any], response: dict[str
         span.set_attribute("gen_ai.usage.total_tokens", int(total_tokens))
     if "prompt_num_tokens" in response:
         span.set_attribute("gen_ai.usage.input_tokens", int(response.get("prompt_num_tokens") or 0))
-        span.set_attribute("gen_ai.usage.output_tokens", int(response.get("response_num_tokens") or 0))
-        span.set_attribute("gen_ai.usage.reasoning_tokens", int(response.get("reasoning_num_tokens") or 0))
+        span.set_attribute(
+            "gen_ai.usage.output_tokens", int(response.get("response_num_tokens") or 0)
+        )
+        span.set_attribute(
+            "gen_ai.usage.reasoning_tokens", int(response.get("reasoning_num_tokens") or 0)
+        )
         span.set_attribute("gen_ai.usage.total_tokens", int(response.get("total_num_tokens") or 0))
     if "cost_usd" in response:
         span.set_attribute("llm.cost_usd", float(response.get("cost_usd") or 0.0))
