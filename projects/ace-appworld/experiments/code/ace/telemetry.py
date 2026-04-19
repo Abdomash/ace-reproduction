@@ -4,6 +4,7 @@ import json
 import os
 import re
 import sys
+import time
 from contextlib import contextmanager
 from pathlib import Path
 from typing import Any, Iterator
@@ -216,8 +217,12 @@ def telemetry_span(
     in_process_call: bool = True,
 ) -> Iterator[Any]:
     tracer = _RUNTIME.get("tracer")
+    wall_start = time.perf_counter()
     if not _RUNTIME.get("enabled") or tracer is None:
-        yield None
+        try:
+            yield None
+        finally:
+            pass
         return
 
     span_attributes = {
@@ -243,6 +248,10 @@ def telemetry_span(
             span.set_attribute("agent.failure.category", "system")
             span.set_attribute("agent.failure.reason", str(exc))
             raise
+        finally:
+            wall_seconds = time.perf_counter() - wall_start
+            span.set_attribute("wall_time_seconds", wall_seconds)
+            span.set_attribute("duration.wall_time_seconds", wall_seconds)
 
 
 def record_span_output(span: Any, output: Any) -> None:
@@ -263,14 +272,35 @@ def record_llm_response(span: Any, arguments: dict[str, Any], response: dict[str
         completion_tokens = int(
             usage.get("completion_tokens") or usage.get("output_tokens") or 0
         )
+        details = usage.get("completion_tokens_details") or {}
+        reasoning_tokens = int(
+            details.get("reasoning_tokens")
+            or usage.get("reasoning_tokens")
+            or usage.get("internal_reasoning_tokens")
+            or 0
+        )
         total_tokens = usage.get("total_tokens")
         if total_tokens is None:
             total_tokens = prompt_tokens + completion_tokens
         span.set_attribute("gen_ai.usage.input_tokens", prompt_tokens)
         span.set_attribute("gen_ai.usage.output_tokens", completion_tokens)
+        span.set_attribute("gen_ai.usage.reasoning_tokens", reasoning_tokens)
         span.set_attribute("gen_ai.usage.total_tokens", int(total_tokens))
-    if "cost" in response:
+    if "prompt_num_tokens" in response:
+        span.set_attribute("gen_ai.usage.input_tokens", int(response.get("prompt_num_tokens") or 0))
+        span.set_attribute("gen_ai.usage.output_tokens", int(response.get("response_num_tokens") or 0))
+        span.set_attribute("gen_ai.usage.reasoning_tokens", int(response.get("reasoning_num_tokens") or 0))
+        span.set_attribute("gen_ai.usage.total_tokens", int(response.get("total_num_tokens") or 0))
+    if "cost_usd" in response:
+        span.set_attribute("llm.cost_usd", float(response.get("cost_usd") or 0.0))
+        span.set_attribute("llm.cost.usd", float(response.get("cost_usd") or 0.0))
+    elif "cost" in response:
         span.set_attribute("llm.cost.usd", float(response.get("cost") or 0.0))
+    if "cost_source" in response:
+        span.set_attribute("llm.cost_source", str(response.get("cost_source")))
+    if "wall_time_seconds" in response:
+        span.set_attribute("llm.call_time_seconds", float(response.get("wall_time_seconds") or 0.0))
+        span.set_attribute("llm.wall_time_seconds", float(response.get("wall_time_seconds") or 0.0))
     if "model" in arguments:
         span.set_attribute("gen_ai.request.model", str(arguments["model"]))
     record_span_output(span, response)

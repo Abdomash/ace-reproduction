@@ -58,6 +58,115 @@ CHAT_COMPLETION = {  # These are lambda so set environment variables take effect
     "litellm": lambda: litellm.completion,
 }
 
+
+def _field_value(obj: Any, field: str, default: Any = None) -> Any:
+    if obj is None:
+        return default
+    if isinstance(obj, dict):
+        return obj.get(field, default)
+    return getattr(obj, field, default)
+
+
+def _safe_int(value: Any, default: int = 0) -> int:
+    if value is None:
+        return default
+    try:
+        return int(value)
+    except (TypeError, ValueError):
+        return default
+
+
+def _safe_float(value: Any) -> float | None:
+    if value is None:
+        return None
+    try:
+        return float(value)
+    except (TypeError, ValueError):
+        return None
+
+
+def _usage_counts(response: dict[str, Any]) -> dict[str, int]:
+    usage = response.get("usage") if isinstance(response, dict) else None
+    details = _field_value(usage, "completion_tokens_details") or {}
+    prompt_tokens = _safe_int(
+        _field_value(usage, "prompt_tokens", _field_value(usage, "input_tokens", 0))
+    )
+    completion_tokens = _safe_int(
+        _field_value(usage, "completion_tokens", _field_value(usage, "output_tokens", 0))
+    )
+    reasoning_tokens = _safe_int(
+        _field_value(
+            details,
+            "reasoning_tokens",
+            _field_value(
+                usage,
+                "reasoning_tokens",
+                _field_value(usage, "internal_reasoning_tokens", 0),
+            ),
+        )
+    )
+    total_tokens = _field_value(usage, "total_tokens", _field_value(usage, "total_token_count", None))
+    if total_tokens is None:
+        total_tokens = prompt_tokens + completion_tokens
+    return {
+        "prompt_num_tokens": prompt_tokens,
+        "response_num_tokens": completion_tokens,
+        "reasoning_num_tokens": reasoning_tokens,
+        "total_num_tokens": _safe_int(total_tokens),
+    }
+
+
+def _provider_cost_usd(response: dict[str, Any]) -> float | None:
+    usage = response.get("usage") if isinstance(response, dict) else None
+    for candidate in (
+        response.get("cost"),
+        response.get("cost_usd"),
+        _field_value(usage, "cost"),
+        _field_value(usage, "cost_usd"),
+        _field_value(usage, "total_cost"),
+    ):
+        value = _safe_float(candidate)
+        if value is not None:
+            return value
+    return None
+
+
+def _pricing_value(pricing: dict[str, Any], *keys: str) -> float | None:
+    for key in keys:
+        value = _safe_float(pricing.get(key))
+        if value is not None:
+            return value
+    return None
+
+
+def _cost_from_usage_and_pricing(
+    usage_counts: dict[str, int], pricing: dict[str, Any]
+) -> tuple[float | None, dict[str, float]]:
+    input_cost_per_token = _pricing_value(pricing, "input_cost_per_token", "prompt")
+    output_cost_per_token = _pricing_value(pricing, "output_cost_per_token", "completion")
+    reasoning_cost_per_token = _pricing_value(
+        pricing,
+        "output_cost_per_reasoning_token",
+        "internal_reasoning",
+    )
+    if input_cost_per_token is None or output_cost_per_token is None:
+        return None, {}
+
+    prompt_cost = usage_counts["prompt_num_tokens"] * input_cost_per_token
+    completion_cost_usd = usage_counts["response_num_tokens"] * output_cost_per_token
+    reasoning_cost = 0.0
+    if reasoning_cost_per_token is not None:
+        reasoning_cost = usage_counts["reasoning_num_tokens"] * reasoning_cost_per_token
+
+    return (
+        prompt_cost + completion_cost_usd + reasoning_cost,
+        {
+            "input_cost_per_token": input_cost_per_token,
+            "output_cost_per_token": output_cost_per_token,
+            "reasoning_cost_per_token": reasoning_cost_per_token or 0.0,
+        },
+    )
+
 def non_cached_chat_completion(
     completion_method: str,
     provider: str,
@@ -261,6 +370,7 @@ class LiteLLMGenerator:
         **generation_kwargs: Any,
     ) -> None:
         self.model = name
+        self.token_cost_data = token_cost_data or {}
         default_custom_llm_provider = (
             "openai" if name not in litellm.model_cost and completion_method == "openai" else None
         )
@@ -283,8 +393,8 @@ class LiteLLMGenerator:
                 f"Invalid completion_method: {completion_method}. "
                 "Valid values are: 'openai' or 'litellm'."
             )
-        self.max_input_tokens = litellm.model_cost.get("name", {}).get("max_input_tokens", None)
-        self.max_output_tokens = litellm.model_cost.get("name", {}).get("max_output_tokens", None)
+        self.max_input_tokens = litellm.model_cost.get(self.model, {}).get("max_input_tokens", None)
+        self.max_output_tokens = litellm.model_cost.get(self.model, {}).get("max_output_tokens", None)
         self.retry_after_n_seconds = retry_after_n_seconds
         self.max_retries = max_retries
         self.chat_completion = {
@@ -314,6 +424,7 @@ class LiteLLMGenerator:
         self.generation_kwargs = generation_kwargs
         self.cost = 0
         self.log_file_path = None
+        self.detailed_log_dir = None
         self.telemetry_agent_name = "llm"
 
     def generate(
@@ -355,8 +466,14 @@ class LiteLLMGenerator:
                 try:
                     if span is not None:
                         span.set_attribute("llm.attempt", attempt_number)
+                    call_start = time.perf_counter()
                     response = self.chat_completion(**arguments)
-                    response["cost"] = self.completion_cost(completion_response=response)
+                    call_end = time.perf_counter()
+                    response["call_time"] = call_end - call_start
+                    response["total_time"] = response["call_time"]
+                    response["wall_time_seconds"] = response["call_time"]
+                    response["attempt_number"] = attempt_number
+                    self.add_cost_metadata(response)
                     self.may_log_call(arguments, response)
                     record_llm_response(span, arguments, response)
                     success = True
@@ -393,24 +510,105 @@ class LiteLLMGenerator:
         return output
 
     def may_log_call(self, arguments: dict, response: dict) -> None:
-        log_data = {"id": uuid.uuid4().hex, "input": arguments, "output": response}
+        call_id = uuid.uuid4().hex
+        messages = arguments.get("messages") or []
+        choices = response.get("choices") or [{}]
+        message = choices[0].get("message", {}) if isinstance(choices[0], dict) else {}
+        log_data = {
+            "id": call_id,
+            "role": self.telemetry_agent_name,
+            "model": self.model,
+            "prompt": messages,
+            "prompt_length": len(str(messages)),
+            "response_length": len(str(message)),
+            "call_time": response.get("call_time"),
+            "total_time": response.get("total_time"),
+            "prompt_num_tokens": response.get("prompt_num_tokens", 0),
+            "response_num_tokens": response.get("response_num_tokens", 0),
+            "reasoning_num_tokens": response.get("reasoning_num_tokens", 0),
+            "total_num_tokens": response.get("total_num_tokens", 0),
+            "cost_usd": response.get("cost_usd"),
+            "cost_source": response.get("cost_source", "unknown"),
+            "input_cost_per_token": response.get("input_cost_per_token"),
+            "output_cost_per_token": response.get("output_cost_per_token"),
+            "reasoning_cost_per_token": response.get("reasoning_cost_per_token"),
+            "input": arguments,
+            "output": response,
+        }
         if self.log_file_path:
             os.makedirs(os.path.dirname(self.log_file_path), exist_ok=True)
             write_jsonl([log_data], self.log_file_path, append=True, silent=True)
+        if self.detailed_log_dir:
+            os.makedirs(self.detailed_log_dir, exist_ok=True)
+            detailed_path = os.path.join(
+                self.detailed_log_dir,
+                f"{self.telemetry_agent_name}_{call_id}.json",
+            )
+            with open(detailed_path, "w", encoding="utf-8") as f:
+                import json
+
+                json.dump(log_data, f, indent=2)
 
     def log_calls_to(self, file_path: str | None = None, world: AppWorld | None = None) -> None:
         if (world and file_path) or (not world and not file_path):
             raise ValueError("Either world or file_path must be provided.")
         if world:
             file_path = os.path.join(world.output_logs_directory, "lm_calls.jsonl")
+            self.detailed_log_dir = os.path.join(
+                world.base_output_directory, "detailed_llm_logs"
+            )
         self.log_file_path = file_path
 
-    def completion_cost(self, *args: Any, **kwargs: Any) -> float:
+    def add_cost_metadata(self, response: dict[str, Any]) -> None:
+        usage_counts = _usage_counts(response)
+        response.update(usage_counts)
+
+        provider_cost = _provider_cost_usd(response)
+        if provider_cost is not None and provider_cost > 0:
+            response["cost"] = round(provider_cost, 8)
+            response["cost_usd"] = round(provider_cost, 8)
+            response["cost_source"] = "provider"
+            return
+
+        litellm_cost = self.completion_cost(completion_response=response)
+        if litellm_cost is not None:
+            response["cost"] = litellm_cost
+            response["cost_usd"] = litellm_cost
+            response["cost_source"] = "litellm"
+            pricing = litellm.model_cost.get(self.model, {})
+            for key in ("input_cost_per_token", "output_cost_per_token", "output_cost_per_reasoning_token"):
+                if key in pricing:
+                    response[key.replace("output_cost_per_reasoning_token", "reasoning_cost_per_token")] = pricing[key]
+            return
+
+        pricing_cost, pricing_fields = _cost_from_usage_and_pricing(
+            usage_counts, self.token_cost_data
+        )
+        if pricing_cost is not None:
+            response["cost"] = round(pricing_cost, 8)
+            response["cost_usd"] = round(pricing_cost, 8)
+            response["cost_source"] = "token_cost_data"
+            response.update(pricing_fields)
+            return
+
+        if provider_cost is not None:
+            response["cost"] = round(provider_cost, 8)
+            response["cost_usd"] = round(provider_cost, 8)
+            response["cost_source"] = "provider"
+            return
+
+        response["cost"] = 0.0
+        response["cost_source"] = "unknown"
+
+    def completion_cost(self, *args: Any, **kwargs: Any) -> float | None:
         if self.model in litellm.model_cost:
             if self.custom_llm_provider:
                 kwargs["custom_llm_provider"] = self.custom_llm_provider
-            return round(completion_cost(*args, **kwargs), 8)
-        return 0.0
+            try:
+                return round(completion_cost(*args, **kwargs), 8)
+            except Exception:
+                return None
+        return None
 
 
 def to_dict(obj: Any) -> Any:
