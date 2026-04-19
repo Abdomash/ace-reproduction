@@ -11,3 +11,7 @@ latex/
 **/detailed_llm_logs/
 environment_io.md
 loggger.log
+
+projects/maestro/examples/
+projects/maestro/.github/
+projects/maestro/data/

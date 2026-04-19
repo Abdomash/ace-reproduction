@@ -37,9 +37,7 @@ yxc-251224
 dataset/
 parquet/
 analysis/
-data/*
-!data/example/
-!data/example/run_20251223_020529.otel.jsonl
+data/
 
 upload_hf.py
 telemetry*.py
