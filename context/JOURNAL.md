@@ -1,5 +1,38 @@
 # Journal
 
+## 2026-04-20 - Fixed zero latency/cost-timing in MAESTRO telemetry
+
+The MAESTRO analysis run for `openrouter-gpt-oss-120b` showed all LLM-related
+timing as zero: `duration_ns=0`, `start_time=end_time=1684411200000000000`,
+`wall_time_seconds=0.0`, `llm.call_time_seconds=0.0`. Token counts and dollar
+costs were correct.
+
+**Root cause**: AppWorld uses `freezegun.freeze_time()` to freeze the system
+clock to each task's simulated datetime (e.g. 2023-05-18) so that business
+logic (`DateTime.now()`, verification-code expiry, subscription checks, etc.)
+behaves deterministically. Freezegun globally patches `time.time_ns()`,
+`time.time()`, and `time.perf_counter()` — the exact functions the
+OpenTelemetry SDK and ACE telemetry code rely on for span timestamps and
+wall-clock measurements. All spans created inside the `AppWorld` context got
+the same frozen timestamp, making `start_time == end_time` and all durations
+zero.
+
+**Fix**: Use `freezegun.api.real_time_ns` and `freezegun.api.real_perf_counter`
+— saved references to the original unpatched functions that always return real
+wall-clock time. Stored in a dict (which freezegun cannot traverse) with a
+graceful fallback to `time.time_ns`/`time.perf_counter` when freezegun is
+absent.
+
+Changed files:
+- `ace-appworld/experiments/code/ace/telemetry.py` — added
+  `_real_time_ns()`/`_real_perf_counter()` helpers; `telemetry_span()` now
+  passes `start_time=_real_time_ns()` and `end_on_exit=False` with explicit
+  `span.end(end_time=_real_time_ns())`; wall-clock via `_real_perf_counter()`.
+- `ace-appworld/experiments/code/ace/lite_llm_generator.py` — LLM call timing
+  now uses `_real_perf_counter()` instead of `time.perf_counter()`.
+
+The experiment results need to be re-run after this fix.
+
 ## 2026-04-19 - OpenRouter FiNER smoke comparison
 
 Finished the 2026-04-19 FiNER smoke experiments comparing `minimax/minimax-m2.7`,
