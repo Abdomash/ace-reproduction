@@ -66,6 +66,9 @@ def parse_args():
     parser.add_argument("--bulletpoint_analyzer_threshold", type=float, default=0.90)
 
     parser.add_argument("--save_path", type=str, required=True)
+    parser.add_argument("--benchmark", type=str, default=None)
+    parser.add_argument("--run_type", type=str, default=None)
+    parser.add_argument("--config_slug", type=str, default=None)
 
     parser.add_argument("--telemetry_enabled", action="store_true")
     parser.add_argument(
@@ -74,7 +77,12 @@ def parse_args():
 
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--config_name", type=str, default="default")
-    parser.add_argument("--run_id", type=str, default=None)
+    parser.add_argument(
+        "--run_id",
+        type=str,
+        default=None,
+        help="Optional explicit run_id override; prefer <mode>_seed-<seed>_<timestamp>",
+    )
     parser.add_argument(
         "--sample_config_path",
         type=str,
@@ -192,6 +200,9 @@ def main():
         "json_mode": args.json_mode,
         "no_ground_truth": args.no_ground_truth,
         "save_dir": args.save_path,
+        "benchmark": args.benchmark,
+        "run_type": args.run_type,
+        "config_slug": args.config_slug,
         "test_workers": args.test_workers,
         "initial_playbook_path": args.initial_playbook_path,
         "use_bulletpoint_analyzer": args.use_bulletpoint_analyzer,

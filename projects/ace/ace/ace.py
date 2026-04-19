@@ -18,6 +18,12 @@ from playbook_utils import *
 from logger import *
 from utils import *
 from llm import set_telemetry_runtime
+from result_layout import (
+    build_run_leaf,
+    parse_run_leaf,
+    update_run_group,
+    write_result_path_json,
+)
 from telemetry import (
     get_invoke_helpers,
     start_telemetry,
@@ -142,14 +148,22 @@ class ACE:
     def _provider_call_failed(self, call_info: Optional[Dict[str, Any]]) -> bool:
         return isinstance(call_info, dict) and bool(call_info.get("error_type"))
 
-    def _resolve_run_id(self, config: Dict[str, Any], task_name: str, mode: str) -> str:
+    def _resolve_run_identity(
+        self, config: Dict[str, Any], task_name: str, mode: str
+    ) -> Tuple[str, str]:
         configured_run_id = config.get("run_id") if config else None
         if configured_run_id:
-            return str(configured_run_id)
-        config_name = str(config.get("config_name", "default")) if config else "default"
+            run_id = str(configured_run_id)
+            parsed = parse_run_leaf(run_id)
+            timestamp = (
+                parsed["timestamp"]
+                if parsed
+                else datetime.now().strftime("%Y%m%d_%H%M%S")
+            )
+            return run_id, timestamp
         seed = str(config.get("seed", "na")) if config else "na"
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        return f"ace_{task_name}_{mode}_{config_name}_{seed}_{timestamp}"
+        return build_run_leaf(mode, seed, timestamp), timestamp
 
     def _invoke_agent(self, agent_name: str, payload: Dict[str, Any], invoke_fn):
         if not self._invoke_agent_span or not self._record_invoke_agent_output:
@@ -323,7 +337,7 @@ class ACE:
         config_params = self._extract_config_params(config)
         task_name = config_params["task_name"]
         save_dir = config_params["save_dir"]
-        run_id = self._resolve_run_id(config, task_name, mode)
+        run_id, run_timestamp = self._resolve_run_identity(config, task_name, mode)
 
         # Setup paths based on mode
         if mode == "eval_only":
@@ -379,6 +393,16 @@ class ACE:
                 f,
                 indent=2,
             )
+        result_metadata = write_result_path_json(
+            config=config,
+            save_dir=save_dir,
+            run_dir=save_path,
+            run_leaf=run_id,
+            mode=mode,
+            seed=(config or {}).get("seed", "na"),
+            timestamp=run_timestamp,
+        )
+        update_run_group(save_dir, result_metadata)
 
         # Print initial banner
         print(f"\n{'=' * 60}")
