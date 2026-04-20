@@ -74,3 +74,52 @@ The retained robustness layer is deliberately narrow: empty visible content and
 malformed provider JSON are logged as provider-call failures, counted as failed
 calls/samples where the workflow can continue, and are not retried. Timeout,
 rate-limit, and server-error retry behavior remains operational transport handling.
+
+## 2026-04-20 - Full FiNER offline-run cost estimates (gpt-oss-120b)
+
+Estimated the cost of running the full FiNER offline adaptation with
+gpt-oss-120b by extrapolating from the subset run (60/40/80 train/val/test,
+total $1.90 at OpenRouter Nitro pricing).
+
+**Method**: Extracted per-call pricing from the subset telemetry, computed
+phase-wise token/cost breakdowns, then extrapolated to the full dataset
+(1000/500/441) accounting for playbook growth. The playbook accumulates
+~174 tokens per training step until capping at the 80K token budget (~step
+450), after which per-step cost plateaus. Full runs use eval_steps=100
+(10 validation evaluations). Per-call pricing was reverse-engineered from
+cost_usd and token counts as a perfect linear fit, confirming per-model
+rates.
+
+**At OpenRouter Nitro pricing ($0.35/M input, $0.75/M output)**:
+
+| Phase | Est. Cost |
+|-------|-----------|
+| Initial test (441 samples, no playbook) | ~$0.65 |
+| Training (1000 steps, growing playbook) | ~$86 |
+| Validation (10 evals × 500 samples) | ~$123 |
+| Final test (441 samples, full playbook) | ~$13 |
+| **Total** | **~$220 ±30% ($150–$290)** |
+
+**At OpenRouter Standard pricing ($0.039/M input, $0.19/M output)**:
+
+The same token volumes scale differently because training and validation
+are input-dominated (reading the growing playbook on every call). The
+input price drops 9× vs only 2.5× for output, so costs shrink
+disproportionately:
+
+| Phase | Est. Cost |
+|-------|-----------|
+| Initial test | ~$0.12 |
+| Training | ~$11 |
+| Validation | ~$15 |
+| Final test | ~$1.60 |
+| **Total** | **~$28 ±30% ($20–$36)** |
+
+**Paper comparison**: The ACE paper (Table 4) reports $2.9 for *online*
+FiNER adaptation — a different setup where the model sequentially predicts
+and updates context on each of the 441 test samples (no separate training
+phase). Our pipeline runs *offline* adaptation: training on 1000 samples
+with an iteratively growing playbook, periodic validation, then held-out
+test evaluation. Offline is far more expensive due to the iterative
+training loop with expanding context. The paper does not report offline
+FiNER dollar costs.
