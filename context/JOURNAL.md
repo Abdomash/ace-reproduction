@@ -123,3 +123,50 @@ with an iteratively growing playbook, periodic validation, then held-out
 test evaluation. Offline is far more expensive due to the iterative
 training loop with expanding context. The paper does not report offline
 FiNER dollar costs.
+
+## 2026-04-21 - FiNER subset model comparison: minimax-m2.7 vs gpt-oss-120b vs deepseek-v3-2
+
+Ran DeepSeek v3.2 on the FiNER subset and compared against the earlier minimax-m2.7
+and gpt-oss-120b results.
+
+**Minimax-m2.7 did not produce noticeably stronger results than gpt-oss-120b** despite
+being a bigger and more expensive model. Their final accuracies are only ~1.5pp apart
+(68.44% vs 66.88%), well within run-to-run variance. Minimax's apparent +16.56pp
+improvement is inflated by the fact that 28 of 80 initial samples returned
+`NO_VISIBLE_MODEL_OUTPUT` (empty provider responses), dragging its initial accuracy
+down to 51.88%. ACE resolved 25 of those 28 empty responses, accounting for most
+of the gain. GPT-OSS-120B had 0–2 no_answer responses across its runs, so its
+improvements are genuine tag-accuracy gains. The ~2–4pp final-accuracy gap between
+the two models is not meaningful.
+
+DeepSeek v3.2, by contrast, achieved notably stronger overall performance, reaching
+76.88% final accuracy — roughly 10pp ahead of both models. Its ACE improvement was
++5.63pp (71.25% → 76.88%), modest in absolute terms but starting from a much higher
+baseline with zero no_answer issues, so the gains represent genuine tag-level
+improvement.
+
+| Model | Initial | Final | Delta | Best Val | no_answer (init→final) |
+|-------|---------|-------|-------|----------|------------------------|
+| minimax-m2.7 | 51.88% | 68.44% | +16.56pp | 81.88% | 28 → 3 |
+| gpt-oss-120b (best run) | 56.88% | 66.88% | +10.00pp | 81.25% | 0 → 0 |
+| deepseek-v3-2 | 71.25% | 76.88% | +5.63pp | 82.50% | 0 → 0 |
+
+**Handling reasoning-only models**: The `NO_VISIBLE_MODEL_OUTPUT` sentinel was
+added to handle cases where the model exhausts its entire token budget on
+reasoning tokens without producing any visible output content. MiniMax-m2.7 is
+a thinking model, unlike GPT-OSS-120B and DeepSeek-v3.2, and its 28/80 empty
+initial responses likely stem from spending the full `max_tokens` budget on
+internal reasoning. This is compounded by the ACE generator prompt asking for
+"step-by-step thoughts" alongside the answer — a thinking model would first
+produce hidden reasoning tokens *to think about the problem*, then visible
+tokens *to explain its steps*, roughly doubling token usage per call.
+
+I explored two mitigations: (1) extending the per-request token budget or
+retrying with sequential requests, and (2) passing the model's hidden
+reasoning tokens to the reflector while adjusting the generator prompt to
+request only the output answer, avoiding a re-explanation of the reasoning.
+Both felt like significant departures from the ACE paper's setup, and the
+results were inconsistent. I ultimately settled on treating no-answer outputs
+as a first-class failure mode — whether due to invalid/malformed JSON or
+`NO_VISIBLE_MODEL_OUTPUT` — logging them as provider call failures and letting
+the ACE workflow continue without retrying.
