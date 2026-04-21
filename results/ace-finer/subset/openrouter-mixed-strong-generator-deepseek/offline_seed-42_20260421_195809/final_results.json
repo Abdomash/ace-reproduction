@@ -1,0 +1,43 @@
+{
+  "run_id": "offline_seed-42_20260421_195809",
+  "telemetry": {
+    "enabled": true,
+    "trace_path": "/home/abdo/ace-reproduction/results/ace-finer/subset/openrouter-mixed-strong-generator-deepseek/offline_seed-42_20260421_195809/telemetry/run_offline_seed-42_20260421_195809.otel.jsonl",
+    "metrics_path": "/home/abdo/ace-reproduction/results/ace-finer/subset/openrouter-mixed-strong-generator-deepseek/offline_seed-42_20260421_195809/telemetry/ace_offline_seed-42_20260421_195809.metrics.jsonl",
+    "metrics_interval_seconds": 5.0,
+    "task_name": "finer",
+    "mode": "offline"
+  },
+  "results": {
+    "initial_test_results": {
+      "accuracy": 0.709375,
+      "correct": 29,
+      "total": 80,
+      "no_answer": 0
+    },
+    "training_results": {
+      "best_validation_accuracy": 0.84375
+    },
+    "final_test_results": {
+      "accuracy": 0.76875,
+      "correct": 39,
+      "total": 80,
+      "no_answer": 0
+    }
+  },
+  "initial_test_results": {
+    "accuracy": 0.709375,
+    "correct": 29,
+    "total": 80,
+    "no_answer": 0
+  },
+  "training_results": {
+    "best_validation_accuracy": 0.84375
+  },
+  "final_test_results": {
+    "accuracy": 0.76875,
+    "correct": 39,
+    "total": 80,
+    "no_answer": 0
+  }
+}
