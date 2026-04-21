@@ -1,0 +1,3018 @@
+{
+  "analysis_id": "summarize_runs__ace-finer__subset__openrouter-deepseek-deepseek-v3-2__20260421_172224",
+  "analysis_kind": "summarize_runs",
+  "command": "python ./analysis/scripts/ace/summarize_runs.py results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/",
+  "created_at": "2026-04-21T17:22:24.390149+03:00",
+  "git_commit": "3e08cf7217e8c55495a6921b6c46f8d137dd207d",
+  "inputs": [
+    {
+      "files": [
+        {
+          "bytes": 6861,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/run_config.json",
+          "sha256": "b7d0179d96bcc86ca7e995d5400e3c55f79a3f49ff4efc5c84b198b56f578e42"
+        },
+        {
+          "bytes": 357,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/result_path.json",
+          "sha256": "03196d28fb6601d7150a304533c9d91e69dbb5b4d7a69260e60da7143cb94dae"
+        },
+        {
+          "bytes": 27333,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/initial_test_results.json",
+          "sha256": "6386d0878f4d7ca51666b535ac846036af6ef271ba37d6c61d75554a2002eed5"
+        },
+        {
+          "bytes": 23312,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/final_test_results.json",
+          "sha256": "af52fcd4183cd763fd83cce31ce61835f5deb8fbc37b8bb21b470d2a2f8eee1a"
+        },
+        {
+          "bytes": 58399,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/pre_train_post_train_results.json",
+          "sha256": "41c47d4adc91d4f62f12f202f5d1a67e947550973581ed0cd7312dbfff40b5eb"
+        },
+        {
+          "bytes": 4201,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/train_results.json",
+          "sha256": "aa243ce5d90be0c54b8127eceb3ec9f34ab6baa7729caf2008063559565a9330"
+        },
+        {
+          "bytes": 34801,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/val_results.json",
+          "sha256": "7951f7ae87b7126a3eae7c1ffcb95de94ba9958558850ddfa111ee99889771e9"
+        },
+        {
+          "bytes": 18788,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/best_playbook.txt",
+          "sha256": "14b9e55944200ddc39e3f54bc636e13fda0c2d02a8bb519cf9a83a91689f7685"
+        },
+        {
+          "bytes": 34352,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/final_playbook.txt",
+          "sha256": "2b1bdbbb60f209d4083fb1d994a58bf912148708802203cd76af570cc4df7b6d"
+        },
+        {
+          "bytes": 212981,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/bullet_usage_log.jsonl",
+          "sha256": "62890c702a7b36c6b231053245764fc782b6f2e946a4ebff741ea1baff05496c"
+        },
+        {
+          "bytes": 44583,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/curator_operations_diff.jsonl",
+          "sha256": "507270914ed9d13529c0d8486c5c8e3eb37c0f56ed6285b8b88af534564c6fbc"
+        },
+        {
+          "bytes": 20467,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/curator_failures.txt",
+          "sha256": "b0f77a53be84b272334eb7e3865ff7f12ced91924fd1bccb377d649a3b0b0d0f"
+        },
+        {
+          "bytes": 13156,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/curator_train_e_1_s_10_20260421_152239_577.json",
+          "sha256": "7864d6e85ed4781b8e2938e2b50b410c2fcb36893430983f6c89c73cc76f6b1c"
+        },
+        {
+          "bytes": 14459,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/curator_train_e_1_s_11_20260421_152415_807.json",
+          "sha256": "c8d4b271933b292852f3384e7d01fc3a98f583d069fb2116d87b532cf947949f"
+        },
+        {
+          "bytes": 17465,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/curator_train_e_1_s_12_20260421_152612_561.json",
+          "sha256": "f91e7430e431899ab1f36a9a4347a6b71900dc35a4d557bc067cab54e9758f07"
+        },
+        {
+          "bytes": 16130,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/curator_train_e_1_s_13_20260421_152830_140.json",
+          "sha256": "bd9e3e14d2308d1c88ed239b1f487339f7dd7e527dd3e74080eeb8fffcb998cd"
+        },
+        {
+          "bytes": 15963,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/curator_train_e_1_s_14_20260421_152932_597.json",
+          "sha256": "fd30ffaf94af1e0a4f41a0c5adff324623fb9acef45bd06495c7825cc580351e"
+        },
+        {
+          "bytes": 15767,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/curator_train_e_1_s_15_20260421_153037_436.json",
+          "sha256": "03a689b2f5d5f69e575bef1b803cb72c00c6f413a97994c440c84ab7d95688ed"
+        },
+        {
+          "bytes": 19556,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/curator_train_e_1_s_16_20260421_153418_885.json",
+          "sha256": "8ce7b0f6ed359a439fabe865d045041dff0c2c41a597ca1eb01f18d8434fb7ae"
+        },
+        {
+          "bytes": 17169,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/curator_train_e_1_s_17_20260421_153525_786.json",
+          "sha256": "a114f63af39eeddae68cbec199b73cc56f6a70204285e6f96d9af41d4c3d1d67"
+        },
+        {
+          "bytes": 19991,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/curator_train_e_1_s_18_20260421_153704_835.json",
+          "sha256": "01a5d40aadf7efd424e4f9288d812f24bac572e2e850d0bf13fcbd45e0432e50"
+        },
+        {
+          "bytes": 17893,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/curator_train_e_1_s_19_20260421_153802_690.json",
+          "sha256": "fe3c67ad17cec99595fb434625dc9c3999b4b1717e4be691d5a26872fa8547f2"
+        },
+        {
+          "bytes": 12921,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/curator_train_e_1_s_1_20260421_151155_342.json",
+          "sha256": "f41a3fab912b25c92b9d29a87cccbb6a18837ad058b04e5d658e4679fa7daa6f"
+        },
+        {
+          "bytes": 19300,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/curator_train_e_1_s_20_20260421_153907_338.json",
+          "sha256": "38fb4a8d134f50427ebf0c077150fdc344f7f134322b1a38eedebb4be8b3b36c"
+        },
+        {
+          "bytes": 19656,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/curator_train_e_1_s_21_20260421_154030_409.json",
+          "sha256": "677e43767aa33350b074ff0bc3f52efdae576af2f0acfbbc5beb78b4a1d11926"
+        },
+        {
+          "bytes": 22701,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/curator_train_e_1_s_22_20260421_154332_560.json",
+          "sha256": "39d898c8a4dda34cee0e4fb0139eab78cc02722ea3c203420f09c2bb385f0fea"
+        },
+        {
+          "bytes": 25339,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/curator_train_e_1_s_23_20260421_154559_878.json",
+          "sha256": "41004c8fc9da6b7bfdcc54243a0e95373e4ed439d7478a135d50fc2deb4124f2"
+        },
+        {
+          "bytes": 22355,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/curator_train_e_1_s_24_20260421_154720_531.json",
+          "sha256": "5f691212e42f57c5968ce4da87a666daf7f012986db53b7f31abb4a2ba3d9d5c"
+        },
+        {
+          "bytes": 26265,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/curator_train_e_1_s_25_20260421_154906_833.json",
+          "sha256": "b27c2fa8c38cb73dc19c49aa07d54d58fcc91c51ccc8b07d39900880e03c09e8"
+        },
+        {
+          "bytes": 23315,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/curator_train_e_1_s_26_20260421_155040_920.json",
+          "sha256": "aa014de94aca4c3b8573196fbe3ebe1e9b925101f675ef14a116aaa0d3a11f79"
+        },
+        {
+          "bytes": 29994,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/curator_train_e_1_s_27_20260421_155409_294.json",
+          "sha256": "3a6a9e77d009ed550a8d901ecda91da88b00dc0903aee9f650133bf06a056bb1"
+        },
+        {
+          "bytes": 23610,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/curator_train_e_1_s_28_20260421_155517_878.json",
+          "sha256": "328fc9039a278367a60376d6b9c573c3e071b258d83e1c187848b5f23fa2c411"
+        },
+        {
+          "bytes": 25545,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/curator_train_e_1_s_29_20260421_155717_448.json",
+          "sha256": "8f6375cf1704f8f8bdb0aa8e3ebba1e5a0053aee67ffa471ceb0179977340e0a"
+        },
+        {
+          "bytes": 12232,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/curator_train_e_1_s_2_20260421_151345_341.json",
+          "sha256": "031ef47da14b358674575754b59b06f34f401633d5ca13286eeea0c698df49bd"
+        },
+        {
+          "bytes": 32741,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/curator_train_e_1_s_30_20260421_160139_999.json",
+          "sha256": "e15552a68c2da32cf08d85253aaa6cb8efe1a4ac06e4e2c9f5b7640e5bf299eb"
+        },
+        {
+          "bytes": 31042,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/curator_train_e_1_s_31_20260421_160421_323.json",
+          "sha256": "207046509067e130604cf22f8926cdc0c7f72a3fff62013a3a468bcb84b531aa"
+        },
+        {
+          "bytes": 26794,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/curator_train_e_1_s_32_20260421_160518_219.json",
+          "sha256": "d35b12a1bdcbf1117ae7ca8be5df53dd6b467ca2c2dc60094747926ce4cc7ec9"
+        },
+        {
+          "bytes": 44324,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/curator_train_e_1_s_33_20260421_160720_443.json",
+          "sha256": "f68fe5aaf5970082bf92b10c88489a662c14ce285c8acee33bcd728028d5d5aa"
+        },
+        {
+          "bytes": 36260,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/curator_train_e_1_s_34_20260421_161003_856.json",
+          "sha256": "6b03cfb0476c8acdfeaf9fd62f94d1ef9d647cca5444ba7af0b600d4651f7cd7"
+        },
+        {
+          "bytes": 41042,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/curator_train_e_1_s_35_20260421_161353_862.json",
+          "sha256": "2f4f35032bb8a963622703b23d8f48478418212d1ff2e5c223dcc3f1861a266f"
+        },
+        {
+          "bytes": 35310,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/curator_train_e_1_s_36_20260421_161627_788.json",
+          "sha256": "bde961d3bfb73b7d3146e93bf8205065f9611543c0c941b99cb5b1a2dda74c74"
+        },
+        {
+          "bytes": 34221,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/curator_train_e_1_s_37_20260421_162022_015.json",
+          "sha256": "debfa8c3ebafb6ac9e053214d96d7c8a2ebbcbdf0ef3304659d2f2f76f8963bb"
+        },
+        {
+          "bytes": 30882,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/curator_train_e_1_s_38_20260421_162136_644.json",
+          "sha256": "f3669bd75ec0b4fa0006732ffcd794a18b75e9f1684363d7b62c575c9fdc30ba"
+        },
+        {
+          "bytes": 29835,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/curator_train_e_1_s_39_20260421_162314_360.json",
+          "sha256": "b6646c1140bedbe7e8c07d44f747db6adbc0b972010727bf1c8bec32a7f15a3d"
+        },
+        {
+          "bytes": 10498,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/curator_train_e_1_s_3_20260421_151450_354.json",
+          "sha256": "a2d71825779e687f7933a1548949de92cfd36e8e78ce3a12545293d74816127d"
+        },
+        {
+          "bytes": 30895,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/curator_train_e_1_s_40_20260421_162430_228.json",
+          "sha256": "d5c5ad1d0ed89d86ead4c9cd8909db07e932f5005fef936371ffadad4509a44c"
+        },
+        {
+          "bytes": 33494,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/curator_train_e_1_s_41_20260421_162618_312.json",
+          "sha256": "f4e5d4de35568cf3a357914e64e5b532f24c4374a84796fe5dab916dc25f00b4"
+        },
+        {
+          "bytes": 35937,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/curator_train_e_1_s_42_20260421_162848_814.json",
+          "sha256": "89f531bd97d73451d6089d38952e8ba1da97c93f185d1612d2dbce2c0c4e0505"
+        },
+        {
+          "bytes": 33909,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/curator_train_e_1_s_43_20260421_163026_352.json",
+          "sha256": "2245d62b847a7a032bfbe5d05e64d82c65e6feb8b2db0832b0137b4183239454"
+        },
+        {
+          "bytes": 33165,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/curator_train_e_1_s_44_20260421_163138_924.json",
+          "sha256": "27a81179736e9f81d11d61296492cf6235e491074a18fe8cea755c75c63647d5"
+        },
+        {
+          "bytes": 37795,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/curator_train_e_1_s_45_20260421_163323_861.json",
+          "sha256": "af73e77ca6f42e528828664f0f28cc1a9e0bdb30583c34bb656d03f1ef6cfb2e"
+        },
+        {
+          "bytes": 35398,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/curator_train_e_1_s_46_20260421_163616_689.json",
+          "sha256": "8a7ca3800a4eed5a083545bd4113a6176b7696153693ae4f677e3b56b01fd420"
+        },
+        {
+          "bytes": 33858,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/curator_train_e_1_s_47_20260421_163725_884.json",
+          "sha256": "c2c6b0d48476ff01e1a8ab91d09e8a1365deb1814e31f649376274255e598a0a"
+        },
+        {
+          "bytes": 35889,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/curator_train_e_1_s_48_20260421_163844_490.json",
+          "sha256": "ca1b9dae55919166f966ce35951aa764840051fd3b3505f7d77f7966faf59319"
+        },
+        {
+          "bytes": 38319,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/curator_train_e_1_s_49_20260421_164027_541.json",
+          "sha256": "6eed1f86296f2e70441395cedfa9a716e8d949160fbd5aa97eaa984187a5187f"
+        },
+        {
+          "bytes": 10876,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/curator_train_e_1_s_4_20260421_151543_878.json",
+          "sha256": "32463db7c157b348bc6f53c60f0a5b0d637893284c3660a89e7ba205388dbe64"
+        },
+        {
+          "bytes": 38908,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/curator_train_e_1_s_50_20260421_164601_695.json",
+          "sha256": "6310190da59fce2496eb2dd5df87b0de70f7807aec488f31d1f961c2a297ad97"
+        },
+        {
+          "bytes": 40882,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/curator_train_e_1_s_51_20260421_164811_756.json",
+          "sha256": "2747ab510bf3f7135bf562609cc7ea70cce0eaf88ca7fc84cc92f38365d2e0c9"
+        },
+        {
+          "bytes": 37823,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/curator_train_e_1_s_52_20260421_164938_448.json",
+          "sha256": "1d5d11134a98762e9aef9857c11483fe3728f5af6b7f9659000003255e8c1f05"
+        },
+        {
+          "bytes": 43750,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/curator_train_e_1_s_53_20260421_165129_835.json",
+          "sha256": "c9d933e12c2eee8ee8b99f987c815e73c1f6b6e70142e4f15f6a4fdfd3ddfe0c"
+        },
+        {
+          "bytes": 41120,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/curator_train_e_1_s_54_20260421_165256_495.json",
+          "sha256": "e612bad05f98248d735848268ad874b7b760f8c6ac4b6c95625d1f6416592217"
+        },
+        {
+          "bytes": 40758,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/curator_train_e_1_s_55_20260421_165538_008.json",
+          "sha256": "6aba1e3513f5a9016e22c4d6792ef592aea9790824c046d39a49f65d57281876"
+        },
+        {
+          "bytes": 40606,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/curator_train_e_1_s_56_20260421_165703_783.json",
+          "sha256": "70005a345bb4d03928d1f960adf8c7d2aa403d66a3ccca20e939e2a5be32c4be"
+        },
+        {
+          "bytes": 42624,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/curator_train_e_1_s_57_20260421_165844_571.json",
+          "sha256": "6143a06441ada2a5303c8d2970b5832ea4c74dd1daaa185a1e1a32c6cd02c42a"
+        },
+        {
+          "bytes": 43693,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/curator_train_e_1_s_58_20260421_170058_544.json",
+          "sha256": "0b30c39130944325ec8c9a40a57c7e157ddac0b97433202dadb666d29ed27f5e"
+        },
+        {
+          "bytes": 45024,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/curator_train_e_1_s_59_20260421_170322_534.json",
+          "sha256": "b01a30d36b9116cd437f5353fdd3e76473d43b9fdba0d95b5e764488dc170e2f"
+        },
+        {
+          "bytes": 10002,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/curator_train_e_1_s_5_20260421_151636_893.json",
+          "sha256": "f7df61b5f4ff862bbd093c757917ee3cdd3fc0aeff1275dff64aba50147f062e"
+        },
+        {
+          "bytes": 41795,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/curator_train_e_1_s_60_20260421_170510_651.json",
+          "sha256": "1da1f593c67cbe173d945683e1ad4b9acda9de5ffdbecf3cb443e0faf522fa71"
+        },
+        {
+          "bytes": 11675,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/curator_train_e_1_s_6_20260421_151825_846.json",
+          "sha256": "4727266895376c52a14d69cd50228f996312dbefa056853419905d201a4ecc7f"
+        },
+        {
+          "bytes": 10121,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/curator_train_e_1_s_7_20260421_151921_549.json",
+          "sha256": "7157e811b234cb88b7a443fd54389c6ac7ac761401930c9c9387109151a68d4c"
+        },
+        {
+          "bytes": 12913,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/curator_train_e_1_s_8_20260421_152035_657.json",
+          "sha256": "366e4d54474d6ab1cc752f0bfd380922073169ac414bf5ada54b3a4d2e457e44"
+        },
+        {
+          "bytes": 11517,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/curator_train_e_1_s_9_20260421_152137_023.json",
+          "sha256": "db9ad0ed5d6a67623f74867a5de9daaeebb2ca1c0a112588d64b334b12f8cf4b"
+        },
+        {
+          "bytes": 15353,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_0_20260421_150805_656.json",
+          "sha256": "4d14a38bae93ad87aaa5cb447cb8d85fa1e324d17809f170c2518366795bbcdc"
+        },
+        {
+          "bytes": 21452,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_0_20260421_153122_231.json",
+          "sha256": "a67e75b2ac035be4bd8e3bc2eaf6074103c642bd74fbab178c70f7c8e87ec4f4"
+        },
+        {
+          "bytes": 32866,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_0_20260421_160234_326.json",
+          "sha256": "e063dba40766d4ecfb8a93e7636a408ac6e787f623180656039058cef06819dd"
+        },
+        {
+          "bytes": 38780,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_0_20260421_163415_045.json",
+          "sha256": "178053adb63171984713ee9cc186d697993b3eb30a0897384f53a908f9c31e21"
+        },
+        {
+          "bytes": 47590,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_0_20260421_170622_688.json",
+          "sha256": "ee736fc54abedc585752f3c2aefd43a8038e6e46c021883dd1992be37d89d5f4"
+        },
+        {
+          "bytes": 34664,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_0_20260421_170809_859.json",
+          "sha256": "e4f52c98d66d2f73581ec586db090dceb92e13e2a14870946e9ba3c91b0992d9"
+        },
+        {
+          "bytes": 11656,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_10_20260421_150739_464.json",
+          "sha256": "74d2a83bfd98b9d7267546580c6a02fb7abc0983ffba2df4ea08c163cd7a07d9"
+        },
+        {
+          "bytes": 20720,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_10_20260421_153114_607.json",
+          "sha256": "b128d42c29ba5a25d3fd8f889816d2c3a22a0ffb24808d8315cae1bf7904a9e5"
+        },
+        {
+          "bytes": 31214,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_10_20260421_160223_508.json",
+          "sha256": "db69ff074e03314699d462613ca9b1437d88bba26e3157d4426ad3791e4b8a1e"
+        },
+        {
+          "bytes": 38649,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_10_20260421_163412_037.json",
+          "sha256": "dfb9fa4fe1c66768502d4053a074ea50f38738578221e68f5ee0fae228c6aea0"
+        },
+        {
+          "bytes": 46927,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_10_20260421_170607_808.json",
+          "sha256": "ec055f261dd7490cfb62e9c86ea030c9edeeb96f499c89cb8695f8b194c75633"
+        },
+        {
+          "bytes": 31801,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_10_20260421_170806_324.json",
+          "sha256": "e8a6ddc7d81bc28854652cf1a5a5be89f8458bcb9857d8b9ed4d071596c139fc"
+        },
+        {
+          "bytes": 14061,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_11_20260421_150737_472.json",
+          "sha256": "d10603c6c3ccd8b27a8e088aaa6d92406af1dae62851c864aaaf4bf2a7ae02cd"
+        },
+        {
+          "bytes": 21091,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_11_20260421_153116_504.json",
+          "sha256": "dfab01c6648350fc741efc6e6c4e0450f184781436ea456a5677e336e25f8ab8"
+        },
+        {
+          "bytes": 31897,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_11_20260421_160228_173.json",
+          "sha256": "6589509f450f27b9439d153ee953b32a893aef49877271037f06fd22afea2617"
+        },
+        {
+          "bytes": 39487,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_11_20260421_163417_448.json",
+          "sha256": "aed98a7ec6783387723d0210b31be91dfadde879169dcfdf1c80bf9318f8b026"
+        },
+        {
+          "bytes": 47422,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_11_20260421_170617_058.json",
+          "sha256": "f4a05a80b22d6deaec27ae94d97b9e1d2795764836767d201dc150280476132a"
+        },
+        {
+          "bytes": 32869,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_11_20260421_170811_530.json",
+          "sha256": "3ebd7da70bf41d6c9a0902ebf10cf1ebeeb9e5bdc64273fa6d1a74da4be68ba1"
+        },
+        {
+          "bytes": 12332,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_12_20260421_150744_922.json",
+          "sha256": "b3ada3949eea459591182fa711f665724a4dd7e5739bbf46813500439d320357"
+        },
+        {
+          "bytes": 20255,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_12_20260421_153113_618.json",
+          "sha256": "312311ad2d6b1728d5c0150819e814b1e3e616bdddf125f7e1ffaade24a8ca02"
+        },
+        {
+          "bytes": 30690,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_12_20260421_160221_547.json",
+          "sha256": "16d2a2995a4425fae96fc62373c7bf9ceb95495af9263bfc12d9ad5448a9514a"
+        },
+        {
+          "bytes": 38397,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_12_20260421_163412_912.json",
+          "sha256": "4be48ade9565764e3797393a4d252fc02498f538d904d99fa1b67e2b2fe0a8bc"
+        },
+        {
+          "bytes": 46571,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_12_20260421_170611_096.json",
+          "sha256": "34cd60819f3f44baf6f14e69846214f7613c181edd7b4b2b53d11620966df151"
+        },
+        {
+          "bytes": 30853,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_12_20260421_170808_260.json",
+          "sha256": "04e89eaaab600a360aa26ce7fdb3d52ff4a02d7bb7c9b7bc64aa579d38c8e9ab"
+        },
+        {
+          "bytes": 12441,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_13_20260421_150747_789.json",
+          "sha256": "252395276e98434ffe42e07f0f36eb8f6022806ae7c568b48c12656d6231d278"
+        },
+        {
+          "bytes": 21423,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_13_20260421_153116_892.json",
+          "sha256": "5a9d769e055dd6055cee4cccf912821fe7b094cfd195309918544c5ecb9a91ac"
+        },
+        {
+          "bytes": 31954,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_13_20260421_160227_565.json",
+          "sha256": "2b587cc7432f5903bb0cc3009438b5fd6b8565df82c01d6e8498613460255b0b"
+        },
+        {
+          "bytes": 39559,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_13_20260421_163416_315.json",
+          "sha256": "74dc632a38cf765e9c38be5160a46f8ccc6c2ab5059eb20294f8aec40680d444"
+        },
+        {
+          "bytes": 48358,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_13_20260421_170620_450.json",
+          "sha256": "7d2582fc8a453bc7dd20b810e17d0c7f737e300e564b486137a0eb60e6b288d9"
+        },
+        {
+          "bytes": 32070,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_13_20260421_170815_637.json",
+          "sha256": "7bd0e6bd685b9b1f800003055d24b22055c39918306c4d82ff22460f45d6d85c"
+        },
+        {
+          "bytes": 14107,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_14_20260421_150751_653.json",
+          "sha256": "b1d7e59b4d008f9507e4f5a1f107865bf7bdeb7d38630ccde0964202259f4efc"
+        },
+        {
+          "bytes": 21192,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_14_20260421_153119_334.json",
+          "sha256": "cf9cee3d6e60c67ef400a4ed0d229dead4639655677ca4fb40aa4d16a67400f5"
+        },
+        {
+          "bytes": 31047,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_14_20260421_160224_193.json",
+          "sha256": "2e9782468bd971f171545760fa877dac85a2319cf01edb92818dd7de35b517c1"
+        },
+        {
+          "bytes": 38471,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_14_20260421_163413_237.json",
+          "sha256": "b6381c1cd50c3d6867a1f4fa9ba23335c1e7b089954efe93e829681d1e706457"
+        },
+        {
+          "bytes": 47019,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_14_20260421_170618_898.json",
+          "sha256": "6e57ec5ba46a173218a4c8cf8efdd4c3c7accfb164292baa019287b89a2a293f"
+        },
+        {
+          "bytes": 31851,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_14_20260421_170814_310.json",
+          "sha256": "e685877570eb7c2b8baa7be498feb1590733b5a9a600e6c200901d20f855fc96"
+        },
+        {
+          "bytes": 13794,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_15_20260421_150807_143.json",
+          "sha256": "abcc2e8d5da7e72380227401bea1aad47626b85f6aa5eb5f00b229d60cdd50f9"
+        },
+        {
+          "bytes": 21157,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_15_20260421_153119_962.json",
+          "sha256": "58dcdbccf4ca3a8fa04baf92c376c93fd51d88f68e868c1abfba41ae6d6ac570"
+        },
+        {
+          "bytes": 32405,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_15_20260421_160233_705.json",
+          "sha256": "8de8cad990b25f29e621b83340c1eca1563cd70c8960b674219ecccd4d884699"
+        },
+        {
+          "bytes": 38960,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_15_20260421_163418_349.json",
+          "sha256": "b9773e36b885c3dfab17e98efff300778f6bffda1b67e6820dc74d205f356903"
+        },
+        {
+          "bytes": 46701,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_15_20260421_170625_430.json",
+          "sha256": "34ad4d6aee4209dba3da9887e36ae8b941dd4e5be8690d9712bce91787fe438e"
+        },
+        {
+          "bytes": 31666,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_15_20260421_170813_403.json",
+          "sha256": "f1a3192fb0d480ee074546bfd7778cdfeebee5afa9dbbe69a7284196bccfc0a2"
+        },
+        {
+          "bytes": 14924,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_16_20260421_150801_057.json",
+          "sha256": "525133e08ba496b5cdb9e83649a034604bd2af0db4ef46e6cd756230719f2c99"
+        },
+        {
+          "bytes": 20213,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_16_20260421_153114_863.json",
+          "sha256": "6f5d08d2db5b8064953139f70dce5358b5270a5ba88bea9045609067f49d41f4"
+        },
+        {
+          "bytes": 31102,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_16_20260421_160222_415.json",
+          "sha256": "c26290deff1a078a23b68ae3cf5e9b2ef9bb17bfe4e2cb04a4afcbb990da82f6"
+        },
+        {
+          "bytes": 38595,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_16_20260421_163413_097.json",
+          "sha256": "56bec2ca08f71a522025911e19007b8d4e11fcccc06a1ef95eeffbc296327102"
+        },
+        {
+          "bytes": 46443,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_16_20260421_170611_256.json",
+          "sha256": "6abfa4f81498b16764324cb9988694726093898f42d5d9cfdd8c47c9e611bf20"
+        },
+        {
+          "bytes": 31114,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_16_20260421_170808_391.json",
+          "sha256": "b9479808b2bb916cec10a0816019fa7bc25f68c9923773307cb7bc5a6d4179e1"
+        },
+        {
+          "bytes": 12607,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_17_20260421_150753_242.json",
+          "sha256": "eb5c8bc9ac88da7c1920de7b65298a4b4c3b93398582eadc8c2f541f17045410"
+        },
+        {
+          "bytes": 20917,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_17_20260421_153117_531.json",
+          "sha256": "a8d0228d4f36fdab2da2984953d542f477be648380a419c0f35197210c95eb0e"
+        },
+        {
+          "bytes": 31531,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_17_20260421_160227_197.json",
+          "sha256": "e0b716bff9dc9d2d95e3c6192bcd0d57580b8d1cb22309478f0a8b2bb3daadd8"
+        },
+        {
+          "bytes": 39130,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_17_20260421_163417_037.json",
+          "sha256": "9abba6e55f29507415db39a47942482f9874277504c240322b20ebb32a5cd1f5"
+        },
+        {
+          "bytes": 47672,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_17_20260421_170610_270.json",
+          "sha256": "cae30bbb93c38f47d5d24391cee059d42ec831e24ef56a6399bca35d6509f433"
+        },
+        {
+          "bytes": 31535,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_17_20260421_170810_474.json",
+          "sha256": "3b0acd9c233dcb68ba7c5d942b1108c82943bd89a51bb2ac6ebf054338c2906c"
+        },
+        {
+          "bytes": 14043,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_18_20260421_150744_839.json",
+          "sha256": "32be64233c4a7e02e0184bf1094576bcbfc48d3cce45aa7e7d1acde74446031e"
+        },
+        {
+          "bytes": 21910,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_18_20260421_153126_205.json",
+          "sha256": "a5ce3ab48938cc0b81c63ef0ea587c502d8b18e959ff8d365caf4b0a1279ad9b"
+        },
+        {
+          "bytes": 31443,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_18_20260421_160225_114.json",
+          "sha256": "f250a8d99a5ad7e6bb6c35a7189dce38e0cb24fc4d6c36e5c86e6a59d2eee42a"
+        },
+        {
+          "bytes": 39787,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_18_20260421_163423_642.json",
+          "sha256": "d2ae5f7ce4ab536a2c26bddb13f171a0a7fe6a3559ba3f1b6407954f738c8031"
+        },
+        {
+          "bytes": 47685,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_18_20260421_170630_613.json",
+          "sha256": "bbef3e6ad1033d00d5a35a85f2b8ac0cde2235dd5304e68abf1326ce270d1f6e"
+        },
+        {
+          "bytes": 33563,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_18_20260421_170816_418.json",
+          "sha256": "074704f325309d00a602665cbb7e456c9aea5785ad21eb550bed1fa31225666b"
+        },
+        {
+          "bytes": 12616,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_19_20260421_150754_376.json",
+          "sha256": "9acbf1494c966bce96243913daed5fd1e351dfaff2e9aec81bf722ee421db592"
+        },
+        {
+          "bytes": 23809,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_19_20260421_153145_343.json",
+          "sha256": "bf636c248c04c00006bf5534f357959dd3c887175a5bb38335ae6afbb7877c10"
+        },
+        {
+          "bytes": 34519,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_19_20260421_160252_052.json",
+          "sha256": "5d5cfb54ff9b14df444571e11f6420a0808c1ba0948c12a7fd088a82e7054daf"
+        },
+        {
+          "bytes": 44170,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_19_20260421_163459_475.json",
+          "sha256": "464e3683eab5c226682b31eff53483ea4b771de515860e5cd3bee562dbb2d313"
+        },
+        {
+          "bytes": 55245,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_19_20260421_170742_918.json",
+          "sha256": "ef097af5346899270d472edb00a5c4190584986271ff080592f8f78eb5b83152"
+        },
+        {
+          "bytes": 31512,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_19_20260421_170814_343.json",
+          "sha256": "361d95b81df74e0a5b2246be763896c4d70afe04e10c4743543832eaddbd7a83"
+        },
+        {
+          "bytes": 15707,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_1_20260421_150743_062.json",
+          "sha256": "0afc28e218ca8730126cd0c5bf8c56f6f2f5d539c877d68d0dcd3b91ce7b2419"
+        },
+        {
+          "bytes": 20763,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_1_20260421_153115_483.json",
+          "sha256": "b15ff2085c416019dcc4810a2911db753b50cc3beeca975e10fa49f392bf0342"
+        },
+        {
+          "bytes": 31628,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_1_20260421_160227_422.json",
+          "sha256": "adbc247c7b00cc6b89901fc6a7479bfbb6d320cd3820f5f55a5d0887f583962e"
+        },
+        {
+          "bytes": 39164,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_1_20260421_163416_110.json",
+          "sha256": "776252d66286097cb358dca49d432f63b1e60eba1334b385311599782e09b012"
+        },
+        {
+          "bytes": 46938,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_1_20260421_170614_789.json",
+          "sha256": "16a8e77e632f91b9e5d5b1c9355c16cd79941131f48017907fc39a1d34e3df20"
+        },
+        {
+          "bytes": 34331,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_1_20260421_170814_341.json",
+          "sha256": "6f007fcf906c2a61b85478cb25b732370416f8360665123cc0e36ce6e13a7ba2"
+        },
+        {
+          "bytes": 12058,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_20_20260421_150822_642.json",
+          "sha256": "7ccc168b1a27d0d0cbb9d397cc2eff4da8d4b5ed448348b67b323fc5d2151498"
+        },
+        {
+          "bytes": 20591,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_20_20260421_153131_496.json",
+          "sha256": "b715ec764fe529203f62d0ed9a1f4a0a89c3db878547049ac908b342aadb4dc2"
+        },
+        {
+          "bytes": 31125,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_20_20260421_160239_086.json",
+          "sha256": "63233957f7d812c4cd85d07070e1c90261bbac78f4626b964426337b956e875a"
+        },
+        {
+          "bytes": 39083,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_20_20260421_163432_527.json",
+          "sha256": "d5fbe13f06b88b0d090b0edb02c26d486d1cb4697e912c4ceb04eaa5884ee433"
+        },
+        {
+          "bytes": 47811,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_20_20260421_170640_806.json",
+          "sha256": "241dc4d48d295b8fd8428437a4172b7023d9d7849ba3a922da701ec7ecd0c8bc"
+        },
+        {
+          "bytes": 31477,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_20_20260421_170834_345.json",
+          "sha256": "2e7db6c8a3bd9c1155f2b71a0cd77cd9cfad3d58b32deac5a6f3de38553805a2"
+        },
+        {
+          "bytes": 13470,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_21_20260421_150803_402.json",
+          "sha256": "3ff43857b6406b093711d93c63d61c0405c2a480606524cc0be8b54bbdead25e"
+        },
+        {
+          "bytes": 21516,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_21_20260421_153137_553.json",
+          "sha256": "a2179e804edbb0b9abfcdba9bffbb4865a53f5f3af1d147f573674b71aaa2ac0"
+        },
+        {
+          "bytes": 31071,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_21_20260421_160237_570.json",
+          "sha256": "67aa42cc6e29dadff2e1e1cd5e9394fd0f2fb057a6785245c5aa9a253e74fb79"
+        },
+        {
+          "bytes": 39072,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_21_20260421_163431_589.json",
+          "sha256": "b95d7a23869c4d1377119aa078a4fae03fe08032717b384f6484ba16bcea486d"
+        },
+        {
+          "bytes": 46862,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_21_20260421_170634_622.json",
+          "sha256": "a946c744c36b91a06f377272eb2bae2585dc281bfab63a01a2acdd4f07660c76"
+        },
+        {
+          "bytes": 30405,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_21_20260421_170825_176.json",
+          "sha256": "fb9380725f2582633c6c40fc371a51991abb909e8da45a88c33e488ba77629cd"
+        },
+        {
+          "bytes": 13067,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_22_20260421_150806_957.json",
+          "sha256": "081edeec7a980b5ef0e7910c62b1fef093a04d3a8888ce6f68099c6d8480fdab"
+        },
+        {
+          "bytes": 21546,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_22_20260421_153137_704.json",
+          "sha256": "afb5f2ce9770ce763c928e4ec167923d44951efadfdf620e36413c215cedb718"
+        },
+        {
+          "bytes": 32224,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_22_20260421_160243_063.json",
+          "sha256": "cddf8ca487741e8a9a83a4471cfa996943b92f63f7b6835421ac5246e642f6ac"
+        },
+        {
+          "bytes": 40616,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_22_20260421_163439_747.json",
+          "sha256": "0daf416c72fc0bbc25aa4e8b8c4246fa7573cb1513e49353213fa6b5e18c7536"
+        },
+        {
+          "bytes": 47363,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_22_20260421_170636_327.json",
+          "sha256": "53b981641b8a1a86b9ccbae97478ac06b1ca6bd2d8e91f7fb1eda57f4b840bf8"
+        },
+        {
+          "bytes": 32720,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_22_20260421_170848_168.json",
+          "sha256": "abab49c6d80c4e0e5d45f9ddf9dd111603c5346df7f42821ec06b1631488ce4f"
+        },
+        {
+          "bytes": 11778,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_23_20260421_150755_450.json",
+          "sha256": "f4dad61bf2a79cfcc1f3d72b6cfffecced0a0f650b6c8e173001dd3739c3a901"
+        },
+        {
+          "bytes": 20544,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_23_20260421_153131_909.json",
+          "sha256": "ab7590f15e97de33805b687349314e61a6e1b7dc26dc28cb2b876c75ddb83ee5"
+        },
+        {
+          "bytes": 30994,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_23_20260421_160237_971.json",
+          "sha256": "a4e3aff572c8e38abc5119dd09aab6d744b081551002a6c123f25dd2ba07ff15"
+        },
+        {
+          "bytes": 39315,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_23_20260421_163432_184.json",
+          "sha256": "48cebe2beede7cad4b58af941e338f267234778f60a9e409a2b279c63850b3d5"
+        },
+        {
+          "bytes": 47070,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_23_20260421_170637_098.json",
+          "sha256": "4ee14aa7d189023a920dd23796b59e12838253db18e4ff61e630529a33931a31"
+        },
+        {
+          "bytes": 30858,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_23_20260421_170828_660.json",
+          "sha256": "78a8dd1fab12dc87db762bb2216366b500605615a7a574f4ed1be860fe089128"
+        },
+        {
+          "bytes": 12188,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_24_20260421_150757_980.json",
+          "sha256": "6c5c759476a361791b65bbd4020bca993c2b4e0368fb0090b7365bd9df0e8a91"
+        },
+        {
+          "bytes": 22515,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_24_20260421_153143_679.json",
+          "sha256": "90c7ceb8f90e25fca4fcbe489ab6783b6540976b7df326fb83600336c9db0762"
+        },
+        {
+          "bytes": 33440,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_24_20260421_160257_638.json",
+          "sha256": "3f29f95fc4c08f0709a8ac774b0cc7d27b7763800276e64cfdd93a928021198e"
+        },
+        {
+          "bytes": 41596,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_24_20260421_163449_666.json",
+          "sha256": "dc4e5a397b25246431a00aa200965678c94a1d0a0941d8f46db035e2081a01f8"
+        },
+        {
+          "bytes": 47635,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_24_20260421_170642_448.json",
+          "sha256": "c53a035ed9c21617e76b9b0bb8475fb8dffc80d2c38f48ba1474929a03183024"
+        },
+        {
+          "bytes": 32915,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_24_20260421_170838_156.json",
+          "sha256": "5292e874d624b811aac32666732939078893e0366db3eb89a545161288ad9c70"
+        },
+        {
+          "bytes": 14143,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_25_20260421_150813_459.json",
+          "sha256": "649e6e93ca5f9fe4eca33ded6744f01af3be1ce4b11c1acfe517299e2f5b2818"
+        },
+        {
+          "bytes": 20210,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_25_20260421_153132_704.json",
+          "sha256": "8c5b1d7742e04d33228bdb98a1b3bc06bb754e9e4d35048a21647e1ea0614ee7"
+        },
+        {
+          "bytes": 31087,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_25_20260421_160245_887.json",
+          "sha256": "a7ea639fc825149148e037a2918ff2a870d9dea32576d5c48babc504cce306b2"
+        },
+        {
+          "bytes": 38328,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_25_20260421_163431_846.json",
+          "sha256": "09dd304e1d3c44991a332d5a53db3c870866728def117ccd2095e52f663cf7a5"
+        },
+        {
+          "bytes": 46041,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_25_20260421_170634_895.json",
+          "sha256": "297162e1a7fde327ba1f9e30a918592cc9d088b5b7d1f21a24ad64873a161ae6"
+        },
+        {
+          "bytes": 31219,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_25_20260421_170845_145.json",
+          "sha256": "e0de1d258a9fa4603eba17de6e9a74b9012526dd0663ff20e2bff63e3575a7a3"
+        },
+        {
+          "bytes": 11792,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_26_20260421_150757_822.json",
+          "sha256": "e8fd1a3583d9d63a7820a710fe855a4b629a918737b95603d4aa9f0f66cc675c"
+        },
+        {
+          "bytes": 20420,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_26_20260421_153136_128.json",
+          "sha256": "2cde66eae29e0eb3489ddbb27adb08f5ddb1b2f228d7c6e54c1ab56ce255f7d0"
+        },
+        {
+          "bytes": 31448,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_26_20260421_160251_411.json",
+          "sha256": "8e7761a973c62668dd64d01365f05e149285ea3ee3b7e1c1d9bf6107b89029ff"
+        },
+        {
+          "bytes": 39695,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_26_20260421_163447_971.json",
+          "sha256": "20dd30ce0014b52da402e98765a59511a72f3e70d4701d1757f2265285685c6d"
+        },
+        {
+          "bytes": 46969,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_26_20260421_170650_952.json",
+          "sha256": "fca9a57ff113664e6c581733793e323375b9401a159282fd7adf7a21ba580610"
+        },
+        {
+          "bytes": 31123,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_26_20260421_170833_173.json",
+          "sha256": "009a37bf56e123bc72dc0549a01ab68a79e43a81ec3484cd4de048989416af6d"
+        },
+        {
+          "bytes": 13417,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_27_20260421_150812_628.json",
+          "sha256": "f1e926d3bcec92eca24be7c512f09dfe884cf93b171b9ae8ae9d4fcdf8bf8bad"
+        },
+        {
+          "bytes": 20886,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_27_20260421_153132_498.json",
+          "sha256": "fc3e59f3a576fdf30878c4585a1f81b6c7c92c958ff77cad2d76a26df1bcdb4d"
+        },
+        {
+          "bytes": 31358,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_27_20260421_160242_143.json",
+          "sha256": "e5a5376fd055ffee89e3674d392bfa85e32fea2749f747d8e5b2e3575494a46a"
+        },
+        {
+          "bytes": 39456,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_27_20260421_163434_464.json",
+          "sha256": "50e1135583694d5f63141d2accb13376c44c83d66e3f3d89603479c6c5430013"
+        },
+        {
+          "bytes": 46979,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_27_20260421_170650_565.json",
+          "sha256": "1611adbc04c4753fa84237b3555987325abb0cf0ca738b41b28d98b9ea81ae34"
+        },
+        {
+          "bytes": 31170,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_27_20260421_170837_646.json",
+          "sha256": "b50ad157e760d8fd50712a2d505259c60032763033d12d7b1249afa5da0130a5"
+        },
+        {
+          "bytes": 10978,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_28_20260421_150754_257.json",
+          "sha256": "601242ed79d3d0a7836e8b3c412660f998b191d0f7e18d5ca9793e33640e91b5"
+        },
+        {
+          "bytes": 20426,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_28_20260421_153134_833.json",
+          "sha256": "dbec49b2718751095227b2d5f6302aa3780cd3f8b22b0a18724cfbc3cfa211c5"
+        },
+        {
+          "bytes": 31502,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_28_20260421_160251_233.json",
+          "sha256": "de6f75efa0609db5ee1976d2d079446592ba13cf4b146f065ea7e99a4062b1e2"
+        },
+        {
+          "bytes": 38667,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_28_20260421_163437_035.json",
+          "sha256": "482697868ecd97d6c9f2f9b649b3804c04c423f436de42cd47f894fd6f499b80"
+        },
+        {
+          "bytes": 47191,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_28_20260421_170642_679.json",
+          "sha256": "eebd0e2d5b7fb77d1fcab0af66089db52ce0bf8ee53e3b9740e868d4b51081db"
+        },
+        {
+          "bytes": 31135,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_28_20260421_170838_680.json",
+          "sha256": "fbdcd89040be9447cbf5c459ac01924a3f20d90cbf2d98775ec9aeee76d23ecd"
+        },
+        {
+          "bytes": 13231,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_29_20260421_150758_482.json",
+          "sha256": "1cdc376ef2ac2b098ff0b8087eec6f0a0fd8ad165b2ef0b1584f192957a7a77a"
+        },
+        {
+          "bytes": 20550,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_29_20260421_153138_166.json",
+          "sha256": "dae66c8698f02acf61f620d7db58ff4c40e81952c9709860522194e3498c3280"
+        },
+        {
+          "bytes": 31074,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_29_20260421_160247_924.json",
+          "sha256": "e76e560a6f63a2091d383ece488075910ff8f701144099f4333ba478a3f6eced"
+        },
+        {
+          "bytes": 38980,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_29_20260421_163440_342.json",
+          "sha256": "94ce2bbef0a58659808d50daa96e96a0a3e3931f3c7a18eb727442577561b4b2"
+        },
+        {
+          "bytes": 46671,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_29_20260421_170654_010.json",
+          "sha256": "6dd37c94161ec71d2a3eefb544bbd6bda075dbfb466f8fa926c3fc3075c62566"
+        },
+        {
+          "bytes": 33341,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_29_20260421_170832_271.json",
+          "sha256": "d54272618a98f5eec09b720f3b27bc095bf94ee228102e61e2d7a7a5af184cf2"
+        },
+        {
+          "bytes": 12888,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_2_20260421_150745_090.json",
+          "sha256": "d213fd6f830f10ce303c0a22f32acd3c762af09c2248f216c9c94d632e158147"
+        },
+        {
+          "bytes": 25145,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_2_20260421_153129_724.json",
+          "sha256": "3937e0412c7541bcaca442323a0b26cc320bbecef500cd10ce9d0dbe5de31cf9"
+        },
+        {
+          "bytes": 34427,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_2_20260421_160229_470.json",
+          "sha256": "afa5421551829c0064c91a34327e3b7b16930c09d1d6e3652dd7c9e1c1ac2ef4"
+        },
+        {
+          "bytes": 42285,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_2_20260421_163423_012.json",
+          "sha256": "b64f2d8d46bab8e056f8277d0e0ffb7e60b5896aac91d7a7c016dedb375de65e"
+        },
+        {
+          "bytes": 50537,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_2_20260421_170628_532.json",
+          "sha256": "c1b8bda1292411863fa69823fc959c45c1a45c47d5fa4c72efe188b4461a820d"
+        },
+        {
+          "bytes": 32838,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_2_20260421_170811_088.json",
+          "sha256": "86ca980c0d3e29a5e2dc18a4e60b66e5a990b691002ebb6c84cf487bfa39a82a"
+        },
+        {
+          "bytes": 13370,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_30_20260421_150809_053.json",
+          "sha256": "3c8506aa6878ec1050c85a5275bf959c21d534fd5efdc2eb1df8804fdd4b47c7"
+        },
+        {
+          "bytes": 20682,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_30_20260421_153135_378.json",
+          "sha256": "2a345e8aa843632f5c0adab142b01036bef63fa5e4f29f687afcdd844cb0f2bb"
+        },
+        {
+          "bytes": 33731,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_30_20260421_160304_752.json",
+          "sha256": "ae16705a3c7ca5ca97a356892eab064a046763433a8bb98f6949832bc5880590"
+        },
+        {
+          "bytes": 43011,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_30_20260421_163506_159.json",
+          "sha256": "ca278efdd5291c3244cc789aecd8f5f14d057985ab2f9669136a933ed447db72"
+        },
+        {
+          "bytes": 49069,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_30_20260421_170703_665.json",
+          "sha256": "08ce0b745f10b1167755a34ba19fa90c31426dad7e4ac2ef1299a6eb4046c79b"
+        },
+        {
+          "bytes": 31408,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_30_20260421_170830_997.json",
+          "sha256": "98e7e3a27893b9409ae643863ff2db0cb211e37a214ab406c06e9cfd59cdbcf9"
+        },
+        {
+          "bytes": 13180,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_31_20260421_150810_714.json",
+          "sha256": "5fb6032a8e673747e17ac3b44ee8d0d85e74cb486bfca24d5c7050dd19f382d9"
+        },
+        {
+          "bytes": 21190,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_31_20260421_153144_779.json",
+          "sha256": "c8b9f067e951db7135626ddbdbdb17ae2cbcda47411f179742edf20702eb82a0"
+        },
+        {
+          "bytes": 31457,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_31_20260421_160254_768.json",
+          "sha256": "9043463ebd64c4d2852d8d223f43222e87631f425d2667ea4f87290d06e9cc8a"
+        },
+        {
+          "bytes": 40361,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_31_20260421_163453_339.json",
+          "sha256": "0db9d4fe19fa4816e992479302b57ef04d2d56052c23ac642f5df52c9f8ef7a9"
+        },
+        {
+          "bytes": 48056,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_31_20260421_170654_762.json",
+          "sha256": "e5df538271fb55fc642349f7297977c3abe4a95f9fc9e6727c52c16f0597cf8b"
+        },
+        {
+          "bytes": 32493,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_31_20260421_170854_317.json",
+          "sha256": "284e988969d28d5e19a7ae550c7689966be6308f32a59334b2856b0f398aeec9"
+        },
+        {
+          "bytes": 13520,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_32_20260421_150819_139.json",
+          "sha256": "68e3a43253cd3eaa3947cff344d9e18d52f06bdd1d3d9e451206de4ed5624e50"
+        },
+        {
+          "bytes": 20384,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_32_20260421_153136_872.json",
+          "sha256": "7774087fb225bc4193ea0bcf5096140da2f932dfe0bb7bb2a64c8f154e3f6a97"
+        },
+        {
+          "bytes": 31644,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_32_20260421_160251_208.json",
+          "sha256": "fe1479058b9c8930139f983439eb185135ab2c25c1de089572a2e5a218150648"
+        },
+        {
+          "bytes": 39054,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_32_20260421_163443_804.json",
+          "sha256": "67f926bea97cc7735c388c612f558a4f3fe204283921b7d7a704d4b35c333fbe"
+        },
+        {
+          "bytes": 46778,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_32_20260421_170647_179.json",
+          "sha256": "f1bd3d54a3ba26a10ae4dfd024766aee29a90913d470185c616d268348fd248a"
+        },
+        {
+          "bytes": 31081,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_32_20260421_170841_382.json",
+          "sha256": "5140df350a2d0932de6717bb119905ee7ceb434c207997917cebe7d9242b0f73"
+        },
+        {
+          "bytes": 12564,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_33_20260421_150811_904.json",
+          "sha256": "d5b7dead5c1923235a23bfa6803fa8e582160582f8459a60f740d0858d5a166d"
+        },
+        {
+          "bytes": 20010,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_33_20260421_153136_143.json",
+          "sha256": "d721cdb16acba7e7167ebb20d348a46775efea9ff00284d0889103e702f991dd"
+        },
+        {
+          "bytes": 30414,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_33_20260421_160244_317.json",
+          "sha256": "e6930b87d31f5a2bfd3d12d7d4ceff7c95cfaaee17f6b1b224d8a327b750d0f4"
+        },
+        {
+          "bytes": 38424,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_33_20260421_163435_957.json",
+          "sha256": "91f5b45d3b9f3254d0dd301953f3b96ac8c38edd792979d0704834f93926163d"
+        },
+        {
+          "bytes": 45943,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_33_20260421_170639_429.json",
+          "sha256": "dcea176fe54a0cc642d30cd1f9e4d7a5db8bf13ee2c8be321f722a097e4ad094"
+        },
+        {
+          "bytes": 31192,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_33_20260421_170843_176.json",
+          "sha256": "62fe6505c0f3eed2414577e9468477a9cb7e5f8ce6874ac77886a4c7bb5f436f"
+        },
+        {
+          "bytes": 11880,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_34_20260421_150810_443.json",
+          "sha256": "4c3bba895ad9b2aec5c2592f06dd426c1e29702e2c8d686ef349713c61801b67"
+        },
+        {
+          "bytes": 21713,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_34_20260421_153147_755.json",
+          "sha256": "59be29d946e5830074d9335b8fb6132da8ecb4d5d366d8ae9117f0a7eda15a66"
+        },
+        {
+          "bytes": 31790,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_34_20260421_160254_449.json",
+          "sha256": "877e5409db6c49b41a3b8194a4a20a44d8d8140804175558febc0b4ac23ed408"
+        },
+        {
+          "bytes": 39903,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_34_20260421_163448_953.json",
+          "sha256": "72f8607f8e86ed0a90901235cf7c8856e095da5356e920061ecc915a9155887e"
+        },
+        {
+          "bytes": 48052,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_34_20260421_170704_984.json",
+          "sha256": "28e5dac86ae0bd9357fe5754a6afbdb02c72fc183ffa3f85f0e1784ea7da093d"
+        },
+        {
+          "bytes": 30365,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_34_20260421_170836_436.json",
+          "sha256": "205d848cc33bf0e45b07f49357a527f611dcfcce2663520dbfc7293fc9a61010"
+        },
+        {
+          "bytes": 15149,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_35_20260421_150817_568.json",
+          "sha256": "bc66faace42676e097fc8ec7231db6af8b82bf12ee67ec7d348aa144bbad5df6"
+        },
+        {
+          "bytes": 20789,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_35_20260421_153140_768.json",
+          "sha256": "3ae9accc1894e3861dc53acbbe9cfdbea3b245b65c35f3455715c127f5129a1d"
+        },
+        {
+          "bytes": 30890,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_35_20260421_160249_424.json",
+          "sha256": "9e1d90a5ce3e7dbe775a947e5128a64b19873ef6f84597eae7ffd80f3a2aa580"
+        },
+        {
+          "bytes": 38642,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_35_20260421_163442_727.json",
+          "sha256": "30a2aaefa417d155a797cddd1c8dd238cceb88a9d7f775885d0481724ec5322a"
+        },
+        {
+          "bytes": 46779,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_35_20260421_170653_697.json",
+          "sha256": "4453227f9c4ff285a5978a59e24c2037d0c4aa8c6f8c436d280d49c354fc35e4"
+        },
+        {
+          "bytes": 33071,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_35_20260421_170832_230.json",
+          "sha256": "0ea4df0d4aa0e572c5e6086e738982cc7730b127efcfae6221c65d6823ea3048"
+        },
+        {
+          "bytes": 13130,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_36_20260421_150818_565.json",
+          "sha256": "48f0364af349b879d9a42af4172f92ad1d5a17020184eb2f7db16b2ebed26179"
+        },
+        {
+          "bytes": 20488,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_36_20260421_153142_050.json",
+          "sha256": "3be88109cbd034386e296615207c39c6f41b55305ebb9cbd02af379db9a51139"
+        },
+        {
+          "bytes": 31392,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_36_20260421_160255_121.json",
+          "sha256": "686bb0c619fc69f357e82c160cd60d294cdceca10fba67a353c2c5659f30de3b"
+        },
+        {
+          "bytes": 39336,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_36_20260421_163447_954.json",
+          "sha256": "3524515368b784079f2717f7a1b4ae9d11ddc33759ffd5dd971d82d74300a5c4"
+        },
+        {
+          "bytes": 46738,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_36_20260421_170657_758.json",
+          "sha256": "3dba7de851883faa2896dcfc409eb3c57201b44434aaf65e086e59307e632104"
+        },
+        {
+          "bytes": 30859,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_36_20260421_170831_819.json",
+          "sha256": "87f0bd54671e8ba1a46126a3b6e3600b47fed75c616bbf3489541456a6cf0ad8"
+        },
+        {
+          "bytes": 12449,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_37_20260421_150812_631.json",
+          "sha256": "0641303df1003eeae0a957ed7c621b45a7a79f1ddaf2428844af6bb48fce6c21"
+        },
+        {
+          "bytes": 20486,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_37_20260421_153144_388.json",
+          "sha256": "0f8e92cbb00be130d4225c6029ee47a26fcbc082e80dffc3d6c267f7fccd8b8a"
+        },
+        {
+          "bytes": 30837,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_37_20260421_160252_246.json",
+          "sha256": "e5ade2bec0327093bc5897627c57d0de401105eedde3c66dcc1dcfeb6ce94f1a"
+        },
+        {
+          "bytes": 39571,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_37_20260421_163449_338.json",
+          "sha256": "0a72780bd9fe65694e23a4a8db38646093df5dee549ecc8a98662bec18bbd6e1"
+        },
+        {
+          "bytes": 47151,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_37_20260421_170710_100.json",
+          "sha256": "89b6a9d820c96f56802f542479cfce6c7357707ef65f4a916b8ae5176c16be86"
+        },
+        {
+          "bytes": 32649,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_37_20260421_170848_113.json",
+          "sha256": "fb3c4469644a6e3d3b245f851f790272cb6638dd02b77f1438ff4592f94efc95"
+        },
+        {
+          "bytes": 12558,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_38_20260421_150818_832.json",
+          "sha256": "63ff1fb940218b2667a126c70dda20cf86abd89541c00967e2ef2966da5776f8"
+        },
+        {
+          "bytes": 20805,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_38_20260421_153152_395.json",
+          "sha256": "1f4dc28ed62b23c67785922b8b7902e93cbdbe63891e281bdf45edc6b700cda1"
+        },
+        {
+          "bytes": 32107,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_38_20260421_160306_568.json",
+          "sha256": "378e47296be0c9268a66d12004f1de8fc05b84d045c0ba7aab39d5c03c8051e6"
+        },
+        {
+          "bytes": 38527,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_38_20260421_163445_712.json",
+          "sha256": "aecdbf987ee050f6fc6dd10fd4576619f9ea0af00f6d234b3fa29dfdc59250bf"
+        },
+        {
+          "bytes": 47326,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_38_20260421_170715_513.json",
+          "sha256": "5cb095ff7940561f7f96caea5987b07f62ed8acf5de33c1ca999f6eab305ad26"
+        },
+        {
+          "bytes": 30430,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_38_20260421_170837_670.json",
+          "sha256": "815171236980e86e784dc2354e35fdbc7bf2aea102d8e1b7ce40f82d4afff2c3"
+        },
+        {
+          "bytes": 12605,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_39_20260421_150815_472.json",
+          "sha256": "d16df5049a1dc91f6ff4ebb8b927ffdc47cf7b9170a54d856c3b3774c785641f"
+        },
+        {
+          "bytes": 20471,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_39_20260421_153149_187.json",
+          "sha256": "b7a792bc2916cf63f16b2d8d0893af2d40cf5e04f5c998e27a05cac3193a9779"
+        },
+        {
+          "bytes": 31327,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_39_20260421_160258_107.json",
+          "sha256": "7c8041f4cf671d2e533af279f57fece90181b3a159d7f0981316f63bbf5412bd"
+        },
+        {
+          "bytes": 39204,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_39_20260421_163453_167.json",
+          "sha256": "6672bccb257c8192bab93f82bb907033f1f9b3d96845f22209a9c171539d0418"
+        },
+        {
+          "bytes": 46614,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_39_20260421_170701_855.json",
+          "sha256": "bef02d1ced4aed5519f6168151fc6f0c167ff315a760c90736ef0dff5d83eef6"
+        },
+        {
+          "bytes": 32475,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_39_20260421_170908_067.json",
+          "sha256": "2ba441feed6888b7b3dca6cd1d19794782fc6cb388f8c839f276582fd4bda4d6"
+        },
+        {
+          "bytes": 13848,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_3_20260421_150746_843.json",
+          "sha256": "67f4418a2346a838d2e984039936a8251def96be72d6090d059e2d8a864bb79f"
+        },
+        {
+          "bytes": 20905,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_3_20260421_153113_665.json",
+          "sha256": "e681d3851a271631d72c6d42df39b4407f8deb67e30b7e3c3bb17fb690be4302"
+        },
+        {
+          "bytes": 31208,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_3_20260421_160219_734.json",
+          "sha256": "f658b46d10a8d5027cac79b3c8d94de0d55406ae490a267e2c4cae93effcbfc5"
+        },
+        {
+          "bytes": 40726,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_3_20260421_163426_002.json",
+          "sha256": "4eae6045e73ba0d7b45331f40e340632168c1b3413c77f5a4a20806a4dbf431a"
+        },
+        {
+          "bytes": 46968,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_3_20260421_170609_318.json",
+          "sha256": "98dff0a122897538d5c9d0f0593ab079c701e74b1037644dcf1c020ddc9ba2b4"
+        },
+        {
+          "bytes": 31948,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_3_20260421_170803_425.json",
+          "sha256": "9ffd473abd15cf56e98acac7b3716b8e756d81a8a582adb0c046a10952a014e6"
+        },
+        {
+          "bytes": 11839,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_40_20260421_150814_581.json",
+          "sha256": "8c7ef9a25671e4673e3dfc9828563919c1ee7f903ffd74a551b6cf16c4cc6960"
+        },
+        {
+          "bytes": 31099,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_40_20260421_170853_601.json",
+          "sha256": "a930ffede8c6e284b4ce40d694c711065f5552917fe26e954d83d62a5d144cb4"
+        },
+        {
+          "bytes": 11910,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_41_20260421_150818_575.json",
+          "sha256": "6a4da2ad14fb9c67107c271c6b3c052c2d9b5d25843c40f8cac591bce1298639"
+        },
+        {
+          "bytes": 30858,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_41_20260421_170849_882.json",
+          "sha256": "a5b890bc6c54bda1ae975dbce939fc32315e829bb293dc49e0123bbcf20a7193"
+        },
+        {
+          "bytes": 14024,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_42_20260421_150836_895.json",
+          "sha256": "d2fb59eac5ee592bc798175150d7a99915fd42eff62277041887ada9e0faa620"
+        },
+        {
+          "bytes": 32357,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_42_20260421_170912_574.json",
+          "sha256": "9ead8838f8e61bbcdd1b1a43999a6a9505a942b72173b58f2cf67fb8e0b7f468"
+        },
+        {
+          "bytes": 11395,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_43_20260421_150816_775.json",
+          "sha256": "47c701fe8159b385964e2e9366aca2d64186aa24d665025f57c18c17a5aa4ef1"
+        },
+        {
+          "bytes": 32879,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_43_20260421_170859_157.json",
+          "sha256": "539170077bab0b2bc92b9b99ae597d5e697dbda54d6e19c0bee800ea8f6d9fa6"
+        },
+        {
+          "bytes": 14035,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_44_20260421_150826_734.json",
+          "sha256": "0b62bfa30421d4d1ecb1f2600bae46d763448680ac83a54022dacf2ca372e6e3"
+        },
+        {
+          "bytes": 33728,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_44_20260421_170918_468.json",
+          "sha256": "b49d5928d6b70f7f7ce7e367f3bebd6fd7193594fc98f074791dad89d58b2069"
+        },
+        {
+          "bytes": 12007,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_45_20260421_150824_690.json",
+          "sha256": "33378e9d201c04ac2421bf00ebeff397abe1fea5e2a517ce02d1ce3622a18ca3"
+        },
+        {
+          "bytes": 31198,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_45_20260421_170903_868.json",
+          "sha256": "f81eab72049e4149020eaf96a0c5ba4852070fb8802494dd6bdd57a94f5ca2c4"
+        },
+        {
+          "bytes": 14574,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_46_20260421_150836_234.json",
+          "sha256": "1a7522467fd58914196f2aef847b069f5183e2dad4bb9408298b63bb518fea24"
+        },
+        {
+          "bytes": 32174,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_46_20260421_170907_445.json",
+          "sha256": "4bc89c22f59324c8f63ecf87f7ebf7259164fa22697415670264de20e98ba7fa"
+        },
+        {
+          "bytes": 12153,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_47_20260421_150827_136.json",
+          "sha256": "ab0a6230adafeec5d32b22cef391647e56b3aed608f24a0fa9d9ec8bd02a41e0"
+        },
+        {
+          "bytes": 32306,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_47_20260421_170913_976.json",
+          "sha256": "b093007c8f9951806baa00f3eba1aa678215a1136522799b7a09c547688a80db"
+        },
+        {
+          "bytes": 11682,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_48_20260421_150820_557.json",
+          "sha256": "b64e0af048f055ae4a569cd54d16217ce1cfdb948ca373e112791dc9b10a002d"
+        },
+        {
+          "bytes": 31473,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_48_20260421_170855_288.json",
+          "sha256": "a1a2dcf3c232646cf865f2763f992eda40e5e7bb8fb1740a1a744c10c0925d84"
+        },
+        {
+          "bytes": 13014,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_49_20260421_150834_202.json",
+          "sha256": "cdd131d5ecf6efb19c83b7be360c9fd22da801277fcde0b1c84c977aa622ce0c"
+        },
+        {
+          "bytes": 31517,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_49_20260421_170903_246.json",
+          "sha256": "1d6a585ced33000310a7fcc6db364f3ec21ed3ce3f5595b91e0270500c01930e"
+        },
+        {
+          "bytes": 12303,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_4_20260421_150741_488.json",
+          "sha256": "7410b4475133116f6096ddc2cf80b704ec8153d66e05079a30e6a98b2514d74a"
+        },
+        {
+          "bytes": 21886,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_4_20260421_153120_229.json",
+          "sha256": "027b9419eb96dcc77d538cf19f81649758563dd3c188fdf6b2dd8c4edcc64385"
+        },
+        {
+          "bytes": 32137,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_4_20260421_160227_198.json",
+          "sha256": "ccd9a6651b49622276932a39633f92e60573889acd0d8b0e9113986c003252a9"
+        },
+        {
+          "bytes": 40276,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_4_20260421_163423_270.json",
+          "sha256": "cf9921099bcce6ee9f0fe2b9221d1ce611ae8fc34c3a4e2720e381a5b7280598"
+        },
+        {
+          "bytes": 48428,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_4_20260421_170618_644.json",
+          "sha256": "deb0f84bf018933d9e1cf4aeea3f2446b9c39f2df9da44f034b98abf8aa2a8fc"
+        },
+        {
+          "bytes": 31048,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_4_20260421_170803_742.json",
+          "sha256": "5491052939d4f3c75f8f258e7c7c0cdc46352827736c8b1346a4e3ab03de65a5"
+        },
+        {
+          "bytes": 12541,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_50_20260421_150832_202.json",
+          "sha256": "26086f8e403d09a13095e338627c98ac7d76f5fc69e986fbbd9c9ed9be49617c"
+        },
+        {
+          "bytes": 30780,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_50_20260421_170858_221.json",
+          "sha256": "fd4d7ed86d420a3cdbeeda35faac9fb5bf6095f1d00d790bf134f240da8ef254"
+        },
+        {
+          "bytes": 12933,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_51_20260421_150828_169.json",
+          "sha256": "7a5e8d102293fc29c955528df5d551f424424f9183ed2f0a4a7bbe6b340f04f3"
+        },
+        {
+          "bytes": 33933,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_51_20260421_170910_229.json",
+          "sha256": "230fdc0aa0a1e67326b6dd8f7e49a7100556db138a138928aa69ff8547cb538d"
+        },
+        {
+          "bytes": 14700,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_52_20260421_150844_216.json",
+          "sha256": "4ca42dfeb3e55a2e4f538e32e0f13d1692c17134a55e042d8404d63831bba239"
+        },
+        {
+          "bytes": 32116,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_52_20260421_170859_945.json",
+          "sha256": "f2c577a2c67260e1f9efd7a7d32d310acc79cfb1c934cc06ff56ac5649d67dc5"
+        },
+        {
+          "bytes": 12765,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_53_20260421_150837_270.json",
+          "sha256": "8ea58f7e81b206b8907b40b64326cf533d8e9adb003a1a8c6b199653c76d1799"
+        },
+        {
+          "bytes": 30883,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_53_20260421_170904_432.json",
+          "sha256": "7fc44b831fa01db574a43737c706eaca15d5e5fe3ebb894e16b9982d263cf906"
+        },
+        {
+          "bytes": 12011,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_54_20260421_150824_952.json",
+          "sha256": "ceb2ad21cee05ae668b5d56f1589d82762ab4f1de7f9ccb3299bce3d2b6d55f9"
+        },
+        {
+          "bytes": 34382,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_54_20260421_170930_129.json",
+          "sha256": "b29ebcc59ee1105036205a94bc046f450ee192adc538ec2106629349c80e254a"
+        },
+        {
+          "bytes": 11922,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_55_20260421_150829_870.json",
+          "sha256": "eb1484ec71f8b8d5847dd54839389d6df74a7aa5d3281aeeff4128fa54a715e1"
+        },
+        {
+          "bytes": 31256,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_55_20260421_170904_864.json",
+          "sha256": "5de81a9e8c9258d6a2f5cb53e4d4d27e4a22f545bc95028af89840976cb648ab"
+        },
+        {
+          "bytes": 13140,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_56_20260421_150845_011.json",
+          "sha256": "5fc420182204b2c9463d71df305d5440ac583f876cdecf5ff2198fa6f547a61b"
+        },
+        {
+          "bytes": 31288,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_56_20260421_170924_342.json",
+          "sha256": "51b324aa5bcd9732c66b87f95fa6a5a550901f0264ce63da2608bbf3d1f3e90d"
+        },
+        {
+          "bytes": 11331,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_57_20260421_150829_386.json",
+          "sha256": "e921e09c4715cbfed4664082c1fb92cc2d5c6571e3551ac241e0505d32dc3ad3"
+        },
+        {
+          "bytes": 31125,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_57_20260421_170913_267.json",
+          "sha256": "e6e9b0c629dc55646f471a612e193d2342e769084e5a303dc8c30b2cf1732b73"
+        },
+        {
+          "bytes": 11426,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_58_20260421_150833_042.json",
+          "sha256": "88e0b7cb592fe02c9fa0d2c777eb3aaf8c1622e8205fe521febd17e5d3ef80fe"
+        },
+        {
+          "bytes": 30984,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_58_20260421_170918_924.json",
+          "sha256": "b86a56f5bfd3af57bae2cf10cef55c93371fec47ee2a7093fa84247b7fa9e42e"
+        },
+        {
+          "bytes": 13646,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_59_20260421_150838_976.json",
+          "sha256": "aba0c650451703365432dfa9944be8a092eee11a78ec9fed5b76e024e50a73fb"
+        },
+        {
+          "bytes": 32286,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_59_20260421_170917_280.json",
+          "sha256": "c42bb8951b78f80166259d73887cf4cdc9cbcabd63e0dada81376081f0b473ae"
+        },
+        {
+          "bytes": 12106,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_5_20260421_150742_930.json",
+          "sha256": "50634d243b621ed63003d5bf231129901a65ba0f28f1b74b7d87351b3aa4bfde"
+        },
+        {
+          "bytes": 21321,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_5_20260421_153117_664.json",
+          "sha256": "680db3d43f8d67527ae3dee93acdb7f558d50850a34888e132556739d2daeea0"
+        },
+        {
+          "bytes": 31044,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_5_20260421_160219_956.json",
+          "sha256": "f3daa8ebe8ca1ae7bd71bb3f3ae6a0ac4eba00703b7cdac78a2526fee52778ab"
+        },
+        {
+          "bytes": 39335,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_5_20260421_163418_667.json",
+          "sha256": "b631e9a88a220e2f500eb535721d77f281945cf2563d87dc9206ca94e6a4beda"
+        },
+        {
+          "bytes": 47423,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_5_20260421_170618_459.json",
+          "sha256": "abcea4c12b2b17c2bd3efab04eed3f31ca400951ae91e5972a182b126d44abac"
+        },
+        {
+          "bytes": 32750,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_5_20260421_170824_413.json",
+          "sha256": "03624e06732d4891baf1fd9dff017385dec096b4c88d983c8aa7913a441b3f02"
+        },
+        {
+          "bytes": 10856,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_60_20260421_150830_726.json",
+          "sha256": "d16e332f38f616e535ca221c97ced534435a71e66bdabe03b085bebb180b6627"
+        },
+        {
+          "bytes": 31193,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_60_20260421_170924_808.json",
+          "sha256": "be5110b06d78d2e239f870c05a2ae06b0449b49d60eb3916965f377292ebecbb"
+        },
+        {
+          "bytes": 11906,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_61_20260421_150836_833.json",
+          "sha256": "53ec2ed692978bcaa17765b877373a894e66b9784ec99e4017999a4545f6d84a"
+        },
+        {
+          "bytes": 30795,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_61_20260421_170913_368.json",
+          "sha256": "c255a732c084198a5bda7242e028c8a96909b46b957629d3049669da87890b53"
+        },
+        {
+          "bytes": 13147,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_62_20260421_150841_973.json",
+          "sha256": "528f66c63a336f5a6c03109ef0aa8cbbd36d62ac95436d04223acd688f3086e4"
+        },
+        {
+          "bytes": 31354,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_62_20260421_170921_653.json",
+          "sha256": "b2c21c56e9f55d6283cc8f793923678d7074f45e9032a425d972e1224af9544f"
+        },
+        {
+          "bytes": 12414,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_63_20260421_150839_003.json",
+          "sha256": "da3721d37abf4c94c8b823c791ebe60e0f45ecc7efc433e28363e604cd644073"
+        },
+        {
+          "bytes": 30916,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_63_20260421_170917_811.json",
+          "sha256": "797c8651147bb6140e06c7f18af74f5b8fdffec81a39cbc9c72aac5ccfeecfe3"
+        },
+        {
+          "bytes": 13293,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_64_20260421_150847_522.json",
+          "sha256": "b61166411c30dd7e98564274275ed99522d14dcc81649679f3b033831a42dc4b"
+        },
+        {
+          "bytes": 32577,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_64_20260421_170939_713.json",
+          "sha256": "e5e1342932351863069326cf5079089099e6424195d90a3e7a36b87d49a8b8d6"
+        },
+        {
+          "bytes": 11179,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_65_20260421_150839_155.json",
+          "sha256": "3f9cebcb9a1337b9ef3a0d680e39882d0c78680107169c42e3676d8ff8b04fea"
+        },
+        {
+          "bytes": 30924,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_65_20260421_170921_700.json",
+          "sha256": "5ef479a53761f702446a0d34eec152c0e4ce1a84fce3732c78de2ef6e487a2af"
+        },
+        {
+          "bytes": 12501,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_66_20260421_150849_000.json",
+          "sha256": "a61983bc1cef85f71452362fbc62cb46a41cbdd74e5e75245e7226da7875b3fe"
+        },
+        {
+          "bytes": 30864,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_66_20260421_170932_077.json",
+          "sha256": "3d46fd1dbb060d5e778835dab0e596cf81eba80d76dfb17b7ad9055f7cd8dccf"
+        },
+        {
+          "bytes": 11999,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_67_20260421_150841_382.json",
+          "sha256": "c65d1d85329a6b5160f4c7998b85f8e5c2f62c2dd4e52f7adca5129a8c5f370a"
+        },
+        {
+          "bytes": 30795,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_67_20260421_170927_757.json",
+          "sha256": "c628794cc2f156105c815d67854f51df62df0c3e93cf139c1988ff5979242944"
+        },
+        {
+          "bytes": 13716,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_68_20260421_150901_506.json",
+          "sha256": "b14e1c66170aa9bf1d5b2a92e1eec810a768b5118067299e31ee4170bf2acf7d"
+        },
+        {
+          "bytes": 32889,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_68_20260421_170951_952.json",
+          "sha256": "c35a459c5035b070d0a2ad97b4ebec0ef1a3d174c40df6aa8ffc281247a06370"
+        },
+        {
+          "bytes": 12822,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_69_20260421_150854_257.json",
+          "sha256": "1963f5d7e71eac47aacc1b9a6d28184f931017b0f279fc2847a9bf300444022c"
+        },
+        {
+          "bytes": 31423,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_69_20260421_170933_772.json",
+          "sha256": "aba958e1c7055b09c0c381f99c6624145fedf2f938055ffdca2c4f8005a0ee7c"
+        },
+        {
+          "bytes": 11269,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_6_20260421_150741_511.json",
+          "sha256": "f0a3ff47bce66727b9fd11c9851f6db0d06313566ebd01756a8c2e818deb88b5"
+        },
+        {
+          "bytes": 20507,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_6_20260421_153115_471.json",
+          "sha256": "7fee6f80304b51a43379239f00cd28b1f4d3c4deabb775700e49ec3e9afbf495"
+        },
+        {
+          "bytes": 31303,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_6_20260421_160224_989.json",
+          "sha256": "eb32b6341913802a190657ec6be13d556111fecb6721cb840756042d5f6f8d14"
+        },
+        {
+          "bytes": 39270,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_6_20260421_163419_099.json",
+          "sha256": "2f5fce428124d9b8908ef14b0d382877ba48c7132092bb17689f3d6a18d4f845"
+        },
+        {
+          "bytes": 46812,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_6_20260421_170614_192.json",
+          "sha256": "64d14741ae2732dbb84ee9de879e043de15e53597f26c43e81345ae6084ee5fc"
+        },
+        {
+          "bytes": 31282,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_6_20260421_170803_662.json",
+          "sha256": "989e610bb38b2519409847c439f147ccdf6470bc8c8dc7d96c17d6d73cbe9171"
+        },
+        {
+          "bytes": 12624,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_70_20260421_150851_965.json",
+          "sha256": "3f9ed3edd6a0eb0feffa60ccf8e135db67471e7dec4472c13c6ce5584aff5ae3"
+        },
+        {
+          "bytes": 31659,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_70_20260421_170937_397.json",
+          "sha256": "30e233bbfe8a32f9b63780d5635cf26c88cc16dfe82cf970662fd5b0fc26cc44"
+        },
+        {
+          "bytes": 12487,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_71_20260421_150845_822.json",
+          "sha256": "3424d73d28076851de8ab85c2e5c840eaf1cd64df6a7ea44c0fa8dade626bae5"
+        },
+        {
+          "bytes": 31786,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_71_20260421_170934_021.json",
+          "sha256": "975a8a22feb41c8bd76cfc8dd8798b115f7f9a35c822fe54a2f6d391b3ebb561"
+        },
+        {
+          "bytes": 16104,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_72_20260421_150922_045.json",
+          "sha256": "9332b8f8b884ee35abb6607babcc3977f3b5be29fd0235c8f22250e2b98bd9d5"
+        },
+        {
+          "bytes": 34760,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_72_20260421_170958_562.json",
+          "sha256": "175a50c380a4d6319bb7dfab499338754a4f20543d28563190ffe8fbd6188058"
+        },
+        {
+          "bytes": 12321,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_73_20260421_150850_258.json",
+          "sha256": "4b76258a690758a8da6957d35cd7a6a71e42c783f2814722924371cfe8d30a6d"
+        },
+        {
+          "bytes": 32309,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_73_20260421_170946_044.json",
+          "sha256": "d6fbc65118dbdd0477c8d82a973d4e08a6741dccefac4265705404a6fbc87572"
+        },
+        {
+          "bytes": 12534,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_74_20260421_150854_978.json",
+          "sha256": "c1d109a9369ada6ee708b53aeec88ed7bfbdb4ffb2ef65a766ce09ddc724586f"
+        },
+        {
+          "bytes": 31247,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_74_20260421_170938_153.json",
+          "sha256": "c3f9fb93bdda3b5a7b7f05b09a75d792ca67d5c52c2cd353d7fd3ab9e3a4cb06"
+        },
+        {
+          "bytes": 12099,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_75_20260421_150853_900.json",
+          "sha256": "2ee183d7a1dd481636ad3c7c47652f5e1c981ef040e32f9a9e79dbbda04eff0a"
+        },
+        {
+          "bytes": 32226,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_75_20260421_170948_762.json",
+          "sha256": "8413374ea1a547983ed61548e27627b6002fc95eb02ecf34ca6859aa11f58329"
+        },
+        {
+          "bytes": 12127,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_76_20260421_150855_130.json",
+          "sha256": "a259b15b51c48f570b0268c980092d422ee7963040f45525fe6bea6ad77caf87"
+        },
+        {
+          "bytes": 31178,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_76_20260421_170943_603.json",
+          "sha256": "00d51e0165e9a95402728e45be837b7f79afdc4749087f231b9d633975d8a035"
+        },
+        {
+          "bytes": 12084,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_77_20260421_150855_031.json",
+          "sha256": "53b5b343afa3552ac063e4119bf866dfdc3ac2d436a7a5edd92c267f77dfae0b"
+        },
+        {
+          "bytes": 31228,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_77_20260421_170946_284.json",
+          "sha256": "d11328b7a5258d2f36bc4a935f932e0712c6664c0461662dad85d748952f5034"
+        },
+        {
+          "bytes": 12871,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_78_20260421_150856_183.json",
+          "sha256": "43b4fc9e1fedfd33718e0edab4cc4e32d3c57fd5da31a0f8155c4808d2d74c3e"
+        },
+        {
+          "bytes": 32777,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_78_20260421_170957_288.json",
+          "sha256": "01c0f438ce841f9dffd188c4d32810744404b87e09670a77f756fc2515142683"
+        },
+        {
+          "bytes": 12515,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_79_20260421_150900_691.json",
+          "sha256": "c0fd3a991ea55d1fefc4d67bde07cd82251aac75cce0dfb00d6988b80f589f90"
+        },
+        {
+          "bytes": 31538,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_79_20260421_170950_747.json",
+          "sha256": "69c939f382b73e3ad859a034161966dd59167a4b7c12616604635cbfbd1d22af"
+        },
+        {
+          "bytes": 12725,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_7_20260421_150746_845.json",
+          "sha256": "b7bd32159958eb870483bfb0be4bbc726c96948ccac2fb097d09f9f4d7b5e650"
+        },
+        {
+          "bytes": 20683,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_7_20260421_153112_565.json",
+          "sha256": "0a41386e014bf0ffa146e3760644d880f6e89a3f41027541b37a24066c2f46e0"
+        },
+        {
+          "bytes": 31090,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_7_20260421_160220_310.json",
+          "sha256": "15e4edf58c2f5aec450ce23b5e046fd6d4d481e8d0a7d66839d1e166c2dfc533"
+        },
+        {
+          "bytes": 38941,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_7_20260421_163412_862.json",
+          "sha256": "054044ddc1e22ad6bae5fe88d48efeb48896d4a49b972f2934d4a33d4bff4214"
+        },
+        {
+          "bytes": 46799,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_7_20260421_170611_601.json",
+          "sha256": "e488d9ed9c45e24204ed102b4f3c20390934a131eacd9c2cc97d567b47221fae"
+        },
+        {
+          "bytes": 32103,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_7_20260421_170814_823.json",
+          "sha256": "9a6325164d692b3162106b988e14f0959ad3b3b0b58a5c70ccdd2a04d8368c51"
+        },
+        {
+          "bytes": 13897,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_8_20260421_150958_296.json",
+          "sha256": "0e7eb3c85d9a6d1cdc40f6504565efa0e897a5e66b1d81e7299496acee1cc69d"
+        },
+        {
+          "bytes": 21796,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_8_20260421_153120_063.json",
+          "sha256": "13595a6c1875273524ce206bf120e2c9dacb1b2a46f3de205042c4d74c44fa47"
+        },
+        {
+          "bytes": 31566,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_8_20260421_160223_857.json",
+          "sha256": "0b59ffd1109f08faafcb78b2cc1136d74f3a5a00cda5907016fb7a51c26bf477"
+        },
+        {
+          "bytes": 39761,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_8_20260421_163419_805.json",
+          "sha256": "e168dcf22504240df5528912026e28ffcb4e70524ac0663288281c9f8e6171a6"
+        },
+        {
+          "bytes": 48628,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_8_20260421_170625_538.json",
+          "sha256": "3cb89f01c8b74e58c4235dfb1ac5b92bffa7b578f1a3f4248c9aaf4a032f0a3e"
+        },
+        {
+          "bytes": 32707,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_8_20260421_170822_354.json",
+          "sha256": "870c2afac8a4c6025fd980945d73bc85e4c00fd8e29cd4cabc813f0319013c1e"
+        },
+        {
+          "bytes": 13529,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_9_20260421_150754_895.json",
+          "sha256": "92f7d0646277ddb72a511001f9b73a1b8d2bf53a15cca33b4cf2d4296f78a709"
+        },
+        {
+          "bytes": 20330,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_9_20260421_153114_308.json",
+          "sha256": "0d439efa800201280c2f7051a5906ac40cb04a0233c653a985fabc085e392d08"
+        },
+        {
+          "bytes": 31877,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_9_20260421_160230_650.json",
+          "sha256": "e1b5d6f2f153095f436ec1071f249ca026c483d16e4c10eb410cceccc9ddfd91"
+        },
+        {
+          "bytes": 39578,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_9_20260421_163423_096.json",
+          "sha256": "7665e3b69ef20275d8ea629e84096b176accc23f249f2c56c12cd455a7887080"
+        },
+        {
+          "bytes": 48694,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_9_20260421_170634_818.json",
+          "sha256": "ac1310bd7f3454c77e1ac33654a16ff27de65d95d28971b0611e4278affa66f7"
+        },
+        {
+          "bytes": 31484,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_test_eval_9_20260421_170804_478.json",
+          "sha256": "d21b021c0bd360fc906ece10ed0971097fc2aed48abccfd5493740c64577e482"
+        },
+        {
+          "bytes": 18018,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_10_gen_initial_20260421_152211_463.json",
+          "sha256": "44fca44cbc0972167021ba0aeb498e8036c09020c2390d119fc3051285848e82"
+        },
+        {
+          "bytes": 17973,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_10_post_curate_20260421_152259_662.json",
+          "sha256": "fb9b18b7cd8aa8ff4aacf6ac302c4f30f0e2f340f3990870f0a61254bda056a8"
+        },
+        {
+          "bytes": 17995,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_11_gen_initial_20260421_152319_248.json",
+          "sha256": "b26cf24a097173ebf2af3241ec3888ab873e3cda575ebb0a0219bf4fac31e846"
+        },
+        {
+          "bytes": 19254,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_11_post_curate_20260421_152436_344.json",
+          "sha256": "a5ec872555963993c4a854e195a0310932609e50d07b64404206a5ddefd09cbf"
+        },
+        {
+          "bytes": 18818,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_12_gen_initial_20260421_152456_804.json",
+          "sha256": "6339c1095361af1eb986ab8d18024a9d1537ec8aaccbe911c3ba7c6281fb50f6"
+        },
+        {
+          "bytes": 19874,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_12_post_curate_20260421_152634_673.json",
+          "sha256": "1c6587867aa42ec0aa0a9b681bda4bcbc948001413c829c47442d8d1693f0395"
+        },
+        {
+          "bytes": 24093,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_12_post_reflect_round_0_20260421_152556_266.json",
+          "sha256": "4a8e3b14ed73f30f8b48bfdf8b0ee96194972a9ce4e9370679c38611b254f44f"
+        },
+        {
+          "bytes": 20353,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_13_gen_initial_20260421_152654_015.json",
+          "sha256": "0d27a17112b27c818f4a3f5e40934beaa28e7f3e1857398f17481d90c62bb716"
+        },
+        {
+          "bytes": 20248,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_13_post_curate_20260421_152846_346.json",
+          "sha256": "6cf76038ae431437d229021a02fcb733c4665005556d1b89f9c64315dd56f942"
+        },
+        {
+          "bytes": 19885,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_14_gen_initial_20260421_152901_496.json",
+          "sha256": "7505cb862749fd90036918d8139b51425060754e152bddaa8c493759046212e4"
+        },
+        {
+          "bytes": 20432,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_14_post_curate_20260421_152949_880.json",
+          "sha256": "ad2e3ec7bbfb688cd4a22cec0c1b203c1871545fa9a2c132ba765f64ad240c2a"
+        },
+        {
+          "bytes": 20891,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_15_gen_initial_20260421_153007_416.json",
+          "sha256": "ce010d6c02f2ea7cba53462442089e95e61847ca2a2bd09a31e3be66401f486b"
+        },
+        {
+          "bytes": 21075,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_15_post_curate_20260421_153055_559.json",
+          "sha256": "ce2d659fbf2c838fe6eadaad9cacbe8e22d3a75db68d56fa24ee11696de404da"
+        },
+        {
+          "bytes": 21676,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_16_gen_initial_20260421_153217_417.json",
+          "sha256": "f53a418362bd8ff001e1cc04ea7f35338cb97fe6b27f4d1d83188cf83a3eba46"
+        },
+        {
+          "bytes": 22504,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_16_post_curate_20260421_153439_929.json",
+          "sha256": "0509ddcf3e3fa74da9c7b695d8cbd298214c7905e3c1f308fd4ff1783565743a"
+        },
+        {
+          "bytes": 26884,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_16_post_reflect_round_0_20260421_153319_251.json",
+          "sha256": "ca2c0fbd64a54b80694c0f11e82750d8da333789f48ddd5384cdf4a26dc2771d"
+        },
+        {
+          "bytes": 21579,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_17_gen_initial_20260421_153500_710.json",
+          "sha256": "d3708be5e6df8a23d03a55a9c87bfdd849c6002be535c4f916c3363f844e7252"
+        },
+        {
+          "bytes": 20884,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_17_post_curate_20260421_153538_263.json",
+          "sha256": "452ee1dd6160c902e22641f38a3ea5c4f7d7c3a825ca21c1ff802f1802d28c4e"
+        },
+        {
+          "bytes": 23054,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_18_gen_initial_20260421_153559_824.json",
+          "sha256": "7f61e16aac628b48b2e33532aa19ab227cd9a7afc13d7c704402f6ee8f1f9e65"
+        },
+        {
+          "bytes": 23195,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_18_post_curate_20260421_153724_443.json",
+          "sha256": "23f04c8f30392fc495eb7bd40ab0b83250ce9c1021337696ad99fbede148ec10"
+        },
+        {
+          "bytes": 26593,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_18_post_reflect_round_0_20260421_153650_113.json",
+          "sha256": "29d97cae4a36cf7e7c18c1f32bdd39199f4e7fd717d85f87a6e731c1e248a3fa"
+        },
+        {
+          "bytes": 22255,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_19_gen_initial_20260421_153738_440.json",
+          "sha256": "d338a6b411e6a769400a403b4adc0e4cdc1b05f0ec1b7bfb1fd0a3686809a3cb"
+        },
+        {
+          "bytes": 22577,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_19_post_curate_20260421_153817_713.json",
+          "sha256": "4287a2f0ebca7326a4cb349e0af556296c80f6678db46cd6d68fc84d0ece8a86"
+        },
+        {
+          "bytes": 12693,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_1_gen_initial_20260421_151020_499.json",
+          "sha256": "bcc630126a25e60828a1a45a20f447ca5df362dc2f2bddbd1b3ca80f3655cb7d"
+        },
+        {
+          "bytes": 13086,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_1_post_curate_20260421_151213_563.json",
+          "sha256": "dd032d86ed44a4b908844237b0d94a533e024939b4dabc0637e6e4fdf305fa91"
+        },
+        {
+          "bytes": 19595,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_1_post_reflect_round_0_20260421_151130_413.json",
+          "sha256": "9c6301bfd91740997b5256a878bf7ad71f7de2753d27206a31961d4bacc081e2"
+        },
+        {
+          "bytes": 23622,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_20_gen_initial_20260421_153838_059.json",
+          "sha256": "af6962aefc4d4a7daea166dcbdb3be94f066190d0ac58d3247e88bb3f2127107"
+        },
+        {
+          "bytes": 24062,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_20_post_curate_20260421_153926_221.json",
+          "sha256": "ddb13262d5fa10fa660c18bb1e783d46ca625bfa0fa84ae5bcca95cf21e23d57"
+        },
+        {
+          "bytes": 25050,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_21_gen_initial_20260421_153958_565.json",
+          "sha256": "6116c999394c53b9d641a8d8649ce9855fbd7285cef645a022dbea3ceb3eb56b"
+        },
+        {
+          "bytes": 24555,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_21_post_curate_20260421_154055_716.json",
+          "sha256": "d00cd497df6e7337e80a39b54aaea4d9d5bda435fa4f12c3f35bb190f74ecf08"
+        },
+        {
+          "bytes": 24458,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_22_gen_initial_20260421_154115_861.json",
+          "sha256": "b595e379839eff7b04dc2dcc59ddc3ec5059cbbf8ea8a7360dfbfce7053e29bb"
+        },
+        {
+          "bytes": 25245,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_22_post_curate_20260421_154353_483.json",
+          "sha256": "6a61747b7cd5cede0da789d0d53e9b640f8c7cbda195bd2c2ab001ae1275187a"
+        },
+        {
+          "bytes": 30168,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_22_post_reflect_round_0_20260421_154224_326.json",
+          "sha256": "14f455db602d3fcfa20895cc45f6983b3e1609f7f4bdcfa170a0d74dc9a87c21"
+        },
+        {
+          "bytes": 30597,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_22_post_reflect_round_1_20260421_154323_903.json",
+          "sha256": "d2dd4f43d1553003af620e9e35d1f6661a0fcf80a006d50d6d5d0b9a0eab291f"
+        },
+        {
+          "bytes": 26079,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_23_gen_initial_20260421_154414_282.json",
+          "sha256": "16d647bedca95e2afcdfe3cda37a407d6290a04273bfceb0a39bd01945acfe34"
+        },
+        {
+          "bytes": 27056,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_23_post_curate_20260421_154619_809.json",
+          "sha256": "5a2eb475e5b0f999149840157f9fd25c7a81bfb2229df2164819c6d9d93373b4"
+        },
+        {
+          "bytes": 31971,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_23_post_reflect_round_0_20260421_154522_506.json",
+          "sha256": "f80537ad3895ca8837033102a4c70357493ddfe04b05c6bf0bbb8143d0036142"
+        },
+        {
+          "bytes": 28144,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_24_gen_initial_20260421_154646_436.json",
+          "sha256": "02356a2fd7a83e51d293bef031ab35e8774fffe10faf0000a84b63b000f5e0d9"
+        },
+        {
+          "bytes": 28949,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_24_post_curate_20260421_154755_486.json",
+          "sha256": "dd6e4728b51b5f0abefbff5d85c2a33ad3e5c1f68134f1c58b682be5461cc02f"
+        },
+        {
+          "bytes": 27409,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_25_gen_initial_20260421_154819_614.json",
+          "sha256": "93c3bef0809cdc9bf4d552f5513b2e476adb0569dc62d35c3654a19f6e4a2329"
+        },
+        {
+          "bytes": 29048,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_25_post_curate_20260421_154935_707.json",
+          "sha256": "1b3192b1665e5968f99c5926c69c7407d93e56b33e39de6f75ed9bdef14d797e"
+        },
+        {
+          "bytes": 28368,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_26_gen_initial_20260421_155000_274.json",
+          "sha256": "56e05f8c40c45753993765acdca0a5a5819cd0287a4a7b6a94a448406cef88a9"
+        },
+        {
+          "bytes": 28905,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_26_post_curate_20260421_155103_990.json",
+          "sha256": "49de1a21e8e6a8092786f63128f86e9f438ff457555716b579cb2bb00554d04c"
+        },
+        {
+          "bytes": 27570,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_27_gen_initial_20260421_155121_157.json",
+          "sha256": "f068ce9bdba709cab0f942fbfbfd0cd827444f18d10b887c5868d687b55afea3"
+        },
+        {
+          "bytes": 29743,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_27_post_curate_20260421_155434_135.json",
+          "sha256": "3d331aedca79c7ae70b8270842c92496a1e4996469023d82bf37da6a034ee7dd"
+        },
+        {
+          "bytes": 34731,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_27_post_reflect_round_0_20260421_155338_427.json",
+          "sha256": "c6ae62a1cbe30ee7159fe917d0226fe3fc565321dc735ae32370771696e1991b"
+        },
+        {
+          "bytes": 29745,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_28_gen_initial_20260421_155456_431.json",
+          "sha256": "5076d395179e2832d64ed61ddff90008d9898b0c15d97ddcc0f3e560d6c444c9"
+        },
+        {
+          "bytes": 30014,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_28_post_curate_20260421_155541_144.json",
+          "sha256": "bc1251a8eaf425bbdbc2294eb25bfdab4634cd73cc1727b50fdaf7f29111a83a"
+        },
+        {
+          "bytes": 30345,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_29_gen_initial_20260421_155604_681.json",
+          "sha256": "315d0a8a755f78e21fbc71eda17d3a3daec930e72f8c9ee5cf0fd0ed6bd77674"
+        },
+        {
+          "bytes": 29960,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_29_post_curate_20260421_155736_061.json",
+          "sha256": "fad830ac05c384588d24e24705256b1c011046083a14757ace8bb0112cc460ea"
+        },
+        {
+          "bytes": 14894,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_2_gen_initial_20260421_151232_246.json",
+          "sha256": "655f90dd85b22f078ef7d1b9d085b984232c01c611b1a5b2b68ec35a92a59bb5"
+        },
+        {
+          "bytes": 16674,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_2_post_curate_20260421_151406_998.json",
+          "sha256": "0a021f2af1cca318c604769264442df482559c1f7a7fe6289302581d88194377"
+        },
+        {
+          "bytes": 20133,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_2_post_reflect_round_0_20260421_151322_932.json",
+          "sha256": "b4c8cdf9ff0ad34ec3634874b1e5f99aadd3ad3e130162a80627ce2befbe99ec"
+        },
+        {
+          "bytes": 30448,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_30_gen_initial_20260421_155800_565.json",
+          "sha256": "ea9f92ca01f220d6457184865d0c4dc73fc1520e76b6884105e88276ff3fd977"
+        },
+        {
+          "bytes": 31285,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_30_post_curate_20260421_160202_773.json",
+          "sha256": "59d957cd6c90d2051bc48f01bc29a3427e6bc386fc3e27daeb9cc9c65bdd4032"
+        },
+        {
+          "bytes": 36608,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_30_post_reflect_round_0_20260421_160056_775.json",
+          "sha256": "8222013f4f4b3826ddfb7af1f4da7ddee98b441c19979ada2619ad845e4db7a3"
+        },
+        {
+          "bytes": 30398,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_31_gen_initial_20260421_160322_821.json",
+          "sha256": "fc70c851cbbc79fb473bf46c2632db0bfccc7ab4c0089ef6fa956c6c187de770"
+        },
+        {
+          "bytes": 31494,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_31_post_curate_20260421_160437_759.json",
+          "sha256": "f4436d735047a7b9e5c5da74d7569d66b54ed071991eb6b64e53d737631c44b4"
+        },
+        {
+          "bytes": 31879,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_32_gen_initial_20260421_160455_421.json",
+          "sha256": "1a446f45a5afb75005df720b1baf206f42b1dbac2f97ce72876eaa39d910a009"
+        },
+        {
+          "bytes": 31752,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_32_post_curate_20260421_160536_002.json",
+          "sha256": "a88322f773a32bae0703eaf7be85ea20b9d8f30580ee87910add7d4dfc670f45"
+        },
+        {
+          "bytes": 32129,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_33_gen_initial_20260421_160556_435.json",
+          "sha256": "8bdf076cbccfab6acb5db4b6cc536d34b64993e6c495a66ea5d92fda920018d9"
+        },
+        {
+          "bytes": 32020,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_33_post_curate_20260421_160740_355.json",
+          "sha256": "19d8780f527418b0edfb6e457648bb94224b457e8ad2b25c95e848369145e9aa"
+        },
+        {
+          "bytes": 31696,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_34_gen_initial_20260421_160759_085.json",
+          "sha256": "57e754b4ed232e5295f340c1ccfa46c7d5ddd7a9ce6edcad948cc051fd6ea104"
+        },
+        {
+          "bytes": 32239,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_34_post_curate_20260421_161023_979.json",
+          "sha256": "e7d2e2932daa57c6fc9db4fe6880b084bb5424d84a6db5b70370a733fc815126"
+        },
+        {
+          "bytes": 41754,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_34_post_reflect_round_0_20260421_160928_001.json",
+          "sha256": "d3408f63053671b244d49a275ad801bd03962c65625c24dd6a9a4a22510be993"
+        },
+        {
+          "bytes": 33423,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_35_gen_initial_20260421_161051_457.json",
+          "sha256": "c93fd973d86e0a0d923db2d5a793a44823c7e50c20441c68e60490314e04905f"
+        },
+        {
+          "bytes": 34289,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_35_post_curate_20260421_161418_853.json",
+          "sha256": "50d44a7213f044c5cc8e06d7ab4dc3080ef0536f8388139d6efdd7f236a2f067"
+        },
+        {
+          "bytes": 47488,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_35_post_reflect_round_0_20260421_161328_405.json",
+          "sha256": "9b80d9ee4a621675ec8d106e8506fa180af11d0a8b5be693fe440726bfdafab3"
+        },
+        {
+          "bytes": 35656,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_36_gen_initial_20260421_161447_834.json",
+          "sha256": "a81e5211cc8f33ab606c40c579aa03828e2b36405d23b1b9c85c66d900a3c718"
+        },
+        {
+          "bytes": 35669,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_36_post_curate_20260421_161653_425.json",
+          "sha256": "c3575ae784c330f72ae2d46a0012d944e143d648a5552af6b99f34d7718f4242"
+        },
+        {
+          "bytes": 40482,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_36_post_reflect_round_0_20260421_161600_757.json",
+          "sha256": "23d804d3bbd1287734ff8fa20deb4a50e862caa866d3a321115c7bfa2ff3e908"
+        },
+        {
+          "bytes": 34960,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_37_gen_initial_20260421_161714_706.json",
+          "sha256": "0a0286cdc771022bd648ae7535bc3c442447be3074de2b8336d7c9afc1713c71"
+        },
+        {
+          "bytes": 36237,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_37_post_curate_20260421_162046_074.json",
+          "sha256": "81669783036d017e03f6340058fe64fe6922ccd3b7062f8e32fc7dbf7731954c"
+        },
+        {
+          "bytes": 40845,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_37_post_reflect_round_0_20260421_161821_174.json",
+          "sha256": "38f0094325f330c425dc9628e52f58780295a43a2f6b3200c0e80f33c4ef1500"
+        },
+        {
+          "bytes": 35604,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_38_gen_initial_20260421_162105_727.json",
+          "sha256": "b630252f188132e7f8fa6ebd1126bf311b49664905c290b51f5a340f8cc1a1b5"
+        },
+        {
+          "bytes": 35747,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_38_post_curate_20260421_162157_597.json",
+          "sha256": "73e041c0eb2197d004638df5912648412dd885b94b902facc96f5f7227efcb22"
+        },
+        {
+          "bytes": 36026,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_39_gen_initial_20260421_162220_500.json",
+          "sha256": "1a62df60d0933cd0ebaff9b5feef731aca2a9a815d4f602f28f30c7516564d3e"
+        },
+        {
+          "bytes": 36025,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_39_post_curate_20260421_162337_025.json",
+          "sha256": "21bde742e1b7fdebbc5714e0f3c5652e4942afd530fb2198bfb9684f4d0a86a7"
+        },
+        {
+          "bytes": 14028,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_3_gen_initial_20260421_151421_944.json",
+          "sha256": "986539791755458b4f793f6c11fda5d788b4ab7702462ac5e7d984d010d9739a"
+        },
+        {
+          "bytes": 14413,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_3_post_curate_20260421_151504_676.json",
+          "sha256": "b3382c81ee9a66b977eaada503906c962eb795c19a679de3218fe39135da102b"
+        },
+        {
+          "bytes": 35470,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_40_gen_initial_20260421_162355_834.json",
+          "sha256": "a0404663c9b75d6a057e9a193feb2760b2358ac1605a1283b7b6efcc9262597a"
+        },
+        {
+          "bytes": 35587,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_40_post_curate_20260421_162449_813.json",
+          "sha256": "ebd044bf4f9cdcec2ac6af1f9d7b71614c04c3bf3c8bd7b425168c8908bd2fe7"
+        },
+        {
+          "bytes": 35895,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_41_gen_initial_20260421_162517_367.json",
+          "sha256": "c940184ce379512ccfa6dbe7c0754800095ea6e6acb2e5ee8ec14dfd12f4b9e0"
+        },
+        {
+          "bytes": 36105,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_41_post_curate_20260421_162641_235.json",
+          "sha256": "190d3bc8b05ae1a84c5590c1f0980ca875af6ff559578d9e5864a39b3b7df95a"
+        },
+        {
+          "bytes": 37305,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_42_gen_initial_20260421_162704_191.json",
+          "sha256": "daeeab0c56d05f5e33b6d4e429475de3b1f4a42e7c8407d97ed64085296bfd81"
+        },
+        {
+          "bytes": 38432,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_42_post_curate_20260421_162915_725.json",
+          "sha256": "c30a7fd19355e8b866aedac73c4c32c0b657005e5dd254206cc160b07abc8037"
+        },
+        {
+          "bytes": 40219,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_42_post_reflect_round_0_20260421_162825_536.json",
+          "sha256": "80fc2aea7d87f0d02d17bbaf2de34b741ada15a6f599159e01d9db56ddcf7c4d"
+        },
+        {
+          "bytes": 38218,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_43_gen_initial_20260421_162944_436.json",
+          "sha256": "41e3369db20caafd0c309e704c7e55dea52f68993e60fad3be294838bfaa4baf"
+        },
+        {
+          "bytes": 38051,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_43_post_curate_20260421_163051_357.json",
+          "sha256": "ac70df73d9599db519418c550667d1c161a8258bd43d94a50193dda69ac41ac1"
+        },
+        {
+          "bytes": 36493,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_44_gen_initial_20260421_163105_848.json",
+          "sha256": "c20bc2e0c84960a68a9512033e5374a2dbe66482731ee6b6b3f9107a74dfc947"
+        },
+        {
+          "bytes": 36770,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_44_post_curate_20260421_163150_928.json",
+          "sha256": "7b52a3e7da46f23b47719ad8548ba0710fd03e91147bd22db9d54656e3296503"
+        },
+        {
+          "bytes": 39935,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_45_gen_initial_20260421_163230_479.json",
+          "sha256": "31e605525775e1bf218f4d4f28983795fee1e5062f7b4d35a27696fc810534ac"
+        },
+        {
+          "bytes": 39973,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_45_post_curate_20260421_163355_424.json",
+          "sha256": "ddb91b8002eaf9b775a6203d5e653074bacf3a8398e6d1c03362e1967a502a51"
+        },
+        {
+          "bytes": 39130,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_46_gen_initial_20260421_163530_091.json",
+          "sha256": "ea5ab6ca95d1b3d6cf68085a5aabadffc18b72e7bd035ccdba6f0e2ede522c8b"
+        },
+        {
+          "bytes": 39579,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_46_post_curate_20260421_163639_250.json",
+          "sha256": "9d91f06cf8391c0f456c853c1ab6dc9309128a0ab051877c12fc9be338798837"
+        },
+        {
+          "bytes": 40253,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_47_gen_initial_20260421_163703_837.json",
+          "sha256": "b4c90e703fc64d6d976a5bd4d3fd8dd57cad5bc07512a50d6eecd2bc9099c6a2"
+        },
+        {
+          "bytes": 40226,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_47_post_curate_20260421_163750_873.json",
+          "sha256": "7c3e4e8793e38ba55d00e2628bc93d2678ae557ded895ea637f9dbb721f0455d"
+        },
+        {
+          "bytes": 39440,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_48_gen_initial_20260421_163809_789.json",
+          "sha256": "6ff48830db9f07b326d0ba465dbed1311034a262ddced83c0e6633bfe7392f28"
+        },
+        {
+          "bytes": 38895,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_48_post_curate_20260421_163900_308.json",
+          "sha256": "5402ba36ce9c0851e06a7ea6294ce3246b7cab341a5c67ca0068bd05de9c476e"
+        },
+        {
+          "bytes": 43401,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_49_gen_initial_20260421_163933_016.json",
+          "sha256": "8c9c91a55d68ce978162dcf3f58a0a8edaa73a09ea6ae1c763884be36bb4006f"
+        },
+        {
+          "bytes": 41907,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_49_post_curate_20260421_164046_071.json",
+          "sha256": "a64531d7859c32e15231cb58983b174c31da16a338ed3b1a5f85b0d399d72c21"
+        },
+        {
+          "bytes": 14155,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_4_gen_initial_20260421_151519_925.json",
+          "sha256": "67dcffed4e830250203e244ed5d06294a98feca05f08cac28e27b17dbc607e13"
+        },
+        {
+          "bytes": 15028,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_4_post_curate_20260421_151559_909.json",
+          "sha256": "b712598e9eafe36eb216ec606f8e0b9acf5270555c26dfaaff7d269f70a87f69"
+        },
+        {
+          "bytes": 40402,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_50_gen_initial_20260421_164112_391.json",
+          "sha256": "d95748ff98939d030a6dd7a49969ad6234324f8ce06cf644a46333ee980f2579"
+        },
+        {
+          "bytes": 42045,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_50_post_curate_20260421_164629_034.json",
+          "sha256": "bd99a90049467bb5e6708e106b819920a62fd59f397d20d3b7ca9595e0f16892"
+        },
+        {
+          "bytes": 44594,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_50_post_reflect_round_0_20260421_164207_566.json",
+          "sha256": "e7636e356308640df900fff48c9530459c8c0e6ebb1b46bcccb4398eb4972664"
+        },
+        {
+          "bytes": 45160,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_50_post_reflect_round_1_20260421_164307_675.json",
+          "sha256": "929906a9b8d37c8afb55263fa58db184e79a5c364996367318be6e6df3f80771"
+        },
+        {
+          "bytes": 44402,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_50_post_reflect_round_2_20260421_164400_954.json",
+          "sha256": "6520115147f7258533dd63251ac3f9455d979a2027a84b31d985d046339380fa"
+        },
+        {
+          "bytes": 42883,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_51_gen_initial_20260421_164649_896.json",
+          "sha256": "84f765513e3b1640b6e89222270f225c0de27fcf7ba78d7e3446967074de6922"
+        },
+        {
+          "bytes": 46332,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_51_post_curate_20260421_164846_327.json",
+          "sha256": "b5f9fd3c80ff6857eb6993a225bbe89474e02bbc11b890ac684caa109eafeae6"
+        },
+        {
+          "bytes": 47488,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_51_post_reflect_round_0_20260421_164756_802.json",
+          "sha256": "a58d007d8201067283ea583db077dd577d8e21565a63809c39f1f1116df33e17"
+        },
+        {
+          "bytes": 43104,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_52_gen_initial_20260421_164913_344.json",
+          "sha256": "740938e5c4e05e21c909e2bae00f4426df433e5de43d691e435fce6d534d40f2"
+        },
+        {
+          "bytes": 42911,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_52_post_curate_20260421_165000_865.json",
+          "sha256": "d6d52ce53b0814dc446b8a8397fafb1c98ab76829d36c7705f02fbece10650e5"
+        },
+        {
+          "bytes": 44205,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_53_gen_initial_20260421_165012_296.json",
+          "sha256": "dbd3ce472fe299b5da2e4f8e78cb1a8b5e772975c365c29352f5c72aab9964fc"
+        },
+        {
+          "bytes": 45547,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_53_post_curate_20260421_165149_055.json",
+          "sha256": "700fd874c079d0ece94ee75e38254a5e50b69803b34b66420ca22534034d1632"
+        },
+        {
+          "bytes": 49828,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_53_post_reflect_round_0_20260421_165102_767.json",
+          "sha256": "923180e229e8bf814f824262bfc852b04d2e443fc4ff12ed14a04c1ef349a926"
+        },
+        {
+          "bytes": 43898,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_54_gen_initial_20260421_165221_258.json",
+          "sha256": "763b66d330e62adb12b7680b52fa90ec9099ef4e3cc62be997a5bebf3d4ad0c9"
+        },
+        {
+          "bytes": 45220,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_54_post_curate_20260421_165336_643.json",
+          "sha256": "fc6aa4b1f8cc649f0b89b475514c63bd78cbd2deb7f8401192ea320a9486c555"
+        },
+        {
+          "bytes": 44369,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_55_gen_initial_20260421_165509_290.json",
+          "sha256": "7d92fa682cb6e8d1db8d0c4a7797fe1286ab9da70b7160c0a8c63513dbfdb49a"
+        },
+        {
+          "bytes": 44508,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_55_post_curate_20260421_165605_669.json",
+          "sha256": "9ef0357c3633e4e18827e2faea9d7ecd4ae8a3db8f3bb64222db01c25d712a38"
+        },
+        {
+          "bytes": 44752,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_56_gen_initial_20260421_165631_491.json",
+          "sha256": "b591ec5b956ed1cfc6322e83a500ac4018a6eb9b0a7223421f87d927d0251649"
+        },
+        {
+          "bytes": 44238,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_56_post_curate_20260421_165725_932.json",
+          "sha256": "98f09cfaf8079f94a0b44738d9d4f8a2767222275d8b67c9516b15c5a4804d2b"
+        },
+        {
+          "bytes": 46470,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_57_gen_initial_20260421_165801_016.json",
+          "sha256": "02a236c520aaf32217d1336beb438a13cdb343bb55f3569faa5308ecffe39829"
+        },
+        {
+          "bytes": 47076,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_57_post_curate_20260421_165909_454.json",
+          "sha256": "525270e3238cd6d5da436a62df16e40c72c891621856cb0f034a224291399748"
+        },
+        {
+          "bytes": 45736,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_58_gen_initial_20260421_165929_777.json",
+          "sha256": "e1a7bc59dda8082f804a53adc0a92e8d03488d1077f9ca132be595082a96689a"
+        },
+        {
+          "bytes": 47188,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_58_post_curate_20260421_170134_611.json",
+          "sha256": "018994d3d4d14da284f553736406208db3850f2dbc3b019393b3df48108be362"
+        },
+        {
+          "bytes": 49509,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_58_post_reflect_round_0_20260421_170030_285.json",
+          "sha256": "850babdcc2db900ada6dd685012f00e1ad06c3cfe2acdc869644298289649d1c"
+        },
+        {
+          "bytes": 46285,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_59_gen_initial_20260421_170210_265.json",
+          "sha256": "5df4f17b6d15e4ab5bb8cbddc402ffd7e49dab0f5c29f63a35151ead74d57972"
+        },
+        {
+          "bytes": 46987,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_59_post_curate_20260421_170354_842.json",
+          "sha256": "bf25be856036ebafeab2731610b4893969a503c3e3f262c15346a782ca885342"
+        },
+        {
+          "bytes": 50565,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_59_post_reflect_round_0_20260421_170304_586.json",
+          "sha256": "4a6d7bffe0a843bfd9dce661cbcdec3c8bd6598ba0acc8636e0f24d7d17e54d9"
+        },
+        {
+          "bytes": 14491,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_5_gen_initial_20260421_151611_595.json",
+          "sha256": "2ee86e69043392ff0742ad024f617ce730dd80616fc55de857aea8524380323c"
+        },
+        {
+          "bytes": 15326,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_5_post_curate_20260421_151652_353.json",
+          "sha256": "497ee04b061f8fcd2a8e2da90bcaa06ba4f5f14710553542dcb8a32c0670ba63"
+        },
+        {
+          "bytes": 46340,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_60_gen_initial_20260421_170440_438.json",
+          "sha256": "0d83f336ec34fd8ecb7b6e800b75512987c8683b16b2f84d773a15e26d7851c8"
+        },
+        {
+          "bytes": 47460,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_60_post_curate_20260421_170546_881.json",
+          "sha256": "b24c2507c02070c85e6bd0a0d90f7ce0d699efccab2cd50b187eb5792b8a42c9"
+        },
+        {
+          "bytes": 14991,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_6_gen_initial_20260421_151709_561.json",
+          "sha256": "e2e0280f90d9ba64542b60ad914bfe30e85ee9515d470a5250feeb1b8fc4695e"
+        },
+        {
+          "bytes": 15634,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_6_post_curate_20260421_151844_125.json",
+          "sha256": "f68c4447605bb237f7cb858bf626e525585a160f45d18dbba8d6ae8c8f22139b"
+        },
+        {
+          "bytes": 15293,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_7_gen_initial_20260421_151902_974.json",
+          "sha256": "edd836dbc75baa504623ebd68e6d336a108a71900bc78f6a41e5ba50564d3007"
+        },
+        {
+          "bytes": 15290,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_7_post_curate_20260421_151938_749.json",
+          "sha256": "8618e8bc07811cf06cb23c15437beac96e4b7393934fd91474901f1c62ec2c63"
+        },
+        {
+          "bytes": 15894,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_8_gen_initial_20260421_151957_644.json",
+          "sha256": "23b8fed5bed70df12497d0e77f2134609dc93e348cace6f361b35c68625f9b8f"
+        },
+        {
+          "bytes": 16180,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_8_post_curate_20260421_152053_763.json",
+          "sha256": "6da572f15f09ad3b3eae404890db2ca1a3e70d32359e006c48c40ed6c3e07265"
+        },
+        {
+          "bytes": 15933,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_9_gen_initial_20260421_152109_254.json",
+          "sha256": "8e3aea32bbc76a3d18dbb39ca0c2a4ebc080371d60d8a47cbfa9b90011c11f0f"
+        },
+        {
+          "bytes": 16510,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/generator_train_e_1_s_9_post_curate_20260421_152151_103.json",
+          "sha256": "13b67bbe6d24884d607e09f3849b8e7fc94bacb70ffb82758a716c0984e09022"
+        },
+        {
+          "bytes": 18522,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/reflector_train_e_1_s_10_reflect_on_correct_20260421_152228_765.json",
+          "sha256": "bf3372e64fe48d48492429b7cc31cb2cc87beffd12c698939997e4f4fb8d92bb"
+        },
+        {
+          "bytes": 16834,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/reflector_train_e_1_s_11_reflect_on_correct_20260421_152340_035.json",
+          "sha256": "c282bf5ba6ea3d41ea4b9751a1109f410f3ee9b47b6b260705409a20e7a98c81"
+        },
+        {
+          "bytes": 19979,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/reflector_train_e_1_s_12_round_0_20260421_152531_912.json",
+          "sha256": "fe7e43e89e3a2ef9d4526e57e8b2592cdb3a63f795a07a16fe0ddbbe9f2de8c5"
+        },
+        {
+          "bytes": 17934,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/reflector_train_e_1_s_13_reflect_on_correct_20260421_152710_615.json",
+          "sha256": "d98fab568702b475abc2ec0bf4d27fe59dc6b48a7501d173d98fbc173745d607"
+        },
+        {
+          "bytes": 15435,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/reflector_train_e_1_s_14_reflect_on_correct_20260421_152916_575.json",
+          "sha256": "31408f6da4ed409edda976206ba2c2914ab748ed67270b80da3cad2e7c15b19f"
+        },
+        {
+          "bytes": 15632,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/reflector_train_e_1_s_15_reflect_on_correct_20260421_153021_144.json",
+          "sha256": "febf69b9b4e52161c56e68ab9dff4d1b957e0622be7a645e06e0f0c355bbf6bc"
+        },
+        {
+          "bytes": 19582,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/reflector_train_e_1_s_16_round_0_20260421_153252_343.json",
+          "sha256": "ad2de4813e53935da46a87ed8cd2637d9094fcabfe42bdef1b0551e4c0a2bd4e"
+        },
+        {
+          "bytes": 15681,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/reflector_train_e_1_s_17_reflect_on_correct_20260421_153514_404.json",
+          "sha256": "2f400c2e6985d09835a51c1b950569161329093c2691cc4feda90dc94df52742"
+        },
+        {
+          "bytes": 20816,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/reflector_train_e_1_s_18_round_0_20260421_153629_408.json",
+          "sha256": "78296c560e5edbdf417c77b60a97742b8ca76dda17beea0faa29bfb4431df959"
+        },
+        {
+          "bytes": 14782,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/reflector_train_e_1_s_19_reflect_on_correct_20260421_153750_467.json",
+          "sha256": "8658c4700369d25f1b15f110e96c6051738307bd1fdc8a312fe8486ac25aa6bb"
+        },
+        {
+          "bytes": 20667,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/reflector_train_e_1_s_1_round_0_20260421_151107_273.json",
+          "sha256": "7b3e0e4334781e417cb98e6145104a031b8af62bf6a6e35ee0551734902d2ea1"
+        },
+        {
+          "bytes": 16341,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/reflector_train_e_1_s_20_reflect_on_correct_20260421_153857_482.json",
+          "sha256": "16bc0df13017c85ab4a0cd11d17a7b32c0329e293f40d529e08f6d345e7a8c84"
+        },
+        {
+          "bytes": 19907,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/reflector_train_e_1_s_21_reflect_on_correct_20260421_154011_720.json",
+          "sha256": "54ed6116e96737e1440c669bc5d4965e29c073241c57835c87d0aa1eb82cf328"
+        },
+        {
+          "bytes": 19303,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/reflector_train_e_1_s_22_round_0_20260421_154157_213.json",
+          "sha256": "6dc73354e92ccfed156e9ae60d5665cdc825c57cb3ce43d343ec0d9991349e1d"
+        },
+        {
+          "bytes": 18048,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/reflector_train_e_1_s_22_round_1_20260421_154247_438.json",
+          "sha256": "bd5df334e29ea62c7ec71dab50a2d9ad89cfb54b7bbc9f04ccaea40738c37df7"
+        },
+        {
+          "bytes": 22554,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/reflector_train_e_1_s_23_round_0_20260421_154454_058.json",
+          "sha256": "ffe3b310af81e5fc8584b97ba8fc6bc33daad87d88fedad38dcf106706ee0c2b"
+        },
+        {
+          "bytes": 21413,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/reflector_train_e_1_s_24_reflect_on_correct_20260421_154707_461.json",
+          "sha256": "bd7e5715d06f29b5dbfce87edb80154f886d60a7156162e9e4edbe30aa669888"
+        },
+        {
+          "bytes": 23792,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/reflector_train_e_1_s_25_reflect_on_correct_20260421_154848_928.json",
+          "sha256": "3fa8099efed8de856a97fb95af95bcadc17549ff6fe88f70f81a1ed4bc58dd68"
+        },
+        {
+          "bytes": 16106,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/reflector_train_e_1_s_26_reflect_on_correct_20260421_155006_372.json",
+          "sha256": "80794c2177a49015ad47fe6aca038931e34995102100a62a62f94aa851f0e49d"
+        },
+        {
+          "bytes": 20175,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/reflector_train_e_1_s_27_round_0_20260421_155307_685.json",
+          "sha256": "16087cc733676c303c8d2dcc635672be6bdeb9b4f07efbae545f319752d38fb1"
+        },
+        {
+          "bytes": 17858,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/reflector_train_e_1_s_28_reflect_on_correct_20260421_155510_148.json",
+          "sha256": "7f08b9742d7b62a9cf934dbc5e18545b32bc64d4f0ae829f809dbc9082c14f7f"
+        },
+        {
+          "bytes": 20054,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/reflector_train_e_1_s_29_reflect_on_correct_20260421_155624_334.json",
+          "sha256": "3d5e2bc226ed715fc53b51f4d8c8862828c19850fda67ea1840cc8cec65cacde"
+        },
+        {
+          "bytes": 20330,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/reflector_train_e_1_s_2_round_0_20260421_151305_175.json",
+          "sha256": "e56579176f7e91a162bb23a1cbdaf20f04bf6a249c3e1f52f1be4ad582cdab17"
+        },
+        {
+          "bytes": 20777,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/reflector_train_e_1_s_30_round_0_20260421_160031_518.json",
+          "sha256": "430c9c050ca6ea2e370155cd80a0c3e714ce5924da0c3d542f6f690d8f1c68bf"
+        },
+        {
+          "bytes": 17505,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/reflector_train_e_1_s_31_reflect_on_correct_20260421_160350_209.json",
+          "sha256": "a4174f9a67678237ee9c047e4b515e6af2915e14207b57ebf34421d3609a6065"
+        },
+        {
+          "bytes": 14843,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/reflector_train_e_1_s_32_reflect_on_correct_20260421_160506_145.json",
+          "sha256": "1ede0ef9e7f32650b94ff2dc794bcd39d09a2b12a48652cceef9147d7fae2e9b"
+        },
+        {
+          "bytes": 15321,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/reflector_train_e_1_s_33_reflect_on_correct_20260421_160601_501.json",
+          "sha256": "8b4e218c5f48958d82936c264ea8422e529425164bf3b68592c248e13b7f70df"
+        },
+        {
+          "bytes": 24127,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/reflector_train_e_1_s_34_round_0_20260421_160900_679.json",
+          "sha256": "6cd16fbfa68b7695622a9f88ea2af0b69a1b60db184e841bb982e6b49f0dc3e0"
+        },
+        {
+          "bytes": 31606,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/reflector_train_e_1_s_35_round_0_20260421_161257_195.json",
+          "sha256": "e61bf1319cdab8dba97f657f19d084ef3e60e9c9fc3a1b7444f7595b1311b6aa"
+        },
+        {
+          "bytes": 24784,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/reflector_train_e_1_s_36_round_0_20260421_161538_641.json",
+          "sha256": "745e518541709b18ff938239294f782666bff9b98e56d0b146bea3c474fb2217"
+        },
+        {
+          "bytes": 20015,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/reflector_train_e_1_s_37_round_0_20260421_161752_898.json",
+          "sha256": "d431d0dfc8a8dfd246e7b8c29435e4ace4a71025e261f5e1ab1d4f8499821a14"
+        },
+        {
+          "bytes": 20909,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/reflector_train_e_1_s_38_reflect_on_correct_20260421_162126_013.json",
+          "sha256": "8ba8576292459c25ca379300a29eeb941d8cf19f06df06c70e7277f8faf342a2"
+        },
+        {
+          "bytes": 15512,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/reflector_train_e_1_s_39_reflect_on_correct_20260421_162233_936.json",
+          "sha256": "4e5c46b175e1dd53bf5763148aec09d365db33e132f379c2a786f099c251325c"
+        },
+        {
+          "bytes": 15713,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/reflector_train_e_1_s_3_reflect_on_correct_20260421_151434_820.json",
+          "sha256": "d6e9673bdee37556b8362e559beae755b5da2a37acb09002660996be8cf42f3c"
+        },
+        {
+          "bytes": 17892,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/reflector_train_e_1_s_40_reflect_on_correct_20260421_162416_260.json",
+          "sha256": "03f6c5daa2ea412c14d3591a9e05d1b3415f70aa62fcbdb1b4df8af31c4f1e9b"
+        },
+        {
+          "bytes": 21933,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/reflector_train_e_1_s_41_reflect_on_correct_20260421_162552_626.json",
+          "sha256": "9784823e876f06a036168c6f08a4e4636d8db7b26076dade967cc6cb0395b321"
+        },
+        {
+          "bytes": 19004,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/reflector_train_e_1_s_42_round_0_20260421_162811_724.json",
+          "sha256": "9fe658462eccb2306a940ad03de84f12e5ee8a9dca1e96d478ba7c3e3768c72f"
+        },
+        {
+          "bytes": 16678,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/reflector_train_e_1_s_43_reflect_on_correct_20260421_162959_555.json",
+          "sha256": "18d896079f7bbbd9322695928e9ef476f34c8a13f8c7783c4c6de8c5463c6d34"
+        },
+        {
+          "bytes": 13734,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/reflector_train_e_1_s_44_reflect_on_correct_20260421_163117_728.json",
+          "sha256": "35f3c262ccc64b6ec7cadcf400299dfadc5f1756dbeaa1d43dbcad668163b497"
+        },
+        {
+          "bytes": 25971,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/reflector_train_e_1_s_45_reflect_on_correct_20260421_163310_369.json",
+          "sha256": "80d15103fbb9707d81518fa5c797891c964196ca0a3dee3a095e55c2baa941fe"
+        },
+        {
+          "bytes": 16331,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/reflector_train_e_1_s_46_reflect_on_correct_20260421_163547_374.json",
+          "sha256": "f61ea96bb51d530a1b0c96324da672fb1a75a2e4ec968969e85bbe3ee4e5e210"
+        },
+        {
+          "bytes": 16100,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/reflector_train_e_1_s_47_reflect_on_correct_20260421_163716_171.json",
+          "sha256": "cfe8521e52cbcede2a697765282a7fba0e034d7f551bbf974dd9e164250ce044"
+        },
+        {
+          "bytes": 16164,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/reflector_train_e_1_s_48_reflect_on_correct_20260421_163830_061.json",
+          "sha256": "f2df1044e0a4a3f224869df0f49bb5be96b769e89c031fd23f1e1474c7be3053"
+        },
+        {
+          "bytes": 24015,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/reflector_train_e_1_s_49_reflect_on_correct_20260421_164009_700.json",
+          "sha256": "17c62a569dd33d3d36c101101a82e8fa06d2a94a194cd51fea799fc7621b3718"
+        },
+        {
+          "bytes": 15614,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/reflector_train_e_1_s_4_reflect_on_correct_20260421_151531_779.json",
+          "sha256": "1629de831226176eaef4b9c4179734be0c68de0fd810a3ab5ffb5ebc2f30ab1f"
+        },
+        {
+          "bytes": 20233,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/reflector_train_e_1_s_50_round_0_20260421_164142_826.json",
+          "sha256": "fdb56492d61b120055c2a333be9bfbbca259e8236f65e7ea9f415d5244d31b61"
+        },
+        {
+          "bytes": 21356,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/reflector_train_e_1_s_50_round_1_20260421_164241_846.json",
+          "sha256": "92f637c8c1c27f84f0fbc36ee9d4f26e2c67f38ad9919ca6697a517236138988"
+        },
+        {
+          "bytes": 20581,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/reflector_train_e_1_s_50_round_2_20260421_164336_100.json",
+          "sha256": "c6829978521f56842cc7c5a2529e87f6699a39c3789edef3f9a069964deca9a5"
+        },
+        {
+          "bytes": 19026,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/reflector_train_e_1_s_51_round_0_20260421_164719_974.json",
+          "sha256": "21ee19ab6eb2d89f6c613a2a8132590f3e8242c4e7348c1974b8a40afacff268"
+        },
+        {
+          "bytes": 15869,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/reflector_train_e_1_s_52_reflect_on_correct_20260421_164928_535.json",
+          "sha256": "08f2db31fee042dace272f159dbb189b6be7701267d8fa5f8da7f325455cbd48"
+        },
+        {
+          "bytes": 21959,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/reflector_train_e_1_s_53_round_0_20260421_165051_722.json",
+          "sha256": "fe2347fc600760e68baecc1484d182222b1bc64188a3d90acc7bceb12eec1601"
+        },
+        {
+          "bytes": 19538,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/reflector_train_e_1_s_54_reflect_on_correct_20260421_165245_392.json",
+          "sha256": "b0bbfb78df24cbc041f5925d2ee1d8b29f4c9aeb2363aa254fa39f18cc05f7ff"
+        },
+        {
+          "bytes": 19159,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/reflector_train_e_1_s_55_reflect_on_correct_20260421_165528_176.json",
+          "sha256": "dcf8d35b5e18ef7ece2dbaaea6c487970d60739a5a5e1e7a98556d7c2bb729d7"
+        },
+        {
+          "bytes": 15826,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/reflector_train_e_1_s_56_reflect_on_correct_20260421_165648_533.json",
+          "sha256": "e9258dc14a358e5a8894bedbd5c6da9843348fa5757c1edbb7131eed8a980601"
+        },
+        {
+          "bytes": 22528,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/reflector_train_e_1_s_57_reflect_on_correct_20260421_165830_660.json",
+          "sha256": "b32adae3dd46e4394ecb582b9c269cf7f133529f1d68a26478a7209243857751"
+        },
+        {
+          "bytes": 17522,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/reflector_train_e_1_s_58_round_0_20260421_165953_013.json",
+          "sha256": "8eecb45545b6c210cad3305bd88081b6dede459217054f54c8dd9c897a7eabfd"
+        },
+        {
+          "bytes": 18181,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/reflector_train_e_1_s_59_round_0_20260421_170238_357.json",
+          "sha256": "a061cd74acc444fa5e53ad7f2468b0bb7cfc7782a2bbae19ba2cd422bde4a20f"
+        },
+        {
+          "bytes": 14407,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/reflector_train_e_1_s_5_reflect_on_correct_20260421_151624_926.json",
+          "sha256": "b8a130e571f45fb7016d604ed4aecdaedd23483d028a35ac530b37d30e70e370"
+        },
+        {
+          "bytes": 14733,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/reflector_train_e_1_s_60_reflect_on_correct_20260421_170451_600.json",
+          "sha256": "dc8d4d17d818a45cf29ffae83b6f35c473556ee35ad61417fcda92e3c9f2e8eb"
+        },
+        {
+          "bytes": 17604,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/reflector_train_e_1_s_6_reflect_on_correct_20260421_151726_987.json",
+          "sha256": "476251550c8e177ab30edee7d899219507a8bf329848ab8a1960c857894236e2"
+        },
+        {
+          "bytes": 14239,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/reflector_train_e_1_s_7_reflect_on_correct_20260421_151911_671.json",
+          "sha256": "c5614495f626ad2b6d57166f1532c5af6d6e56387fdcdff195310cc143475ecd"
+        },
+        {
+          "bytes": 17643,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/reflector_train_e_1_s_8_reflect_on_correct_20260421_152018_135.json",
+          "sha256": "cfd773aa8285d4a0fe17ffa21242eee739f4276087b4463050c04534e63548a2"
+        },
+        {
+          "bytes": 14620,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/detailed_llm_logs/reflector_train_e_1_s_9_reflect_on_correct_20260421_152123_381.json",
+          "sha256": "3a56fe293b02914b3ac5587aa7b55b97849e40f2c632255ac97c4a76f6cbaf05"
+        },
+        {
+          "bytes": 896154,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/telemetry/run_offline_seed-42_20260421_150728.otel.jsonl",
+          "sha256": "e6b773b2caeda85aabaecdae105fc0ce89d6c374bbef1074df97bf998dfef56a"
+        },
+        {
+          "bytes": 1527330,
+          "path": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728/telemetry/ace_offline_seed-42_20260421_150728.metrics.jsonl",
+          "sha256": "69933e48563dc1cb3d528454bf960ec951965acc9e556eab098237f2e7d65c38"
+        }
+      ],
+      "run_dir": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728"
+    }
+  ],
+  "outputs": [
+    "reports/summary.md"
+  ],
+  "parameters": {
+    "results_root": "results",
+    "runs": [
+      "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/"
+    ]
+  }
+}

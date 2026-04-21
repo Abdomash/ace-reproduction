@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "benchmark": "ace-finer",
+  "run_type": "subset",
+  "config_slug": "openrouter-deepseek-deepseek-v3-2",
+  "mode": "offline",
+  "seed": 42,
+  "timestamp": "20260421_150728",
+  "run_leaf": "offline_seed-42_20260421_150728",
+  "run_dir": "results/ace-finer/subset/openrouter-deepseek-deepseek-v3-2/offline_seed-42_20260421_150728"
+}
