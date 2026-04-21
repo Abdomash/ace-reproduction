@@ -16,7 +16,7 @@ Raw run outputs belong under `results/`. Derived reports, summaries, plots, tabl
 
 ```bash
 runners/ace/run_experiments.sh finer_subset --dry-run
-python analysis/scripts/ace/summarize_runs.py results/ace-finer/subset/openrouter-gpt-oss-20b
+python -m analysis results/ace-finer/subset/openrouter-gpt-oss-20b --benchmark finer
 python analysis/scripts/ace/aggregate_experiments.py ace-finer/subset/openrouter-gpt-oss-20b
 ```
 
