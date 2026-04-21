@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "benchmark": "ace-finer",
+  "run_type": "subset",
+  "config_slug": "openrouter-mixed-strong-reflector",
+  "runs": [
+    {
+      "run_leaf": "offline_seed-42_20260421_025609",
+      "mode": "offline",
+      "seed": 42,
+      "timestamp": "20260421_025609",
+      "run_dir": "results/ace-finer/subset/openrouter-mixed-strong-reflector/offline_seed-42_20260421_025609"
+    }
+  ]
+}
