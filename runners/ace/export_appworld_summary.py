@@ -167,6 +167,7 @@ def summarize_evaluation(run_dir: Path, dataset: str) -> dict[str, Any]:
 def compact_lm_call(task_id: str, row: dict[str, Any]) -> dict[str, Any]:
     output = row.get("output") if isinstance(row.get("output"), dict) else {}
     usage = output.get("usage") if isinstance(output.get("usage"), dict) else {}
+    prompt_details = usage.get("prompt_tokens_details") if isinstance(usage.get("prompt_tokens_details"), dict) else {}
     arguments = row.get("input") if isinstance(row.get("input"), dict) else {}
     return {
         "task_id": task_id,
@@ -188,6 +189,20 @@ def compact_lm_call(task_id: str, row: dict[str, Any]) -> dict[str, Any]:
         "total_num_tokens": row.get("total_num_tokens")
         or output.get("total_num_tokens")
         or usage.get("total_tokens"),
+        "cached_input_tokens": (
+            row.get("cached_input_tokens")
+            if row.get("cached_input_tokens") is not None
+            else output.get("cached_input_tokens")
+            if output.get("cached_input_tokens") is not None
+            else prompt_details.get("cached_tokens")
+        ),
+        "cached_output_tokens": (
+            row.get("cached_output_tokens")
+            if row.get("cached_output_tokens") is not None
+            else output.get("cached_output_tokens")
+            if output.get("cached_output_tokens") is not None
+            else prompt_details.get("cache_write_tokens")
+        ),
         "cost_usd": row.get("cost_usd") or output.get("cost_usd") or output.get("cost"),
         "cost_source": row.get("cost_source") or output.get("cost_source"),
         "prompt_length": row.get("prompt_length"),
@@ -203,6 +218,7 @@ def summarize_lm_calls(run_dir: Path, summary_dir: Path) -> dict[str, Any]:
     role_counts = Counter()
     model_counts = Counter()
     totals = Counter()
+    cache_presence = Counter()
     task_call_counts = Counter()
     parse_errors = 0
 
@@ -238,6 +254,8 @@ def summarize_lm_calls(run_dir: Path, summary_dir: Path) -> dict[str, Any]:
                 "response_num_tokens",
                 "reasoning_num_tokens",
                 "total_num_tokens",
+                "cached_input_tokens",
+                "cached_output_tokens",
                 "cost_usd",
                 "call_time",
                 "wall_time_seconds",
@@ -245,6 +263,8 @@ def summarize_lm_calls(run_dir: Path, summary_dir: Path) -> dict[str, Any]:
                 value = compact.get(key)
                 if value is None:
                     continue
+                if key in {"cached_input_tokens", "cached_output_tokens"}:
+                    cache_presence[key] += 1
                 try:
                     totals[key] += float(value)
                 except (TypeError, ValueError):
@@ -266,6 +286,8 @@ def summarize_lm_calls(run_dir: Path, summary_dir: Path) -> dict[str, Any]:
             "response_num_tokens",
             "reasoning_num_tokens",
             "total_num_tokens",
+            "cached_input_tokens",
+            "cached_output_tokens",
             "cost_usd",
             "call_time",
             "wall_time_seconds",
@@ -273,6 +295,8 @@ def summarize_lm_calls(run_dir: Path, summary_dir: Path) -> dict[str, Any]:
             value = compact.get(key)
             if value is None:
                 continue
+            if key in {"cached_input_tokens", "cached_output_tokens"}:
+                cache_presence[key] += 1
             try:
                 totals[key] += float(value)
             except (TypeError, ValueError):
@@ -280,6 +304,9 @@ def summarize_lm_calls(run_dir: Path, summary_dir: Path) -> dict[str, Any]:
 
     write_jsonl(compact_path, compact_rows)
     costs = [float(row["cost_usd"]) for row in compact_rows if row.get("cost_usd") is not None]
+    totals_dict = dict(totals)
+    for key in ("cached_input_tokens", "cached_output_tokens"):
+        totals_dict[key] = totals[key] if cache_presence[key] else None
     return {
         "call_count": len(compact_rows),
         "parse_errors": parse_errors,
@@ -287,7 +314,7 @@ def summarize_lm_calls(run_dir: Path, summary_dir: Path) -> dict[str, Any]:
         "role_counts": dict(role_counts),
         "model_counts": dict(model_counts),
         "task_call_counts": dict(task_call_counts),
-        "totals": dict(totals),
+        "totals": totals_dict,
         "zero_cost_call_count": sum(1 for cost in costs if cost == 0),
         "nonzero_cost_call_count": sum(1 for cost in costs if cost != 0),
     }
@@ -365,6 +392,7 @@ def summarize_telemetry(run_dir: Path) -> dict[str, Any]:
     span_name_counts = Counter()
     agent_counts = Counter()
     llm_totals = Counter()
+    llm_cache_presence = Counter()
     wall_time_by_agent = Counter()
 
     for path in sorted(telemetry_dir.glob("*.metrics.jsonl")):
@@ -411,6 +439,8 @@ def summarize_telemetry(run_dir: Path) -> dict[str, Any]:
                     ("gen_ai.usage.output_tokens", "response_num_tokens"),
                     ("gen_ai.usage.reasoning_tokens", "reasoning_num_tokens"),
                     ("gen_ai.usage.total_tokens", "total_num_tokens"),
+                    ("llm.usage.cached_input_tokens", "cached_input_tokens"),
+                    ("llm.usage.cached_output_tokens", "cached_output_tokens"),
                     ("llm.cost_usd", "cost_usd"),
                     ("llm.cost.usd", "cost_usd_legacy"),
                     ("llm.call_time_seconds", "call_time_seconds"),
@@ -420,6 +450,8 @@ def summarize_telemetry(run_dir: Path) -> dict[str, Any]:
                     value = attrs.get(key)
                     if value is None:
                         continue
+                    if target in {"cached_input_tokens", "cached_output_tokens"}:
+                        llm_cache_presence[target] += 1
                     try:
                         llm_totals[target] += float(value)
                     except (TypeError, ValueError):
@@ -431,6 +463,10 @@ def summarize_telemetry(run_dir: Path) -> dict[str, Any]:
                 except (TypeError, ValueError):
                     pass
 
+    llm_totals_dict = dict(llm_totals)
+    for key in ("cached_input_tokens", "cached_output_tokens"):
+        llm_totals_dict[key] = llm_totals[key] if llm_cache_presence[key] else None
+
     return {
         "metric_file_count": metric_file_count,
         "trace_file_count": trace_file_count,
@@ -438,7 +474,7 @@ def summarize_telemetry(run_dir: Path) -> dict[str, Any]:
         "span_name_counts": dict(span_name_counts),
         "agent_counts": dict(agent_counts),
         "metrics": metric_summary,
-        "llm_totals": dict(llm_totals),
+        "llm_totals": llm_totals_dict,
         "wall_time_seconds_by_agent": dict(wall_time_by_agent),
     }
 

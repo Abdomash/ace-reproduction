@@ -69,6 +69,19 @@ def _reasoning_token_count(usage) -> int:
     return _field_value(details, "reasoning_tokens", 0) or 0
 
 
+def _cache_token_counts(usage) -> Dict[str, int]:
+    if usage is None:
+        return {
+            "cached_input_tokens": 0,
+            "cached_output_tokens": 0,
+        }
+    details = _field_value(usage, "prompt_tokens_details")
+    return {
+        "cached_input_tokens": int(_field_value(details, "cached_tokens", 0) or 0),
+        "cached_output_tokens": int(_field_value(details, "cache_write_tokens", 0) or 0),
+    }
+
+
 def _message_reasoning(message) -> Optional[str]:
     for field in ("reasoning", "reasoning_content"):
         value = getattr(message, field, None)
@@ -89,6 +102,7 @@ def _response_usage_counts(response) -> Dict[str, int]:
         "response_num_tokens": completion_tokens,
         "total_num_tokens": total_tokens,
         "reasoning_num_tokens": _reasoning_token_count(usage),
+        **_cache_token_counts(usage),
     }
 
 
@@ -421,6 +435,7 @@ def timed_llm_call(
             if total_tokens is None:
                 total_tokens = prompt_tokens + completion_tokens
             reasoning_tokens = _reasoning_token_count(getattr(response, "usage", None))
+            cache_token_counts = _cache_token_counts(getattr(response, "usage", None))
             cost_usd = _response_cost_usd(response)
 
             input_bytes = len(prompt.encode("utf-8"))
@@ -434,6 +449,14 @@ def timed_llm_call(
                 span.set_attribute("gen_ai.usage.output_tokens", int(completion_tokens))
                 span.set_attribute("gen_ai.usage.reasoning_tokens", int(reasoning_tokens))
                 span.set_attribute("gen_ai.usage.total_tokens", int(total_tokens))
+                span.set_attribute(
+                    "llm.usage.cached_input_tokens",
+                    int(cache_token_counts["cached_input_tokens"]),
+                )
+                span.set_attribute(
+                    "llm.usage.cached_output_tokens",
+                    int(cache_token_counts["cached_output_tokens"]),
+                )
                 if finish_reason is not None:
                     span.set_attribute("gen_ai.response.finish_reason", str(finish_reason))
                     span.set_attribute("llm.response.finish_reason", str(finish_reason))
@@ -485,6 +508,8 @@ def timed_llm_call(
                 "response_num_tokens": completion_tokens,
                 "reasoning_num_tokens": reasoning_tokens,
                 "total_num_tokens": total_tokens,
+                "cached_input_tokens": cache_token_counts["cached_input_tokens"],
+                "cached_output_tokens": cache_token_counts["cached_output_tokens"],
                 "provider_reasoning_length": (
                     len(response_reasoning) if response_reasoning else 0
                 ),

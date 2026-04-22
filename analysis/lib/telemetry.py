@@ -67,6 +67,10 @@ def summarize_telemetry(trace_files: list[Path], metrics_files: list[Path]) -> d
     wall_time_by_agent: defaultdict[str, float] = defaultdict(float)
     llm_cost_usd = 0.0
     llm_wall_time_seconds = 0.0
+    llm_cached_input_tokens = 0
+    llm_cached_output_tokens = 0
+    llm_cached_input_tokens_seen = False
+    llm_cached_output_tokens_seen = False
     span_count = 0
     timestamps: list[int] = []
 
@@ -82,6 +86,12 @@ def summarize_telemetry(trace_files: list[Path], metrics_files: list[Path]) -> d
             wall_time_by_agent[agent] += duration_ns / 1_000_000_000
             llm_cost_usd += float(attrs.get("llm.cost_usd") or 0.0)
             llm_wall_time_seconds += float(attrs.get("llm.call_time_seconds") or 0.0)
+            if attrs.get("llm.usage.cached_input_tokens") is not None:
+                llm_cached_input_tokens_seen = True
+                llm_cached_input_tokens += int(attrs.get("llm.usage.cached_input_tokens") or 0)
+            if attrs.get("llm.usage.cached_output_tokens") is not None:
+                llm_cached_output_tokens_seen = True
+                llm_cached_output_tokens += int(attrs.get("llm.usage.cached_output_tokens") or 0)
             start_time = item.get("start_time")
             end_time = item.get("end_time")
             if start_time:
@@ -106,6 +116,12 @@ def summarize_telemetry(trace_files: list[Path], metrics_files: list[Path]) -> d
         "agent_counts": dict(agent_counts),
         "span_name_counts": dict(span_name_counts),
         "llm_cost_usd": llm_cost_usd,
+        "llm_cached_input_tokens": (
+            llm_cached_input_tokens if llm_cached_input_tokens_seen else None
+        ),
+        "llm_cached_output_tokens": (
+            llm_cached_output_tokens if llm_cached_output_tokens_seen else None
+        ),
         "llm_wall_time_seconds": llm_wall_time_seconds,
         "trace_wall_time_seconds": trace_wall_time_seconds,
         "wall_time_seconds_by_agent": dict(wall_time_by_agent),

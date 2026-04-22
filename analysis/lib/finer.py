@@ -185,6 +185,8 @@ def summarize_llm_logs(log_dir) -> dict:
                 "response_tokens": 0,
                 "reasoning_tokens": 0,
                 "total_tokens": 0,
+                "cached_input_tokens": None,
+                "cached_output_tokens": None,
                 "total_time": 0.0,
                 "cost_usd": 0.0,
                 "calls_with_cost": 0,
@@ -195,6 +197,11 @@ def summarize_llm_logs(log_dir) -> dict:
         row["response_tokens"] += int(data.get("response_num_tokens") or 0)
         row["reasoning_tokens"] += int(data.get("reasoning_num_tokens") or 0)
         row["total_tokens"] += int(data.get("total_num_tokens") or 0)
+        for field in ("cached_input_tokens", "cached_output_tokens"):
+            value = data.get(field)
+            if value is None:
+                continue
+            row[field] = int(value) + int(row[field] or 0)
         row["total_time"] += float(data.get("total_time") or data.get("call_time") or 0.0)
         if data.get("cost_usd") is not None:
             row["cost_usd"] += float(data.get("cost_usd") or 0.0)
@@ -205,6 +212,16 @@ def summarize_llm_logs(log_dir) -> dict:
         "response_tokens": sum(role["response_tokens"] for role in roles.values()),
         "reasoning_tokens": sum(role["reasoning_tokens"] for role in roles.values()),
         "total_tokens": sum(role["total_tokens"] for role in roles.values()),
+        "cached_input_tokens": (
+            sum(int(role["cached_input_tokens"] or 0) for role in roles.values())
+            if any(role["cached_input_tokens"] is not None for role in roles.values())
+            else None
+        ),
+        "cached_output_tokens": (
+            sum(int(role["cached_output_tokens"] or 0) for role in roles.values())
+            if any(role["cached_output_tokens"] is not None for role in roles.values())
+            else None
+        ),
         "total_time": sum(role["total_time"] for role in roles.values()),
         "cost_usd": sum(role["cost_usd"] for role in roles.values()),
         "calls_with_cost": sum(role["calls_with_cost"] for role in roles.values()),

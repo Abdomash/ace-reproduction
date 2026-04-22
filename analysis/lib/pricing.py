@@ -11,6 +11,8 @@ TOKEN_FIELDS = {
     "response_tokens": ("response_num_tokens", "gen_ai.usage.output_tokens"),
     "reasoning_tokens": ("reasoning_num_tokens", "gen_ai.usage.reasoning_tokens"),
     "total_tokens": ("total_num_tokens", "gen_ai.usage.total_tokens"),
+    "cached_input_tokens": ("cached_input_tokens", "llm.usage.cached_input_tokens"),
+    "cached_output_tokens": ("cached_output_tokens", "llm.usage.cached_output_tokens"),
 }
 
 
@@ -21,6 +23,8 @@ def _empty_role(cost_source: str) -> dict:
         "response_tokens": 0,
         "reasoning_tokens": 0,
         "total_tokens": 0,
+        "cached_input_tokens": None,
+        "cached_output_tokens": None,
         "cost_usd": 0.0,
         "cost_source": cost_source,
     }
@@ -32,6 +36,11 @@ def _update_role(row: dict, item: dict, field_names: dict[str, str]) -> None:
     row["response_tokens"] += int(item.get(field_names["response_tokens"]) or 0)
     row["reasoning_tokens"] += int(item.get(field_names["reasoning_tokens"]) or 0)
     row["total_tokens"] += int(item.get(field_names["total_tokens"]) or 0)
+    for field in ("cached_input_tokens", "cached_output_tokens"):
+        value = item.get(field_names[field])
+        if value is None:
+            continue
+        row[field] = int(value) + int(row[field] or 0)
     row["cost_usd"] += float(item.get(field_names["cost_usd"]) or 0.0)
 
 
@@ -43,6 +52,10 @@ def _rollup_roles(roles: dict[str, dict], cost_source: str) -> dict:
         total["response_tokens"] += role_data["response_tokens"]
         total["reasoning_tokens"] += role_data["reasoning_tokens"]
         total["total_tokens"] += role_data["total_tokens"]
+        for field in ("cached_input_tokens", "cached_output_tokens"):
+            if role_data[field] is None:
+                continue
+            total[field] = int(role_data[field]) + int(total[field] or 0)
         total["cost_usd"] += role_data["cost_usd"]
     return {"roles": dict(roles), "total": total}
 
@@ -63,6 +76,8 @@ def _from_compact_jsonl(path: Path) -> dict | None:
                 "response_tokens": "response_num_tokens",
                 "reasoning_tokens": "reasoning_num_tokens",
                 "total_tokens": "total_num_tokens",
+                "cached_input_tokens": "cached_input_tokens",
+                "cached_output_tokens": "cached_output_tokens",
                 "cost_usd": "cost_usd",
             },
         )
@@ -92,6 +107,8 @@ def _from_telemetry(trace_files: list[Path]) -> dict | None:
                     "response_num_tokens": attrs.get("gen_ai.usage.output_tokens"),
                     "reasoning_num_tokens": attrs.get("gen_ai.usage.reasoning_tokens"),
                     "total_num_tokens": attrs.get("gen_ai.usage.total_tokens"),
+                    "cached_input_tokens": attrs.get("llm.usage.cached_input_tokens"),
+                    "cached_output_tokens": attrs.get("llm.usage.cached_output_tokens"),
                     "cost_usd": attrs.get("llm.cost_usd"),
                 },
                 {
@@ -99,6 +116,8 @@ def _from_telemetry(trace_files: list[Path]) -> dict | None:
                     "response_tokens": "response_num_tokens",
                     "reasoning_tokens": "reasoning_num_tokens",
                     "total_tokens": "total_num_tokens",
+                    "cached_input_tokens": "cached_input_tokens",
+                    "cached_output_tokens": "cached_output_tokens",
                     "cost_usd": "cost_usd",
                 },
             )

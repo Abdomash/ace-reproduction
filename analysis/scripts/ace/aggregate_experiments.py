@@ -116,6 +116,8 @@ def llm_log_summary(run_dir: Path) -> dict[str, Any]:
                 "response_tokens": 0,
                 "reasoning_tokens": 0,
                 "total_tokens": 0,
+                "cached_input_tokens": None,
+                "cached_output_tokens": None,
                 "total_latency": 0.0,
                 "cost_usd": 0.0,
             },
@@ -125,6 +127,11 @@ def llm_log_summary(run_dir: Path) -> dict[str, Any]:
         row["response_tokens"] += int(data.get("response_num_tokens") or 0)
         row["reasoning_tokens"] += int(data.get("reasoning_num_tokens") or 0)
         row["total_tokens"] += int(data.get("total_num_tokens") or 0)
+        for field in ("cached_input_tokens", "cached_output_tokens"):
+            value = data.get(field)
+            if value is None:
+                continue
+            row[field] = int(value) + int(row[field] or 0)
         row["total_latency"] += float(data.get("total_time") or data.get("call_time") or 0.0)
         row["cost_usd"] += float(data.get("cost_usd") or 0.0)
     return summary
@@ -152,20 +159,40 @@ def telemetry_summary(run_dir: Path) -> dict[str, Any]:
 
 def flatten_role_metrics(prefix: str, logs: dict[str, Any], row: dict[str, Any]) -> None:
     total_cost = 0.0
+    total_cached_input_tokens = None
+    total_cached_output_tokens = None
     for role in ("generator", "reflector", "curator"):
         data = logs.get(role) or {}
         calls = int(data.get("calls") or 0)
         total_cost += float(data.get("cost_usd") or 0.0)
+        cached_input_tokens = data.get("cached_input_tokens")
+        cached_output_tokens = data.get("cached_output_tokens")
+        if cached_input_tokens is not None:
+            total_cached_input_tokens = int(cached_input_tokens) + int(total_cached_input_tokens or 0)
+        if cached_output_tokens is not None:
+            total_cached_output_tokens = int(cached_output_tokens) + int(total_cached_output_tokens or 0)
         row[f"{prefix}_{role}_calls"] = calls
         row[f"{prefix}_{role}_tokens"] = int(data.get("total_tokens") or 0)
         row[f"{prefix}_{role}_prompt_tokens"] = int(data.get("prompt_tokens") or 0)
         row[f"{prefix}_{role}_response_tokens"] = int(data.get("response_tokens") or 0)
         row[f"{prefix}_{role}_reasoning_tokens"] = int(data.get("reasoning_tokens") or 0)
+        row[f"{prefix}_{role}_cached_input_tokens"] = (
+            int(cached_input_tokens) if cached_input_tokens is not None else "-"
+        )
+        row[f"{prefix}_{role}_cached_output_tokens"] = (
+            int(cached_output_tokens) if cached_output_tokens is not None else "-"
+        )
         row[f"{prefix}_{role}_avg_latency_s"] = (
             float(data.get("total_latency") or 0.0) / calls if calls else None
         )
         row[f"{prefix}_{role}_cost_usd"] = float(data.get("cost_usd") or 0.0)
     row[f"{prefix}_total_cost_usd"] = total_cost
+    row[f"{prefix}_total_cached_input_tokens"] = (
+        total_cached_input_tokens if total_cached_input_tokens is not None else "-"
+    )
+    row[f"{prefix}_total_cached_output_tokens"] = (
+        total_cached_output_tokens if total_cached_output_tokens is not None else "-"
+    )
 
 
 def summarize_run(run_dir: Path) -> dict[str, Any]:

@@ -32,6 +32,112 @@ from telemetry import (
 )
 
 
+def _empty_llm_usage_row() -> Dict[str, Any]:
+    return {
+        "calls": 0,
+        "prompt_tokens": 0,
+        "response_tokens": 0,
+        "reasoning_tokens": 0,
+        "total_tokens": 0,
+        "cached_input_tokens": 0,
+        "cached_output_tokens": 0,
+        "total_time": 0.0,
+        "cost_usd": 0.0,
+        "calls_with_cost": 0,
+    }
+
+
+def _summarize_detailed_llm_logs(log_dir: str) -> Dict[str, Any]:
+    roles: Dict[str, Dict[str, Any]] = {}
+    if not log_dir or not os.path.isdir(log_dir):
+        empty_total = _empty_llm_usage_row()
+        return {
+            "roles": {},
+            "total": empty_total,
+            "costs": {
+                "roles": {},
+                "total": {
+                    key: empty_total[key]
+                    for key in (
+                        "calls",
+                        "prompt_tokens",
+                        "response_tokens",
+                        "reasoning_tokens",
+                        "total_tokens",
+                        "cached_input_tokens",
+                        "cached_output_tokens",
+                        "cost_usd",
+                    )
+                },
+            },
+        }
+
+    for filename in sorted(os.listdir(log_dir)):
+        if not filename.endswith(".json"):
+            continue
+        path = os.path.join(log_dir, filename)
+        try:
+            with open(path, "r", encoding="utf-8") as f:
+                data = json.load(f)
+        except Exception:
+            continue
+        if not isinstance(data, dict):
+            continue
+        role = str(data.get("role") or "unknown")
+        row = roles.setdefault(role, _empty_llm_usage_row())
+        row["calls"] += 1
+        row["prompt_tokens"] += int(data.get("prompt_num_tokens") or 0)
+        row["response_tokens"] += int(data.get("response_num_tokens") or 0)
+        row["reasoning_tokens"] += int(data.get("reasoning_num_tokens") or 0)
+        row["total_tokens"] += int(data.get("total_num_tokens") or 0)
+        row["cached_input_tokens"] += int(data.get("cached_input_tokens") or 0)
+        row["cached_output_tokens"] += int(data.get("cached_output_tokens") or 0)
+        row["total_time"] += float(data.get("total_time") or data.get("call_time") or 0.0)
+        if data.get("cost_usd") is not None:
+            row["cost_usd"] += float(data.get("cost_usd") or 0.0)
+            row["calls_with_cost"] += 1
+
+    total = _empty_llm_usage_row()
+    for row in roles.values():
+        total["calls"] += row["calls"]
+        total["prompt_tokens"] += row["prompt_tokens"]
+        total["response_tokens"] += row["response_tokens"]
+        total["reasoning_tokens"] += row["reasoning_tokens"]
+        total["total_tokens"] += row["total_tokens"]
+        total["cached_input_tokens"] += row["cached_input_tokens"]
+        total["cached_output_tokens"] += row["cached_output_tokens"]
+        total["total_time"] += row["total_time"]
+        total["cost_usd"] += row["cost_usd"]
+        total["calls_with_cost"] += row["calls_with_cost"]
+
+    costs = {
+        "roles": {
+            role: {
+                "calls": row["calls"],
+                "prompt_tokens": row["prompt_tokens"],
+                "response_tokens": row["response_tokens"],
+                "reasoning_tokens": row["reasoning_tokens"],
+                "total_tokens": row["total_tokens"],
+                "cached_input_tokens": row["cached_input_tokens"],
+                "cached_output_tokens": row["cached_output_tokens"],
+                "cost_usd": row["cost_usd"],
+            }
+            for role, row in roles.items()
+        },
+        "total": {
+            "calls": total["calls"],
+            "prompt_tokens": total["prompt_tokens"],
+            "response_tokens": total["response_tokens"],
+            "reasoning_tokens": total["reasoning_tokens"],
+            "total_tokens": total["total_tokens"],
+            "cached_input_tokens": total["cached_input_tokens"],
+            "cached_output_tokens": total["cached_output_tokens"],
+            "cost_usd": total["cost_usd"],
+        },
+    }
+    return {"roles": roles, "total": total, "costs": costs}
+
+
 class ACE:
     """
     Main ACE system orchestrator.
@@ -548,12 +654,18 @@ class ACE:
             set_telemetry_runtime(None)
 
         # Save consolidated results
+        llm_usage = _summarize_detailed_llm_logs(log_dir)
         final_results_path = os.path.join(save_path, "final_results.json")
         with open(final_results_path, "w") as f:
             json.dump(
                 {
                     "run_id": run_id,
                     "telemetry": telemetry_metadata,
+                    "llm_usage": {
+                        "roles": llm_usage["roles"],
+                        "total": llm_usage["total"],
+                    },
+                    "costs": llm_usage["costs"],
                     "results": results,
                     **results,
                 },

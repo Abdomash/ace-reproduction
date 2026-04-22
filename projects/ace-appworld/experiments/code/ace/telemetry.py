@@ -308,12 +308,15 @@ def record_llm_response(span: Any, arguments: dict[str, Any], response: dict[str
         prompt_tokens = int(usage.get("prompt_tokens") or usage.get("input_tokens") or 0)
         completion_tokens = int(usage.get("completion_tokens") or usage.get("output_tokens") or 0)
         details = usage.get("completion_tokens_details") or {}
+        prompt_details = usage.get("prompt_tokens_details") or {}
         reasoning_tokens = int(
             details.get("reasoning_tokens")
             or usage.get("reasoning_tokens")
             or usage.get("internal_reasoning_tokens")
             or 0
         )
+        cached_input_tokens = int(prompt_details.get("cached_tokens") or 0)
+        cached_output_tokens = int(prompt_details.get("cache_write_tokens") or 0)
         total_tokens = usage.get("total_tokens")
         if total_tokens is None:
             total_tokens = prompt_tokens + completion_tokens
@@ -321,6 +324,8 @@ def record_llm_response(span: Any, arguments: dict[str, Any], response: dict[str
         span.set_attribute("gen_ai.usage.output_tokens", completion_tokens)
         span.set_attribute("gen_ai.usage.reasoning_tokens", reasoning_tokens)
         span.set_attribute("gen_ai.usage.total_tokens", int(total_tokens))
+        span.set_attribute("llm.usage.cached_input_tokens", cached_input_tokens)
+        span.set_attribute("llm.usage.cached_output_tokens", cached_output_tokens)
     if "prompt_num_tokens" in response:
         span.set_attribute("gen_ai.usage.input_tokens", int(response.get("prompt_num_tokens") or 0))
         span.set_attribute(
@@ -330,6 +335,12 @@ def record_llm_response(span: Any, arguments: dict[str, Any], response: dict[str
             "gen_ai.usage.reasoning_tokens", int(response.get("reasoning_num_tokens") or 0)
         )
         span.set_attribute("gen_ai.usage.total_tokens", int(response.get("total_num_tokens") or 0))
+        span.set_attribute(
+            "llm.usage.cached_input_tokens", int(response.get("cached_input_tokens") or 0)
+        )
+        span.set_attribute(
+            "llm.usage.cached_output_tokens", int(response.get("cached_output_tokens") or 0)
+        )
     if "cost_usd" in response:
         span.set_attribute("llm.cost_usd", float(response.get("cost_usd") or 0.0))
         span.set_attribute("llm.cost.usd", float(response.get("cost_usd") or 0.0))

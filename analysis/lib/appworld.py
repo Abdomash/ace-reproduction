@@ -52,6 +52,14 @@ def summarize_run(run) -> dict:
         telemetry["agent_count"] = len(telemetry_summary.get("agent_counts") or {})
     if telemetry.get("llm_wall_time_seconds") in (None, 0):
         telemetry["llm_wall_time_seconds"] = (telemetry_summary.get("llm_totals") or {}).get("wall_time_seconds")
+    if telemetry.get("llm_cached_input_tokens") is None:
+        telemetry["llm_cached_input_tokens"] = (telemetry_summary.get("llm_totals") or {}).get(
+            "cached_input_tokens"
+        )
+    if telemetry.get("llm_cached_output_tokens") is None:
+        telemetry["llm_cached_output_tokens"] = (telemetry_summary.get("llm_totals") or {}).get(
+            "cached_output_tokens"
+        )
     if telemetry.get("trace_wall_time_seconds") in (None, 0):
         telemetry["trace_wall_time_seconds"] = max(
             (telemetry_summary.get("wall_time_seconds_by_agent") or {}).values(),

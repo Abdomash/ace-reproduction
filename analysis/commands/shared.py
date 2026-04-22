@@ -122,6 +122,12 @@ def metric_value(value, unit: str | None) -> str:
     return str(value)
 
 
+def scalar(value) -> str:
+    if value is None:
+        return "-"
+    return str(value)
+
+
 def count_pair(numerator, denominator) -> str:
     if numerator is None or denominator is None:
         return "-"
@@ -148,7 +154,10 @@ def _render_table(rows: list[dict]) -> list[str]:
     widths = {header: len(header) for header in headers}
     rendered_rows = []
     for row in rows:
-        rendered = {header: str(row.get(header, "")) for header in headers}
+        rendered = {
+            header: ("-" if row.get(header) is None else str(row.get(header, "")))
+            for header in headers
+        }
         rendered_rows.append(rendered)
         for header, value in rendered.items():
             widths[header] = max(widths[header], len(value))
@@ -289,7 +298,9 @@ def render_finer_report(run, payload: dict) -> str:
         f"  correct_tags:         {count_pair(initial.get('correct_tags'), initial.get('total_tags'))} -> {count_pair(final.get('correct_tags'), final.get('total_tags'))}",
         f"  best_validation:      {pct(summary.get('best_validation_accuracy'))}",
         f"  total_cost:           {money(total_cost.get('cost_usd'))}",
-        f"  total_tokens:         {total_cost.get('total_tokens') or 0}",
+        f"  total_tokens:         {scalar(total_cost.get('total_tokens'))}",
+        f"  cached_input_tokens:  {scalar(total_cost.get('cached_input_tokens'))}",
+        f"  cached_output_tokens: {scalar(total_cost.get('cached_output_tokens'))}",
         f"  elapsed_time:         {(telemetry.get('trace_wall_time_seconds') or 0):.2f}s",
         "",
         "Accuracy breakdown:",
@@ -350,6 +361,8 @@ def render_finer_report(run, payload: dict) -> str:
                     "calls": row.get("calls"),
                     "cost": money(row.get("cost_usd")),
                     "tokens": row.get("total_tokens"),
+                    "cached_in": row.get("cached_input_tokens"),
+                    "cached_out": row.get("cached_output_tokens"),
                     "avg_time": f"{((llm_usage.get('roles', {}).get(role, {}).get('total_time') or 0.0) / (row.get('calls') or 1)):.2f}s",
                 }
             )
@@ -359,6 +372,8 @@ def render_finer_report(run, payload: dict) -> str:
                 "calls": total_cost.get("calls"),
                 "cost": money(total_cost.get("cost_usd")),
                 "tokens": total_cost.get("total_tokens"),
+                "cached_in": total_cost.get("cached_input_tokens"),
+                "cached_out": total_cost.get("cached_output_tokens"),
                 "avg_time": f"{((llm_usage.get('total', {}).get('total_time') or 0.0) / (llm_usage.get('total', {}).get('calls') or 1)):.2f}s",
             }
         )
@@ -424,7 +439,9 @@ def render_appworld_report(run, payload: dict) -> str:
         f"  task_goal_completion:     {pct(summary.get('task_goal_completion'))}",
         f"  scenario_goal_completion: {pct(summary.get('scenario_goal_completion'))}",
         f"  total_cost:               {money(total_cost.get('cost_usd'))}",
-        f"  total_tokens:             {total_cost.get('total_tokens') or 0}",
+        f"  total_tokens:             {scalar(total_cost.get('total_tokens'))}",
+        f"  cached_input_tokens:      {scalar(total_cost.get('cached_input_tokens'))}",
+        f"  cached_output_tokens:     {scalar(total_cost.get('cached_output_tokens'))}",
         f"  elapsed_time:             {(telemetry.get('trace_wall_time_seconds') or 0):.2f}s",
         "",
         "Evaluation breakdown:",
@@ -492,7 +509,9 @@ def render_comparison_report(runs, payloads: list[dict]) -> str:
             row = {
                 "run": _run_label(run),
                 "total_cost": money(total_cost.get("cost_usd")),
-                "total_tokens": total_cost.get("total_tokens") or 0,
+                "total_tokens": scalar(total_cost.get("total_tokens")),
+                "cached_in": scalar(total_cost.get("cached_input_tokens")),
+                "cached_out": scalar(total_cost.get("cached_output_tokens")),
                 "avg_time": f"{((llm_usage.get('total', {}).get('total_time') or 0.0) / (llm_usage.get('total', {}).get('calls') or 1)):.2f}s",
             }
             for role in role_order:
@@ -603,7 +622,9 @@ def render_comparison_report(runs, payloads: list[dict]) -> str:
                 "scenario_goal": pct(summary.get("scenario_goal_completion")),
                 "failures": summary.get("failure_count"),
                 "cost": money(total_cost.get("cost_usd")),
-                "tokens": total_cost.get("total_tokens") or 0,
+                "tokens": scalar(total_cost.get("total_tokens")),
+                "cached_in": scalar(total_cost.get("cached_input_tokens")),
+                "cached_out": scalar(total_cost.get("cached_output_tokens")),
                 "cpu_avg": metric_value(_metric_stat(telemetry, "process.cpu.usage", "avg"), _metric_unit(telemetry, "process.cpu.usage")),
                 "mem_max": bytes_human(_metric_stat(telemetry, "process.memory.usage_bytes", "max")),
             }

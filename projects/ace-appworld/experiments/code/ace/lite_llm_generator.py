@@ -91,6 +91,7 @@ def _safe_float(value: Any) -> float | None:
 def _usage_counts(response: dict[str, Any]) -> dict[str, int]:
     usage = response.get("usage") if isinstance(response, dict) else None
     details = _field_value(usage, "completion_tokens_details") or {}
+    prompt_details = _field_value(usage, "prompt_tokens_details") or {}
     prompt_tokens = _safe_int(
         _field_value(usage, "prompt_tokens", _field_value(usage, "input_tokens", 0))
     )
@@ -118,6 +119,10 @@ def _usage_counts(response: dict[str, Any]) -> dict[str, int]:
         "response_num_tokens": completion_tokens,
         "reasoning_num_tokens": reasoning_tokens,
         "total_num_tokens": _safe_int(total_tokens),
+        "cached_input_tokens": _safe_int(_field_value(prompt_details, "cached_tokens", 0)),
+        "cached_output_tokens": _safe_int(
+            _field_value(prompt_details, "cache_write_tokens", 0)
+        ),
     }
 
 
@@ -538,6 +543,8 @@ class LiteLLMGenerator:
             "response_num_tokens": response.get("response_num_tokens", 0),
             "reasoning_num_tokens": response.get("reasoning_num_tokens", 0),
             "total_num_tokens": response.get("total_num_tokens", 0),
+            "cached_input_tokens": response.get("cached_input_tokens", 0),
+            "cached_output_tokens": response.get("cached_output_tokens", 0),
             "cost_usd": response.get("cost_usd"),
             "cost_source": response.get("cost_source", "unknown"),
             "input_cost_per_token": response.get("input_cost_per_token"),
