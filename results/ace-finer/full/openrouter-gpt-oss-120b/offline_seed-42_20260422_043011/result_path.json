@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "benchmark": "ace-finer",
+  "run_type": "full",
+  "config_slug": "openrouter-gpt-oss-120b",
+  "mode": "offline",
+  "seed": 42,
+  "timestamp": "20260422_043011",
+  "run_leaf": "offline_seed-42_20260422_043011",
+  "run_dir": "results/ace-finer/full/openrouter-gpt-oss-120b/offline_seed-42_20260422_043011"
+}
