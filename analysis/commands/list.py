@@ -12,6 +12,8 @@ def run(args):
             "size": run.run_type,
             "mode": run.mode,
             "config": run.config_slug,
+            "sample": run.sample_id,
+            "tier_config": run.tier_config_id,
             "run_id": run.run_leaf,
             "timestamp": format_timestamp(run.timestamp) or run.timestamp,
             "status": run.status,

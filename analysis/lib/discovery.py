@@ -5,6 +5,7 @@ from pathlib import Path
 
 from .common import RESULTS_ROOT, extract_timestamp, load_json, normalize_benchmark, repo_relative
 from .selectors import SelectorSet
+from runners.tiering import tier_metadata_for_models
 
 
 @dataclass(frozen=True)
@@ -26,6 +27,14 @@ class RunRecord:
     current_stage: str | None
     last_completed_stage: str | None
     active_runtime_seconds: float | None
+    campaign_id: str | None
+    sample_id: str | None
+    config_id: str | None
+    generator_tier: str | None
+    reflector_tier: str | None
+    curator_tier: str | None
+    tier_config_id: str | None
+    tier_classification_source: str | None
 
     @property
     def repo_relative_path(self) -> str:
@@ -52,6 +61,12 @@ def _finer_run_records() -> list[RunRecord]:
         run_config = load_json(run_dir / "run_config.json") or {}
         config = run_config.get("config") or {}
         run_state = load_json(run_dir / "run_state.json") or {}
+        models = {
+            "generator": run_config.get("generator_model") or config.get("generator_model"),
+            "reflector": run_config.get("reflector_model") or config.get("reflector_model"),
+            "curator": run_config.get("curator_model") or config.get("curator_model"),
+        }
+        tier_metadata = tier_metadata_for_models(models)
         benchmark_raw = identity.get("benchmark") or config.get("benchmark") or "ace-finer"
         config_dir = run_dir.parent
         runs.append(
@@ -73,6 +88,17 @@ def _finer_run_records() -> list[RunRecord]:
                 current_stage=run_state.get("current_stage") or identity.get("current_stage"),
                 last_completed_stage=run_state.get("last_completed_stage") or identity.get("last_completed_stage"),
                 active_runtime_seconds=run_state.get("active_runtime_seconds", identity.get("active_runtime_seconds")),
+                campaign_id=config.get("campaign_id") or identity.get("campaign_id"),
+                sample_id=config.get("sample_id") or identity.get("sample_id"),
+                config_id=config.get("config_id") or identity.get("config_id"),
+                generator_tier=(tier_metadata.get("role_tiers") or {}).get("generator"),
+                reflector_tier=(tier_metadata.get("role_tiers") or {}).get("reflector"),
+                curator_tier=(tier_metadata.get("role_tiers") or {}).get("curator"),
+                tier_config_id=tier_metadata.get("tier_config_id"),
+                tier_classification_source=",".join(
+                    f"{role}:{source}"
+                    for role, source in sorted((tier_metadata.get("classification_sources") or {}).items())
+                ),
             )
         )
     return runs
@@ -92,6 +118,24 @@ def _appworld_run_records() -> list[RunRecord]:
         config_slug = parts[2] if len(parts) >= 3 else None
         run_summary = load_json(summary_file) or {}
         run_state = load_json(run_dir / "run_state.json") or {}
+        run_config = load_json(run_dir / "run_config.json") or {}
+        llm_summary = load_json(run_dir / "summary" / "llm_summary.json") or {}
+        models_payload = run_summary.get("models") or run_config.get("models") or {}
+        if not models_payload:
+            model_counts = llm_summary.get("model_counts") or {}
+            if len(model_counts) == 1:
+                only_model = next(iter(model_counts))
+                models_payload = {
+                    "generator": {"model": only_model},
+                    "reflector": {"model": only_model},
+                    "curator": {"model": only_model},
+                }
+        models = {
+            "generator": ((models_payload.get("generator") or {}).get("model") if isinstance(models_payload.get("generator"), dict) else None),
+            "reflector": ((models_payload.get("reflector") or {}).get("model") if isinstance(models_payload.get("reflector"), dict) else None),
+            "curator": ((models_payload.get("curator") or {}).get("model") if isinstance(models_payload.get("curator"), dict) else None),
+        }
+        tier_metadata = tier_metadata_for_models(models)
         runs.append(
             RunRecord(
                 path=run_dir,
@@ -100,7 +144,7 @@ def _appworld_run_records() -> list[RunRecord]:
                 run_type=run_type,
                 config_slug=config_slug,
                 run_leaf=run_dir.name,
-                seed=None,
+                seed=run_summary.get("seed") or run_config.get("seed"),
                 timestamp=extract_timestamp(run_dir.name),
                 mode=run_summary.get("mode"),
                 run_group_path=(run_dir.parent / "run_group.json") if (run_dir.parent / "run_group.json").exists() else None,
@@ -111,6 +155,17 @@ def _appworld_run_records() -> list[RunRecord]:
                 current_stage=run_state.get("current_stage") or run_summary.get("current_stage"),
                 last_completed_stage=run_state.get("last_completed_stage") or run_summary.get("last_completed_stage"),
                 active_runtime_seconds=run_state.get("active_runtime_seconds", run_summary.get("active_runtime_seconds")),
+                campaign_id=run_summary.get("campaign_id") or run_config.get("campaign_id"),
+                sample_id=run_summary.get("sample_id") or run_config.get("sample_id"),
+                config_id=run_summary.get("config_id") or run_config.get("config_id"),
+                generator_tier=(tier_metadata.get("role_tiers") or {}).get("generator"),
+                reflector_tier=(tier_metadata.get("role_tiers") or {}).get("reflector"),
+                curator_tier=(tier_metadata.get("role_tiers") or {}).get("curator"),
+                tier_config_id=tier_metadata.get("tier_config_id"),
+                tier_classification_source=",".join(
+                    f"{role}:{source}"
+                    for role, source in sorted((tier_metadata.get("classification_sources") or {}).items())
+                ),
             )
         )
     return runs

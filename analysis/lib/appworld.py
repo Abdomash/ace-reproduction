@@ -3,6 +3,7 @@ from __future__ import annotations
 from .common import load_json
 from .pricing import summarize_costs
 from .telemetry import summarize_telemetry
+from runners.tiering import tier_metadata_for_models
 
 
 def _difficulty_rate(difficulty: dict | None) -> float | None:
@@ -38,6 +39,41 @@ def summarize_run(run) -> dict:
     )
     difficulty = evaluation_summary.get("difficulty") or ((stages.get("eval-normal") or {}).get("difficulty") or {})
     models_display = ", ".join(sorted((llm_summary.get("model_counts") or {}).keys()))
+    resolved_models = run_summary.get("resolved_models") or {}
+    run_config_models = run_summary.get("models") or {}
+    if not resolved_models and not run_config_models:
+        model_counts = llm_summary.get("model_counts") or {}
+        if len(model_counts) == 1:
+            only_model = next(iter(model_counts))
+            run_config_models = {
+                "generator": {"model": only_model},
+                "reflector": {"model": only_model},
+                "curator": {"model": only_model},
+            }
+    models = {
+        "generator": (
+            (resolved_models.get("generator") or {}).get("model")
+            if isinstance(resolved_models.get("generator"), dict)
+            else (run_config_models.get("generator") or {}).get("model")
+            if isinstance(run_config_models.get("generator"), dict)
+            else None
+        ),
+        "reflector": (
+            (resolved_models.get("reflector") or {}).get("model")
+            if isinstance(resolved_models.get("reflector"), dict)
+            else (run_config_models.get("reflector") or {}).get("model")
+            if isinstance(run_config_models.get("reflector"), dict)
+            else None
+        ),
+        "curator": (
+            (resolved_models.get("curator") or {}).get("model")
+            if isinstance(resolved_models.get("curator"), dict)
+            else (run_config_models.get("curator") or {}).get("model")
+            if isinstance(run_config_models.get("curator"), dict)
+            else None
+        ),
+    }
+    tier_metadata = tier_metadata_for_models(models)
     summary = {
         "dataset": run_summary.get("dataset") or run_summary.get("split"),
         "task_goal_completion": aggregate.get("task_goal_completion"),
@@ -57,6 +93,14 @@ def summarize_run(run) -> dict:
         "active_runtime_seconds": run_summary.get("active_runtime_seconds"),
         "current_stage": run_summary.get("current_stage"),
         "last_completed_stage": run_summary.get("last_completed_stage"),
+        "campaign_id": run_summary.get("campaign_id"),
+        "sample_id": run_summary.get("sample_id"),
+        "config_id": run_summary.get("config_id"),
+        "generator_tier": (tier_metadata.get("role_tiers") or {}).get("generator"),
+        "reflector_tier": (tier_metadata.get("role_tiers") or {}).get("reflector"),
+        "curator_tier": (tier_metadata.get("role_tiers") or {}).get("curator"),
+        "tier_config_id": tier_metadata.get("tier_config_id"),
+        "tier_classification_source": tier_metadata.get("classification_sources"),
     }
     telemetry = summarize_telemetry(trace_files, metrics_files)
     if telemetry.get("span_count") in (None, 0):
@@ -89,5 +133,6 @@ def summarize_run(run) -> dict:
         "api": api_summary,
         "llm": llm_summary,
         "run": run_summary,
+        "resolved_models": models,
         "stages": stages,
     }

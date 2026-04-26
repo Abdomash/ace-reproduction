@@ -2,6 +2,24 @@
 
 This file records assumptions and deviations encountered during implementation.
 
+## 2026-04-26
+
+- Added a new canonical representative-campaign launcher at `python -m runner`.
+- Implementation note: the launcher logic now lives under the existing
+  `runners/` directory, with only a thin top-level `runner.py` shim for
+  the command name.
+- Assumption: the new representative matrix is a pre-reproduction harness, not the final paper-faithful full ACE benchmark reproduction.
+- Assumption: tier names are cost-tier labels only.
+  - `cheap = openrouter / openai/gpt-oss-120b`
+  - `expensive = openrouter / deepseek/deepseek-v3.2`
+- Historical compatibility exception: `openai/gpt-oss-120b:nitro` must be treated as `expensive` in analysis even though non-`nitro` GPT-family models are treated as `cheap`.
+- Historical compatibility rule: MiniMax-family and DeepSeek-family models are treated as `expensive`.
+- FiNER representative samples are explicit checked-in manifests with disjoint seeded coverage and selected indices stored directly in the sample files.
+- AppWorld representative samples keep full official `train` for adaptation and subset only official eval splits by whole scenario.
+- Legacy shell presets were kept in place for older workflows; the Python
+  runner under `runners/` is the source of truth for the representative
+  subset matrix.
+
 ## 2026-04-04
 
 - Assumption: `NOTES.md` did not exist in the repository root, so it was created to satisfy the request to track implementation assumptions.

@@ -8,6 +8,7 @@ import os
 import json
 import argparse
 import random
+from pathlib import Path
 from .data_processor import DataProcessor
 
 from ace import ACE
@@ -242,6 +243,18 @@ def parse_args():
         action="store_true",
         help="Shuffle each split deterministically before applying offset/limit",
     )
+    parser.add_argument(
+        "--sample_manifest_path",
+        type=str,
+        default=None,
+        help="Optional JSON manifest describing explicit selected indices per split.",
+    )
+    parser.add_argument(
+        "--run_metadata_json",
+        type=str,
+        default=None,
+        help="Optional JSON object of extra run metadata to persist into run_config.json.",
+    )
 
     return parser.parse_args()
 
@@ -352,6 +365,29 @@ def slice_samples(samples, split_name, limit, offset, shuffle_samples, sample_se
 
 
 def apply_sample_slicing(args, train_samples, val_samples, test_samples):
+    if args.sample_manifest_path:
+        manifest = load_sample_manifest(args.sample_manifest_path)
+        train_samples, train_meta = select_manifest_samples(train_samples, "train", manifest)
+        val_samples, val_meta = select_manifest_samples(val_samples, "val", manifest)
+        test_samples, test_meta = select_manifest_samples(test_samples, "test", manifest)
+        metadata = {
+            "mode": "manifest",
+            "manifest_path": str(Path(args.sample_manifest_path).resolve()),
+            "manifest_sample_id": manifest.get("sample_id"),
+            "manifest_sampling_method_version": manifest.get("sampling_method_version"),
+            "train": train_meta,
+            "val": val_meta,
+            "test": test_meta,
+        }
+        print("Sample slicing:")
+        for split, meta in (("train", train_meta), ("val", val_meta), ("test", test_meta)):
+            if meta:
+                print(
+                    f"  {split}: {meta['selected_count']}/{meta['original_count']} "
+                    f"(manifest sample_id={manifest.get('sample_id')})"
+                )
+        return train_samples, val_samples, test_samples, metadata
+
     train_samples, train_meta = slice_samples(
         train_samples,
         "train",
@@ -389,8 +425,49 @@ def apply_sample_slicing(args, train_samples, val_samples, test_samples):
                     f"  {split}: {meta['selected_count']}/{meta['original_count']} "
                     f"(offset={meta['offset']}, limit={meta['limit']}, "
                     f"shuffle={meta['shuffle_samples']})"
-                )
+    )
     return train_samples, val_samples, test_samples, metadata
+
+
+def load_sample_manifest(path: str) -> dict:
+    with open(path, "r", encoding="utf-8") as f:
+        manifest = json.load(f)
+    if not isinstance(manifest, dict):
+        raise ValueError(f"Sample manifest must be a JSON object: {path}")
+    manifest["manifest_path"] = str(Path(path).resolve())
+    return manifest
+
+
+def select_manifest_samples(samples, split_name: str, manifest: dict):
+    if samples is None:
+        return None, None
+    splits = manifest.get("splits") or {}
+    split_manifest = splits.get(split_name) or {}
+    selected_indices = split_manifest.get("selected_indices")
+    if selected_indices is None:
+        raise ValueError(
+            f"Sample manifest `{manifest.get('sample_id')}` is missing selected_indices for split `{split_name}`."
+        )
+    original_count = len(samples)
+    invalid = [idx for idx in selected_indices if int(idx) < 0 or int(idx) >= original_count]
+    if invalid:
+        raise ValueError(
+            f"Sample manifest `{manifest.get('sample_id')}` contains out-of-range indices for split `{split_name}`: {invalid[:10]}"
+        )
+    normalized_indices = [int(idx) for idx in selected_indices]
+    selected_samples = [samples[idx] for idx in normalized_indices]
+    metadata = {
+        "split": split_name,
+        "original_count": original_count,
+        "selected_count": len(selected_samples),
+        "selected_indices": normalized_indices,
+        "sample_seed": manifest.get("sampling_seed"),
+        "source_files": manifest.get("source_files"),
+        "selection_source": "manifest",
+        "manifest_sample_id": manifest.get("sample_id"),
+        "manifest_path": manifest.get("manifest_path"),
+    }
+    return selected_samples, metadata
 
 
 def load_initial_playbook(path):
@@ -420,6 +497,12 @@ def main():
     train_samples, val_samples, test_samples, data_processor = preprocess_data(
         args.task_name, task_config[args.task_name], args.mode
     )
+    if args.run_metadata_json:
+        run_metadata = json.loads(args.run_metadata_json)
+        if not isinstance(run_metadata, dict):
+            raise ValueError("--run_metadata_json must decode to a JSON object")
+    else:
+        run_metadata = {}
     train_samples, val_samples, test_samples, slicing_metadata = apply_sample_slicing(
         args, train_samples, val_samples, test_samples
     )
@@ -475,12 +558,14 @@ def main():
         "reflector_model": args.reflector_model,
         "curator_model": args.curator_model,
         "sample_slicing": slicing_metadata,
+        "sample_manifest_path": str(Path(args.sample_manifest_path).resolve()) if args.sample_manifest_path else None,
         "resume_from": args.resume_from,
         "checkpoint_enabled": args.checkpoint_enabled,
         "resume_enabled": bool(args.checkpoint_enabled or args.resume_from),
         "stop_after_stage": args.stop_after_stage,
         "stop_after_step": args.stop_after_step,
     }
+    config.update(run_metadata)
 
     config["telemetry_enabled"] = args.telemetry_enabled
     if args.telemetry_metrics_interval_seconds is not None:

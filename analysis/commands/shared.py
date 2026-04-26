@@ -74,6 +74,14 @@ def run_rows(runs):
             "current_stage": run.current_stage,
             "last_completed_stage": run.last_completed_stage,
             "active_runtime_seconds": run.active_runtime_seconds,
+            "campaign_id": run.campaign_id,
+            "sample_id": run.sample_id,
+            "config_id": run.config_id,
+            "generator_tier": run.generator_tier,
+            "reflector_tier": run.reflector_tier,
+            "curator_tier": run.curator_tier,
+            "tier_config_id": run.tier_config_id,
+            "tier_classification_source": run.tier_classification_source,
             "path": run.repo_relative_path,
         }
         for run in runs

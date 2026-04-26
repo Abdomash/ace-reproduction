@@ -58,6 +58,11 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--stop-after-task", type=int, default=None)
     parser.add_argument("--checkpoint-every-task", type=int, default=1)
     parser.add_argument("--test-workers", type=int, default=1)
+    parser.add_argument("--enabled-stages", default=None)
+    parser.add_argument("--adapt-task-manifest", type=Path, default=None)
+    parser.add_argument("--eval-normal-task-manifest", type=Path, default=None)
+    parser.add_argument("--eval-challenge-task-manifest", type=Path, default=None)
+    parser.add_argument("--run-metadata-json", type=str, default=None)
     return parser.parse_args()
 
 
@@ -121,6 +126,7 @@ def stage_specs(args: argparse.Namespace, run_dir: Path) -> list[dict[str, Any]]
             "agent_type": "ace_adaptation_react",
             "initial_playbook_file_path": str(args.initial_playbook_path),
             "trained_playbook_file_path": str(adapted_playbook),
+            "external_task_manifest": args.adapt_task_manifest,
         },
         {
             "name": "eval-normal",
@@ -128,6 +134,7 @@ def stage_specs(args: argparse.Namespace, run_dir: Path) -> list[dict[str, Any]]
             "agent_class": "evaluation",
             "agent_type": "ace_evaluation_react",
             "trained_playbook_file_path": str(adapted_playbook),
+            "external_task_manifest": args.eval_normal_task_manifest,
         },
         {
             "name": "eval-challenge",
@@ -135,6 +142,7 @@ def stage_specs(args: argparse.Namespace, run_dir: Path) -> list[dict[str, Any]]
             "agent_class": "evaluation",
             "agent_type": "ace_evaluation_react",
             "trained_playbook_file_path": str(adapted_playbook),
+            "external_task_manifest": args.eval_challenge_task_manifest,
         },
     ]
 
@@ -209,6 +217,7 @@ def configure_appworld_env(args: argparse.Namespace, run_dir: Path) -> None:
 
 
 def write_run_config(args: argparse.Namespace, run_dir: Path, run_id: str) -> None:
+    run_metadata = parse_run_metadata(args.run_metadata_json)
     payload = {
         "run_id": run_id,
         "mode": "full",
@@ -227,8 +236,54 @@ def write_run_config(args: argparse.Namespace, run_dir: Path, run_id: str) -> No
             "reflector": {"provider": args.reflector_provider, "model": args.reflector_model},
             "curator": {"provider": args.curator_provider, "model": args.curator_model},
         },
+        "enabled_stages": parse_enabled_stages(args.enabled_stages),
+        "task_manifests": {
+            "adapt": str(args.adapt_task_manifest.resolve()) if args.adapt_task_manifest else None,
+            "eval-normal": str(args.eval_normal_task_manifest.resolve()) if args.eval_normal_task_manifest else None,
+            "eval-challenge": str(args.eval_challenge_task_manifest.resolve()) if args.eval_challenge_task_manifest else None,
+        },
+        **run_metadata,
     }
     write_json_atomic(run_dir / "run_config.json", payload)
+
+
+def parse_run_metadata(raw: str | None) -> dict[str, Any]:
+    if not raw:
+        return {}
+    payload = json.loads(raw)
+    if not isinstance(payload, dict):
+        raise ValueError("--run-metadata-json must decode to a JSON object")
+    return payload
+
+
+def parse_enabled_stages(raw: str | None) -> list[str] | None:
+    if not raw:
+        return None
+    stages = [part.strip() for part in str(raw).split(",") if part.strip()]
+    return stages or None
+
+
+def load_external_task_manifest(path: Path | None) -> dict[str, Any] | None:
+    if not path:
+        return None
+    payload = load_json(path.resolve())
+    if not isinstance(payload, dict):
+        raise ValueError(f"Task manifest must be a JSON object: {path}")
+    return payload
+
+
+def task_ids_for_stage(stage: dict[str, Any]) -> tuple[list[str], dict[str, Any] | None]:
+    from appworld.task import load_task_ids
+
+    external_manifest = load_external_task_manifest(stage.get("external_task_manifest"))
+    if external_manifest:
+        selected_task_ids = external_manifest.get("selected_task_ids")
+        if not isinstance(selected_task_ids, list) or not selected_task_ids:
+            raise ValueError(
+                f"Task manifest for stage `{stage['name']}` must include non-empty selected_task_ids."
+            )
+        return [str(task_id) for task_id in selected_task_ids], external_manifest
+    return load_task_ids(stage["dataset"]), None
 
 
 def update_run_state(run_dir: Path, run_state: dict[str, Any], **updates: Any) -> dict[str, Any]:
@@ -310,7 +365,6 @@ def run_stage(
     run_state: dict[str, Any],
     stage: dict[str, Any],
 ) -> tuple[bool, dict[str, Any]]:
-    from appworld.task import load_task_ids
     from appworld.evaluator import evaluate_dataset
 
     stage_name = stage["name"]
@@ -318,9 +372,12 @@ def run_stage(
     stage_root = stage_dir(run_dir, stage_name)
     stage_root.mkdir(parents=True, exist_ok=True)
     manifest = load_manifest(run_dir, stage_name)
-    task_ids = load_task_ids(dataset)
+    task_ids, external_manifest = task_ids_for_stage(stage)
     manifest["task_ids"] = task_ids
     manifest["dataset"] = dataset
+    if external_manifest:
+        manifest["sample_manifest_path"] = str(stage["external_task_manifest"].resolve())
+        manifest["sample_manifest"] = external_manifest
     persist_manifest(run_dir, stage_name, manifest)
     if stage_completed(manifest, task_ids):
         return False, manifest
@@ -412,7 +469,12 @@ def main() -> int:
         persist_run_state(run_dir, run_state)
     write_run_config(args, run_dir, run_id)
 
+    enabled_stages = parse_enabled_stages(args.enabled_stages)
     stage_list = stage_specs(args, run_dir)
+    if enabled_stages:
+        stage_list = [stage for stage in stage_list if stage["name"] in enabled_stages]
+        if not stage_list:
+            raise SystemExit("No stages remain after applying --enabled-stages.")
     current_stage = run_state.get("current_stage") or "adapt"
     session = start_session(
         run_dir,
@@ -450,7 +512,8 @@ def main() -> int:
                 export_top_level_summary(args.appworld_root, run_dir)
                 return 0
 
-        update_run_state(run_dir, run_state, status=STATUS_COMPLETED, current_stage="eval-challenge")
+        final_stage_name = stage_list[-1]["name"] if stage_list else run_state.get("last_completed_stage")
+        update_run_state(run_dir, run_state, status=STATUS_COMPLETED, current_stage=final_stage_name)
         run_state, _ = finish_session(
             run_dir,
             run_state,

@@ -97,6 +97,7 @@ def result_path_metadata(
     run_state: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     identity = resolve_path_identity(config, save_dir)
+    config = config or {}
     return {
         "schema_version": 1,
         **identity,
@@ -105,6 +106,13 @@ def result_path_metadata(
         "timestamp": timestamp,
         "run_leaf": run_leaf,
         "run_dir": repo_relative(Path(run_dir)),
+        "campaign_id": config.get("campaign_id"),
+        "sample_id": config.get("sample_id"),
+        "sample_kind": config.get("sample_kind"),
+        "config_id": config.get("config_id"),
+        "tier_models": config.get("tier_models"),
+        "resolved_models": config.get("resolved_models"),
+        "sample_manifest_path": config.get("sample_manifest_path"),
         **lifecycle_fields_from_state(run_state),
     }
 
@@ -155,6 +163,13 @@ def update_run_group(
         "seed": result_metadata["seed"],
         "timestamp": result_metadata["timestamp"],
         "run_dir": result_metadata["run_dir"],
+        "campaign_id": result_metadata.get("campaign_id"),
+        "sample_id": result_metadata.get("sample_id"),
+        "sample_kind": result_metadata.get("sample_kind"),
+        "config_id": result_metadata.get("config_id"),
+        "tier_models": result_metadata.get("tier_models"),
+        "resolved_models": result_metadata.get("resolved_models"),
+        "sample_manifest_path": result_metadata.get("sample_manifest_path"),
         **lifecycle_fields_from_state(run_state),
     }
 

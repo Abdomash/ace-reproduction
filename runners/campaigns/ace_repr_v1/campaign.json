@@ -1,0 +1,8 @@
+{
+  "campaign_id": "ace_repr_v1",
+  "label": "Tiered Representative ACE Subset Matrix",
+  "goal": "Representative pre-reproduction matrix for FiNER and AppWorld that preserves benchmark structure while staying smaller than later full ACE paper-style runs.",
+  "tiers_path": "tiers.json",
+  "configs_path": "configs.json",
+  "samples_dir": "samples"
+}

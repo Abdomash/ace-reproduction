@@ -47,9 +47,9 @@ Available presets:
 ```bash
 runners/ace/run_experiments.sh finer_subset \
   --provider openrouter \
-  --generator openai/gpt-oss-120b:nitro \
-  --reflector openai/gpt-oss-120b:nitro \
-  --curator openai/gpt-oss-120b:nitro \
+  --generator openai/gpt-oss-120b \
+  --reflector openai/gpt-oss-120b \
+  --curator openai/gpt-oss-120b \
   --config-name ace_all_openrouter_gptoss120b_subset \
   --seed 42 \
   --telemetry 1 \
@@ -65,11 +65,11 @@ logged and counted as failed where the workflow can continue.
 ```bash
 runners/ace/run_experiments.sh appworld_subset \
   --provider openrouter \
-  --generator openai/gpt-oss-120b:nitro \
-  --reflector openai/gpt-oss-120b:nitro \
-  --curator openai/gpt-oss-120b:nitro \
+  --generator openai/gpt-oss-120b \
+  --reflector openai/gpt-oss-120b \
+  --curator openai/gpt-oss-120b \
   --appworld-max-steps 20 \
-  --config-name appworld_subset_gptoss20b \
+  --config-name appworld_subset_gptoss120b \
   --seed 42
 ```
 
@@ -90,9 +90,9 @@ runners/ace/run_experiments.sh all_full \
 ```bash
 runners/ace/run_experiments.sh finer_full \
   --provider openrouter \
-  --generator openai/gpt-oss-120b:nitro \
-  --reflector openai/gpt-oss-120b:nitro \
-  --curator openai/gpt-oss-120b:nitro \
+  --generator openai/gpt-oss-120b \
+  --reflector openai/gpt-oss-120b \
+  --curator openai/gpt-oss-120b \
   --config-slug openrouter-gpt-oss-120b \
   --checkpoint-enabled \
   --stop-after-stage baseline-eval
@@ -102,9 +102,9 @@ runners/ace/run_experiments.sh finer_full \
 
 runners/ace/run_experiments.sh appworld_full_eval \
   --provider openrouter \
-  --generator openai/gpt-oss-120b:nitro \
-  --reflector openai/gpt-oss-120b:nitro \
-  --curator openai/gpt-oss-120b:nitro \
+  --generator openai/gpt-oss-120b \
+  --reflector openai/gpt-oss-120b \
+  --curator openai/gpt-oss-120b \
   --config-slug openrouter-gpt-oss-120b \
   --checkpoint-enabled \
   --stop-after-stage adapt

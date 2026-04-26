@@ -607,6 +607,7 @@ def build_run_summary(run_dir: Path, dataset: str) -> dict[str, Any]:
         "stage_count": stage_count,
     }
     run_state = load_json(run_dir / "run_state.json") or {}
+    run_config = load_json(run_dir / "run_config.json") or {}
     for key in (
         "status",
         "checkpointing_enabled",
@@ -623,6 +624,20 @@ def build_run_summary(run_dir: Path, dataset: str) -> dict[str, Any]:
         "failure_reason",
     ):
         summary[key] = run_state.get(key)
+    for key in (
+        "campaign_id",
+        "sample_id",
+        "sample_kind",
+        "config_id",
+        "config_name",
+        "tier_models",
+        "resolved_models",
+        "sample_manifest_path",
+        "enabled_stages",
+        "task_manifests",
+    ):
+        summary[key] = run_config.get(key)
+    summary["models"] = run_config.get("models")
     return summary
 
 

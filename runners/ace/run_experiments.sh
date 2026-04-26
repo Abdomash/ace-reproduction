@@ -58,8 +58,8 @@ Environment variables for API keys (depending on --provider):
   OPENROUTER_API_KEY, OPENAI_API_KEY, TOGETHER_API_KEY, SAMBANOVA_API_KEY
 
 Examples:
-  runners/ace/run_experiments.sh finer_subset --provider openrouter --generator openai/gpt-oss-120b:nitro
-  runners/ace/run_experiments.sh appworld_subset --provider openrouter --generator openai/gpt-oss-120b:nitro
+  runners/ace/run_experiments.sh finer_subset --provider openrouter --generator openai/gpt-oss-120b
+  runners/ace/run_experiments.sh appworld_subset --provider openrouter --generator openai/gpt-oss-120b
   runners/ace/run_experiments.sh all_full --provider openrouter --generator minimax/minimax-m2.7 --reflector minimax/minimax-m2.7 --curator minimax/minimax-m2.7
 EOF
 }
@@ -76,9 +76,9 @@ API_PROVIDER="openrouter"
 GENERATOR_PROVIDER=""
 REFLECTOR_PROVIDER=""
 CURATOR_PROVIDER=""
-GENERATOR_MODEL="openai/gpt-oss-120b:nitro"
-REFLECTOR_MODEL="openai/gpt-oss-120b:nitro"
-CURATOR_MODEL="openai/gpt-oss-120b:nitro"
+GENERATOR_MODEL="openai/gpt-oss-120b"
+REFLECTOR_MODEL="openai/gpt-oss-120b"
+CURATOR_MODEL="openai/gpt-oss-120b"
 RESULTS_ROOT="${RESULTS_ROOT:-${REPO_ROOT}/results}"
 RUN_TYPE="${RUN_TYPE:-}"
 CONFIG_SLUG="${CONFIG_SLUG:-default}"

@@ -1,5 +1,34 @@
 # ACE x MAESTRO Reproduction and Experiment Plan
 
+## 2026-04-26 update
+
+This plan has now been partially implemented for the representative
+pre-reproduction phase:
+
+- A dedicated `python -m runner` launcher now exists for the fixed
+  representative subset matrix.
+- The active pre-reproduction campaign is `runners/campaigns/ace_repr_v1/`.
+- This campaign is explicitly separate from the later paper-faithful full
+  reproduction plan captured below.
+- The current representative matrix uses tier-based configs instead of raw
+  model nicknames:
+  - `all_cheap`
+  - `all_expensive`
+  - `expensive_generator`
+  - `expensive_reflector`
+  - `expensive_curator`
+- Default tier mapping:
+  - `cheap = openrouter / openai/gpt-oss-120b`
+  - `expensive = openrouter / deepseek/deepseek-v3.2`
+- Historical analysis rule:
+  - `openai/gpt-oss-120b:nitro` is treated as `expensive`
+  - non-`nitro` GPT-family runs are treated as `cheap`
+  - MiniMax and DeepSeek runs are treated as `expensive`
+
+The rest of this document still describes the broader full reproduction
+direction and should be interpreted as the later target, not the already
+implemented representative runner.
+
 ## Scope and Intent
 
 This document defines the full implementation and experiment plan for reproducing and extending ACE under MAESTRO-style observability, based on the proposal in `new-proposal-template.tex` and review of the `projects/ace/` and `projects/maestro/` codebases.

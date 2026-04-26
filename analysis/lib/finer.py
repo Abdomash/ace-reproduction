@@ -5,6 +5,7 @@ import re
 from .common import load_json
 from .pricing import summarize_costs
 from .telemetry import summarize_telemetry
+from runners.tiering import tier_metadata_for_models
 
 
 def _split_tags(value: str) -> list[str]:
@@ -251,6 +252,12 @@ def summarize_run(run) -> dict:
     initial_sample_tags = initial.get("sample_correct_tags_by_index") or {}
     final_sample_tags = final.get("sample_correct_tags_by_index") or {}
     llm_usage = summarize_llm_logs(run.path / "detailed_llm_logs")
+    models = {
+        "generator": run_config.get("generator_model") or config.get("generator_model"),
+        "reflector": run_config.get("reflector_model") or config.get("reflector_model"),
+        "curator": run_config.get("curator_model") or config.get("curator_model"),
+    }
+    tier_metadata = tier_metadata_for_models(models)
     regressed_tags = 0
     improved_tags = 0
     regressed_samples = 0
@@ -303,6 +310,14 @@ def summarize_run(run) -> dict:
         "active_runtime_seconds": run_state.get("active_runtime_seconds"),
         "current_stage": run_state.get("current_stage"),
         "last_completed_stage": run_state.get("last_completed_stage"),
+        "campaign_id": config.get("campaign_id"),
+        "sample_id": config.get("sample_id"),
+        "config_id": config.get("config_id"),
+        "generator_tier": (tier_metadata.get("role_tiers") or {}).get("generator"),
+        "reflector_tier": (tier_metadata.get("role_tiers") or {}).get("reflector"),
+        "curator_tier": (tier_metadata.get("role_tiers") or {}).get("curator"),
+        "tier_config_id": tier_metadata.get("tier_config_id"),
+        "tier_classification_source": tier_metadata.get("classification_sources"),
     }
     return {
         "summary": summary,
@@ -314,11 +329,7 @@ def summarize_run(run) -> dict:
         },
         "training": training,
         "training_pre_post": training_pre_post,
-        "models": {
-            "generator": run_config.get("generator_model") or config.get("generator_model"),
-            "reflector": run_config.get("reflector_model") or config.get("reflector_model"),
-            "curator": run_config.get("curator_model") or config.get("curator_model"),
-        },
+        "models": models,
         "models_display": " | ".join(
             f"{role}={model}"
             for role, model in [

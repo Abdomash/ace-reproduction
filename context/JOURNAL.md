@@ -1,5 +1,40 @@
 # Journal
 
+## 2026-04-26 - Tiered representative ACE subset runner
+
+Added a new `python -m runner` execution surface for the representative
+pre-reproduction ACE matrix and checked in fixed campaign/sample manifests.
+The implementation now lives under the existing `runners/` package.
+
+**What changed**:
+- Added Python launcher modules under `runners/` with `launch`, `resume`,
+  `list`, `samples`, and `configs` commands.
+- Added checked-in campaign manifests under
+  `runners/campaigns/ace_repr_v1/` for:
+  - `finer_repr_a`
+  - `finer_repr_b`
+  - `appworld_test_normal_repr`
+  - `appworld_test_challenge_repr`
+- Added tier configs:
+  - `all_cheap`
+  - `all_expensive`
+  - `expensive_generator`
+  - `expensive_reflector`
+  - `expensive_curator`
+- FiNER now accepts manifest-backed subset selection through
+  `--sample_manifest_path` and persists campaign/sample/tier metadata into
+  `run_config.json`, `result_path.json`, and `run_group.json`.
+- AppWorld staged full runs now accept enabled-stage filtering, optional
+  stage task manifests, and injected run metadata. Exported
+  `summary/run_summary.json` now carries the same campaign/sample/tier fields.
+- Analysis now derives `generator_tier`, `reflector_tier`, `curator_tier`,
+  and `tier_config_id` for both new and historical runs.
+
+**Historical tiering rule recorded in code**:
+- `openai/gpt-oss-120b:nitro` is classified as `expensive`
+- non-`nitro` GPT-family models are classified as `cheap`
+- MiniMax and DeepSeek families are classified as `expensive`
+
 ## 2026-04-26 - Resumable staged FiNER/AppWorld runs and lifecycle metadata
 
 Added resumable staged execution for new FiNER runs and for the new single-run
