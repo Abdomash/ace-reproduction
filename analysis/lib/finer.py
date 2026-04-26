@@ -231,6 +231,7 @@ def summarize_llm_logs(log_dir) -> dict:
 
 def summarize_run(run) -> dict:
     run_config = load_json(run.path / "run_config.json") or {}
+    run_state = load_json(run.path / "run_state.json") or {}
     config = run_config.get("config") or {}
     initial_raw = load_json(run.path / "initial_test_results.json")
     final_raw = load_json(run.path / "final_test_results.json")
@@ -295,6 +296,13 @@ def summarize_run(run) -> dict:
             if final.get("correct_tags") is not None and initial.get("correct_tags") is not None
             else None
         ),
+        "status": run_state.get("status") or "completed",
+        "checkpointing_enabled": run_state.get("checkpointing_enabled", False),
+        "has_checkpoints": run_state.get("has_checkpoints", False),
+        "resume_count": run_state.get("resume_count", 0),
+        "active_runtime_seconds": run_state.get("active_runtime_seconds"),
+        "current_stage": run_state.get("current_stage"),
+        "last_completed_stage": run_state.get("last_completed_stage"),
     }
     return {
         "summary": summary,
@@ -334,6 +342,7 @@ def summarize_run(run) -> dict:
             "api_provider": config.get("api_provider"),
             "config_name": config.get("config_name"),
         },
+        "run_state": run_state,
         "llm_usage": llm_usage,
         "exact_changes": {
             "became_correct": sorted(final_ok - initial_ok),

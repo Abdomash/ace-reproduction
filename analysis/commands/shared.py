@@ -67,6 +67,13 @@ def run_rows(runs):
             "timestamp": run.timestamp,
             "timestamp_display": format_timestamp(run.timestamp),
             "mode": run.mode,
+            "status": run.status,
+            "checkpointing_enabled": run.checkpointing_enabled,
+            "has_checkpoints": run.has_checkpoints,
+            "resume_count": run.resume_count,
+            "current_stage": run.current_stage,
+            "last_completed_stage": run.last_completed_stage,
+            "active_runtime_seconds": run.active_runtime_seconds,
             "path": run.repo_relative_path,
         }
         for run in runs

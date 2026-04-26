@@ -7,6 +7,8 @@ import re
 from pathlib import Path
 from typing import Any
 
+from lifecycle import lifecycle_fields_from_state
+
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 RESULTS_ROOT = REPO_ROOT / "results"
@@ -92,6 +94,7 @@ def result_path_metadata(
     mode: str,
     seed: Any,
     timestamp: str,
+    run_state: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     identity = resolve_path_identity(config, save_dir)
     return {
@@ -102,6 +105,7 @@ def result_path_metadata(
         "timestamp": timestamp,
         "run_leaf": run_leaf,
         "run_dir": repo_relative(Path(run_dir)),
+        **lifecycle_fields_from_state(run_state),
     }
 
 
@@ -118,6 +122,7 @@ def write_result_path_json(
     mode: str,
     seed: Any,
     timestamp: str,
+    run_state: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     metadata = result_path_metadata(
         config=config,
@@ -127,12 +132,15 @@ def write_result_path_json(
         mode=mode,
         seed=seed,
         timestamp=timestamp,
+        run_state=run_state,
     )
     write_json(Path(run_dir) / "result_path.json", metadata)
     return metadata
 
 
-def update_run_group(config_dir: str | Path, result_metadata: dict[str, Any]) -> dict[str, Any]:
+def update_run_group(
+    config_dir: str | Path, result_metadata: dict[str, Any], run_state: dict[str, Any] | None = None
+) -> dict[str, Any]:
     config_dir = Path(config_dir)
     group_path = config_dir / "run_group.json"
     identity = {
@@ -147,6 +155,7 @@ def update_run_group(config_dir: str | Path, result_metadata: dict[str, Any]) ->
         "seed": result_metadata["seed"],
         "timestamp": result_metadata["timestamp"],
         "run_dir": result_metadata["run_dir"],
+        **lifecycle_fields_from_state(run_state),
     }
 
     existing: dict[str, Any] = {}

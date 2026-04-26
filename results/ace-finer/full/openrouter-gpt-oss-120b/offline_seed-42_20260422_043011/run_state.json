@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "run_id": "offline_seed-42_20260422_043011",
+  "status": "failed",
+  "checkpointing_enabled": false,
+  "resume_enabled": false,
+  "has_checkpoints": false,
+  "resume_count": 0,
+  "current_stage": "final-eval",
+  "last_completed_stage": "train",
+  "active_runtime_seconds": null,
+  "started_at": null,
+  "last_resumed_at": null,
+  "last_checkpoint_at": null,
+  "completed_at": null,
+  "failure_reason": "Missing final-eval artifacts: final_test_results.json and final_results.json were not produced."
+}

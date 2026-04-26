@@ -114,6 +114,30 @@ def parse_args():
         default=50,
         help="Save intermediate playbooks every N steps",
     )
+    parser.add_argument(
+        "--resume-from",
+        type=str,
+        default=None,
+        help="Resume a staged run from an existing run directory",
+    )
+    parser.add_argument(
+        "--checkpoint-enabled",
+        action="store_true",
+        help="Enable resumable checkpoint metadata for staged runs",
+    )
+    parser.add_argument(
+        "--stop-after-stage",
+        type=str,
+        choices=["baseline-eval", "train", "final-eval"],
+        default=None,
+        help="Finish the named FiNER stage, persist state, and stop before the next stage",
+    )
+    parser.add_argument(
+        "--stop-after-step",
+        type=int,
+        default=None,
+        help="Stop during FiNER training after the specified global training step",
+    )
 
     # System configuration
     parser.add_argument(
@@ -451,6 +475,11 @@ def main():
         "reflector_model": args.reflector_model,
         "curator_model": args.curator_model,
         "sample_slicing": slicing_metadata,
+        "resume_from": args.resume_from,
+        "checkpoint_enabled": args.checkpoint_enabled,
+        "resume_enabled": bool(args.checkpoint_enabled or args.resume_from),
+        "stop_after_stage": args.stop_after_stage,
+        "stop_after_step": args.stop_after_step,
     }
 
     config["telemetry_enabled"] = args.telemetry_enabled

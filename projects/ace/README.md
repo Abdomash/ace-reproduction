@@ -55,19 +55,21 @@ cd /path/to/ace-reproduction
 APPWORLD_COMMIT=<pinned-sha> runners/ace/setup_appworld.sh
 ```
 
-Then run AppWorld experiments via:
+Then run the staged full AppWorld workflow via the unified runner:
 
 ```bash
-cd /path/to/ace-reproduction/projects/ace
-python -m eval.appworld.run \
-  --task_name appworld \
-  --mode eval_only \
-  --dataset_name test_normal \
-  --api_provider openai \
-  --generator_model gpt-oss:20b \
-  --appworld_root ../ace-appworld \
-  --save_path ../../results
+cd /path/to/ace-reproduction
+runners/ace/run_experiments.sh appworld_full_eval \
+  --provider openrouter \
+  --generator openai/gpt-oss-20b:nitro \
+  --reflector openai/gpt-oss-20b:nitro \
+  --curator openai/gpt-oss-20b:nitro \
+  --config-slug openrouter-gpt-oss-20b \
+  --config-name openrouter-gpt-oss-20b \
+  --checkpoint-enabled
 ```
+
+`appworld_full_eval` now creates one run directory and executes `adapt -> eval-normal -> eval-challenge` inside it. For single-stage manual AppWorld experiments, the lower-level `projects/ace-appworld` entrypoints still exist, but the reproduction runner interface is the staged wrapper above.
 
 ## Unified Runner
 
@@ -75,6 +77,28 @@ For quick subset or full-style runs across FiNER/AppWorld, use:
 
 ```bash
 runners/ace/run_experiments.sh --help
+```
+
+Common staged resume examples:
+
+```bash
+runners/ace/run_experiments.sh finer_full \
+  --provider openrouter \
+  --generator openai/gpt-oss-120b:nitro \
+  --reflector openai/gpt-oss-120b:nitro \
+  --curator openai/gpt-oss-120b:nitro \
+  --config-slug openrouter-gpt-oss-120b \
+  --checkpoint-enabled \
+  --stop-after-stage baseline-eval
+
+runners/ace/run_experiments.sh appworld_full_eval \
+  --provider openrouter \
+  --generator openai/gpt-oss-120b:nitro \
+  --reflector openai/gpt-oss-120b:nitro \
+  --curator openai/gpt-oss-120b:nitro \
+  --config-slug openrouter-gpt-oss-120b \
+  --checkpoint-enabled \
+  --stop-after-stage adapt
 ```
 
 Detailed usage and examples are documented in:
@@ -236,6 +260,34 @@ uv run python -m eval.finance.run \
     --num_epochs 3 \
     --eval_steps 100 \
     --max_tokens 4096
+
+# Stop cleanly after the baseline evaluation stage
+uv run python -m eval.finance.run \
+    --task_name finer \
+    --mode offline \
+    --save_path results/ace-finer/full/openrouter-gpt-oss-20b \
+    --benchmark ace-finer \
+    --run_type full \
+    --config_slug openrouter-gpt-oss-20b \
+    --checkpoint-enabled \
+    --stop-after-stage baseline-eval
+
+# Resume an interrupted staged run from the same run directory
+uv run python -m eval.finance.run \
+    --task_name finer \
+    --mode offline \
+    --resume-from results/ace-finer/full/openrouter-gpt-oss-20b/offline_seed-42_YYYYMMDD_HHMMSS
+
+# Stop during training after N global steps
+uv run python -m eval.finance.run \
+    --task_name finer \
+    --mode offline \
+    --save_path results/ace-finer/full/openrouter-gpt-oss-20b \
+    --benchmark ace-finer \
+    --run_type full \
+    --config_slug openrouter-gpt-oss-20b \
+    --checkpoint-enabled \
+    --stop-after-step 250
 ```
 
 #### Available Arguments
@@ -251,20 +303,27 @@ uv run python -m eval.finance.run \
 | `--config_slug` | Explicit config identity recorded in result paths | Slugified `config_name` |
 | `--initial_playbook_path` | Path to initial playbook | Optional |
 | `--mode` | Run mode: 'offline' for offline training with validation, 'online' for online training and testing on test split, 'eval_only' for evaluation only | `offline` |
-| `--api_provider` | API provider for LLM calls. Choose from ['sambanova', 'together', 'openai'] | `sambanova` |
+| `--api_provider` | Default API provider from `SUPPORTED_API_PROVIDERS` (for this repo: `openrouter`, `openai`, `together`, `sambanova`) | `sambanova` |
 | `--num_epochs` | Number of training epochs | 1 |
 | `--max_num_rounds` | Max reflection rounds for incorrect answers | 3 |
 | `--curator_frequency` | Run curator every N steps | 1 |
 | `--eval_steps` | Evaluate every N steps | 100 |
 | `--online_eval_frequency` | Update playbook every N samples for evaluation in online mode | 15 |
 | `--save_steps` | Save intermediate playbooks every N steps | 50 |
+| `--resume-from` | Resume a staged FiNER run from an existing run directory | None |
+| `--checkpoint-enabled` | Write resumable lifecycle metadata and training checkpoints | False |
+| `--stop-after-stage` | Finish one FiNER stage and stop before the next (`baseline-eval`, `train`, `final-eval`) | None |
+| `--stop-after-step` | Stop during FiNER training after the specified global step | None |
 | `--max_tokens` | Maximum tokens for LLM responses | 4096 |
 | `--playbook_token_budget` | Total token budget for playbook | 80000 |
 | `--test_workers` | Number of parallel workers for testing | 20 |
 | `--generator_model` | Model for generator | `DeepSeek-V3.1` |
 | `--reflector_model` | Model for reflector | `DeepSeek-V3.1` |
 | `--curator_model` | Model for curator | `DeepSeek-V3.1` |
-| `--json_mode` | Optional non-reproduction JSON mode for structured output | False |
+| `--generator_provider` | Optional provider override for generator | None |
+| `--reflector_provider` | Optional provider override for reflector | None |
+| `--curator_provider` | Optional provider override for curator | None |
+| `--json_mode` | Enable JSON mode for LLM calls | False |
 | `--no_ground_truth` | Don't use ground truth in reflection | False |
 | `--use_bulletpoint_analyzer` | Enable bulletpoint analyzer for playbook deduplication and merging | False |
 | `--bulletpoint_analyzer_threshold` | Similarity threshold for bulletpoint analyzer (0-1) | 0.9 |
@@ -277,21 +336,33 @@ Using offline training as an example, after training, ACE generates:
 
 ```
 results/
-└── ace_run_TIMESTAMP_finer_offline/
-    ├── run_config.json                # Training configuration
-    ├── final_results.json             # Consolidated results from all stages
-    ├── initial_test_results.json      # Initial test results with empty playbook (baseline)
-    ├── final_test_results.json        # Final test results with best playbook
-    ├── train_results.json             # Training results
-    ├── val_results.json               # Validation results and error logs
-    ├── pre_train_post_train_results.json     # Detailed pre-train and post-train generator output for each training sample
-    ├── final_playbook.txt             # Final evolved context
-    ├── best_playbook.txt              # Best performing context (only for offline training)
-    ├── bullet_usage_log.jsonl         # Bullet usage tracking
-    ├── curator_operations_diff.jsonl  # Curator operation tracking
-    ├── detailed_llm_logs/             # Detailed LLM call logs
-    └── intermediate_playbooks/        # Intermediate playbooks 
+└── ace-finer/
+    └── full/
+        └── openrouter-gpt-oss-20b/
+            ├── run_group.json                 # Run index for this config slug
+            └── offline_seed-42_YYYYMMDD_HHMMSS/
+                ├── run_config.json
+                ├── result_path.json           # Run identity + lifecycle metadata
+                ├── run_state.json             # Canonical staged lifecycle state
+                ├── sessions.jsonl             # Append-only per-invocation runtime ledger
+                ├── checkpoints/
+                │   └── train_checkpoint.json  # Latest resumable FiNER training checkpoint
+                ├── final_results.json         # Consolidated results + lifecycle metadata
+                ├── initial_test_results.json  # Baseline evaluation output
+                ├── final_test_results.json    # Final evaluation output
+                ├── train_results.json         # Training results
+                ├── val_results.json           # Validation results and error logs
+                ├── pre_train_post_train_results.json
+                ├── final_playbook.txt
+                ├── best_playbook.txt
+                ├── bullet_usage_log.jsonl
+                ├── curator_operations_diff.jsonl
+                ├── detailed_llm_logs/
+                ├── telemetry/
+                └── intermediate_playbooks/
 ```
+
+New AppWorld full runs follow a similar lifecycle pattern under `results/ace-appworld/<run_type>/<config_slug>/<run_leaf>/`, with stage-local artifacts in `stages/adapt/`, `stages/eval-normal/`, and `stages/eval-challenge/`, plus top-level `summary/run_summary.json` and `evaluations/` for compatibility with analysis.
 
 ### Understanding Playbook Format
 

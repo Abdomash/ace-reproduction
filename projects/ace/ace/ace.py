@@ -11,6 +11,7 @@ This module coordinates three agents:
 import os
 import json
 from datetime import datetime
+from pathlib import Path
 from typing import Dict, List, Tuple, Optional, Any
 
 from .core import Generator, Reflector, Curator, BulletpointAnalyzer
@@ -23,6 +24,23 @@ from result_layout import (
     parse_run_leaf,
     update_run_group,
     write_result_path_json,
+)
+from lifecycle import (
+    STATUS_CHECKPOINTED,
+    STATUS_COMPLETED,
+    STATUS_FAILED,
+    STATUS_IN_PROGRESS,
+    checkpoints_dir,
+    lifecycle_fields_from_state,
+    load_json as load_lifecycle_json,
+    load_run_state,
+    load_train_checkpoint,
+    new_run_state,
+    persist_run_state,
+    persist_train_checkpoint,
+    start_session,
+    finish_session,
+    train_checkpoint_path,
 )
 from telemetry import (
     get_invoke_helpers,
@@ -353,6 +371,107 @@ class ACE:
             "max_prompt_length": config.get("max_prompt_length"),
         }
 
+    def _is_finer_lifecycle_run(self, mode: str, config: Dict[str, Any]) -> bool:
+        task_name = str((config or {}).get("task_name") or "").lower()
+        return mode == "offline" and task_name == "finer"
+
+    def _write_final_results(
+        self,
+        save_path: str,
+        run_id: str,
+        telemetry_metadata: Dict[str, Any],
+        results: Dict[str, Any],
+        run_state: Dict[str, Any] | None = None,
+    ) -> Dict[str, Any]:
+        log_dir = os.path.join(save_path, "detailed_llm_logs")
+        llm_usage = _summarize_detailed_llm_logs(log_dir)
+        payload = {
+            "run_id": run_id,
+            "telemetry": telemetry_metadata,
+            "llm_usage": {
+                "roles": llm_usage["roles"],
+                "total": llm_usage["total"],
+            },
+            "costs": llm_usage["costs"],
+            "results": results,
+            **results,
+        }
+        if run_state:
+            payload.update(lifecycle_fields_from_state(run_state))
+        final_results_path = os.path.join(save_path, "final_results.json")
+        with open(final_results_path, "w", encoding="utf-8") as handle:
+            json.dump(payload, handle, indent=2)
+        return payload
+
+    def _write_result_metadata(
+        self,
+        *,
+        config: Dict[str, Any],
+        save_dir: str,
+        save_path: str,
+        run_id: str,
+        mode: str,
+        run_timestamp: str,
+        run_state: Dict[str, Any] | None,
+    ) -> Dict[str, Any]:
+        result_metadata = write_result_path_json(
+            config=config,
+            save_dir=save_dir,
+            run_dir=save_path,
+            run_leaf=run_id,
+            mode=mode,
+            seed=(config or {}).get("seed", "na"),
+            timestamp=run_timestamp,
+            run_state=run_state,
+        )
+        update_run_group(save_dir, result_metadata, run_state=run_state)
+        return result_metadata
+
+    def _refresh_run_metadata(
+        self,
+        *,
+        config: Dict[str, Any],
+        save_dir: str,
+        save_path: str,
+        run_id: str,
+        mode: str,
+        run_timestamp: str,
+    ) -> Dict[str, Any] | None:
+        run_state = load_run_state(save_path)
+        if not run_state:
+            return None
+        return self._write_result_metadata(
+            config=config,
+            save_dir=save_dir,
+            save_path=save_path,
+            run_id=run_id,
+            mode=mode,
+            run_timestamp=run_timestamp,
+            run_state=run_state,
+        )
+
+    def _persist_training_checkpoint_files(
+        self, save_path: str, checkpoint_payload: Dict[str, Any]
+    ) -> Dict[str, Any]:
+        checkpoint_dir = checkpoints_dir(save_path)
+        current_playbook_path = checkpoint_dir / "current_playbook.txt"
+        best_playbook_path = checkpoint_dir / "best_playbook.txt"
+        current_playbook_path.write_text(
+            checkpoint_payload.get("current_playbook", self.playbook),
+            encoding="utf-8",
+        )
+        best_playbook_path.write_text(
+            checkpoint_payload.get("best_playbook", self.best_playbook),
+            encoding="utf-8",
+        )
+        payload = dict(checkpoint_payload)
+        payload["current_playbook_path"] = str(current_playbook_path)
+        payload["best_playbook_path"] = str(best_playbook_path)
+        payload.pop("current_playbook", None)
+        payload.pop("best_playbook", None)
+        persist_train_checkpoint(save_path, payload)
+        return payload
+
     def _get_appworld_adapter(
         self, data_processor, config: Dict[str, Any], log_dir: str
     ):
@@ -443,17 +562,40 @@ class ACE:
         config_params = self._extract_config_params(config)
         task_name = config_params["task_name"]
         save_dir = config_params["save_dir"]
-        run_id, run_timestamp = self._resolve_run_identity(config, task_name, mode)
+        resume_from = (config or {}).get("resume_from")
+        if resume_from:
+            save_path = os.path.abspath(str(resume_from))
+            run_id = os.path.basename(save_path.rstrip(os.sep))
+            _, run_timestamp = self._resolve_run_identity({"run_id": run_id}, task_name, mode)
+            save_dir = os.path.dirname(save_path)
+            config["run_id"] = run_id
+            config["save_dir"] = save_dir
+        else:
+            run_id, run_timestamp = self._resolve_run_identity(config, task_name, mode)
+            save_path = None
 
         # Setup paths based on mode
-        if mode == "eval_only":
+        if save_path is None and mode == "eval_only":
             save_path, log_dir = self._setup_paths(save_dir, task_name, mode, run_id)
             usage_log_path = None
             playbook_dir = None
-        else:
+        elif save_path is None:
             save_path, usage_log_path, playbook_dir, log_dir = self._setup_paths(
                 save_dir, task_name, mode, run_id
             )
+        elif mode == "eval_only":
+            os.makedirs(save_path, exist_ok=True)
+            log_dir = os.path.join(save_path, "detailed_llm_logs")
+            os.makedirs(log_dir, exist_ok=True)
+            usage_log_path = None
+            playbook_dir = None
+        else:
+            os.makedirs(save_path, exist_ok=True)
+            log_dir = os.path.join(save_path, "detailed_llm_logs")
+            os.makedirs(log_dir, exist_ok=True)
+            usage_log_path = os.path.join(save_path, "bullet_usage_log.jsonl")
+            playbook_dir = os.path.join(save_path, "intermediate_playbooks")
+            os.makedirs(playbook_dir, exist_ok=True)
 
         self._telemetry_runtime = start_telemetry(
             config=config,
@@ -499,16 +641,26 @@ class ACE:
                 f,
                 indent=2,
             )
-        result_metadata = write_result_path_json(
+        run_state = None
+        if self._is_finer_lifecycle_run(mode, config or {}):
+            run_state = load_run_state(save_path)
+            if not run_state:
+                run_state = new_run_state(
+                    run_id=run_id,
+                    checkpointing_enabled=bool((config or {}).get("checkpoint_enabled")),
+                    resume_enabled=bool((config or {}).get("resume_enabled", True)),
+                    current_stage="baseline-eval" if test_samples else "train",
+                )
+                persist_run_state(save_path, run_state)
+        self._write_result_metadata(
             config=config,
             save_dir=save_dir,
-            run_dir=save_path,
-            run_leaf=run_id,
+            save_path=save_path,
+            run_id=run_id,
             mode=mode,
-            seed=(config or {}).get("seed", "na"),
-            timestamp=run_timestamp,
+            run_timestamp=run_timestamp,
+            run_state=run_state,
         )
-        update_run_group(save_dir, result_metadata)
 
         # Print initial banner
         print(f"\n{'=' * 60}")
@@ -539,6 +691,23 @@ class ACE:
             if telemetry_metadata.get("error"):
                 print(f"Telemetry startup error: {telemetry_metadata.get('error')}")
         print()
+
+        if self._is_finer_lifecycle_run(mode, config or {}):
+            return self._run_finer_offline_lifecycle(
+                train_samples=train_samples or [],
+                val_samples=val_samples or [],
+                test_samples=test_samples or [],
+                data_processor=data_processor,
+                config=config or {},
+                save_path=save_path,
+                save_dir=save_dir,
+                run_id=run_id,
+                run_timestamp=run_timestamp,
+                usage_log_path=usage_log_path,
+                playbook_dir=playbook_dir,
+                log_dir=log_dir,
+                telemetry_metadata=telemetry_metadata,
+            )
 
         # Execute based on mode
         results = {}
@@ -703,6 +872,242 @@ class ACE:
         print(f"{'=' * 60}\n")
 
         return results
+
+    def _stage_rank(self, stage: str | None) -> int:
+        order = {
+            None: -1,
+            "baseline-eval": 0,
+            "train": 1,
+            "final-eval": 2,
+        }
+        return order.get(stage, -1)
+
+    def _stage_is_complete(self, run_state: Dict[str, Any], stage: str) -> bool:
+        return self._stage_rank(run_state.get("last_completed_stage")) >= self._stage_rank(stage)
+
+    def _restore_finer_training_checkpoint(self, checkpoint: Dict[str, Any] | None) -> None:
+        if not checkpoint:
+            return
+        current_playbook_path = checkpoint.get("current_playbook_path")
+        best_playbook_path = checkpoint.get("best_playbook_path")
+        if current_playbook_path and os.path.exists(current_playbook_path):
+            self.playbook = Path(current_playbook_path).read_text(encoding="utf-8")
+        if best_playbook_path and os.path.exists(best_playbook_path):
+            self.best_playbook = Path(best_playbook_path).read_text(encoding="utf-8")
+        self.next_global_id = int(checkpoint.get("next_global_bullet_id") or self.next_global_id)
+
+    def _run_finer_offline_lifecycle(
+        self,
+        *,
+        train_samples: List[Dict[str, Any]],
+        val_samples: List[Dict[str, Any]],
+        test_samples: List[Dict[str, Any]],
+        data_processor,
+        config: Dict[str, Any],
+        save_path: str,
+        save_dir: str,
+        run_id: str,
+        run_timestamp: str,
+        usage_log_path: str,
+        playbook_dir: str,
+        log_dir: str,
+        telemetry_metadata: Dict[str, Any],
+    ) -> Dict[str, Any]:
+        run_state = load_run_state(save_path) or new_run_state(
+            run_id=run_id,
+            checkpointing_enabled=bool(config.get("checkpoint_enabled")),
+            resume_enabled=bool(config.get("resume_enabled", True)),
+            current_stage="baseline-eval" if test_samples else "train",
+        )
+        persist_run_state(save_path, run_state)
+        self._refresh_run_metadata(
+            config=config,
+            save_dir=save_dir,
+            save_path=save_path,
+            run_id=run_id,
+            mode="offline",
+            run_timestamp=run_timestamp,
+        )
+
+        existing_final_results = load_lifecycle_json(os.path.join(save_path, "final_results.json")) or {}
+        existing_results = existing_final_results.get("results") if isinstance(existing_final_results, dict) else {}
+        results: Dict[str, Any] = dict(existing_results or {})
+
+        checkpoint = load_train_checkpoint(save_path)
+        self._restore_finer_training_checkpoint(checkpoint)
+
+        next_stage = run_state.get("current_stage") or "baseline-eval"
+        if self._stage_is_complete(run_state, "baseline-eval"):
+            next_stage = "train"
+        if self._stage_is_complete(run_state, "train"):
+            next_stage = "final-eval"
+        if self._stage_is_complete(run_state, "final-eval"):
+            next_stage = "final-eval"
+
+        session = start_session(
+            save_path,
+            run_state,
+            stage_entered=next_stage,
+            resume_from_checkpoint=bool(config.get("resume_from") or checkpoint),
+        )
+
+        def persist_state_and_results() -> None:
+            persist_run_state(save_path, run_state)
+            self._refresh_run_metadata(
+                config=config,
+                save_dir=save_dir,
+                save_path=save_path,
+                run_id=run_id,
+                mode="offline",
+                run_timestamp=run_timestamp,
+            )
+            self._write_final_results(
+                save_path=save_path,
+                run_id=run_id,
+                telemetry_metadata=telemetry_metadata,
+                results=results,
+                run_state=run_state,
+            )
+
+        try:
+            if test_samples and not self._stage_is_complete(run_state, "baseline-eval"):
+                run_state["current_stage"] = "baseline-eval"
+                persist_state_and_results()
+                print(f"\n{'=' * 60}")
+                print("INITIAL TEST (before training)")
+                print(f"{'=' * 60}\n")
+                initial_test_results = self._run_test(
+                    test_samples=test_samples,
+                    data_processor=data_processor,
+                    playbook=self.playbook,
+                    config=config,
+                    log_dir=log_dir,
+                    save_path=save_path,
+                    prefix="initial",
+                )
+                results["initial_test_results"] = initial_test_results
+                run_state["last_completed_stage"] = "baseline-eval"
+                run_state["current_stage"] = "baseline-eval"
+                persist_state_and_results()
+                if config.get("stop_after_stage") == "baseline-eval":
+                    run_state["status"] = STATUS_CHECKPOINTED
+                    persist_state_and_results()
+                    run_state, _ = finish_session(
+                        save_path,
+                        run_state,
+                        session,
+                        stage_exited="baseline-eval",
+                        status=STATUS_CHECKPOINTED,
+                    )
+                    persist_state_and_results()
+                    return results
+
+            if not self._stage_is_complete(run_state, "train"):
+                run_state["current_stage"] = "train"
+                persist_state_and_results()
+                print(f"\n{'=' * 60}")
+                print("STARTING OFFLINE TRAINING")
+                print(f"{'=' * 60}\n")
+                training_outcome = self._offline_train(
+                    train_samples=train_samples,
+                    val_samples=val_samples,
+                    data_processor=data_processor,
+                    config=config,
+                    save_path=save_path,
+                    usage_log_path=usage_log_path,
+                    playbook_dir=playbook_dir,
+                    log_dir=log_dir,
+                    resume_checkpoint=checkpoint,
+                    checkpoint_enabled=bool(config.get("checkpoint_enabled")),
+                    stop_after_step=config.get("stop_after_step"),
+                )
+                results["training_results"] = training_outcome["training_results"]
+                persist_state_and_results()
+                if training_outcome.get("stopped_early"):
+                    run_state["status"] = STATUS_CHECKPOINTED
+                    run_state["current_stage"] = "train"
+                    persist_state_and_results()
+                    run_state, _ = finish_session(
+                        save_path,
+                        run_state,
+                        session,
+                        stage_exited="train",
+                        status=STATUS_CHECKPOINTED,
+                    )
+                    persist_state_and_results()
+                    return results
+                run_state["last_completed_stage"] = "train"
+                persist_state_and_results()
+                if config.get("stop_after_stage") == "train":
+                    run_state["status"] = STATUS_CHECKPOINTED
+                    persist_state_and_results()
+                    run_state, _ = finish_session(
+                        save_path,
+                        run_state,
+                        session,
+                        stage_exited="train",
+                        status=STATUS_CHECKPOINTED,
+                    )
+                    persist_state_and_results()
+                    return results
+
+            if test_samples and not self._stage_is_complete(run_state, "final-eval"):
+                run_state["current_stage"] = "final-eval"
+                persist_state_and_results()
+                print(f"\n{'=' * 60}")
+                print("FINAL TEST (with best playbook)")
+                print(f"{'=' * 60}\n")
+                final_test_results = self._run_test(
+                    test_samples=test_samples,
+                    data_processor=data_processor,
+                    playbook=self.best_playbook,
+                    config=config,
+                    log_dir=log_dir,
+                    save_path=save_path,
+                    prefix="final",
+                )
+                results["final_test_results"] = final_test_results
+                run_state["last_completed_stage"] = "final-eval"
+
+            run_state["status"] = STATUS_COMPLETED
+            persist_state_and_results()
+            run_state, _ = finish_session(
+                save_path,
+                run_state,
+                session,
+                stage_exited=run_state.get("last_completed_stage"),
+                status=STATUS_COMPLETED,
+            )
+            persist_state_and_results()
+
+            print(f"\n{'=' * 60}")
+            print("RUN COMPLETE")
+            print(f"{'=' * 60}")
+            if "training_results" in results:
+                print(
+                    f"Best Validation Accuracy: {results['training_results']['best_validation_accuracy']:.3f}"
+                )
+            if "initial_test_results" in results:
+                print(f"Initial Test Accuracy: {results['initial_test_results']['accuracy']:.3f}")
+            if "final_test_results" in results:
+                print(f"Final Test Accuracy: {results['final_test_results']['accuracy']:.3f}")
+            print(f"Results saved to: {save_path}")
+            print(f"Run ID: {run_id}")
+            print(f"{'=' * 60}\n")
+            return results
+        except Exception as exc:
+            run_state["status"] = STATUS_FAILED
+            run_state["failure_reason"] = str(exc)
+            persist_state_and_results()
+            run_state, _ = finish_session(
+                save_path,
+                run_state,
+                session,
+                stage_exited=run_state.get("current_stage"),
+                status=STATUS_FAILED,
+            )
+            persist_state_and_results()
+            raise
 
     def _run_test(
         self,
@@ -1092,6 +1497,9 @@ class ACE:
         usage_log_path: str,
         playbook_dir: str,
         log_dir: str,
+        resume_checkpoint: Dict[str, Any] | None = None,
+        checkpoint_enabled: bool = False,
+        stop_after_step: int | None = None,
     ) -> Dict[str, Any]:
         """
         Run offline training
@@ -1111,7 +1519,6 @@ class ACE:
         """
         # Extract configuration using helper
         config_params = self._extract_config_params(config)
-        task_name = config_params["task_name"]
         num_epochs = config_params["num_epochs"]
         eval_steps = config_params["eval_steps"]
         save_steps = config_params["save_steps"]
@@ -1120,11 +1527,69 @@ class ACE:
         curator_frequency = config_params["curator_frequency"]
 
         # Initialize tracking
-        results = []
-        pre_train_post_train_results = []
-        error_logs = []
-        best_accuracy = 0.0
-        self.best_playbook = self.playbook
+        results = list((resume_checkpoint or {}).get("results") or [])
+        pre_train_post_train_results = list(
+            (resume_checkpoint or {}).get("pre_train_post_train_results") or []
+        )
+        error_logs = list((resume_checkpoint or {}).get("error_logs") or [])
+        best_accuracy = float((resume_checkpoint or {}).get("best_accuracy") or 0.0)
+        self.best_playbook = self.best_playbook if resume_checkpoint else self.playbook
+        start_epoch = int((resume_checkpoint or {}).get("epoch") or 1)
+        start_step = int((resume_checkpoint or {}).get("next_step") or 1)
+        start_global_step = int((resume_checkpoint or {}).get("global_step") or 0)
+        epoch_answers_pre_train = list((resume_checkpoint or {}).get("epoch_answers_pre_train") or [])
+        epoch_targets_pre_train = list((resume_checkpoint or {}).get("epoch_targets_pre_train") or [])
+        epoch_answers_post_train = list((resume_checkpoint or {}).get("epoch_answers_post_train") or [])
+        epoch_targets_post_train = list((resume_checkpoint or {}).get("epoch_targets_post_train") or [])
+
+        def save_training_artifacts() -> None:
+            results_path = os.path.join(save_path, "train_results.json")
+            with open(results_path, "w", encoding="utf-8") as f:
+                json.dump(
+                    {
+                        "best_accuracy": best_accuracy,
+                        "results": results,
+                    },
+                    f,
+                    indent=2,
+                )
+
+            error_logs_path = os.path.join(save_path, "val_results.json")
+            with open(error_logs_path, "w", encoding="utf-8") as f:
+                json.dump(error_logs, f, indent=2)
+
+            pre_train_post_train_results_path = os.path.join(
+                save_path, "pre_train_post_train_results.json"
+            )
+            with open(pre_train_post_train_results_path, "w", encoding="utf-8") as f:
+                json.dump(pre_train_post_train_results, f, indent=2)
+
+            final_playbook_path = os.path.join(save_path, "final_playbook.txt")
+            with open(final_playbook_path, "w", encoding="utf-8") as f:
+                f.write(self.playbook)
+
+            best_playbook_path = os.path.join(save_path, "best_playbook.txt")
+            with open(best_playbook_path, "w", encoding="utf-8") as f:
+                f.write(self.best_playbook)
+
+        def checkpoint(next_epoch: int, next_step_value: int, global_step: int) -> None:
+            payload = {
+                "epoch": next_epoch,
+                "next_step": next_step_value,
+                "global_step": global_step,
+                "best_accuracy": best_accuracy,
+                "next_global_bullet_id": self.next_global_id,
+                "current_playbook": self.playbook,
+                "best_playbook": self.best_playbook,
+                "results": results,
+                "error_logs": error_logs,
+                "pre_train_post_train_results": pre_train_post_train_results,
+                "epoch_answers_pre_train": epoch_answers_pre_train,
+                "epoch_targets_pre_train": epoch_targets_pre_train,
+                "epoch_answers_post_train": epoch_answers_post_train,
+                "epoch_targets_post_train": epoch_targets_post_train,
+            }
+            self._persist_training_checkpoint_files(save_path, payload)
 
         print(f"Total epochs: {num_epochs}")
         print(f"Train samples per epoch: {len(train_samples)}")
@@ -1133,19 +1598,22 @@ class ACE:
         print(f"Evaluation frequency: every {eval_steps} steps\n")
 
         # Training loop
-        for epoch in range(1, num_epochs + 1):
+        for epoch in range(start_epoch, num_epochs + 1):
             print(f"\n{'=' * 60}")
             print(f"EPOCH {epoch}/{num_epochs}")
             print(f"{'=' * 60}")
 
-            epoch_answers_pre_train = []
-            epoch_targets_pre_train = []
-            epoch_answers_post_train = []
-            epoch_targets_post_train = []
+            if epoch != start_epoch:
+                epoch_answers_pre_train = []
+                epoch_targets_pre_train = []
+                epoch_answers_post_train = []
+                epoch_targets_post_train = []
 
-            for step, task_dict in enumerate(train_samples):
-                step += 1
+            for step, task_dict in enumerate(train_samples, start=1):
+                if epoch == start_epoch and step < start_step:
+                    continue
                 print(f"\n--- Step {step}/{len(train_samples)} ---")
+                current_global_step = ((epoch - 1) * len(train_samples)) + step
 
                 target = task_dict.get("target", "")
 
@@ -1186,6 +1654,8 @@ class ACE:
                     )
                     with open(intermediate_path, "w") as f:
                         f.write(self.playbook)
+                    if checkpoint_enabled:
+                        checkpoint(epoch, step + 1, current_global_step)
 
                 # Periodic evaluation
                 if step % eval_steps == 0:
@@ -1258,21 +1728,17 @@ class ACE:
                             self.best_playbook = self.playbook
                             print(f"🎉 New best accuracy: {best_accuracy:.3f}")
 
-                    # Save results
-                    results_path = os.path.join(save_path, "train_results.json")
-                    with open(results_path, "w") as f:
-                        json.dump(
-                            {
-                                "best_accuracy": best_accuracy,
-                                "results": results,
-                            },
-                            f,
-                            indent=2,
-                        )
+                    save_training_artifacts()
+                    if checkpoint_enabled:
+                        checkpoint(epoch, step + 1, current_global_step)
 
-                    error_logs_path = os.path.join(save_path, "val_results.json")
-                    with open(error_logs_path, "w") as f:
-                        json.dump(error_logs, f, indent=2)
+                if stop_after_step is not None and current_global_step >= int(stop_after_step):
+                    save_training_artifacts()
+                    checkpoint(epoch, step + 1, current_global_step)
+                    return {
+                        "training_results": {"best_validation_accuracy": best_accuracy},
+                        "stopped_early": True,
+                    }
 
             # End of epoch - save final playbook
             epoch_playbook_path = os.path.join(
@@ -1280,34 +1746,10 @@ class ACE:
             )
             with open(epoch_playbook_path, "w") as f:
                 f.write(self.playbook)
+            if checkpoint_enabled:
+                checkpoint(epoch + 1, 1, max(start_global_step, epoch * len(train_samples)))
 
-        # Save training results
-        results_path = os.path.join(save_path, "train_results.json")
-        with open(results_path, "w") as f:
-            json.dump(
-                {
-                    "best_accuracy": best_accuracy,
-                    "results": results,
-                },
-                f,
-                indent=2,
-            )
-
-        pre_train_post_train_results_path = os.path.join(
-            save_path, "pre_train_post_train_results.json"
-        )
-        with open(pre_train_post_train_results_path, "w") as f:
-            json.dump(pre_train_post_train_results, f, indent=2)
-
-        # Save final playbook
-        final_playbook_path = os.path.join(save_path, f"final_playbook.txt")
-        with open(final_playbook_path, "w") as f:
-            f.write(self.playbook)
-
-        # Save best playbook
-        best_playbook_path = os.path.join(save_path, f"best_playbook.txt")
-        with open(best_playbook_path, "w") as f:
-            f.write(self.best_playbook)
+        save_training_artifacts()
 
         print(f"\n{'=' * 60}")
         print(f"OFFLINE TRAINING COMPLETE")
@@ -1315,7 +1757,10 @@ class ACE:
         print(f"Best Validation Accuracy: {best_accuracy:.3f}")
         print(f"{'=' * 60}\n")
 
-        return {"best_validation_accuracy": best_accuracy}
+        return {
+            "training_results": {"best_validation_accuracy": best_accuracy},
+            "stopped_early": False,
+        }
 
     def test(
         self,

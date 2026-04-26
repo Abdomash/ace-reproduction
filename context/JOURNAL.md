@@ -1,5 +1,30 @@
 # Journal
 
+## 2026-04-26 - Resumable staged FiNER/AppWorld runs and lifecycle metadata
+
+Added resumable staged execution for new FiNER runs and for the new single-run
+AppWorld full workflow.
+
+**What changed**:
+- New resumable runs now write `run_state.json` and append-only `sessions.jsonl`.
+- FiNER offline runs now expose explicit stages: `baseline-eval`, `train`,
+  and `final-eval`, with `--resume-from`, `--checkpoint-enabled`,
+  `--stop-after-stage`, and `--stop-after-step`.
+- `appworld_full_eval` now creates one run directory and runs
+  `adapt -> eval-normal -> eval-challenge` inside it, with
+  `--resume-from`, `--checkpoint-enabled`, `--stop-after-stage`,
+  `--stop-after-task`, and `--checkpoint-every-task`.
+- AppWorld full runs now store stage-local artifacts under `stages/` and
+  export lifecycle fields through `summary/run_summary.json`.
+- Analysis/discovery now prefer `run_state.json` when present and otherwise
+  treat legacy runs as completed with checkpointing disabled.
+
+**Manual historical override**:
+- Backfilled
+  `results/ace-finer/full/openrouter-gpt-oss-120b/offline_seed-42_20260422_043011/run_state.json`
+  and marked that run `failed`. The run remains a valid historical artifact;
+  only its lifecycle interpretation changed.
+
 ## 2026-04-20 - Fixed zero latency/cost-timing in MAESTRO telemetry
 
 The MAESTRO analysis run for `openrouter-gpt-oss-120b` showed all LLM-related

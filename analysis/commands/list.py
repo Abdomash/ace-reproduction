@@ -14,6 +14,10 @@ def run(args):
             "config": run.config_slug,
             "run_id": run.run_leaf,
             "timestamp": format_timestamp(run.timestamp) or run.timestamp,
+            "status": run.status,
+            "checkpointing": run.checkpointing_enabled,
+            "resume_count": run.resume_count,
+            "current_stage": run.current_stage,
         }
         for run in runs
     ]

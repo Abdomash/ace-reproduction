@@ -46,6 +46,12 @@ Options (override defaults):
   --telemetry-interval <sec>
   --appworld-root <path>
   --appworld-max-steps <int>
+  --resume-from <run_dir>
+  --checkpoint-enabled
+  --stop-after-stage <stage>
+  --stop-after-step <n>
+  --stop-after-task <n>
+  --checkpoint-every-task <n>
   --dry-run
 
 Environment variables for API keys (depending on --provider):
@@ -82,10 +88,17 @@ SEED="42"
 MODE="offline"
 EVAL_STEPS="100"
 TEST_WORKERS="${TEST_WORKERS:-20}"
+TEST_WORKERS_SET="0"
 MAX_TOKENS="${MAX_TOKENS:-4096}"
 TELEMETRY="1"
 TELEMETRY_INTERVAL=""
 APPWORLD_MAX_STEPS="30"
+RESUME_FROM=""
+CHECKPOINT_ENABLED="0"
+STOP_AFTER_STAGE=""
+STOP_AFTER_STEP=""
+STOP_AFTER_TASK=""
+CHECKPOINT_EVERY_TASK="1"
 DRY_RUN="0"
 
 while [[ $# -gt 0 ]]; do
@@ -105,12 +118,18 @@ while [[ $# -gt 0 ]]; do
     --seed) SEED="$2"; shift 2 ;;
     --mode) MODE="$2"; shift 2 ;;
     --eval-steps|--eval_steps) EVAL_STEPS="$2"; shift 2 ;;
-    --test-workers|--test_workers) TEST_WORKERS="$2"; shift 2 ;;
+    --test-workers|--test_workers) TEST_WORKERS="$2"; TEST_WORKERS_SET="1"; shift 2 ;;
     --max-tokens|--max_tokens) MAX_TOKENS="$2"; shift 2 ;;
     --telemetry) TELEMETRY="$2"; shift 2 ;;
     --telemetry-interval) TELEMETRY_INTERVAL="$2"; shift 2 ;;
     --appworld-root) APPWORLD_ROOT="$2"; shift 2 ;;
     --appworld-max-steps) APPWORLD_MAX_STEPS="$2"; shift 2 ;;
+    --resume-from) RESUME_FROM="$2"; shift 2 ;;
+    --checkpoint-enabled) CHECKPOINT_ENABLED="1"; shift ;;
+    --stop-after-stage) STOP_AFTER_STAGE="$2"; shift 2 ;;
+    --stop-after-step) STOP_AFTER_STEP="$2"; shift 2 ;;
+    --stop-after-task) STOP_AFTER_TASK="$2"; shift 2 ;;
+    --checkpoint-every-task) CHECKPOINT_EVERY_TASK="$2"; shift 2 ;;
     --dry-run) DRY_RUN="1"; shift ;;
     -h|--help) usage; exit 0 ;;
     *)
@@ -186,6 +205,18 @@ fi
 TELEMETRY_ARGS="$(telemetry_args)"
 
 common_finance_args="--api_provider ${API_PROVIDER} --generator_model ${GENERATOR_MODEL} --reflector_model ${REFLECTOR_MODEL} --curator_model ${CURATOR_MODEL} --seed ${SEED} --config_name ${CONFIG_NAME} --save_path ${SAVE_PATH} ${IDENTITY_ARGS} --eval_steps ${EVAL_STEPS} --test_workers ${TEST_WORKERS} --max_tokens ${MAX_TOKENS} ${TELEMETRY_ARGS}"
+if [[ -n "${RESUME_FROM}" ]]; then
+  common_finance_args="${common_finance_args} --resume-from ${RESUME_FROM}"
+fi
+if [[ "${CHECKPOINT_ENABLED}" == "1" ]]; then
+  common_finance_args="${common_finance_args} --checkpoint-enabled"
+fi
+if [[ -n "${STOP_AFTER_STAGE}" ]]; then
+  common_finance_args="${common_finance_args} --stop-after-stage ${STOP_AFTER_STAGE}"
+fi
+if [[ -n "${STOP_AFTER_STEP}" ]]; then
+  common_finance_args="${common_finance_args} --stop-after-step ${STOP_AFTER_STEP}"
+fi
 
 if [[ -n "${GENERATOR_PROVIDER}" ]]; then
   common_finance_args="${common_finance_args} --generator_provider ${GENERATOR_PROVIDER}"
@@ -486,8 +517,30 @@ case "${PRESET}" in
     ;;
 
   appworld_full_eval)
-    run_appworld "eval_only" "test_normal" "${CONFIG_NAME}_test_normal" "${SAVE_PATH}" "${APPWORLD_MAX_STEPS}" "${APPWORLD_PLAYBOOK_PATH:-${APPWORLD_ROOT}/experiments/playbooks/appworld_online_trained_playbook.txt}"
-    run_appworld "eval_only" "test_challenge" "${CONFIG_NAME}_test_challenge" "${SAVE_PATH}" "${APPWORLD_MAX_STEPS}" "${APPWORLD_PLAYBOOK_PATH:-${APPWORLD_ROOT}/experiments/playbooks/appworld_online_trained_playbook.txt}"
+    APPWORLD_FULL_TEST_WORKERS="${TEST_WORKERS}"
+    if [[ "${TEST_WORKERS_SET}" != "1" ]]; then
+      APPWORLD_FULL_TEST_WORKERS="1"
+    fi
+    local_cmd="${PYTHON_BIN} ${REPO_ROOT}/runners/ace/run_appworld_full.py --appworld-root ${APPWORLD_ROOT} --save-path ${SAVE_PATH} --config-name ${CONFIG_NAME} --seed ${SEED} --generator-provider $(provider_for_role "${GENERATOR_PROVIDER}") --generator-model ${GENERATOR_MODEL} --reflector-provider $(provider_for_role "${REFLECTOR_PROVIDER}") --reflector-model ${REFLECTOR_MODEL} --curator-provider $(provider_for_role "${CURATOR_PROVIDER}") --curator-model ${CURATOR_MODEL} --max-steps ${APPWORLD_MAX_STEPS} --max-tokens ${MAX_TOKENS} --telemetry ${TELEMETRY} --test-workers ${APPWORLD_FULL_TEST_WORKERS} --initial-playbook-path ${APPWORLD_PLAYBOOK_PATH:-${APPWORLD_ROOT}/experiments/playbooks/appworld_initial_playbook.txt}"
+    if [[ -n "${TELEMETRY_INTERVAL}" ]]; then
+      local_cmd="${local_cmd} --telemetry-interval ${TELEMETRY_INTERVAL}"
+    fi
+    if [[ -n "${RESUME_FROM}" ]]; then
+      local_cmd="${local_cmd} --resume-from ${RESUME_FROM}"
+    fi
+    if [[ "${CHECKPOINT_ENABLED}" == "1" ]]; then
+      local_cmd="${local_cmd} --checkpoint-enabled"
+    fi
+    if [[ -n "${STOP_AFTER_STAGE}" ]]; then
+      local_cmd="${local_cmd} --stop-after-stage ${STOP_AFTER_STAGE}"
+    fi
+    if [[ -n "${STOP_AFTER_TASK}" ]]; then
+      local_cmd="${local_cmd} --stop-after-task ${STOP_AFTER_TASK}"
+    fi
+    if [[ -n "${CHECKPOINT_EVERY_TASK}" ]]; then
+      local_cmd="${local_cmd} --checkpoint-every-task ${CHECKPOINT_EVERY_TASK}"
+    fi
+    run_cmd "${local_cmd}"
     ;;
 
   all_full)
@@ -506,8 +559,11 @@ case "${PRESET}" in
     fi
     cd "${ACE_ROOT}"
     run_cmd "python -m eval.finance.run --task_name finer --mode offline ${all_full_finance_args}"
-    run_appworld "eval_only" "test_normal" "${CONFIG_NAME}_test_normal" "${appworld_save_path}" "${APPWORLD_MAX_STEPS}" "${APPWORLD_PLAYBOOK_PATH:-${APPWORLD_ROOT}/experiments/playbooks/appworld_online_trained_playbook.txt}"
-    run_appworld "eval_only" "test_challenge" "${CONFIG_NAME}_test_challenge" "${appworld_save_path}" "${APPWORLD_MAX_STEPS}" "${APPWORLD_PLAYBOOK_PATH:-${APPWORLD_ROOT}/experiments/playbooks/appworld_online_trained_playbook.txt}"
+    APPWORLD_FULL_TEST_WORKERS="${TEST_WORKERS}"
+    if [[ "${TEST_WORKERS_SET}" != "1" ]]; then
+      APPWORLD_FULL_TEST_WORKERS="1"
+    fi
+    run_cmd "${PYTHON_BIN} ${REPO_ROOT}/runners/ace/run_appworld_full.py --appworld-root ${APPWORLD_ROOT} --save-path ${appworld_save_path} --config-name ${CONFIG_NAME} --seed ${SEED} --generator-provider $(provider_for_role "${GENERATOR_PROVIDER}") --generator-model ${GENERATOR_MODEL} --reflector-provider $(provider_for_role "${REFLECTOR_PROVIDER}") --reflector-model ${REFLECTOR_MODEL} --curator-provider $(provider_for_role "${CURATOR_PROVIDER}") --curator-model ${CURATOR_MODEL} --max-steps ${APPWORLD_MAX_STEPS} --max-tokens ${MAX_TOKENS} --telemetry ${TELEMETRY} --test-workers ${APPWORLD_FULL_TEST_WORKERS} --initial-playbook-path ${APPWORLD_PLAYBOOK_PATH:-${APPWORLD_ROOT}/experiments/playbooks/appworld_initial_playbook.txt}"
     ;;
 
   *)

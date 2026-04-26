@@ -65,6 +65,24 @@ def directory_size(path: Path) -> int:
     return total
 
 
+def stage_run_dirs(run_dir: Path) -> list[tuple[str | None, Path]]:
+    direct_tasks = run_dir / "tasks"
+    if direct_tasks.exists():
+        return [(None, run_dir)]
+    stages_dir = run_dir / "stages"
+    if not stages_dir.exists():
+        return []
+    stage_dirs: list[tuple[str | None, Path]] = []
+    for stage_dir in sorted(stages_dir.iterdir()):
+        if stage_dir.is_dir():
+            stage_dirs.append((stage_dir.name, stage_dir))
+    return stage_dirs
+
+
+def stage_task_key(stage_name: str | None, task_id: str) -> str:
+    return f"{stage_name}:{task_id}" if stage_name else task_id
+
+
 def appworld_bin(appworld_root: Path) -> str:
     candidate = appworld_root / ".venv" / "bin" / "appworld"
     if candidate.exists():
@@ -164,6 +182,34 @@ def summarize_evaluation(run_dir: Path, dataset: str) -> dict[str, Any]:
     }
 
 
+def summarize_full_run_evaluations(run_dir: Path) -> dict[str, Any]:
+    stage_specs = {
+        "eval-normal": "test_normal",
+        "eval-challenge": "test_challenge",
+    }
+    stages: dict[str, Any] = {}
+    task_count = 0
+    failure_count = 0
+    available = False
+    for stage_name, dataset in stage_specs.items():
+        stage_dir = run_dir / "stages" / stage_name
+        summary = summarize_evaluation(stage_dir, dataset)
+        stages[stage_name] = summary
+        available = available or bool(summary.get("available"))
+        task_count += int(summary.get("task_count") or 0)
+        failure_count += int(summary.get("failure_count") or 0)
+    normal_aggregate = ((stages.get("eval-normal") or {}).get("aggregate") or {})
+    challenge_aggregate = ((stages.get("eval-challenge") or {}).get("aggregate") or {})
+    return {
+        "available": available,
+        "aggregate": normal_aggregate,
+        "challenge_aggregate": challenge_aggregate,
+        "task_count": task_count,
+        "failure_count": failure_count,
+        "stages": stages,
+    }
+
+
 def compact_lm_call(task_id: str, row: dict[str, Any]) -> dict[str, Any]:
     output = row.get("output") if isinstance(row.get("output"), dict) else {}
     usage = output.get("usage") if isinstance(output.get("usage"), dict) else {}
@@ -212,8 +258,7 @@ def compact_lm_call(task_id: str, row: dict[str, Any]) -> dict[str, Any]:
 
 def summarize_lm_calls(run_dir: Path, summary_dir: Path) -> dict[str, Any]:
     compact_path = summary_dir / "llm_calls.compact.jsonl"
-    detailed_paths = sorted((run_dir / "detailed_llm_logs").glob("*.json"))
-    raw_paths = detailed_paths or sorted((run_dir / "tasks").glob("*/logs/lm_calls.jsonl"))
+    stage_dirs = stage_run_dirs(run_dir)
     compact_rows = []
     role_counts = Counter()
     model_counts = Counter()
@@ -222,21 +267,32 @@ def summarize_lm_calls(run_dir: Path, summary_dir: Path) -> dict[str, Any]:
     task_call_counts = Counter()
     parse_errors = 0
 
-    if not raw_paths and compact_path.exists():
+    raw_entries: list[tuple[str | None, Path, str]] = []
+    for stage_name, stage_dir in stage_dirs:
+        detailed_paths = sorted((stage_dir / "detailed_llm_logs").glob("*.json"))
+        if detailed_paths:
+            raw_entries.extend((stage_name, path, "detailed") for path in detailed_paths)
+        else:
+            raw_entries.extend(
+                (stage_name, path, "task")
+                for path in sorted((stage_dir / "tasks").glob("*/logs/lm_calls.jsonl"))
+            )
+
+    if not raw_entries and compact_path.exists():
         for row in iter_jsonl(compact_path):
             if not row.get("_parse_error"):
                 compact_rows.append(row)
 
-    for path in raw_paths:
-        if path.parent.name == "detailed_llm_logs":
-            task_id = str(path.stem)
+    for stage_name, path, source_kind in raw_entries:
+        if source_kind == "detailed":
+            task_id = stage_task_key(stage_name, str(path.stem))
             try:
                 data = read_json(path)
             except Exception:
                 data = None
             rows = [data] if isinstance(data, dict) else []
         else:
-            task_id = path.parts[-3]
+            task_id = stage_task_key(stage_name, path.parts[-3])
             rows = iter_jsonl(path)
         for row in rows:
             if row.get("_parse_error"):
@@ -322,14 +378,19 @@ def summarize_lm_calls(run_dir: Path, summary_dir: Path) -> dict[str, Any]:
 
 def summarize_api_calls(run_dir: Path, summary_dir: Path) -> dict[str, Any]:
     compact_path = summary_dir / "api_calls.summary.jsonl"
-    raw_paths = sorted((run_dir / "tasks").glob("*/logs/api_calls.jsonl"))
     task_counts = {}
     endpoint_counts = Counter()
     method_counts = Counter()
     parse_errors = 0
     rows = []
 
-    if not raw_paths and compact_path.exists():
+    raw_entries = []
+    for stage_name, stage_dir in stage_run_dirs(run_dir):
+        raw_entries.extend(
+            (stage_name, path) for path in sorted((stage_dir / "tasks").glob("*/logs/api_calls.jsonl"))
+        )
+
+    if not raw_entries and compact_path.exists():
         for row in iter_jsonl(compact_path):
             if not row.get("_parse_error"):
                 rows.append(row)
@@ -339,8 +400,8 @@ def summarize_api_calls(run_dir: Path, summary_dir: Path) -> dict[str, Any]:
                 for endpoint, value in (row.get("endpoint_counts") or {}).items():
                     endpoint_counts[str(endpoint)] += int(value)
 
-    for path in raw_paths:
-        task_id = path.parts[-3]
+    for stage_name, path in raw_entries:
+        task_id = stage_task_key(stage_name, path.parts[-3])
         count = 0
         per_task_endpoint_counts = Counter()
         for row in iter_jsonl(path):
@@ -384,7 +445,6 @@ def iter_metric_records(path: Path) -> Iterable[dict[str, Any]]:
 
 
 def summarize_telemetry(run_dir: Path) -> dict[str, Any]:
-    telemetry_dir = run_dir / "telemetry"
     metric_summary: dict[str, dict[str, Any]] = {}
     metric_file_count = 0
     trace_file_count = 0
@@ -395,73 +455,77 @@ def summarize_telemetry(run_dir: Path) -> dict[str, Any]:
     llm_cache_presence = Counter()
     wall_time_by_agent = Counter()
 
-    for path in sorted(telemetry_dir.glob("*.metrics.jsonl")):
-        metric_file_count += 1
-        for record in iter_metric_records(path):
-            name = record.get("metric_name")
-            if not name:
-                continue
-            values = []
-            for point in record.get("data_points", []):
-                if isinstance(point, dict) and point.get("value") is not None:
-                    try:
-                        values.append(float(point["value"]))
-                    except (TypeError, ValueError):
-                        pass
-            if not values:
-                continue
-            item = metric_summary.setdefault(
-                name,
-                {"count": 0, "sum": 0.0, "min": None, "max": None, "unit": record.get("unit")},
-            )
-            item["count"] += len(values)
-            item["sum"] += sum(values)
-            item["min"] = min(values) if item["min"] is None else min(item["min"], min(values))
-            item["max"] = max(values) if item["max"] is None else max(item["max"], max(values))
+    for _, stage_dir in stage_run_dirs(run_dir):
+        telemetry_dir = stage_dir / "telemetry"
+        for path in sorted(telemetry_dir.glob("*.metrics.jsonl")):
+            metric_file_count += 1
+            for record in iter_metric_records(path):
+                name = record.get("metric_name")
+                if not name:
+                    continue
+                values = []
+                for point in record.get("data_points", []):
+                    if isinstance(point, dict) and point.get("value") is not None:
+                        try:
+                            values.append(float(point["value"]))
+                        except (TypeError, ValueError):
+                            pass
+                if not values:
+                    continue
+                item = metric_summary.setdefault(
+                    name,
+                    {"count": 0, "sum": 0.0, "min": None, "max": None, "unit": record.get("unit")},
+                )
+                item["count"] += len(values)
+                item["sum"] += sum(values)
+                item["min"] = min(values) if item["min"] is None else min(item["min"], min(values))
+                item["max"] = max(values) if item["max"] is None else max(item["max"], max(values))
 
     for item in metric_summary.values():
         item["avg"] = item["sum"] / item["count"] if item["count"] else None
 
-    for path in sorted(telemetry_dir.glob("*.otel.jsonl")):
-        trace_file_count += 1
-        for row in iter_jsonl(path):
-            if row.get("_parse_error"):
-                continue
-            span_count += 1
-            span_name_counts[str(row.get("name", "unknown"))] += 1
-            agent = row.get("agent_name") or (row.get("attributes") or {}).get("agent.name")
-            if agent:
-                agent_counts[str(agent)] += 1
-            attrs = row.get("attributes") or {}
-            if row.get("name") == "ace.call_llm":
-                for key, target in (
-                    ("gen_ai.usage.input_tokens", "prompt_num_tokens"),
-                    ("gen_ai.usage.output_tokens", "response_num_tokens"),
-                    ("gen_ai.usage.reasoning_tokens", "reasoning_num_tokens"),
-                    ("gen_ai.usage.total_tokens", "total_num_tokens"),
-                    ("llm.usage.cached_input_tokens", "cached_input_tokens"),
-                    ("llm.usage.cached_output_tokens", "cached_output_tokens"),
-                    ("llm.cost_usd", "cost_usd"),
-                    ("llm.cost.usd", "cost_usd_legacy"),
-                    ("llm.call_time_seconds", "call_time_seconds"),
-                    ("llm.wall_time_seconds", "wall_time_seconds"),
-                    ("wall_time_seconds", "span_wall_time_seconds"),
-                ):
-                    value = attrs.get(key)
-                    if value is None:
-                        continue
-                    if target in {"cached_input_tokens", "cached_output_tokens"}:
-                        llm_cache_presence[target] += 1
+    for _, stage_dir in stage_run_dirs(run_dir):
+        telemetry_dir = stage_dir / "telemetry"
+        for path in sorted(telemetry_dir.glob("*.otel.jsonl")):
+            trace_file_count += 1
+            for row in iter_jsonl(path):
+                if row.get("_parse_error"):
+                    continue
+                span_count += 1
+                span_name_counts[str(row.get("name", "unknown"))] += 1
+                agent = row.get("agent_name") or (row.get("attributes") or {}).get("agent.name")
+                if agent:
+                    agent_counts[str(agent)] += 1
+                attrs = row.get("attributes") or {}
+                if row.get("name") == "ace.call_llm":
+                    for key, target in (
+                        ("gen_ai.usage.input_tokens", "prompt_num_tokens"),
+                        ("gen_ai.usage.output_tokens", "response_num_tokens"),
+                        ("gen_ai.usage.reasoning_tokens", "reasoning_num_tokens"),
+                        ("gen_ai.usage.total_tokens", "total_num_tokens"),
+                        ("llm.usage.cached_input_tokens", "cached_input_tokens"),
+                        ("llm.usage.cached_output_tokens", "cached_output_tokens"),
+                        ("llm.cost_usd", "cost_usd"),
+                        ("llm.cost.usd", "cost_usd_legacy"),
+                        ("llm.call_time_seconds", "call_time_seconds"),
+                        ("llm.wall_time_seconds", "wall_time_seconds"),
+                        ("wall_time_seconds", "span_wall_time_seconds"),
+                    ):
+                        value = attrs.get(key)
+                        if value is None:
+                            continue
+                        if target in {"cached_input_tokens", "cached_output_tokens"}:
+                            llm_cache_presence[target] += 1
+                        try:
+                            llm_totals[target] += float(value)
+                        except (TypeError, ValueError):
+                            pass
+                wall_time = attrs.get("wall_time_seconds") or attrs.get("duration.wall_time_seconds")
+                if agent and wall_time is not None:
                     try:
-                        llm_totals[target] += float(value)
+                        wall_time_by_agent[str(agent)] += float(wall_time)
                     except (TypeError, ValueError):
                         pass
-            wall_time = attrs.get("wall_time_seconds") or attrs.get("duration.wall_time_seconds")
-            if agent and wall_time is not None:
-                try:
-                    wall_time_by_agent[str(agent)] += float(wall_time)
-                except (TypeError, ValueError):
-                    pass
 
     llm_totals_dict = dict(llm_totals)
     for key in ("cached_input_tokens", "cached_output_tokens"):
@@ -521,15 +585,45 @@ def prune_raw_task_details(run_dir: Path) -> dict[str, Any]:
 
 
 def build_run_summary(run_dir: Path, dataset: str) -> dict[str, Any]:
-    return {
+    stage_count = len(stage_run_dirs(run_dir))
+    task_directory_count = 0
+    tasks_size_bytes = 0
+    telemetry_size_bytes = 0
+    evaluation_size_bytes = directory_size(run_dir / "evaluations")
+    for _, stage_dir in stage_run_dirs(run_dir):
+        task_directory_count += len([p for p in (stage_dir / "tasks").glob("*") if p.is_dir()])
+        tasks_size_bytes += directory_size(stage_dir / "tasks")
+        telemetry_size_bytes += directory_size(stage_dir / "telemetry")
+        evaluation_size_bytes += directory_size(stage_dir / "evaluations")
+    summary = {
         "run_dir": str(run_dir),
         "dataset": dataset,
+        "mode": "full" if stage_count else None,
         "total_size_bytes": directory_size(run_dir),
-        "tasks_size_bytes": directory_size(run_dir / "tasks"),
-        "telemetry_size_bytes": directory_size(run_dir / "telemetry"),
-        "evaluation_size_bytes": directory_size(run_dir / "evaluations"),
-        "task_directory_count": len([p for p in (run_dir / "tasks").glob("*") if p.is_dir()]),
+        "tasks_size_bytes": tasks_size_bytes or directory_size(run_dir / "tasks"),
+        "telemetry_size_bytes": telemetry_size_bytes or directory_size(run_dir / "telemetry"),
+        "evaluation_size_bytes": evaluation_size_bytes,
+        "task_directory_count": task_directory_count,
+        "stage_count": stage_count,
     }
+    run_state = load_json(run_dir / "run_state.json") or {}
+    for key in (
+        "status",
+        "checkpointing_enabled",
+        "resume_enabled",
+        "has_checkpoints",
+        "resume_count",
+        "current_stage",
+        "last_completed_stage",
+        "active_runtime_seconds",
+        "started_at",
+        "last_resumed_at",
+        "last_checkpoint_at",
+        "completed_at",
+        "failure_reason",
+    ):
+        summary[key] = run_state.get(key)
+    return summary
 
 
 def parse_args() -> argparse.Namespace:
@@ -552,7 +646,7 @@ def main() -> int:
     if not run_dir.exists():
         print(f"AppWorld run directory does not exist; skipping summary export: {run_dir}")
         return 0
-    if not (run_dir / "tasks").exists():
+    if not (run_dir / "tasks").exists() and not (run_dir / "stages").exists():
         print(f"AppWorld run directory has no tasks/ directory; skipping summary export: {run_dir}")
         return 0
 
@@ -572,11 +666,16 @@ def main() -> int:
         if evaluation_run.get("ran") and evaluation_run.get("returncode") not in (0, None):
             print("AppWorld evaluation failed; continuing with available artifacts.", file=sys.stderr)
 
-    evaluation_summary = summarize_evaluation(run_dir, args.dataset)
+    if (run_dir / "stages").exists():
+        evaluation_summary = summarize_full_run_evaluations(run_dir)
+        run_summary_dataset = "full"
+    else:
+        evaluation_summary = summarize_evaluation(run_dir, args.dataset)
+        run_summary_dataset = args.dataset
     llm_summary = summarize_lm_calls(run_dir, summary_dir)
     api_summary = summarize_api_calls(run_dir, summary_dir)
     telemetry_summary = summarize_telemetry(run_dir)
-    run_summary = build_run_summary(run_dir, args.dataset)
+    run_summary = build_run_summary(run_dir, run_summary_dataset)
 
     write_json(summary_dir / "evaluation_summary.json", evaluation_summary)
     write_json(summary_dir / "llm_summary.json", llm_summary)

@@ -19,6 +19,13 @@ class RunRecord:
     timestamp: str | None
     mode: str | None
     run_group_path: Path | None
+    status: str | None
+    checkpointing_enabled: bool | None
+    has_checkpoints: bool | None
+    resume_count: int | None
+    current_stage: str | None
+    last_completed_stage: str | None
+    active_runtime_seconds: float | None
 
     @property
     def repo_relative_path(self) -> str:
@@ -44,6 +51,7 @@ def _finer_run_records() -> list[RunRecord]:
         identity = load_json(result_path_file) or {}
         run_config = load_json(run_dir / "run_config.json") or {}
         config = run_config.get("config") or {}
+        run_state = load_json(run_dir / "run_state.json") or {}
         benchmark_raw = identity.get("benchmark") or config.get("benchmark") or "ace-finer"
         config_dir = run_dir.parent
         runs.append(
@@ -58,6 +66,13 @@ def _finer_run_records() -> list[RunRecord]:
                 timestamp=identity.get("timestamp") or extract_timestamp(run_dir.name),
                 mode=identity.get("mode") or run_config.get("mode") or config.get("mode"),
                 run_group_path=(config_dir / "run_group.json") if (config_dir / "run_group.json").exists() else None,
+                status=run_state.get("status") or identity.get("status") or "completed",
+                checkpointing_enabled=run_state.get("checkpointing_enabled", identity.get("checkpointing_enabled", False)),
+                has_checkpoints=run_state.get("has_checkpoints", identity.get("has_checkpoints", False)),
+                resume_count=run_state.get("resume_count", identity.get("resume_count", 0)),
+                current_stage=run_state.get("current_stage") or identity.get("current_stage"),
+                last_completed_stage=run_state.get("last_completed_stage") or identity.get("last_completed_stage"),
+                active_runtime_seconds=run_state.get("active_runtime_seconds", identity.get("active_runtime_seconds")),
             )
         )
     return runs
@@ -76,6 +91,7 @@ def _appworld_run_records() -> list[RunRecord]:
         run_type = parts[1] if len(parts) >= 2 else None
         config_slug = parts[2] if len(parts) >= 3 else None
         run_summary = load_json(summary_file) or {}
+        run_state = load_json(run_dir / "run_state.json") or {}
         runs.append(
             RunRecord(
                 path=run_dir,
@@ -88,6 +104,13 @@ def _appworld_run_records() -> list[RunRecord]:
                 timestamp=extract_timestamp(run_dir.name),
                 mode=run_summary.get("mode"),
                 run_group_path=(run_dir.parent / "run_group.json") if (run_dir.parent / "run_group.json").exists() else None,
+                status=run_state.get("status") or run_summary.get("status") or "completed",
+                checkpointing_enabled=run_state.get("checkpointing_enabled", run_summary.get("checkpointing_enabled", False)),
+                has_checkpoints=run_state.get("has_checkpoints", run_summary.get("has_checkpoints", False)),
+                resume_count=run_state.get("resume_count", run_summary.get("resume_count", 0)),
+                current_stage=run_state.get("current_stage") or run_summary.get("current_stage"),
+                last_completed_stage=run_state.get("last_completed_stage") or run_summary.get("last_completed_stage"),
+                active_runtime_seconds=run_state.get("active_runtime_seconds", run_summary.get("active_runtime_seconds")),
             )
         )
     return runs

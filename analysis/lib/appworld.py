@@ -31,19 +31,32 @@ def summarize_run(run) -> dict:
         costs["total"]["cost_source"] = "summary/llm_calls.compact.jsonl"
         for role_data in costs["roles"].values():
             role_data["cost_source"] = "summary/llm_calls.compact.jsonl"
-    aggregate = evaluation_summary.get("aggregate") or {}
-    difficulty = evaluation_summary.get("difficulty") or {}
+    stages = evaluation_summary.get("stages") or {}
+    aggregate = evaluation_summary.get("aggregate") or ((stages.get("eval-normal") or {}).get("aggregate") or {})
+    challenge_aggregate = evaluation_summary.get("challenge_aggregate") or (
+        (stages.get("eval-challenge") or {}).get("aggregate") or {}
+    )
+    difficulty = evaluation_summary.get("difficulty") or ((stages.get("eval-normal") or {}).get("difficulty") or {})
     models_display = ", ".join(sorted((llm_summary.get("model_counts") or {}).keys()))
     summary = {
         "dataset": run_summary.get("dataset") or run_summary.get("split"),
         "task_goal_completion": aggregate.get("task_goal_completion"),
         "scenario_goal_completion": aggregate.get("scenario_goal_completion"),
+        "challenge_task_goal_completion": challenge_aggregate.get("task_goal_completion"),
+        "challenge_scenario_goal_completion": challenge_aggregate.get("scenario_goal_completion"),
         "failure_count": evaluation_summary.get("failure_count"),
         "task_count": evaluation_summary.get("task_count")
         or len((load_json(run.path / "evaluations" / "dev.json") or {}).get("individual", {})),
         "difficulty_1_pass_rate": _difficulty_rate(difficulty.get("1")),
         "difficulty_2_pass_rate": _difficulty_rate(difficulty.get("2")),
         "difficulty_3_pass_rate": _difficulty_rate(difficulty.get("3")),
+        "status": run_summary.get("status") or "completed",
+        "checkpointing_enabled": run_summary.get("checkpointing_enabled", False),
+        "has_checkpoints": run_summary.get("has_checkpoints", False),
+        "resume_count": run_summary.get("resume_count", 0),
+        "active_runtime_seconds": run_summary.get("active_runtime_seconds"),
+        "current_stage": run_summary.get("current_stage"),
+        "last_completed_stage": run_summary.get("last_completed_stage"),
     }
     telemetry = summarize_telemetry(trace_files, metrics_files)
     if telemetry.get("span_count") in (None, 0):
@@ -76,4 +89,5 @@ def summarize_run(run) -> dict:
         "api": api_summary,
         "llm": llm_summary,
         "run": run_summary,
+        "stages": stages,
     }
