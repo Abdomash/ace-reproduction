@@ -1,20 +1,3 @@
-──────────────────────────────────────────────────────── Overall Stats ─────────────────────────────────────────────────────────
-Num Passed Tests : 1
-Num Failed Tests : 1
-Num Total  Tests : 2
-──────────────────────────────────────────────────────────── Passes ────────────────────────────────────────────────────────────
->> Passed Requirement
-assert no model changes.
-──────────────────────────────────────────────────────────── Fails ─────────────────────────────────────────────────────────────
->> Failed Requirement
-assert answers match.
-```python
-with test(
-    """
-    assert answers match.
-    """
-):
-    test.answer(predicted_answer, ground_truth_answer)
-```
-----------
-AssertionError:  '20' == '396'
+version https://git-lfs.github.com/spec/v1
+oid sha256:6e573c7a8736fe78b6d4ae65e97d7aa5c0b0dedf5f595f328d4984020e3e99c6
+size 1415

@@ -1,15 +1,3 @@
-{
-  "enabled": true,
-  "trace_path": "/home/abdo/ace-reproduction/results/ace-appworld/subset/openrouter-gpt-oss-120b/ace_appworld_gptoss120b_subset_20260419_231443/telemetry/run_ace_appworld_gptoss120b_subset_20260419_231443_p7_of_20.otel.jsonl",
-  "metrics_path": "/home/abdo/ace-reproduction/results/ace-appworld/subset/openrouter-gpt-oss-120b/ace_appworld_gptoss120b_subset_20260419_231443/telemetry/ace-appworld_ace_appworld_gptoss120b_subset_20260419_231443_p7_of_20.metrics.jsonl",
-  "error": null,
-  "run_id": "ace_appworld_gptoss120b_subset_20260419_231443_p7_of_20",
-  "experiment_name": "ace_appworld_gptoss120b_subset_20260419_231443",
-  "runner_type": "ace",
-  "run_type": "ace-evaluation",
-  "dataset_name": "dev",
-  "task_id": null,
-  "num_processes": 20,
-  "process_index": 7,
-  "metrics_interval_seconds": 5.0
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:538fb68bdd888cc130efa6dd289eee9fdda9797a69094262c5fa2d3a25f34d02
+size 828

@@ -1,20 +1,3 @@
-──────────────────────────────────────────────────────── Overall Stats ─────────────────────────────────────────────────────────
-Num Passed Tests : 1
-Num Failed Tests : 1
-Num Total  Tests : 2
-──────────────────────────────────────────────────────────── Passes ────────────────────────────────────────────────────────────
->> Passed Requirement
-assert no model changes.
-──────────────────────────────────────────────────────────── Fails ─────────────────────────────────────────────────────────────
->> Failed Requirement
-assert answers match.
-```python
-with test(
-    """
-    assert answers match.
-    """
-):
-    test.answer(predicted_answer, ground_truth_answer)
-```
-----------
-AssertionError:  'null' == '275'
+version https://git-lfs.github.com/spec/v1
+oid sha256:562bf1079887fd96384d9709b5d40f5158b8ee9cd99dff7b24669663f2c8e07a
+size 1417

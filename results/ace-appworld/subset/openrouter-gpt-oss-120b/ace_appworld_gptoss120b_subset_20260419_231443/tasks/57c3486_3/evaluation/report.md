@@ -1,19 +1,3 @@
-──────────────────────────────────────────────────────── Overall Stats ─────────────────────────────────────────────────────────
-Num Passed Tests : 5
-Num Failed Tests : 0
-Num Total  Tests : 5
-──────────────────────────────────────────────────────────── Passes ────────────────────────────────────────────────────────────
->> Passed Requirement
-assert answers match.
->> Passed Requirement
-assert model changes match spotify.Song, spotify.SongLike.
->> Passed Requirement
-assert all newly song likes are from artists that main_user follows via models.changed_records
->> Passed Requirement
-assert all songs from artists main_user follows are liked now by using
-private_data.followed_artist_song_ids.
->> Passed Requirement
-assert none of the updated or removed song likes are from artists that main_user follows,
-using private_data.followed_artist_song_ids.
-──────────────────────────────────────────────────────────── Fails ─────────────────────────────────────────────────────────────
-None
+version https://git-lfs.github.com/spec/v1
+oid sha256:15274b9e75774b4a3344f45dd2c97c2a9682d6412af57efb9457e6420261592b
+size 1693
