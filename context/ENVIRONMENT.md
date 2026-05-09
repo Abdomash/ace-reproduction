@@ -33,9 +33,48 @@ TEST_WORKERS=20
 MAX_TOKENS=4096
 TELEMETRY=1
 TELEMETRY_INTERVAL=5
+MAMBA_ENV=ace-repr-runner
 ```
 
 Normally these overrides are not needed; defaults point at `projects/ace`, `projects/ace-appworld`, and `results`.
+
+## One-Time Cluster Setup
+
+For new SLURM hosts, the representative runner now has a one-time bootstrap helper:
+
+```bash
+runners/ace/setup_cluster_env.sh
+```
+
+Default behavior:
+
+- creates or reuses a conda-compatible env named `ace-repr-runner`
+- installs editable dependencies for:
+  - `projects/maestro[telemetry]`
+  - `projects/ace`
+  - `projects/ace-appworld`
+  - `projects/ace-appworld/experiments[simplified]`
+- runs `git lfs install` and `git lfs pull`
+- runs `appworld install --repo`
+- downloads AppWorld data
+- verifies AppWorld tests and tasks
+
+Useful overrides:
+
+```bash
+ENV_NAME=my-ace-env runners/ace/setup_cluster_env.sh
+APPWORLD_VERIFY=0 runners/ace/setup_cluster_env.sh
+APPWORLD_DOWNLOAD_DATA=0 runners/ace/setup_cluster_env.sh
+```
+
+The representative SLURM scripts can then activate the environment with either:
+
+```bash
+MAMBA_ENV=ace-repr-runner
+CONDA_ENV_NAME=ace-repr-runner
+```
+
+They also auto-load provider keys from the repository root `.env` when present.
 
 ## Project Example Files
 

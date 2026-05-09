@@ -4,6 +4,7 @@ This directory contains operational entrypoints for experiments.
 
 - `python -m runner ...`: canonical launcher for the new representative ACE subset campaign. The implementation lives inside the existing `runners/` package, and `runner.py` is just a thin compatibility entrypoint.
 - `ace/run_experiments.sh`: unified local ACE runner for FiNER and Formula, plus AppWorld presets. `appworld_full_eval` now uses a single-run staged orchestrator; `appworld_subset` and `appworld_adaptation` continue to launch through `projects/ace-appworld`.
+- `ace/setup_cluster_env.sh`: one-time conda/mamba bootstrap for SLURM hosts running the representative campaign.
 - `ace/setup_appworld.sh`: AppWorld setup helper for the vendored source tree.
 - `ace/subset/`: OpenRouter subset launchers with model-slug based wrappers.
 - `ace/slurm/`: SLURM jobs for cluster runs.
@@ -58,6 +59,12 @@ python -m runner launch --sample appworld_test_normal_repr --config expensive_re
 python -m runner launch --sample finer_repr_a --sample appworld_test_challenge_repr --config all_cheap --config all_expensive
 python -m runner resume --benchmark finer --sample finer_repr_a --config all_cheap --latest
 
+sbatch runners/ace/slurm/ace_repr_finer_launch.sbatch
+SAMPLES=finer_repr_a,finer_repr_b CONFIGS=all_cheap,expensive_reflector sbatch runners/ace/slurm/ace_repr_finer_launch.sbatch
+sbatch runners/ace/slurm/ace_repr_appworld_launch.sbatch
+SAMPLES=appworld_test_normal_repr,appworld_test_challenge_repr CONFIGS=all_expensive sbatch runners/ace/slurm/ace_repr_appworld_launch.sbatch
+BENCHMARK=appworld SAMPLE=appworld_test_normal_repr CONFIG=expensive_generator sbatch runners/ace/slurm/ace_repr_resume.sbatch
+
 runners/ace/run_experiments.sh finer_subset --dry-run
 runners/ace/run_experiments.sh finer_full --checkpoint-enabled --stop-after-stage train
 runners/ace/run_experiments.sh finer_full --resume-from results/ace-finer/full/openrouter-gpt-oss-120b/offline_seed-42_YYYYMMDD_HHMMSS
@@ -106,6 +113,35 @@ AppWorld full-run stage names:
 `appworld_full_eval` now creates one run directory and executes `adapt -> eval-normal -> eval-challenge` inside it. Raw stage artifacts live under `stages/`, while top-level `summary/` and `evaluations/` remain the compatibility surface consumed by analysis.
 
 AppWorld v1 full-run resume is intentionally serial. If you explicitly pass `--test-workers > 1` to `appworld_full_eval`, the orchestrator fails fast instead of running nondeterministic multi-process resume logic.
+
+## SLURM
+
+The representative campaign now has three cluster entrypoints under [runners/ace/slurm](/home/abdo/ace-reproduction/runners/ace/slurm):
+
+- `ace_repr_finer_launch.sbatch`: launch one or more FiNER representative cells through `python -m runner launch`
+- `ace_repr_appworld_launch.sbatch`: launch one or more AppWorld representative cells through `python -m runner launch`
+- `ace_repr_resume.sbatch`: resume the latest matching representative run through `python -m runner resume`
+
+These scripts follow the guidance in [context/runners/SLURM.md](/home/abdo/ace-reproduction/context/runners/SLURM.md):
+
+- resource requests are defaults, and can be overridden with normal `sbatch` flags such as `--gres` and `--time`
+- runtime configuration is passed with environment variables like `SAMPLES`, `CONFIGS`, `CHEAP_MODEL`, `EXPENSIVE_MODEL`, and `MAMBA_ENV`
+- any extra CLI flags can still be appended after the script path and are forwarded to `python -m runner`
+- checkpointing is enabled by default in these cluster entrypoints and can be disabled with `CHECKPOINT_ENABLED=0`
+- the scripts automatically load provider keys from the repository root `.env` if it exists
+
+One-time host preparation:
+
+```bash
+runners/ace/setup_cluster_env.sh
+MAMBA_ENV=ace-repr-runner sbatch runners/ace/slurm/ace_repr_finer_launch.sbatch
+```
+
+If you use plain conda instead of mamba:
+
+```bash
+CONDA_ENV_NAME=ace-repr-runner sbatch runners/ace/slurm/ace_repr_finer_launch.sbatch
+```
 
 ## Lifecycle Artifacts
 

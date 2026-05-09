@@ -122,15 +122,15 @@ called as an OpenRouter model by setting `reflector_provider=openrouter` and
 
 ## 3. Update Run Scripts and Slurm Templates
 
-Status: needed.
+Status: partially superseded.
 
 Replace GPT-oss-20b defaults with GPT-oss-120b on OpenRouter.
 
 Relevant files:
 
-- `runners/ace/slurm/ace_finer_smoke.sbatch`
-- `runners/ace/slurm/ace_finer_pilot.sbatch`
-- `runners/ace/slurm/ace_finer_full.sbatch`
+- `runners/ace/slurm/ace_repr_finer_launch.sbatch`
+- `runners/ace/slurm/ace_repr_appworld_launch.sbatch`
+- `runners/ace/slurm/ace_repr_resume.sbatch`
 - any local shell snippets used for report runs
 
 Required changes:
@@ -153,6 +153,13 @@ Example defaults:
 : "${REFLECTOR_MODEL:=openai/gpt-oss-120b}"
 : "${CURATOR_MODEL:=openai/gpt-oss-120b}"
 ```
+
+Current direction:
+
+- Representative cluster runs now flow through `python -m runner` rather than the older benchmark-specific SLURM templates.
+- Default cheap-tier model is `openai/gpt-oss-120b` without `:nitro`.
+- Default expensive-tier model is `deepseek/deepseek-v3.2`.
+- Historical `openai/gpt-oss-120b:nitro` runs remain classified as expensive in analysis, but it is not the default launch target anymore.
 
 Example mixed-model override:
 
