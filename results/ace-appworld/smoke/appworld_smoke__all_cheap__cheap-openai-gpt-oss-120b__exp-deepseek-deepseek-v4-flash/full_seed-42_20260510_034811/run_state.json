@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "run_id": "full_seed-42_20260510_034811",
+  "status": "failed",
+  "checkpointing_enabled": false,
+  "resume_enabled": true,
+  "has_checkpoints": true,
+  "resume_count": 0,
+  "current_stage": "adapt",
+  "last_completed_stage": null,
+  "active_runtime_seconds": 2.662421708984766,
+  "started_at": "2026-05-10T00:48:11.683615+00:00",
+  "last_resumed_at": "2026-05-10T00:48:11.683847+00:00",
+  "last_checkpoint_at": "2026-05-10T00:48:14.316283+00:00",
+  "completed_at": null,
+  "failure_reason": "The task directory (/home/abdo/ace-reproduction/data/tasks/82e2fac_1) doesn't exist."
+}

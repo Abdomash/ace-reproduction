@@ -1,0 +1,31 @@
+## STRATEGIES & INSIGHTS
+
+## FORMULAS & CALCULATIONS
+
+## CODE SNIPPETS & TEMPLATES
+
+## COMMON MISTAKES TO AVOID
+
+[err-00006] helpful=0 harmful=0 :: Do not use generic stock‑sale tags (e.g., SaleOfStockNumberOfSharesIssuedInTransaction) for share issuances that are part of an acquisition; instead use the acquisition‑specific tag.
+[err-00007] helpful=0 harmful=0 :: Do not treat a cash payment component as the full consideration transferred; use PaymentsToAcquireBusinessesGross for the cash portion and reserve BusinessCombinationConsiderationTransferred1 for the total aggregate amount.
+[err-00008] helpful=0 harmful=0 :: Do not use SaleOfStockNumberOfSharesIssuedInTransaction for primary share issuances (e.g., shares sold in a primary offering or mandatory convertible preferred stock issuance). Instead, use StockIssuedDuringPeriodSharesNewIssues for new shares created during the period.
+[err-00011] helpful=0 harmful=0 :: Do not tag percentages that are described as a margin or spread over a benchmark rate (e.g., LIBOR, ABR) with DebtInstrumentInterestRateEffectivePercentage. Use DebtInstrumentBasisSpreadOnVariableRate1 for such basis‑spread values.
+[err-00013] helpful=0 harmful=0 :: Do not tag a plain contract‑stated interest rate (e.g., "interest rate ranges from 5% to 6.9%") with DebtInstrumentInterestRateEffectivePercentage. Use DebtInstrumentInterestRateStatedPercentage unless the text explicitly references an effective rate, yield, or discount rate calculation.
+[err-00016] helpful=0 harmful=0 :: Do not tag interest expense amounts that are explicitly tied to a debt instrument (e.g., Seller Notes, loans, bonds) with the generic InterestExpense tag; instead use the more specific InterestExpenseDebt tag.
+## PROBLEM-SOLVING HEURISTICS
+
+[ph-00010] helpful=0 harmful=0 :: When the text mentions the company "selling" shares, first determine if the context describes a primary issuance (new shares created) versus a secondary market sale (existing shares transferred). Use StockIssuedDuringPeriodSharesNewIssues for the former and SaleOfStockNumberOfSharesIssuedInTransaction for the latter.
+[ph-00015] helpful=0 harmful=0 :: When an interest‑rate figure appears without qualifiers such as "effective", "yield", or "discount", default to DebtInstrumentInterestRateStatedPercentage. Only switch to DebtInstrumentInterestRateEffectivePercentage if the surrounding language explicitly describes the rate as effective or derived from a yield calculation.
+[ph-00017] helpful=0 harmful=0 :: When an interest expense figure appears, first determine whether the surrounding text references a specific debt instrument (e.g., "Seller Notes", "loan", "bond", "debt"). If such a reference exists, select InterestExpenseDebt; otherwise, default to the generic InterestExpense tag.
+## CONTEXT CLUES & INDICATORS
+
+[ctx-00009] helpful=0 harmful=0 :: Key phrases indicating a primary issuance: "primary offering", "sold ... shares of our mandatory convertible preferred stock", "issued new shares", "capital raise", "initial public offering", "shares issued as part of a financing". These suggest the use of StockIssuedDuringPeriodSharesNewIssues.
+[ctx-00012] helpful=0 harmful=0 :: Key phrases indicating a basis spread: "margin", "spread", "margin ranges from", "over LIBOR", "over ABR", "basis spread", "spread over". When these appear, map the associated percentage values to DebtInstrumentBasisSpreadOnVariableRate1.
+[ctx-00014] helpful=0 harmful=0 :: Key phrases indicating a stated (nominal) rate: "interest rate", "contractual rate", "stated rate", "rate of X%", "rate ranges from", "rate is X%". These suggest using DebtInstrumentInterestRateStatedPercentage. Phrases like "effective interest rate", "effective yield", "discount rate", "IRR", or "yield to maturity" signal the EffectivePercentage tag.
+[ctx-00018] helpful=0 harmful=0 :: Key phrases indicating debt‑related interest expense: "interest expense on the Seller Notes", "interest charged on debt", "interest payable on the loan", "interest on the bond", "interest expense associated with the note payable". These cues signal that the InterestExpenseDebt tag should be used.
+## OTHERS
+[misc-00001] helpful=0 harmful=0 :: Begin by classifying the numeric entity's transaction type (e.g., acquisition‑related equity issuance, cash payment toward purchase price, or total consideration transferred) before selecting a US GAAP tag.
+[misc-00002] helpful=0 harmful=0 :: Map each transaction type to its dedicated tag: • Acquisition equity issuance → BusinessAcquisitionEquityInterestsIssuedOrIssuableNumberOfSharesIssued • Cash paid as part of purchase price → PaymentsToAcquireBusinessesGross • Aggregate consideration transferred in a business combination → BusinessCombinationConsiderationTransferred1
+[misc-00003] helpful=0 harmful=0 :: Key phrases indicating acquisition equity issuance: "exchange offer", "business combination", "acquisition", "shares issued as consideration".
+[misc-00004] helpful=0 harmful=0 :: Key phrases indicating cash component of purchase price: "cash paid", "cash consideration", "payment to acquire", "cash portion of purchase price".
+[misc-00005] helpful=0 harmful=0 :: Key phrases indicating total aggregate consideration: "total consideration transferred", "aggregate consideration", "overall purchase price of the business combination".

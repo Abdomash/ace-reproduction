@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "run_id": "full_seed-42_20260510_034921",
+  "status": "failed",
+  "checkpointing_enabled": false,
+  "resume_enabled": true,
+  "has_checkpoints": true,
+  "resume_count": 0,
+  "current_stage": "eval-normal",
+  "last_completed_stage": "adapt",
+  "active_runtime_seconds": 1684186173.867537,
+  "started_at": "2026-05-10T00:49:21.674246+00:00",
+  "last_resumed_at": "2026-05-10T00:49:21.674496+00:00",
+  "last_checkpoint_at": "2026-05-10T00:49:25.625712+00:00",
+  "completed_at": null,
+  "failure_reason": "The from_db_home_path /home/abdo/ace-reproduction/results/ace-appworld/smoke/appworld_smoke__all_cheap__cheap-openai-gpt-oss-120b__exp-deepseek-deepseek-v4-flash/full_seed-42_20260510_034921/stages/eval-normal/tasks/3d9a636_2/dbs does not exist."
+}

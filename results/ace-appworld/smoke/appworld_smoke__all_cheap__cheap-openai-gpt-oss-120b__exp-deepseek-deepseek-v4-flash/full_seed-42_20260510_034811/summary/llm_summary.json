@@ -1,0 +1,14 @@
+{
+  "call_count": 0,
+  "compact_path": "/home/abdo/ace-reproduction/results/ace-appworld/smoke/appworld_smoke__all_cheap__cheap-openai-gpt-oss-120b__exp-deepseek-deepseek-v4-flash/full_seed-42_20260510_034811/summary/llm_calls.compact.jsonl",
+  "model_counts": {},
+  "nonzero_cost_call_count": 0,
+  "parse_errors": 0,
+  "role_counts": {},
+  "task_call_counts": {},
+  "totals": {
+    "cached_input_tokens": null,
+    "cached_output_tokens": null
+  },
+  "zero_cost_call_count": 0
+}

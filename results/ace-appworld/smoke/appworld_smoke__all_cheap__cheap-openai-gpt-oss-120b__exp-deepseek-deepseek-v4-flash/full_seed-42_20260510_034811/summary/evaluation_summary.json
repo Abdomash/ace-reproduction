@@ -1,0 +1,17 @@
+{
+  "aggregate": {},
+  "available": false,
+  "challenge_aggregate": {},
+  "failure_count": 0,
+  "stages": {
+    "eval-challenge": {
+      "available": false,
+      "path": "/home/abdo/ace-reproduction/results/ace-appworld/smoke/appworld_smoke__all_cheap__cheap-openai-gpt-oss-120b__exp-deepseek-deepseek-v4-flash/full_seed-42_20260510_034811/stages/eval-challenge/evaluations/test_challenge.json"
+    },
+    "eval-normal": {
+      "available": false,
+      "path": "/home/abdo/ace-reproduction/results/ace-appworld/smoke/appworld_smoke__all_cheap__cheap-openai-gpt-oss-120b__exp-deepseek-deepseek-v4-flash/full_seed-42_20260510_034811/stages/eval-normal/evaluations/test_normal.json"
+    }
+  },
+  "task_count": 0
+}

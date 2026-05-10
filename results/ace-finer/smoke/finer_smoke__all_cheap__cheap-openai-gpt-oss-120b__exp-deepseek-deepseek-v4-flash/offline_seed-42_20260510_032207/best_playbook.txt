@@ -1,0 +1,23 @@
+## STRATEGIES & INSIGHTS
+
+## FORMULAS & CALCULATIONS
+
+## CODE SNIPPETS & TEMPLATES
+
+## COMMON MISTAKES TO AVOID
+
+[err-00006] helpful=0 harmful=0 :: Do not use generic stock‑sale tags (e.g., SaleOfStockNumberOfSharesIssuedInTransaction) for share issuances that are part of an acquisition; instead use the acquisition‑specific tag.
+[err-00007] helpful=0 harmful=0 :: Do not treat a cash payment component as the full consideration transferred; use PaymentsToAcquireBusinessesGross for the cash portion and reserve BusinessCombinationConsiderationTransferred1 for the total aggregate amount.
+[err-00008] helpful=0 harmful=0 :: Do not use SaleOfStockNumberOfSharesIssuedInTransaction for primary share issuances (e.g., shares sold in a primary offering or mandatory convertible preferred stock issuance). Instead, use StockIssuedDuringPeriodSharesNewIssues for new shares created during the period.
+## PROBLEM-SOLVING HEURISTICS
+
+[ph-00010] helpful=0 harmful=0 :: When the text mentions the company "selling" shares, first determine if the context describes a primary issuance (new shares created) versus a secondary market sale (existing shares transferred). Use StockIssuedDuringPeriodSharesNewIssues for the former and SaleOfStockNumberOfSharesIssuedInTransaction for the latter.
+## CONTEXT CLUES & INDICATORS
+
+[ctx-00009] helpful=0 harmful=0 :: Key phrases indicating a primary issuance: "primary offering", "sold ... shares of our mandatory convertible preferred stock", "issued new shares", "capital raise", "initial public offering", "shares issued as part of a financing". These suggest the use of StockIssuedDuringPeriodSharesNewIssues.
+## OTHERS
+[misc-00001] helpful=0 harmful=0 :: Begin by classifying the numeric entity's transaction type (e.g., acquisition‑related equity issuance, cash payment toward purchase price, or total consideration transferred) before selecting a US GAAP tag.
+[misc-00002] helpful=0 harmful=0 :: Map each transaction type to its dedicated tag: • Acquisition equity issuance → BusinessAcquisitionEquityInterestsIssuedOrIssuableNumberOfSharesIssued • Cash paid as part of purchase price → PaymentsToAcquireBusinessesGross • Aggregate consideration transferred in a business combination → BusinessCombinationConsiderationTransferred1
+[misc-00003] helpful=0 harmful=0 :: Key phrases indicating acquisition equity issuance: "exchange offer", "business combination", "acquisition", "shares issued as consideration".
+[misc-00004] helpful=0 harmful=0 :: Key phrases indicating cash component of purchase price: "cash paid", "cash consideration", "payment to acquire", "cash portion of purchase price".
+[misc-00005] helpful=0 harmful=0 :: Key phrases indicating total aggregate consideration: "total consideration transferred", "aggregate consideration", "overall purchase price of the business combination".

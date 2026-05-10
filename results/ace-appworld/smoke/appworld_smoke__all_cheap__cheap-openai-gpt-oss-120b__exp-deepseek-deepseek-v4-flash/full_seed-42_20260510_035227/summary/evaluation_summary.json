@@ -1,0 +1,72 @@
+{
+  "aggregate": {
+    "scenario_goal_completion": 0.0,
+    "task_goal_completion": 0.0
+  },
+  "available": true,
+  "challenge_aggregate": {},
+  "failure_count": 1,
+  "stages": {
+    "eval-challenge": {
+      "available": false,
+      "path": "/home/abdo/ace-reproduction/results/ace-appworld/smoke/appworld_smoke__all_cheap__cheap-openai-gpt-oss-120b__exp-deepseek-deepseek-v4-flash/full_seed-42_20260510_035227/stages/eval-challenge/evaluations/test_challenge.json"
+    },
+    "eval-normal": {
+      "aggregate": {
+        "scenario_goal_completion": 0.0,
+        "task_goal_completion": 0.0
+      },
+      "available": true,
+      "difficulty": {
+        "2": {
+          "passed": 0,
+          "total": 1
+        }
+      },
+      "failure_count": 1,
+      "failures": [
+        {
+          "difficulty": 2,
+          "failures": [
+            {
+              "label": "no_op_fail",
+              "requirement": "assert answers match.",
+              "trace": "```python\nwith test(\n    \"\"\"\n    assert answers match.\n    \"\"\"\n):\n    test.answer(predicted_answer, ground_truth_answer)\n```\n----------\nAssertionError:  '<<not_given>>' == 'null'"
+            },
+            {
+              "label": "no_op_fail",
+              "requirement": "assert model changes match venmo.Friendship",
+              "trace": "```python\nwith test(\n    \"\"\"\n    assert model changes match venmo.Friendship\n    \"\"\"\n):\n    changed_model_names = models.changed_model_names()\n    test.case(changed_model_names, \"==\", {\"venmo.Friendship\"})\n```\n----------\nAssertionError:  set() == {'venmo.Friendship'}\n\nIn right but not left:\n['venmo.Friendship']"
+            },
+            {
+              "label": "no_op_fail",
+              "requirement": "obtain added, deleted friendships using models.changed_records\nand assert friend_ids of the added ones match private_data.to_befriend_venmo_user_ids (ignore_order)",
+              "trace": "```python\nwith test(\n    \"\"\"\n    obtain added, deleted friendships using models.changed_records\n    and assert friend_ids of the added ones match private_data.to_befriend_venmo_user_ids (ignore_order)\n    \"\"\"\n):\n    added_friendships, _, deleted_friendships = models.changed_records(\"venmo.Friendship\")\n    added_friend_ids = list_of(added_friendships, \"friend_id\")\n```\n----------\nAssertionError:  [] == [15, 43, 60, 97]\n\nIn right but not left:\n[15, 43, 60, 97]\n\nOriginal values:\n[] == [43, 97, 15, 60]"
+            },
+            {
+              "label": "no_op_fail",
+              "requirement": "assert friend_ids of the deleted ones match private_data.to_unfriend_venmo_user_ids (ignore_order)",
+              "trace": "```python\nwith test(\n    \"\"\"\n    assert friend_ids of the deleted ones match private_data.to_unfriend_venmo_user_ids (ignore_order)\n    \"\"\"\n):\n    deleted_friend_ids = list_of(deleted_friendships, \"friend_id\")\n    test.case(\n        deleted_friend_ids, \"==\", private_data.to_unfriend_venmo_user_ids, ignore_order=True\n```\n----------\nAssertionError:  [] == [9, 16, 28, 71, 85, 100]\n\nIn right but not left:\n[9, 16, 28, 71, 85, 100]\n\nOriginal values:\n[] == [16, 85, 9, 71, 100, 28]"
+            },
+            {
+              "label": "no_op_fail",
+              "requirement": "assert all main_user's friends on venmo match\nprivate_data.all_friends_venmo_user_ids in the end state (ignore_order)",
+              "trace": "```python\nwith test(\n    \"\"\"\n    assert all main_user's friends on venmo match\n    private_data.all_friends_venmo_user_ids in the end state (ignore_order)\n    \"\"\"\n):\n    venmo_user = models.end.venmo.User.find_from(main_user)\n    venmo_friend_ids = list_of(venmo_user.friends, \"id\")\n```\n----------\nAssertionError:\n[9, 16, 28, 29, 58, 71, 72, 85, 86, 100]\n==\n[15, 29, 43, 58, 60, 72, 86, 97]\n\nIn left but not right:\n[9, 16, 28, 71, 85, 100]\n\nIn right but not left:\n[15, 43, 60, 97]\n\nOriginal values:\n[58, 72, 29, 86, 16, 85, 9, 71, 100, 28]\n==\n[58, 72, 29, 86, 43, 97, 15, 60]"
+            }
+          ],
+          "num_passes": 0,
+          "num_tests": 5,
+          "task_id": "3d9a636_1"
+        }
+      ],
+      "path": "/home/abdo/ace-reproduction/results/ace-appworld/smoke/appworld_smoke__all_cheap__cheap-openai-gpt-oss-120b__exp-deepseek-deepseek-v4-flash/full_seed-42_20260510_035227/stages/eval-normal/evaluations/test_normal.json",
+      "scenario_count": 1,
+      "scenario_failure_count": 1,
+      "scenario_success_count": 0,
+      "task_count": 1,
+      "task_failure_count": 1,
+      "task_success_count": 0
+    }
+  },
+  "task_count": 1
+}

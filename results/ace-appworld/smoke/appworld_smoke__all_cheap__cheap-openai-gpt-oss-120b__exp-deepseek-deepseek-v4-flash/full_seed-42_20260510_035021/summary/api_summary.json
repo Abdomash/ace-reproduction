@@ -1,0 +1,16 @@
+{
+  "api_call_count": 2,
+  "compact_path": "/home/abdo/ace-reproduction/results/ace-appworld/smoke/appworld_smoke__all_cheap__cheap-openai-gpt-oss-120b__exp-deepseek-deepseek-v4-flash/full_seed-42_20260510_035021/summary/api_calls.summary.jsonl",
+  "endpoint_counts": {
+    "/api_docs/api_descriptions": 1,
+    "/supervisor/account_passwords": 1
+  },
+  "method_counts": {
+    "get": 2
+  },
+  "parse_errors": 0,
+  "task_call_counts": {
+    "adapt:82e2fac_1": 1,
+    "eval-normal:3d9a636_1": 1
+  }
+}

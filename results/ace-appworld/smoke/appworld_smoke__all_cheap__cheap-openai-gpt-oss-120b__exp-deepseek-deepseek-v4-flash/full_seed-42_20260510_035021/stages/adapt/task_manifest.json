@@ -1,0 +1,53 @@
+{
+  "stage": "adapt",
+  "tasks": {
+    "82e2fac_1": {
+      "task_id": "82e2fac_1",
+      "stage": "adapt",
+      "status": "completed",
+      "attempt": 1,
+      "started_at": "2026-05-10T00:50:23.938872+00:00",
+      "ended_at": "2026-05-10T00:50:25.307880+00:00",
+      "active_runtime_seconds": 1.369005583022954,
+      "task_completed": true,
+      "task_dir": "/home/abdo/ace-reproduction/results/ace-appworld/smoke/appworld_smoke__all_cheap__cheap-openai-gpt-oss-120b__exp-deepseek-deepseek-v4-flash/full_seed-42_20260510_035021/stages/adapt/tasks/82e2fac_1",
+      "evaluation_report": "/home/abdo/ace-reproduction/results/ace-appworld/smoke/appworld_smoke__all_cheap__cheap-openai-gpt-oss-120b__exp-deepseek-deepseek-v4-flash/full_seed-42_20260510_035021/stages/adapt/tasks/82e2fac_1/evaluation/report.md",
+      "cost_usd": 0.0
+    }
+  },
+  "updated_at": "2026-05-10T00:50:25.307936+00:00",
+  "task_ids": [
+    "82e2fac_1"
+  ],
+  "dataset": "train",
+  "sample_manifest_path": "/home/abdo/ace-reproduction/runners/campaigns/ace_smoke_v1/samples/appworld_smoke.json",
+  "sample_manifest": {
+    "sample_id": "appworld_smoke",
+    "benchmark": "appworld",
+    "sample_kind": "smoke",
+    "label": "AppWorld Smoke",
+    "goal": "Tiny AppWorld preflight run with one adaptation task and one test_normal evaluation task using one agent step.",
+    "run_type": "smoke",
+    "adapt_dataset": "train",
+    "eval_split": "test_normal",
+    "size_summary": "adapt_tasks=1,eval_tasks=1,max_steps=1",
+    "sampling_seed": 42,
+    "sampling_method_version": "appworld_smoke_first_task_v1",
+    "runner_defaults": {
+      "appworld_max_steps": 1,
+      "telemetry_interval": 1
+    },
+    "stage_task_ids": {
+      "adapt": [
+        "82e2fac_1"
+      ],
+      "eval-normal": [
+        "3d9a636_1"
+      ]
+    },
+    "source_files": {
+      "adapt_dataset": "projects/ace-appworld/data/datasets/train.txt",
+      "eval_dataset": "projects/ace-appworld/data/datasets/test_normal.txt"
+    }
+  }
+}

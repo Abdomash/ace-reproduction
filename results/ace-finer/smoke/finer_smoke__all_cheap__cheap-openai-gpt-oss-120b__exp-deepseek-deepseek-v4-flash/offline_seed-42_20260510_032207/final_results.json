@@ -1,0 +1,152 @@
+{
+  "run_id": "offline_seed-42_20260510_032207",
+  "telemetry": {
+    "enabled": true,
+    "trace_path": "/home/abdo/ace-reproduction/results/ace-finer/smoke/finer_smoke__all_cheap__cheap-openai-gpt-oss-120b__exp-deepseek-deepseek-v4-flash/offline_seed-42_20260510_032207/telemetry/run_offline_seed-42_20260510_032207.otel.jsonl",
+    "metrics_path": "/home/abdo/ace-reproduction/results/ace-finer/smoke/finer_smoke__all_cheap__cheap-openai-gpt-oss-120b__exp-deepseek-deepseek-v4-flash/offline_seed-42_20260510_032207/telemetry/ace_offline_seed-42_20260510_032207.metrics.jsonl",
+    "metrics_interval_seconds": 1.0,
+    "task_name": "finer",
+    "mode": "offline"
+  },
+  "llm_usage": {
+    "roles": {
+      "curator": {
+        "calls": 5,
+        "prompt_tokens": 8919,
+        "response_tokens": 3711,
+        "reasoning_tokens": 1623,
+        "total_tokens": 12630,
+        "cached_input_tokens": 66,
+        "cached_output_tokens": 0,
+        "total_time": 68.38766837120056,
+        "cost_usd": 0.0017122169999999998,
+        "calls_with_cost": 5
+      },
+      "generator": {
+        "calls": 52,
+        "prompt_tokens": 148510,
+        "response_tokens": 51418,
+        "reasoning_tokens": 45494,
+        "total_tokens": 199928,
+        "cached_input_tokens": 61600,
+        "cached_output_tokens": 0,
+        "total_time": 1292.0171773433685,
+        "cost_usd": 0.046010732,
+        "calls_with_cost": 52
+      },
+      "reflector": {
+        "calls": 7,
+        "prompt_tokens": 18924,
+        "response_tokens": 5598,
+        "reasoning_tokens": 2929,
+        "total_tokens": 24522,
+        "cached_input_tokens": 130,
+        "cached_output_tokens": 0,
+        "total_time": 116.76726484298706,
+        "cost_usd": 0.004032502,
+        "calls_with_cost": 7
+      }
+    },
+    "total": {
+      "calls": 64,
+      "prompt_tokens": 176353,
+      "response_tokens": 60727,
+      "reasoning_tokens": 50046,
+      "total_tokens": 237080,
+      "cached_input_tokens": 61796,
+      "cached_output_tokens": 0,
+      "total_time": 1477.1721105575562,
+      "cost_usd": 0.051755451,
+      "calls_with_cost": 64
+    }
+  },
+  "costs": {
+    "roles": {
+      "curator": {
+        "calls": 5,
+        "prompt_tokens": 8919,
+        "response_tokens": 3711,
+        "reasoning_tokens": 1623,
+        "total_tokens": 12630,
+        "cached_input_tokens": 66,
+        "cached_output_tokens": 0,
+        "cost_usd": 0.0017122169999999998
+      },
+      "generator": {
+        "calls": 52,
+        "prompt_tokens": 148510,
+        "response_tokens": 51418,
+        "reasoning_tokens": 45494,
+        "total_tokens": 199928,
+        "cached_input_tokens": 61600,
+        "cached_output_tokens": 0,
+        "cost_usd": 0.046010732
+      },
+      "reflector": {
+        "calls": 7,
+        "prompt_tokens": 18924,
+        "response_tokens": 5598,
+        "reasoning_tokens": 2929,
+        "total_tokens": 24522,
+        "cached_input_tokens": 130,
+        "cached_output_tokens": 0,
+        "cost_usd": 0.004032502
+      }
+    },
+    "total": {
+      "calls": 64,
+      "prompt_tokens": 176353,
+      "response_tokens": 60727,
+      "reasoning_tokens": 50046,
+      "total_tokens": 237080,
+      "cached_input_tokens": 61796,
+      "cached_output_tokens": 0,
+      "cost_usd": 0.051755451
+    }
+  },
+  "results": {
+    "initial_test_results": {
+      "accuracy": 0.6,
+      "correct": 2,
+      "total": 5,
+      "no_answer": 0
+    },
+    "training_results": {
+      "best_validation_accuracy": 0.75
+    },
+    "final_test_results": {
+      "accuracy": 0.5,
+      "correct": 2,
+      "total": 5,
+      "no_answer": 0
+    }
+  },
+  "initial_test_results": {
+    "accuracy": 0.6,
+    "correct": 2,
+    "total": 5,
+    "no_answer": 0
+  },
+  "training_results": {
+    "best_validation_accuracy": 0.75
+  },
+  "final_test_results": {
+    "accuracy": 0.5,
+    "correct": 2,
+    "total": 5,
+    "no_answer": 0
+  },
+  "status": "completed",
+  "checkpointing_enabled": false,
+  "resume_enabled": false,
+  "has_checkpoints": false,
+  "resume_count": 0,
+  "current_stage": "final-eval",
+  "last_completed_stage": "final-eval",
+  "active_runtime_seconds": 1475.9614455059927,
+  "started_at": "2026-05-10T00:22:07.656040+00:00",
+  "last_resumed_at": "2026-05-10T00:22:07.657080+00:00",
+  "last_checkpoint_at": null,
+  "completed_at": "2026-05-10T00:46:44.917275+00:00",
+  "failure_reason": null
+}

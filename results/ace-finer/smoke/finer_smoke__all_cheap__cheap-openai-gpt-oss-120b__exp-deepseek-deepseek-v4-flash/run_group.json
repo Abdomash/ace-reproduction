@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "benchmark": "ace-finer",
+  "run_type": "smoke",
+  "config_slug": "finer_smoke__all_cheap__cheap-openai-gpt-oss-120b__exp-deepseek-deepseek-v4-flash",
+  "runs": [
+    {
+      "run_leaf": "offline_seed-42_20260510_032207",
+      "mode": "offline",
+      "seed": 42,
+      "timestamp": "20260510_032207",
+      "run_dir": "results/ace-finer/smoke/finer_smoke__all_cheap__cheap-openai-gpt-oss-120b__exp-deepseek-deepseek-v4-flash/offline_seed-42_20260510_032207",
+      "campaign_id": "ace_smoke_v1",
+      "sample_id": "finer_smoke",
+      "sample_kind": "smoke",
+      "config_id": "all_cheap",
+      "tier_models": {
+        "cheap": {
+          "label": "openai/gpt-oss-120b",
+          "model": "openai/gpt-oss-120b",
+          "provider": "openrouter"
+        },
+        "expensive": {
+          "label": "deepseek/deepseek-v4-flash",
+          "model": "deepseek/deepseek-v4-flash",
+          "provider": "openrouter"
+        }
+      },
+      "resolved_models": {
+        "curator": {
+          "label": "openai/gpt-oss-120b",
+          "model": "openai/gpt-oss-120b",
+          "provider": "openrouter",
+          "tier": "cheap"
+        },
+        "generator": {
+          "label": "openai/gpt-oss-120b",
+          "model": "openai/gpt-oss-120b",
+          "provider": "openrouter",
+          "tier": "cheap"
+        },
+        "reflector": {
+          "label": "openai/gpt-oss-120b",
+          "model": "openai/gpt-oss-120b",
+          "provider": "openrouter",
+          "tier": "cheap"
+        }
+      },
+      "sample_manifest_path": "/home/abdo/ace-reproduction/runners/campaigns/ace_smoke_v1/samples/finer_smoke.json",
+      "status": "completed",
+      "checkpointing_enabled": false,
+      "resume_enabled": false,
+      "has_checkpoints": false,
+      "resume_count": 0,
+      "current_stage": "final-eval",
+      "last_completed_stage": "final-eval",
+      "active_runtime_seconds": 1475.9614455059927,
+      "started_at": "2026-05-10T00:22:07.656040+00:00",
+      "last_resumed_at": "2026-05-10T00:22:07.657080+00:00",
+      "last_checkpoint_at": null,
+      "completed_at": "2026-05-10T00:46:44.917275+00:00",
+      "failure_reason": null
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "run_id": "full_seed-42_20260510_034724",
+  "status": "failed",
+  "checkpointing_enabled": false,
+  "resume_enabled": true,
+  "has_checkpoints": false,
+  "resume_count": 0,
+  "current_stage": "adapt",
+  "last_completed_stage": null,
+  "active_runtime_seconds": 1.0645193819946144,
+  "started_at": "2026-05-10T00:47:24.058423+00:00",
+  "last_resumed_at": "2026-05-10T00:47:24.058681+00:00",
+  "last_checkpoint_at": null,
+  "completed_at": null,
+  "failure_reason": "No module named 'appworld_experiments'"
+}

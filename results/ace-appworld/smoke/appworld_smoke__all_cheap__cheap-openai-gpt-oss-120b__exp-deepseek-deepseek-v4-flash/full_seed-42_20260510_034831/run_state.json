@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "run_id": "full_seed-42_20260510_034831",
+  "status": "failed",
+  "checkpointing_enabled": false,
+  "resume_enabled": true,
+  "has_checkpoints": true,
+  "resume_count": 0,
+  "current_stage": "eval-normal",
+  "last_completed_stage": "adapt",
+  "active_runtime_seconds": 16.176463339012116,
+  "started_at": "2026-05-10T00:48:31.637522+00:00",
+  "last_resumed_at": "2026-05-10T00:48:31.637765+00:00",
+  "last_checkpoint_at": "2026-05-10T00:48:34.209901+00:00",
+  "completed_at": null,
+  "failure_reason": "playbook file not found at /home/abdo/ace-reproduction/results/ace-appworld/smoke/appworld_smoke__all_cheap__cheap-openai-gpt-oss-120b__exp-deepseek-deepseek-v4-flash/full_seed-42_20260510_034831/stages/adapt/adapted_playbook.txt"
+}

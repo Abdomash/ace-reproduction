@@ -1,0 +1,224 @@
+{
+  "run_id": "offline_seed-42_20260510_032207",
+  "task_name": "finer",
+  "mode": "offline",
+  "api_provider": "openrouter",
+  "generator_provider": "openrouter",
+  "reflector_provider": "openrouter",
+  "curator_provider": "openrouter",
+  "generator_model": "openai/gpt-oss-120b",
+  "reflector_model": "openai/gpt-oss-120b",
+  "curator_model": "openai/gpt-oss-120b",
+  "provider_metadata": {
+    "api": {
+      "api_provider": "openrouter",
+      "base_url_label": "https://openrouter.ai/api/v1",
+      "default_header_names": []
+    },
+    "generator": {
+      "api_provider": "openrouter",
+      "base_url_label": "https://openrouter.ai/api/v1",
+      "default_header_names": []
+    },
+    "reflector": {
+      "api_provider": "openrouter",
+      "base_url_label": "https://openrouter.ai/api/v1",
+      "default_header_names": []
+    },
+    "curator": {
+      "api_provider": "openrouter",
+      "base_url_label": "https://openrouter.ai/api/v1",
+      "default_header_names": []
+    }
+  },
+  "provider_base_url_labels": {
+    "api": "https://openrouter.ai/api/v1",
+    "generator": "https://openrouter.ai/api/v1",
+    "reflector": "https://openrouter.ai/api/v1",
+    "curator": "https://openrouter.ai/api/v1"
+  },
+  "pricing_snapshot": {
+    "source": "OpenRouter/OpenAI-compatible response usage and cost metadata when available; no hard-coded final prices.",
+    "source_date": "2026-05-10",
+    "models": {
+      "generator": {
+        "model": "openai/gpt-oss-120b",
+        "input_usd_per_million_tokens": null,
+        "output_usd_per_million_tokens": null
+      },
+      "reflector": {
+        "model": "openai/gpt-oss-120b",
+        "input_usd_per_million_tokens": null,
+        "output_usd_per_million_tokens": null
+      },
+      "curator": {
+        "model": "openai/gpt-oss-120b",
+        "input_usd_per_million_tokens": null,
+        "output_usd_per_million_tokens": null
+      }
+    }
+  },
+  "telemetry": {
+    "enabled": true,
+    "trace_path": "/home/abdo/ace-reproduction/results/ace-finer/smoke/finer_smoke__all_cheap__cheap-openai-gpt-oss-120b__exp-deepseek-deepseek-v4-flash/offline_seed-42_20260510_032207/telemetry/run_offline_seed-42_20260510_032207.otel.jsonl",
+    "metrics_path": "/home/abdo/ace-reproduction/results/ace-finer/smoke/finer_smoke__all_cheap__cheap-openai-gpt-oss-120b__exp-deepseek-deepseek-v4-flash/offline_seed-42_20260510_032207/telemetry/ace_offline_seed-42_20260510_032207.metrics.jsonl",
+    "metrics_interval_seconds": 1.0,
+    "task_name": "finer",
+    "mode": "offline"
+  },
+  "config": {
+    "num_epochs": 1,
+    "max_num_rounds": 3,
+    "curator_frequency": 1,
+    "eval_steps": 1,
+    "online_eval_frequency": 15,
+    "save_steps": 50,
+    "playbook_token_budget": 80000,
+    "task_name": "finer",
+    "mode": "offline",
+    "json_mode": false,
+    "no_ground_truth": false,
+    "save_dir": "/home/abdo/ace-reproduction/results/ace-finer/smoke/finer_smoke__all_cheap__cheap-openai-gpt-oss-120b__exp-deepseek-deepseek-v4-flash",
+    "benchmark": "ace-finer",
+    "run_type": "smoke",
+    "config_slug": "finer_smoke__all_cheap__cheap-openai-gpt-oss-120b__exp-deepseek-deepseek-v4-flash",
+    "test_workers": 1,
+    "initial_playbook_path": null,
+    "use_bulletpoint_analyzer": false,
+    "bulletpoint_analyzer_threshold": 0.9,
+    "api_provider": "openrouter",
+    "generator_provider": "openrouter",
+    "reflector_provider": "openrouter",
+    "curator_provider": "openrouter",
+    "generator_model": "openai/gpt-oss-120b",
+    "reflector_model": "openai/gpt-oss-120b",
+    "curator_model": "openai/gpt-oss-120b",
+    "sample_slicing": {
+      "mode": "manifest",
+      "manifest_path": "/home/abdo/ace-reproduction/runners/campaigns/ace_smoke_v1/samples/finer_smoke.json",
+      "manifest_sample_id": "finer_smoke",
+      "manifest_sampling_method_version": "finer_smoke_first5_v1",
+      "train": {
+        "split": "train",
+        "original_count": 1000,
+        "selected_count": 5,
+        "selected_indices": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "sample_seed": {
+          "train": 42,
+          "val": 42,
+          "test": 42
+        },
+        "source_files": {
+          "train": "projects/ace/eval/finance/data/finer_train_batched_1000_samples.jsonl",
+          "val": "projects/ace/eval/finance/data/finer_val_batched_500_samples.jsonl",
+          "test": "projects/ace/eval/finance/data/finer_test_subset_006_seed42.jsonl"
+        },
+        "selection_source": "manifest",
+        "manifest_sample_id": "finer_smoke",
+        "manifest_path": "/home/abdo/ace-reproduction/runners/campaigns/ace_smoke_v1/samples/finer_smoke.json"
+      },
+      "val": {
+        "split": "val",
+        "original_count": 500,
+        "selected_count": 5,
+        "selected_indices": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "sample_seed": {
+          "train": 42,
+          "val": 42,
+          "test": 42
+        },
+        "source_files": {
+          "train": "projects/ace/eval/finance/data/finer_train_batched_1000_samples.jsonl",
+          "val": "projects/ace/eval/finance/data/finer_val_batched_500_samples.jsonl",
+          "test": "projects/ace/eval/finance/data/finer_test_subset_006_seed42.jsonl"
+        },
+        "selection_source": "manifest",
+        "manifest_sample_id": "finer_smoke",
+        "manifest_path": "/home/abdo/ace-reproduction/runners/campaigns/ace_smoke_v1/samples/finer_smoke.json"
+      },
+      "test": {
+        "split": "test",
+        "original_count": 441,
+        "selected_count": 5,
+        "selected_indices": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "sample_seed": {
+          "train": 42,
+          "val": 42,
+          "test": 42
+        },
+        "source_files": {
+          "train": "projects/ace/eval/finance/data/finer_train_batched_1000_samples.jsonl",
+          "val": "projects/ace/eval/finance/data/finer_val_batched_500_samples.jsonl",
+          "test": "projects/ace/eval/finance/data/finer_test_subset_006_seed42.jsonl"
+        },
+        "selection_source": "manifest",
+        "manifest_sample_id": "finer_smoke",
+        "manifest_path": "/home/abdo/ace-reproduction/runners/campaigns/ace_smoke_v1/samples/finer_smoke.json"
+      }
+    },
+    "sample_manifest_path": "/home/abdo/ace-reproduction/runners/campaigns/ace_smoke_v1/samples/finer_smoke.json",
+    "resume_from": null,
+    "checkpoint_enabled": false,
+    "resume_enabled": false,
+    "stop_after_stage": null,
+    "stop_after_step": null,
+    "campaign_id": "ace_smoke_v1",
+    "config_id": "all_cheap",
+    "resolved_models": {
+      "curator": {
+        "label": "openai/gpt-oss-120b",
+        "model": "openai/gpt-oss-120b",
+        "provider": "openrouter",
+        "tier": "cheap"
+      },
+      "generator": {
+        "label": "openai/gpt-oss-120b",
+        "model": "openai/gpt-oss-120b",
+        "provider": "openrouter",
+        "tier": "cheap"
+      },
+      "reflector": {
+        "label": "openai/gpt-oss-120b",
+        "model": "openai/gpt-oss-120b",
+        "provider": "openrouter",
+        "tier": "cheap"
+      }
+    },
+    "sample_id": "finer_smoke",
+    "sample_kind": "smoke",
+    "tier_models": {
+      "cheap": {
+        "label": "openai/gpt-oss-120b",
+        "model": "openai/gpt-oss-120b",
+        "provider": "openrouter"
+      },
+      "expensive": {
+        "label": "deepseek/deepseek-v4-flash",
+        "model": "deepseek/deepseek-v4-flash",
+        "provider": "openrouter"
+      }
+    },
+    "telemetry_enabled": true,
+    "telemetry_metrics_interval_seconds": 1.0,
+    "seed": 42,
+    "config_name": "FiNER Smoke / All Cheap / cheap=openai/gpt-oss-120b expensive=deepseek/deepseek-v4-flash"
+  }
+}

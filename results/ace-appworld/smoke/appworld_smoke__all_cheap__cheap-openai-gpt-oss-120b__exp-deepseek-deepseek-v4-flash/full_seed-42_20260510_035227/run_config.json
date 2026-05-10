@@ -1,0 +1,75 @@
+{
+  "run_id": "full_seed-42_20260510_035227",
+  "mode": "full",
+  "task_name": "appworld",
+  "config_name": "AppWorld Smoke / All Cheap / cheap=openai/gpt-oss-120b expensive=deepseek/deepseek-v4-flash",
+  "seed": 42,
+  "checkpoint_enabled": false,
+  "resume_from": null,
+  "stop_after_stage": null,
+  "stop_after_task": null,
+  "checkpoint_every_task": 1,
+  "appworld_root": "/home/abdo/ace-reproduction/projects/ace-appworld",
+  "save_path": "/home/abdo/ace-reproduction/results/ace-appworld/smoke/appworld_smoke__all_cheap__cheap-openai-gpt-oss-120b__exp-deepseek-deepseek-v4-flash/full_seed-42_20260510_035227",
+  "models": {
+    "generator": {
+      "provider": "openrouter",
+      "model": "openai/gpt-oss-120b"
+    },
+    "reflector": {
+      "provider": "openrouter",
+      "model": "openai/gpt-oss-120b"
+    },
+    "curator": {
+      "provider": "openrouter",
+      "model": "openai/gpt-oss-120b"
+    }
+  },
+  "enabled_stages": [
+    "adapt",
+    "eval-normal"
+  ],
+  "task_manifests": {
+    "adapt": "/home/abdo/ace-reproduction/runners/campaigns/ace_smoke_v1/samples/appworld_smoke.json",
+    "eval-normal": "/home/abdo/ace-reproduction/runners/campaigns/ace_smoke_v1/samples/appworld_smoke.json",
+    "eval-challenge": null
+  },
+  "campaign_id": "ace_smoke_v1",
+  "config_id": "all_cheap",
+  "resolved_models": {
+    "curator": {
+      "label": "openai/gpt-oss-120b",
+      "model": "openai/gpt-oss-120b",
+      "provider": "openrouter",
+      "tier": "cheap"
+    },
+    "generator": {
+      "label": "openai/gpt-oss-120b",
+      "model": "openai/gpt-oss-120b",
+      "provider": "openrouter",
+      "tier": "cheap"
+    },
+    "reflector": {
+      "label": "openai/gpt-oss-120b",
+      "model": "openai/gpt-oss-120b",
+      "provider": "openrouter",
+      "tier": "cheap"
+    }
+  },
+  "run_type": "smoke",
+  "sample_id": "appworld_smoke",
+  "sample_kind": "smoke",
+  "sample_manifest_path": "/home/abdo/ace-reproduction/runners/campaigns/ace_smoke_v1/samples/appworld_smoke.json",
+  "tier_models": {
+    "cheap": {
+      "label": "openai/gpt-oss-120b",
+      "model": "openai/gpt-oss-120b",
+      "provider": "openrouter"
+    },
+    "expensive": {
+      "label": "deepseek/deepseek-v4-flash",
+      "model": "deepseek/deepseek-v4-flash",
+      "provider": "openrouter"
+    }
+  }
+}

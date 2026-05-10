@@ -1,0 +1,98 @@
+{
+  "active_runtime_seconds": 16.176463339012116,
+  "campaign_id": "ace_smoke_v1",
+  "checkpointing_enabled": false,
+  "completed_at": null,
+  "config_id": "all_cheap",
+  "config_name": "AppWorld Smoke / All Cheap / cheap=openai/gpt-oss-120b expensive=deepseek/deepseek-v4-flash",
+  "current_stage": "eval-normal",
+  "dataset": "full",
+  "enabled_stages": [
+    "adapt",
+    "eval-normal"
+  ],
+  "evaluation_run": {
+    "ran": false,
+    "reason": "disabled"
+  },
+  "evaluation_size_bytes": 0,
+  "failure_reason": "playbook file not found at /home/abdo/ace-reproduction/results/ace-appworld/smoke/appworld_smoke__all_cheap__cheap-openai-gpt-oss-120b__exp-deepseek-deepseek-v4-flash/full_seed-42_20260510_034831/stages/adapt/adapted_playbook.txt",
+  "has_checkpoints": true,
+  "last_checkpoint_at": "2026-05-10T00:48:34.209901+00:00",
+  "last_completed_stage": "adapt",
+  "last_resumed_at": "2026-05-10T00:48:31.637765+00:00",
+  "mode": "full",
+  "models": {
+    "curator": {
+      "model": "openai/gpt-oss-120b",
+      "provider": "openrouter"
+    },
+    "generator": {
+      "model": "openai/gpt-oss-120b",
+      "provider": "openrouter"
+    },
+    "reflector": {
+      "model": "openai/gpt-oss-120b",
+      "provider": "openrouter"
+    }
+  },
+  "post_export_evaluation_size_bytes": 0,
+  "post_export_size_bytes": 172208,
+  "post_export_tasks_size_bytes": 0,
+  "post_export_telemetry_size_bytes": 0,
+  "prune": {
+    "bytes_removed": 0,
+    "removed": [],
+    "removed_count": 0
+  },
+  "resolved_models": {
+    "curator": {
+      "label": "openai/gpt-oss-120b",
+      "model": "openai/gpt-oss-120b",
+      "provider": "openrouter",
+      "tier": "cheap"
+    },
+    "generator": {
+      "label": "openai/gpt-oss-120b",
+      "model": "openai/gpt-oss-120b",
+      "provider": "openrouter",
+      "tier": "cheap"
+    },
+    "reflector": {
+      "label": "openai/gpt-oss-120b",
+      "model": "openai/gpt-oss-120b",
+      "provider": "openrouter",
+      "tier": "cheap"
+    }
+  },
+  "resume_count": 0,
+  "resume_enabled": true,
+  "run_dir": "/home/abdo/ace-reproduction/results/ace-appworld/smoke/appworld_smoke__all_cheap__cheap-openai-gpt-oss-120b__exp-deepseek-deepseek-v4-flash/full_seed-42_20260510_034831",
+  "sample_id": "appworld_smoke",
+  "sample_kind": "smoke",
+  "sample_manifest_path": "/home/abdo/ace-reproduction/runners/campaigns/ace_smoke_v1/samples/appworld_smoke.json",
+  "stage_count": 2,
+  "started_at": "2026-05-10T00:48:31.637522+00:00",
+  "status": "failed",
+  "task_directory_count": 1,
+  "task_manifests": {
+    "adapt": "/home/abdo/ace-reproduction/runners/campaigns/ace_smoke_v1/samples/appworld_smoke.json",
+    "eval-challenge": null,
+    "eval-normal": "/home/abdo/ace-reproduction/runners/campaigns/ace_smoke_v1/samples/appworld_smoke.json"
+  },
+  "tasks_size_bytes": 83355,
+  "telemetry_size_bytes": 0,
+  "tier_models": {
+    "cheap": {
+      "label": "openai/gpt-oss-120b",
+      "model": "openai/gpt-oss-120b",
+      "provider": "openrouter"
+    },
+    "expensive": {
+      "label": "deepseek/deepseek-v4-flash",
+      "model": "deepseek/deepseek-v4-flash",
+      "provider": "openrouter"
+    }
+  },
+  "total_size_bytes": 172208
+}

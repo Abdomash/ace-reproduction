@@ -1,0 +1,28 @@
+{
+  "call_count": 2,
+  "compact_path": "/home/abdo/ace-reproduction/results/ace-appworld/smoke/appworld_smoke__all_cheap__cheap-openai-gpt-oss-120b__exp-deepseek-deepseek-v4-flash/full_seed-42_20260510_035227/summary/llm_calls.compact.jsonl",
+  "model_counts": {
+    "openai/gpt-oss-120b": 2
+  },
+  "nonzero_cost_call_count": 2,
+  "parse_errors": 0,
+  "role_counts": {
+    "generator": 2
+  },
+  "task_call_counts": {
+    "adapt:generator_b3d184e02e8a4bdaa0cd6a7416eb048a": 1,
+    "eval-normal:generator_66fe98681e794a28948d76c6c5e26f18": 1
+  },
+  "totals": {
+    "cached_input_tokens": 0.0,
+    "cached_output_tokens": 0.0,
+    "call_time": 0.0025897299929056317,
+    "cost_usd": 0.00068185,
+    "prompt_num_tokens": 14872.0,
+    "reasoning_num_tokens": 519.0,
+    "response_num_tokens": 536.0,
+    "total_num_tokens": 15408.0,
+    "wall_time_seconds": 0.0025897299929056317
+  },
+  "zero_cost_call_count": 0
+}

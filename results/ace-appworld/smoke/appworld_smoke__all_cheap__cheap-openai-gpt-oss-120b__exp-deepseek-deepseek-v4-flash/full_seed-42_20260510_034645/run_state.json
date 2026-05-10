@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "run_id": "full_seed-42_20260510_034645",
+  "status": "failed",
+  "checkpointing_enabled": false,
+  "resume_enabled": true,
+  "has_checkpoints": false,
+  "resume_count": 0,
+  "current_stage": "adapt",
+  "last_completed_stage": null,
+  "active_runtime_seconds": 0.10057942100684159,
+  "started_at": "2026-05-10T00:46:45.048819+00:00",
+  "last_resumed_at": "2026-05-10T00:46:45.049070+00:00",
+  "last_checkpoint_at": null,
+  "completed_at": null,
+  "failure_reason": "module 'code' has no attribute 'InteractiveConsole'"
+}

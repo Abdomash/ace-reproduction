@@ -1,0 +1,13 @@
+{
+  "agent_counts": {},
+  "llm_totals": {
+    "cached_input_tokens": null,
+    "cached_output_tokens": null
+  },
+  "metric_file_count": 0,
+  "metrics": {},
+  "span_count": 0,
+  "span_name_counts": {},
+  "trace_file_count": 0,
+  "wall_time_seconds_by_agent": {}
+}
