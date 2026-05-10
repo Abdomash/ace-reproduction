@@ -6,7 +6,7 @@
   },
   "expensive": {
     "provider": "openrouter",
-    "model": "deepseek/deepseek-v3.2",
-    "label": "deepseek/deepseek-v3.2"
+    "model": "deepseek/deepseek-v4-flash",
+    "label": "deepseek/deepseek-v4-flash"
   }
 }

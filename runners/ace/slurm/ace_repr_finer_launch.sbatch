@@ -11,7 +11,7 @@
 #   CONFIGS=all_cheap,expensive_reflector
 #   SEED=42
 #   CHEAP_MODEL=openai/gpt-oss-120b
-#   EXPENSIVE_MODEL=deepseek/deepseek-v3.2
+#   EXPENSIVE_MODEL=deepseek/deepseek-v4-flash
 #   CHEAP_PROVIDER=openrouter
 #   EXPENSIVE_PROVIDER=openrouter
 #   TELEMETRY=1
@@ -51,7 +51,7 @@ source "${REPO_ROOT}/runners/ace/activate_env.sh"
 : "${CONFIGS:=all_cheap}"
 : "${SEED:=42}"
 : "${CHEAP_MODEL:=openai/gpt-oss-120b}"
-: "${EXPENSIVE_MODEL:=deepseek/deepseek-v3.2}"
+: "${EXPENSIVE_MODEL:=deepseek/deepseek-v4-flash}"
 : "${CHEAP_PROVIDER:=openrouter}"
 : "${EXPENSIVE_PROVIDER:=openrouter}"
 : "${TELEMETRY:=1}"

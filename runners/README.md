@@ -28,7 +28,7 @@ The checked-in representative pre-reproduction campaign lives under [runners/cam
   - `expensive_curator`
 - Default tiers:
   - `cheap = openrouter / openai/gpt-oss-120b`
-  - `expensive = openrouter / deepseek/deepseek-v3.2`
+  - `expensive = openrouter / deepseek/deepseek-v4-flash`
 - Historical analysis exception:
   - `openai/gpt-oss-120b:nitro` is classified as `expensive`, not `cheap`
   - DeepSeek and MiniMax are also classified as `expensive`

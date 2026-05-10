@@ -19,7 +19,7 @@ pre-reproduction phase:
   - `expensive_curator`
 - Default tier mapping:
   - `cheap = openrouter / openai/gpt-oss-120b`
-  - `expensive = openrouter / deepseek/deepseek-v3.2`
+  - `expensive = openrouter / deepseek/deepseek-v4-flash`
 - Historical analysis rule:
   - `openai/gpt-oss-120b:nitro` is treated as `expensive`
   - non-`nitro` GPT-family runs are treated as `cheap`

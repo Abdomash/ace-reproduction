@@ -158,7 +158,7 @@ Current direction:
 
 - Representative cluster runs now flow through `python -m runner` rather than the older benchmark-specific SLURM templates.
 - Default cheap-tier model is `openai/gpt-oss-120b` without `:nitro`.
-- Default expensive-tier model is `deepseek/deepseek-v3.2`.
+- Default expensive-tier model is `deepseek/deepseek-v4-flash`.
 - Historical `openai/gpt-oss-120b:nitro` runs remain classified as expensive in analysis, but it is not the default launch target anymore.
 
 Example mixed-model override:

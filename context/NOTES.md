@@ -11,7 +11,7 @@ This file records assumptions and deviations encountered during implementation.
 - Assumption: the new representative matrix is a pre-reproduction harness, not the final paper-faithful full ACE benchmark reproduction.
 - Assumption: tier names are cost-tier labels only.
   - `cheap = openrouter / openai/gpt-oss-120b`
-  - `expensive = openrouter / deepseek/deepseek-v3.2`
+  - `expensive = openrouter / deepseek/deepseek-v4-flash`
 - Historical compatibility exception: `openai/gpt-oss-120b:nitro` must be treated as `expensive` in analysis even though non-`nitro` GPT-family models are treated as `cheap`.
 - Historical compatibility rule: MiniMax-family and DeepSeek-family models are treated as `expensive`.
 - FiNER representative samples are explicit checked-in manifests with disjoint seeded coverage and selected indices stored directly in the sample files.
