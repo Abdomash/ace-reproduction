@@ -1,0 +1,41 @@
+{
+  "sample_id": "finer_smoke",
+  "benchmark": "finer",
+  "sample_kind": "smoke",
+  "label": "FiNER Smoke",
+  "goal": "Tiny FiNER preflight slice to confirm the runner, provider calls, result files, and telemetry before representative runs.",
+  "run_type": "smoke",
+  "size_summary": "train=5,val=5,test=5",
+  "sampling_seed": {
+    "train": 42,
+    "val": 42,
+    "test": 42
+  },
+  "sampling_method_version": "finer_smoke_first5_v1",
+  "runner_defaults": {
+    "eval_steps": 1,
+    "telemetry_interval": 1
+  },
+  "source_files": {
+    "train": "projects/ace/eval/finance/data/finer_train_batched_1000_samples.jsonl",
+    "val": "projects/ace/eval/finance/data/finer_val_batched_500_samples.jsonl",
+    "test": "projects/ace/eval/finance/data/finer_test_subset_006_seed42.jsonl"
+  },
+  "splits": {
+    "train": {
+      "original_count": 1000,
+      "selected_count": 5,
+      "selected_indices": [0, 1, 2, 3, 4]
+    },
+    "val": {
+      "original_count": 500,
+      "selected_count": 5,
+      "selected_indices": [0, 1, 2, 3, 4]
+    },
+    "test": {
+      "original_count": 441,
+      "selected_count": 5,
+      "selected_indices": [0, 1, 2, 3, 4]
+    }
+  }
+}

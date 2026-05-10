@@ -50,6 +50,24 @@ def _config_slug(sample_id: str, config_id: str, tier_specs: dict[str, TierSpec]
     )
 
 
+def _run_type_for_sample(campaign: Campaign, sample: dict[str, Any]) -> str:
+    return str(sample.get("run_type") or campaign.manifest.get("run_type") or "subset")
+
+
+def _sample_default(sample: dict[str, Any], name: str, fallback: Any) -> Any:
+    defaults = sample.get("runner_defaults") or {}
+    if isinstance(defaults, dict) and name in defaults:
+        return defaults[name]
+    return fallback
+
+
+def _arg_or_sample_default(args, sample: dict[str, Any], name: str, fallback: Any) -> Any:
+    value = getattr(args, name)
+    if value is not None:
+        return value
+    return _sample_default(sample, name, fallback)
+
+
 def _run_metadata(
     campaign: Campaign,
     sample: dict[str, Any],
@@ -61,6 +79,7 @@ def _run_metadata(
         "campaign_id": campaign.campaign_id,
         "sample_id": sample["sample_id"],
         "sample_kind": sample.get("sample_kind", "representative"),
+        "run_type": _run_type_for_sample(campaign, sample),
         "config_id": config_id,
         "tier_models": {
             name: {
@@ -107,7 +126,8 @@ def _launch_finer(
 ) -> int:
     resolved = _resolved_models_for_config(tier_specs, config_entry)
     config_slug = _config_slug(sample["sample_id"], config_id, tier_specs)
-    save_path = finer_backend.config_dir(config_slug=config_slug)
+    run_type = _run_type_for_sample(campaign, sample)
+    save_path = finer_backend.config_dir(config_slug=config_slug, run_type=run_type)
     run_metadata = _run_metadata(campaign, sample, config_id, tier_specs, resolved)
     config_name = _human_config_name(sample, config_entry, tier_specs)
     sample_manifest_path = campaign.root / "samples" / f"{sample['sample_id']}.json"
@@ -116,7 +136,7 @@ def _launch_finer(
         mode="offline",
         save_path=save_path,
         benchmark="ace-finer",
-        run_type="subset",
+        run_type=run_type,
         config_slug=config_slug,
         config_name=config_name,
         seed=args.seed,
@@ -129,11 +149,11 @@ def _launch_finer(
         curator_model=resolved["curator"]["model"],
         sample_config_path=Path("eval/finance/data/sample_config.json"),
         sample_manifest_path=sample_manifest_path,
-        eval_steps=args.eval_steps,
+        eval_steps=int(_arg_or_sample_default(args, sample, "eval_steps", 100)),
         test_workers=args.test_workers,
         max_tokens=args.max_tokens,
         telemetry=args.telemetry,
-        telemetry_interval=args.telemetry_interval,
+        telemetry_interval=_arg_or_sample_default(args, sample, "telemetry_interval", None),
         checkpoint_enabled=args.checkpoint_enabled,
         stop_after_stage=args.stop_after_stage,
         stop_after_step=args.stop_after_step,
@@ -145,10 +165,18 @@ def _launch_finer(
 def _appworld_stage_manifests(campaign: Campaign, sample: dict[str, Any]) -> tuple[list[str], dict[str, Path]]:
     manifest_path = campaign.root / "samples" / f"{sample['sample_id']}.json"
     eval_split = str(sample["eval_split"])
+    stage_task_ids = sample.get("stage_task_ids")
+    use_stage_manifest = isinstance(stage_task_ids, dict) and bool(stage_task_ids)
     if eval_split == "test_normal":
-        return ["adapt", "eval-normal"], {"eval-normal": manifest_path}
+        stages = ["adapt", "eval-normal"]
+        if use_stage_manifest:
+            return stages, {stage: manifest_path for stage in stages if stage in stage_task_ids}
+        return stages, {"eval-normal": manifest_path}
     if eval_split == "test_challenge":
-        return ["adapt", "eval-challenge"], {"eval-challenge": manifest_path}
+        stages = ["adapt", "eval-challenge"]
+        if use_stage_manifest:
+            return stages, {stage: manifest_path for stage in stages if stage in stage_task_ids}
+        return stages, {"eval-challenge": manifest_path}
     raise SystemExit(f"Unsupported AppWorld eval split in sample manifest: {eval_split}")
 
 
@@ -163,7 +191,8 @@ def _launch_appworld(
 ) -> int:
     resolved = _resolved_models_for_config(tier_specs, config_entry)
     config_slug = _config_slug(sample["sample_id"], config_id, tier_specs)
-    save_path = appworld_backend.config_dir(config_slug=config_slug)
+    run_type = _run_type_for_sample(campaign, sample)
+    save_path = appworld_backend.config_dir(config_slug=config_slug, run_type=run_type)
     run_metadata = _run_metadata(campaign, sample, config_id, tier_specs, resolved)
     config_name = _human_config_name(sample, config_entry, tier_specs)
     enabled_stages, manifest_paths = _appworld_stage_manifests(campaign, sample)
@@ -178,10 +207,10 @@ def _launch_appworld(
         curator_provider=resolved["curator"]["provider"],
         curator_model=resolved["curator"]["model"],
         appworld_root=APPWORLD_ROOT,
-        max_steps=args.appworld_max_steps,
+        max_steps=int(_arg_or_sample_default(args, sample, "appworld_max_steps", 30)),
         max_tokens=args.max_tokens,
         telemetry=args.telemetry,
-        telemetry_interval=args.telemetry_interval,
+        telemetry_interval=_arg_or_sample_default(args, sample, "telemetry_interval", None),
         checkpoint_enabled=args.checkpoint_enabled,
         stop_after_stage=args.stop_after_stage,
         stop_after_task=args.stop_after_task,
@@ -353,6 +382,7 @@ def resume_command(args) -> int:
     config_entry = campaign.configs[metadata["config_id"]]
     tier_specs = campaign.tier_specs
     resolved_models = metadata.get("resolved_models") or _resolved_models_for_config(tier_specs, config_entry)
+    run_type = str(metadata.get("run_type") or _run_type_for_sample(campaign, sample))
 
     config_slug = run.config_slug or _config_slug(sample["sample_id"], metadata["config_id"], tier_specs)
     config_name = metadata.get("config_name") or _human_config_name(sample, config_entry, tier_specs)
@@ -364,9 +394,9 @@ def resume_command(args) -> int:
         command = finer_backend.build_command(
             task_name="finer",
             mode="offline",
-            save_path=finer_backend.config_dir(config_slug=config_slug),
+            save_path=finer_backend.config_dir(config_slug=config_slug, run_type=run_type),
             benchmark="ace-finer",
-            run_type="subset",
+            run_type=run_type,
             config_slug=config_slug,
             config_name=config_name,
             seed=resume_seed,
@@ -394,7 +424,7 @@ def resume_command(args) -> int:
 
     enabled_stages, manifest_paths = _appworld_stage_manifests(campaign, sample)
     command = appworld_backend.build_full_eval_command(
-        save_path=appworld_backend.config_dir(config_slug=config_slug),
+        save_path=appworld_backend.config_dir(config_slug=config_slug, run_type=run_type),
         config_name=config_name,
         seed=resume_seed,
         generator_provider=resolved_models["generator"]["provider"],
@@ -494,7 +524,7 @@ def build_parser() -> argparse.ArgumentParser:
         subparser.add_argument("--tier", action="append", default=[])
         subparser.add_argument("--tier-provider", action="append", default=[])
         subparser.add_argument("--dry-run", action="store_true")
-        subparser.add_argument("--eval-steps", type=int, default=100)
+        subparser.add_argument("--eval-steps", type=int, default=None)
         subparser.add_argument("--test-workers", type=int, default=1)
         subparser.add_argument("--max-tokens", type=int, default=4096)
         subparser.add_argument("--telemetry", type=int, default=1)
@@ -502,7 +532,7 @@ def build_parser() -> argparse.ArgumentParser:
         subparser.add_argument("--checkpoint-enabled", action="store_true")
         subparser.add_argument("--stop-after-stage", default=None)
         subparser.add_argument("--stop-after-step", type=int, default=None)
-        subparser.add_argument("--appworld-max-steps", type=int, default=30)
+        subparser.add_argument("--appworld-max-steps", type=int, default=None)
         subparser.add_argument("--stop-after-task", type=int, default=None)
         subparser.add_argument("--checkpoint-every-task", type=int, default=1)
         subparser.add_argument("--keep-going", action="store_true")

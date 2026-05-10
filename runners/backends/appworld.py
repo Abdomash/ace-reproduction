@@ -12,6 +12,13 @@ def config_dir(config_slug: str, run_type: str = "subset", benchmark: str = "ace
     return RESULTS_ROOT / benchmark / run_type / config_slug
 
 
+def appworld_python_bin(appworld_root: Path) -> str:
+    candidate = appworld_root / ".venv" / "bin" / "python"
+    if candidate.exists():
+        return str(candidate)
+    return python_bin()
+
+
 def build_full_eval_command(
     *,
     save_path: Path,
@@ -40,7 +47,7 @@ def build_full_eval_command(
     run_metadata: dict[str, Any] | None = None,
 ) -> list[str]:
     argv = [
-        python_bin(),
+        appworld_python_bin(appworld_root),
         str(Path(__file__).resolve().parents[2] / "runners" / "ace" / "run_appworld_full.py"),
         "--appworld-root",
         str(appworld_root),
@@ -91,4 +98,3 @@ def launch(argv: list[str], *, dry_run: bool = False) -> int:
     env = os.environ.copy()
     env.setdefault("APPWORLD_PROJECT_PATH", str(APPWORLD_ROOT))
     return run_command(argv, cwd=Path(__file__).resolve().parents[2], dry_run=dry_run)
-

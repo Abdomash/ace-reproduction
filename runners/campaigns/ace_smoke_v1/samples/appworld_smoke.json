@@ -1,0 +1,25 @@
+{
+  "sample_id": "appworld_smoke",
+  "benchmark": "appworld",
+  "sample_kind": "smoke",
+  "label": "AppWorld Smoke",
+  "goal": "Tiny AppWorld preflight run with one adaptation task and one test_normal evaluation task using one agent step.",
+  "run_type": "smoke",
+  "adapt_dataset": "train",
+  "eval_split": "test_normal",
+  "size_summary": "adapt_tasks=1,eval_tasks=1,max_steps=1",
+  "sampling_seed": 42,
+  "sampling_method_version": "appworld_smoke_first_task_v1",
+  "runner_defaults": {
+    "appworld_max_steps": 1,
+    "telemetry_interval": 1
+  },
+  "stage_task_ids": {
+    "adapt": ["82e2fac_1"],
+    "eval-normal": ["3d9a636_1"]
+  },
+  "source_files": {
+    "adapt_dataset": "projects/ace-appworld/data/datasets/train.txt",
+    "eval_dataset": "projects/ace-appworld/data/datasets/test_normal.txt"
+  }
+}

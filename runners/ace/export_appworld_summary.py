@@ -17,6 +17,12 @@ def read_json(path: Path) -> Any:
         return json.load(f)
 
 
+def load_json(path: Path) -> Any:
+    if not path.exists():
+        return None
+    return read_json(path)
+
+
 def write_json(path: Path, data: Any) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     with path.open("w", encoding="utf-8") as f:

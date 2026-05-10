@@ -15,6 +15,7 @@ Raw run outputs belong under `results/`. Derived reports, summaries, plots, tabl
 ## Common Entrypoints
 
 ```bash
+python -m runner launch --campaign ace_smoke_v1 --sample finer_smoke --sample appworld_smoke --config all_cheap --keep-going
 runners/ace/run_experiments.sh finer_subset --dry-run
 runners/ace/run_experiments.sh finer_full --checkpoint-enabled --stop-after-stage baseline-eval
 runners/ace/run_experiments.sh appworld_full_eval --checkpoint-enabled --stop-after-stage adapt

@@ -1,0 +1,12 @@
+{
+  "cheap": {
+    "provider": "openrouter",
+    "model": "openai/gpt-oss-120b",
+    "label": "openai/gpt-oss-120b"
+  },
+  "expensive": {
+    "provider": "openrouter",
+    "model": "deepseek/deepseek-v4-flash",
+    "label": "deepseek/deepseek-v4-flash"
+  }
+}

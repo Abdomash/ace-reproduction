@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import argparse
+import code as _stdlib_code  # noqa: F401  # Ensure experiments/code does not shadow stdlib code.
 import json
 import os
 from pathlib import Path
@@ -9,6 +10,7 @@ import shutil
 import subprocess
 import sys
 import time
+import types
 from typing import Any
 
 
@@ -209,11 +211,24 @@ def stage_completed(manifest: dict[str, Any], task_ids: list[str]) -> bool:
 
 
 def configure_appworld_env(args: argparse.Namespace, run_dir: Path) -> None:
+    os.environ["APPWORLD_ROOT"] = str(args.appworld_root)
     os.environ["APPWORLD_PROJECT_PATH"] = str(args.appworld_root)
     os.environ["APPWORLD_EXPERIMENT_OUTPUTS"] = str(run_dir)
     os.environ["APPWORLD_MAESTRO_TELEMETRY"] = str(args.telemetry)
     if args.telemetry_interval is not None:
         os.environ["APPWORLD_MAESTRO_METRICS_INTERVAL_SECONDS"] = str(args.telemetry_interval)
+
+
+def register_local_appworld_experiments(appworld_root: Path) -> None:
+    package_name = "appworld_experiments"
+    if package_name in sys.modules:
+        return
+    package_root = appworld_root / "experiments"
+    package = types.ModuleType(package_name)
+    package.__file__ = str(package_root / "__init__.py")
+    package.__path__ = [str(package_root)]
+    package.__package__ = package_name
+    sys.modules[package_name] = package
 
 
 def write_run_config(args: argparse.Namespace, run_dir: Path, run_id: str) -> None:
@@ -277,10 +292,16 @@ def task_ids_for_stage(stage: dict[str, Any]) -> tuple[list[str], dict[str, Any]
 
     external_manifest = load_external_task_manifest(stage.get("external_task_manifest"))
     if external_manifest:
-        selected_task_ids = external_manifest.get("selected_task_ids")
+        selected_task_ids = None
+        stage_task_ids = external_manifest.get("stage_task_ids")
+        if isinstance(stage_task_ids, dict):
+            selected_task_ids = stage_task_ids.get(stage["name"])
+        if selected_task_ids is None:
+            selected_task_ids = external_manifest.get("selected_task_ids")
         if not isinstance(selected_task_ids, list) or not selected_task_ids:
             raise ValueError(
-                f"Task manifest for stage `{stage['name']}` must include non-empty selected_task_ids."
+                f"Task manifest for stage `{stage['name']}` must include non-empty selected_task_ids "
+                f"or stage_task_ids.{stage['name']}."
             )
         return [str(task_id) for task_id in selected_task_ids], external_manifest
     return load_task_ids(stage["dataset"]), None
@@ -365,7 +386,8 @@ def run_stage(
     run_state: dict[str, Any],
     stage: dict[str, Any],
 ) -> tuple[bool, dict[str, Any]]:
-    from appworld.evaluator import evaluate_dataset
+    from appworld.common.utils import table_data_to_string
+    from appworld.evaluator import Metric, evaluate_dataset, evaluate_tasks
 
     stage_name = stage["name"]
     dataset = stage["dataset"]
@@ -385,6 +407,17 @@ def run_stage(
     agent = build_agent(stage, args)
     pending_task_ids = remaining_task_ids(manifest, task_ids)
     agent.logger.initialize(experiment_name=stage_experiment_name(stage_name), num_tasks=len(task_ids), num_processes=1, process_index=0)
+    from appworld_experiments.code.ace.telemetry import start_telemetry, stop_telemetry
+
+    runtime = start_telemetry(
+        experiment_name=stage_experiment_name(stage_name),
+        runner_type="ace",
+        run_type="ace-adaptation" if stage["agent_class"] == "adaptation" else "ace-evaluation",
+        dataset_name=dataset,
+        task_id=None,
+        num_processes=1,
+        process_index=0,
+    )
 
     completed_count = sum(1 for row in (manifest.get("tasks") or {}).values() if row.get("status") == "completed")
     for task_index, task_id in enumerate(pending_task_ids, start=completed_count):
@@ -423,6 +456,7 @@ def run_stage(
             persist_manifest(run_dir, stage_name, manifest)
             completed_count += 1
             if args.stop_after_task is not None and completed_count >= int(args.stop_after_task):
+                stop_telemetry(runtime)
                 return True, manifest
         except Exception as exc:
             ended_at = now_utc_iso()
@@ -438,10 +472,34 @@ def run_stage(
             )
             manifest["tasks"][task_id] = task_row
             persist_manifest(run_dir, stage_name, manifest)
+            stop_telemetry(runtime)
             raise
 
+    stop_telemetry(runtime)
+    if stage["agent_class"] == "adaptation":
+        trained_playbook_path = Path(stage["trained_playbook_file_path"])
+        if not trained_playbook_path.exists():
+            trained_playbook_path.parent.mkdir(parents=True, exist_ok=True)
+            trained_playbook_path.write_text(str(getattr(agent, "playbook", "") or ""), encoding="utf-8")
     if stage["agent_class"] == "evaluation":
-        evaluate_dataset(stage_experiment_name(stage_name), dataset, print_report=False)
+        if external_manifest:
+            evaluation_dict = evaluate_tasks(
+                task_ids=task_ids,
+                experiment_name=stage_experiment_name(stage_name),
+                suppress_errors=True,
+                include_details=True,
+                save_reports=True,
+            )
+            evaluations_dir = stage_root / "evaluations"
+            evaluations_dir.mkdir(parents=True, exist_ok=True)
+            (evaluations_dir / f"{dataset}.json").write_text(
+                json.dumps(evaluation_dict, indent=2, sort_keys=True) + "\n",
+                encoding="utf-8",
+            )
+            report = table_data_to_string(Metric.build_report(evaluation_dict))
+            (evaluations_dir / f"{dataset}.txt").write_text(report, encoding="utf-8")
+        else:
+            evaluate_dataset(stage_experiment_name(stage_name), dataset, print_report=False)
         copy_stage_evaluation(run_dir, stage_name, dataset)
     return False, manifest
 
@@ -456,7 +514,7 @@ def main() -> int:
     configure_appworld_env(args, run_dir)
 
     sys.path.insert(0, str(args.appworld_root / "src"))
-    sys.path.insert(0, str(args.appworld_root / "experiments"))
+    register_local_appworld_experiments(args.appworld_root)
 
     run_state = load_run_state(run_dir)
     if not run_state:

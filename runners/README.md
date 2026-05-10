@@ -2,7 +2,7 @@
 
 This directory contains operational entrypoints for experiments.
 
-- `python -m runner ...`: canonical launcher for the new representative ACE subset campaign. The implementation lives inside the existing `runners/` package, and `runner.py` is just a thin compatibility entrypoint.
+- `python -m runner ...`: canonical launcher for the smoke and representative ACE campaigns. The implementation lives inside the existing `runners/` package, and `runner.py` is just a thin compatibility entrypoint.
 - `ace/run_experiments.sh`: unified local ACE runner for FiNER and Formula, plus AppWorld presets. `appworld_full_eval` now uses a single-run staged orchestrator; `appworld_subset` and `appworld_adaptation` continue to launch through `projects/ace-appworld`.
 - `ace/setup_cluster_env.sh`: one-time conda/mamba bootstrap for SLURM hosts running the representative campaign.
 - `ace/setup_appworld.sh`: AppWorld setup helper for the vendored source tree.
@@ -33,6 +33,25 @@ The checked-in representative pre-reproduction campaign lives under [runners/cam
   - `openai/gpt-oss-120b:nitro` is classified as `expensive`, not `cheap`
   - DeepSeek and MiniMax are also classified as `expensive`
 
+## Smoke Campaign
+
+The checked-in preflight smoke campaign lives under [runners/campaigns/ace_smoke_v1](/home/abdo/ace-reproduction/runners/campaigns/ace_smoke_v1/campaign.json). It is separate from `ace_repr_v1` and is intended to confirm the runner, provider wiring, output layout, and telemetry before launching real matrix cells.
+
+- Samples:
+  - `finer_smoke`: FiNER `train=5,val=5,test=5`, with `eval_steps=1`
+  - `appworld_smoke`: one AppWorld train/adapt task and one `test_normal` eval task, with `appworld_max_steps=1`
+- Configs and default tiers match the representative campaign so the same config names work.
+
+Examples:
+
+```bash
+python -m runner samples --campaign ace_smoke_v1
+python -m runner configs --campaign ace_smoke_v1
+python -m runner launch --campaign ace_smoke_v1 --sample finer_smoke --config all_cheap --dry-run
+python -m runner launch --campaign ace_smoke_v1 --sample appworld_smoke --config all_cheap --dry-run
+python -m runner launch --campaign ace_smoke_v1 --sample finer_smoke --sample appworld_smoke --config all_cheap --keep-going
+```
+
 ## Environment
 
 Provider keys are read from the environment. Subset scripts load the repository `.env` file before invoking the unified runner.
@@ -54,6 +73,8 @@ Common variables:
 ```bash
 python -m runner samples
 python -m runner configs
+python -m runner samples --campaign ace_smoke_v1
+python -m runner launch --campaign ace_smoke_v1 --sample finer_smoke --config all_cheap --dry-run
 python -m runner launch --sample finer_repr_a --config all_cheap --dry-run
 python -m runner launch --sample appworld_test_normal_repr --config expensive_reflector --dry-run
 python -m runner launch --sample finer_repr_a --sample appworld_test_challenge_repr --config all_cheap --config all_expensive

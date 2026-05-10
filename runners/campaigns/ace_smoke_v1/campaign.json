@@ -1,0 +1,9 @@
+{
+  "campaign_id": "ace_smoke_v1",
+  "label": "ACE Smoke Preflight Matrix",
+  "goal": "Tiny preflight campaign for confirming FiNER and AppWorld runners, provider wiring, and telemetry before representative runs.",
+  "run_type": "smoke",
+  "tiers_path": "tiers.json",
+  "configs_path": "configs.json",
+  "samples_dir": "samples"
+}

@@ -1,0 +1,32 @@
+{
+  "all_cheap": {
+    "label": "All Cheap",
+    "generator_tier": "cheap",
+    "reflector_tier": "cheap",
+    "curator_tier": "cheap"
+  },
+  "all_expensive": {
+    "label": "All Expensive",
+    "generator_tier": "expensive",
+    "reflector_tier": "expensive",
+    "curator_tier": "expensive"
+  },
+  "expensive_generator": {
+    "label": "Expensive Generator",
+    "generator_tier": "expensive",
+    "reflector_tier": "cheap",
+    "curator_tier": "cheap"
+  },
+  "expensive_reflector": {
+    "label": "Expensive Reflector",
+    "generator_tier": "cheap",
+    "reflector_tier": "expensive",
+    "curator_tier": "cheap"
+  },
+  "expensive_curator": {
+    "label": "Expensive Curator",
+    "generator_tier": "cheap",
+    "reflector_tier": "cheap",
+    "curator_tier": "expensive"
+  }
+}
