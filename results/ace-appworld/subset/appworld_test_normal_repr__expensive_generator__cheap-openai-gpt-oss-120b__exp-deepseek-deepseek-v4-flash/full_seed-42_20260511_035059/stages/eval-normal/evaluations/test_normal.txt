@@ -1,0 +1,6 @@
+    type     | task_goal_completion | scenario_goal_completion
+-------------+----------------------+-------------------------
+ aggregate   |         70.0         |           65.0          
+difficulty_1 |         85.7         |           85.7          
+difficulty_2 |         83.3         |           83.3          
+difficulty_3 |         42.9         |           28.6          

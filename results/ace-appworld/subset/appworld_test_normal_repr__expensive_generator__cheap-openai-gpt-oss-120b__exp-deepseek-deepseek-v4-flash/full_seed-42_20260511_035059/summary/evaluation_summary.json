@@ -1,0 +1,566 @@
+{
+  "aggregate": {
+    "scenario_goal_completion": 65.0,
+    "task_goal_completion": 70.0
+  },
+  "available": true,
+  "challenge_aggregate": {},
+  "failure_count": 18,
+  "stages": {
+    "eval-challenge": {
+      "available": false,
+      "path": "/home/abdo/ace-reproduction/results/ace-appworld/subset/appworld_test_normal_repr__expensive_generator__cheap-openai-gpt-oss-120b__exp-deepseek-deepseek-v4-flash/full_seed-42_20260511_035059/stages/eval-challenge/evaluations/test_challenge.json"
+    },
+    "eval-normal": {
+      "aggregate": {
+        "scenario_goal_completion": 65.0,
+        "task_goal_completion": 70.0
+      },
+      "available": true,
+      "difficulty": {
+        "1": {
+          "passed": 18,
+          "total": 21
+        },
+        "2": {
+          "passed": 15,
+          "total": 18
+        },
+        "3": {
+          "passed": 9,
+          "total": 21
+        }
+      },
+      "failure_count": 18,
+      "failures": [
+        {
+          "difficulty": 1,
+          "failures": [
+            {
+              "label": "no_op_fail",
+              "requirement": "assert answers match.",
+              "trace": "```python\nwith test(\n    \"\"\"\n    assert answers match.\n    \"\"\"\n):\n    test.case(ground_truth_answer, \"==\", predicted_answer, normalize=float, tolerance=0.51)\n```\n----------"
+            }
+          ],
+          "num_passes": 1,
+          "num_tests": 2,
+          "task_id": "21abae1_1"
+        },
+        {
+          "difficulty": 1,
+          "failures": [
+            {
+              "label": "no_op_fail",
+              "requirement": "assert answers match.",
+              "trace": "```python\nwith test(\n    \"\"\"\n    assert answers match.\n    \"\"\"\n):\n    test.case(ground_truth_answer, \"==\", predicted_answer, normalize=float, tolerance=0.51)\n```\n----------"
+            }
+          ],
+          "num_passes": 1,
+          "num_tests": 2,
+          "task_id": "21abae1_2"
+        },
+        {
+          "difficulty": 1,
+          "failures": [
+            {
+              "label": "no_op_fail",
+              "requirement": "assert answers match.",
+              "trace": "```python\nwith test(\n    \"\"\"\n    assert answers match.\n    \"\"\"\n):\n    test.case(ground_truth_answer, \"==\", predicted_answer, normalize=float, tolerance=0.51)\n```\n----------"
+            }
+          ],
+          "num_passes": 1,
+          "num_tests": 2,
+          "task_id": "21abae1_3"
+        },
+        {
+          "difficulty": 3,
+          "failures": [
+            {
+              "label": "no_op_fail",
+              "requirement": "assert answers match.",
+              "trace": "```python\nwith test(\n    \"\"\"\n    assert answers match.\n    \"\"\"\n):\n    test.answer(predicted_answer, ground_truth_answer)\n```\n----------\nAssertionError:  '<<not_given>>' == 'null'"
+            },
+            {
+              "label": "no_op_fail",
+              "requirement": "assert model changes match venmo.Transaction, venmo.Notification,\nvenmo.User, ignoring venmo.PaymentCard.",
+              "trace": "```python\nwith test(\n    \"\"\"\n    assert model changes match venmo.Transaction, venmo.Notification,\n    venmo.User, ignoring venmo.PaymentCard.\n    \"\"\"\n):\n    changed_model_names = models.changed_model_names(ignore=[\"venmo.PaymentCard\"])\n    test.case(\n```\n----------\nAssertionError:  set() == {'venmo.Transaction', 'venmo.Notification', 'venmo.User'}\n\nIn right but not left:\n['venmo.Transaction', 'venmo.Notification', 'venmo.User']"
+            },
+            {
+              "label": "no_op_fail",
+              "requirement": "obtain added, updated, removed venmo.Transaction records using models.changed_records,\nand assert 1 was added, 0 were updated or removed.",
+              "trace": "```python\nwith test(\n    \"\"\"\n    obtain added, updated, removed venmo.Transaction records using models.changed_records,\n    and assert 1 was added, 0 were updated or removed.\n    \"\"\"\n):\n    added_transactions, updated_transactions, removed_transactions = models.changed_records(\n        \"venmo.Transaction\"\n```\n----------\nAssertionError:  0 == 1"
+            },
+            {
+              "label": "no_op_fail",
+              "requirement": "assert the added transaction's receiver_id is private_data.person_venmo_user_id.",
+              "trace": "```python\nwith test(\n    \"\"\"\n    assert the added transaction's receiver_id is private_data.person_venmo_user_id.\n    \"\"\"\n):\n    added_transaction = added_transactions[0]\n    test.case(added_transaction.receiver_id, \"==\", private_data.person_venmo_user_id)\n```\n----------"
+            },
+            {
+              "label": "no_op_fail",
+              "requirement": "assert the added transaction has amount public_data.amount.",
+              "trace": "```python\nwith test(\n    \"\"\"\n    assert the added transaction has amount public_data.amount.\n    \"\"\"\n):\n    test.case(added_transaction.amount, \"==\", public_data.amount)\n```\n----------"
+            }
+          ],
+          "num_passes": 1,
+          "num_tests": 6,
+          "task_id": "2c544f9_1"
+        },
+        {
+          "difficulty": 3,
+          "failures": [
+            {
+              "label": "no_op_fail",
+              "requirement": "assert model changes match venmo.Transaction, venmo.Notification,\nvenmo.User, ignoring venmo.PaymentCard.",
+              "trace": "```python\nwith test(\n    \"\"\"\n    assert model changes match venmo.Transaction, venmo.Notification,\n    venmo.User, ignoring venmo.PaymentCard.\n    \"\"\"\n):\n    changed_model_names = models.changed_model_names(ignore=[\"venmo.PaymentCard\"])\n    test.case(\n```\n----------\nAssertionError:\n{'venmo.Notification', 'gmail.Email', 'gmail.UserEmailThread', 'venmo.User', 'gmail.GlobalEmailThread', 'file_system.Directory', 'venmo.BankTransfer', 'gmail.Attachment', 'file_system.File', 'venmo.Transaction'}\n==\n{'venmo.Transaction', 'venmo.Notification', 'venmo.User'}\n\nIn left but not right:\n['gmail.Email', 'gmail.UserEmailThread', 'gmail.GlobalEmailThread', 'file_system.Directory', 'venmo.BankTransfer', 'gmail.Attachment', 'file_system.File']"
+            }
+          ],
+          "num_passes": 5,
+          "num_tests": 6,
+          "task_id": "2c544f9_2"
+        },
+        {
+          "difficulty": 3,
+          "failures": [
+            {
+              "label": "no_op_fail",
+              "requirement": "assert model changes match venmo.Transaction, venmo.Notification,\nvenmo.User, ignoring venmo.PaymentCard.",
+              "trace": "```python\nwith test(\n    \"\"\"\n    assert model changes match venmo.Transaction, venmo.Notification,\n    venmo.User, ignoring venmo.PaymentCard.\n    \"\"\"\n):\n    changed_model_names = models.changed_model_names(ignore=[\"venmo.PaymentCard\"])\n    test.case(\n```\n----------\nAssertionError:\n{'venmo.Notification', 'gmail.Email', 'gmail.UserEmailThread', 'venmo.User', 'gmail.GlobalEmailThread', 'file_system.Directory', 'venmo.BankTransfer', 'gmail.Attachment', 'file_system.File', 'venmo.Transaction'}\n==\n{'venmo.Transaction', 'venmo.Notification', 'venmo.User'}\n\nIn left but not right:\n['gmail.Email', 'gmail.UserEmailThread', 'gmail.GlobalEmailThread', 'file_system.Directory', 'venmo.BankTransfer', 'gmail.Attachment', 'file_system.File']"
+            }
+          ],
+          "num_passes": 5,
+          "num_tests": 6,
+          "task_id": "2c544f9_3"
+        },
+        {
+          "difficulty": 2,
+          "failures": [
+            {
+              "label": "no_op_fail",
+              "requirement": "assert answers match.",
+              "trace": "```python\nwith test(\n    \"\"\"\n    assert answers match.\n    \"\"\"\n):\n    test.answer(predicted_answer, ground_truth_answer)\n```\n----------\nAssertionError:  '<<not_given>>' == 'null'"
+            },
+            {
+              "label": "no_op_fail",
+              "requirement": "obtain added, deleted friendships using models.changed_records\nand assert friend_ids of the added ones match private_data.to_befriend_venmo_user_ids (ignore_order)",
+              "trace": "```python\nwith test(\n    \"\"\"\n    obtain added, deleted friendships using models.changed_records\n    and assert friend_ids of the added ones match private_data.to_befriend_venmo_user_ids (ignore_order)\n    \"\"\"\n):\n    added_friendships, _, deleted_friendships = models.changed_records(\"venmo.Friendship\")\n    added_friend_ids = list_of(added_friendships, \"friend_id\")\n```\n----------\nAssertionError:\n[1, 15, 32, 33, 34, 35, 36, 43, 45, 49, 60, 68, 76, 81, 89, 97, 98]\n==\n[15, 43, 60, 97]\n\nIn left but not right:\n[1, 32, 33, 34, 35, 36, 45, 49, 68, 76, 81, 89, 98]\n\nOriginal values:\n[98, 43, 49, 1, 36, 34, 81, 33, 35, 60, 68, 89, 97, 32, 76, 45, 15]\n==\n[43, 97, 15, 60]"
+            },
+            {
+              "label": "no_op_fail",
+              "requirement": "assert friend_ids of the deleted ones match private_data.to_unfriend_venmo_user_ids (ignore_order)",
+              "trace": "```python\nwith test(\n    \"\"\"\n    assert friend_ids of the deleted ones match private_data.to_unfriend_venmo_user_ids (ignore_order)\n    \"\"\"\n):\n    deleted_friend_ids = list_of(deleted_friendships, \"friend_id\")\n    test.case(\n        deleted_friend_ids, \"==\", private_data.to_unfriend_venmo_user_ids, ignore_order=True\n```\n----------\nAssertionError:  [] == [9, 16, 28, 71, 85, 100]\n\nIn right but not left:\n[9, 16, 28, 71, 85, 100]\n\nOriginal values:\n[] == [16, 85, 9, 71, 100, 28]"
+            },
+            {
+              "label": "no_op_fail",
+              "requirement": "assert all main_user's friends on venmo match\nprivate_data.all_friends_venmo_user_ids in the end state (ignore_order)",
+              "trace": "```python\nwith test(\n    \"\"\"\n    assert all main_user's friends on venmo match\n    private_data.all_friends_venmo_user_ids in the end state (ignore_order)\n    \"\"\"\n):\n    venmo_user = models.end.venmo.User.find_from(main_user)\n    venmo_friend_ids = list_of(venmo_user.friends, \"id\")\n```\n----------\nAssertionError:\n[1, 9, 15, 16, 28, 29, 32, 33, 34, 35, 36, 43, 45, 49, 58, 60, 68, 71, 72, 76, 81, 85, 86, 89, 97, 98, 100]\n==\n[15, 29, 43, 58, 60, 72, 86, 97]\n\nIn left but not right:\n[1, 9, 16, 28, 32, 33, 34, 35, 36, 45, 49, 68, 71, 76, 81, 85, 89, 98, 100]\n\nOriginal values:\n[58, 72, 29, 86, 16, 85, 9, 71, 100, 28, 45, 33, 32, 35, 68, 97, 36, 76, 15, 60, 43, 81, 34, 49, 89, 98, 1]\n==\n[58, 72, 29, 86, 43, 97, 15, 60]"
+            }
+          ],
+          "num_passes": 1,
+          "num_tests": 5,
+          "task_id": "3d9a636_1"
+        },
+        {
+          "difficulty": 2,
+          "failures": [
+            {
+              "label": "no_op_fail",
+              "requirement": "assert friend_ids of the deleted ones match private_data.to_unfriend_venmo_user_ids (ignore_order)",
+              "trace": "```python\nwith test(\n    \"\"\"\n    assert friend_ids of the deleted ones match private_data.to_unfriend_venmo_user_ids (ignore_order)\n    \"\"\"\n):\n    deleted_friend_ids = list_of(deleted_friendships, \"friend_id\")\n    test.case(\n        deleted_friend_ids, \"==\", private_data.to_unfriend_venmo_user_ids, ignore_order=True\n```\n----------\nAssertionError:  [10, 72, 103, 104] == [10, 34, 72, 103, 104]\n\nIn right but not left:\n[34]\n\nOriginal values:\n[72, 10, 104, 103] == [72, 103, 34, 104, 10]"
+            },
+            {
+              "label": "no_op_fail",
+              "requirement": "assert all main_user's friends on venmo match\nprivate_data.all_friends_venmo_user_ids in the end state (ignore_order)",
+              "trace": "```python\nwith test(\n    \"\"\"\n    assert all main_user's friends on venmo match\n    private_data.all_friends_venmo_user_ids in the end state (ignore_order)\n    \"\"\"\n):\n    venmo_user = models.end.venmo.User.find_from(main_user)\n    venmo_friend_ids = list_of(venmo_user.friends, \"id\")\n```\n----------\nAssertionError:  [34, 83, 90, 91, 92, 95, 96, 101] == [83, 90, 91, 92, 95, 96, 101]\n\nIn left but not right:\n[34]\n\nOriginal values:\n[96, 101, 91, 34, 92, 90, 95, 83] == [96, 101, 91, 90, 95, 92, 83]"
+            }
+          ],
+          "num_passes": 3,
+          "num_tests": 5,
+          "task_id": "3d9a636_2"
+        },
+        {
+          "difficulty": 2,
+          "failures": [
+            {
+              "label": "no_op_fail",
+              "requirement": "obtain added, deleted friendships using models.changed_records\nand assert friend_ids of the added ones match private_data.to_befriend_venmo_user_ids (ignore_order)",
+              "trace": "```python\nwith test(\n    \"\"\"\n    obtain added, deleted friendships using models.changed_records\n    and assert friend_ids of the added ones match private_data.to_befriend_venmo_user_ids (ignore_order)\n    \"\"\"\n):\n    added_friendships, _, deleted_friendships = models.changed_records(\"venmo.Friendship\")\n    added_friend_ids = list_of(added_friendships, \"friend_id\")\n```\n----------\nAssertionError:\n[10, 16, 20, 23, 42, 46, 55, 68, 69, 88, 89, 91, 92, 95]\n==\n[10, 20, 23, 55, 68]\n\nIn left but not right:\n[16, 42, 46, 69, 88, 89, 91, 92, 95]\n\nOriginal values:\n[23, 89, 88, 10, 69, 42, 20, 91, 46, 68, 55, 16, 95, 92]\n==\n[10, 68, 55, 20, 23]"
+            },
+            {
+              "label": "no_op_fail",
+              "requirement": "assert friend_ids of the deleted ones match private_data.to_unfriend_venmo_user_ids (ignore_order)",
+              "trace": "```python\nwith test(\n    \"\"\"\n    assert friend_ids of the deleted ones match private_data.to_unfriend_venmo_user_ids (ignore_order)\n    \"\"\"\n):\n    deleted_friend_ids = list_of(deleted_friendships, \"friend_id\")\n    test.case(\n        deleted_friend_ids, \"==\", private_data.to_unfriend_venmo_user_ids, ignore_order=True\n```\n----------\nAssertionError:  [] == [40, 52, 56, 66, 78]\n\nIn right but not left:\n[40, 52, 56, 66, 78]\n\nOriginal values:\n[] == [40, 66, 56, 52, 78]"
+            },
+            {
+              "label": "no_op_fail",
+              "requirement": "assert all main_user's friends on venmo match\nprivate_data.all_friends_venmo_user_ids in the end state (ignore_order)",
+              "trace": "```python\nwith test(\n    \"\"\"\n    assert all main_user's friends on venmo match\n    private_data.all_friends_venmo_user_ids in the end state (ignore_order)\n    \"\"\"\n):\n    venmo_user = models.end.venmo.User.find_from(main_user)\n    venmo_friend_ids = list_of(venmo_user.friends, \"id\")\n```\n----------\nAssertionError:\n[10, 16, 20, 23, 31, 35, 36, 40, 42, 43, 46, 52, 55, 56, 66, 68, 69, 78, 88, 89, 91, 92, 95, 106]\n==\n[10, 20, 23, 31, 35, 36, 43, 55, 68, 106]\n\nIn left but not right:\n[16, 40, 42, 46, 52, 56, 66, 69, 78, 88, 89, 91, 92, 95]\n\nOriginal values:\n[35, 31, 36, 106, 43, 40, 66, 56, 52, 78, 20, 16, 92, 88, 23, 68, 91, 69, 55, 10, 46, 42, 95, 89]\n==\n[35, 31, 36, 106, 43, 10, 68, 55, 20, 23]"
+            }
+          ],
+          "num_passes": 2,
+          "num_tests": 5,
+          "task_id": "3d9a636_3"
+        },
+        {
+          "difficulty": 3,
+          "failures": [
+            {
+              "label": "no_op_fail",
+              "requirement": "assert answers match.",
+              "trace": "```python\nwith test(\n    \"\"\"\n    assert answers match.\n    \"\"\"\n):\n    test.answer(predicted_answer, ground_truth_answer)\n```\n----------\nAssertionError:  '<<not_given>>' == 'null'"
+            },
+            {
+              "label": "no_op_fail",
+              "requirement": "assert model changes match venmo.Transaction, venmo.Notification,\nsplitwise.Expense, splitwise.ExpenseShare, splitwise.Notification, ignoring\ngmail.GlobalEmailThread, gmail.UserEmailThread, gmail.Email, gmail.Attachment,\nvenmo.User, venmo.BankTransfer, file_system.Directory, file_system.File.",
+              "trace": "```python\nwith test(\n    \"\"\"\n    assert model changes match venmo.Transaction, venmo.Notification,\n    splitwise.Expense, splitwise.ExpenseShare, splitwise.Notification, ignoring\n    gmail.GlobalEmailThread, gmail.UserEmailThread, gmail.Email, gmail.Attachment,\n    venmo.User, venmo.BankTransfer, file_system.Directory, file_system.File.\n    \"\"\"\n):\n```\n----------\nAssertionError:\n{'splitwise.Notification', 'splitwise.Expense', 'splitwise.ExpenseShare'}\n==\n{'venmo.Transaction', 'venmo.Notification', 'splitwise.ExpenseShare', 'splitwise.Notification', 'splitwise.Expense'}\n\nIn right but not left:\n['venmo.Transaction', 'venmo.Notification']"
+            },
+            {
+              "label": "no_op_fail",
+              "requirement": "assert all the added_transactions are private/public based on public_data.privacy.",
+              "trace": "```python\nwith test(\n    \"\"\"\n    assert all the added_transactions are private/public based on public_data.privacy.\n    \"\"\"\n):\n    private = public_data.privacy == \"privately\"\n    test.case(list_of(added_transactions, \"private\"), \"all ==\", private)\n```\n----------\nAssertionError: The left modifier is 'all' with allow_left_empty=False, but left operand is empty."
+            },
+            {
+              "label": "no_op_fail",
+              "requirement": "assert the venmo_user_id_to_amount from these transactions match\nprivate_data.venmo_user_id_to_amount (tolerance of 0.51, ignore_order).",
+              "trace": "```python\nwith test(\n    \"\"\"\n    assert the venmo_user_id_to_amount from these transactions match\n    private_data.venmo_user_id_to_amount (tolerance of 0.51, ignore_order).\n    \"\"\"\n):\n    venmo_user_id_to_amount = dict_of(added_transactions, \"receiver_id\", \"amount\")\n    test.case(\n```\n----------\nAssertionError:  {} == Munch({17: 50 \u00b1 0.51, 25: 10 \u00b1 0.51})\n\nOriginal values:\n{} == Munch({17: 50, 25: 10})"
+            },
+            {
+              "label": "no_op_fail",
+              "requirement": "assert the venmo_user_id_to_description from these transactions match\nprivate_data.venmo_user_id_to_description (normalize_text=True, ignore_order).",
+              "trace": "```python\nwith test(\n    \"\"\"\n    assert the venmo_user_id_to_description from these transactions match\n    private_data.venmo_user_id_to_description (normalize_text=True, ignore_order).\n    \"\"\"\n):\n    venmo_user_id_to_description = dict_of(added_transactions, \"receiver_id\", \"description\")\n    test.case(\n```\n----------\nAssertionError:  {} == Munch({17: 'holiday concert', 25: 'thermometer'})\n\nOriginal values:\n{} == Munch({17: 'Holiday Concert', 25: 'Thermometer'})"
+            },
+            {
+              "label": "no_op_fail",
+              "requirement": "assert the debtor_ids of the added expense shares match the private_data.venmo_user_id.",
+              "trace": "```python\nwith test(\n    \"\"\"\n    assert the debtor_ids of the added expense shares match the private_data.venmo_user_id.\n    \"\"\"\n):\n    test.case(set_of(added_expense_shares, \"debtor_id\"), \"==\", {private_data.venmo_user_id})\n```\n----------\nAssertionError:  {20} == {62}\n\nIn left but not right:\n[20]\n\nIn right but not left:\n[62]"
+            },
+            {
+              "label": "no_op_fail",
+              "requirement": "assert the splitwise_user_id_to_amount (expense.amount) from expenses match\nprivate_data.splitwise_user_id_to_amount (tolerance of 0.51, ignore_order).",
+              "trace": "```python\nwith test(\n    \"\"\"\n    assert the splitwise_user_id_to_amount (expense.amount) from expenses match\n    private_data.splitwise_user_id_to_amount (tolerance of 0.51, ignore_order).\n    \"\"\"\n):\n    splitwise_user_id_to_amount = dict_of(added_expenses, \"payer_id\", \"amount\")\n    test.case(\n```\n----------\nAssertionError:  {62: 20.0 \u00b1 0.51} == Munch({20: 20 \u00b1 0.51, 42: 80 \u00b1 0.51, 90: 15 \u00b1 0.51})\n\nOriginal values:\n{62: 20.0} == Munch({20: 20, 42: 80, 90: 15})"
+            },
+            {
+              "label": "no_op_fail",
+              "requirement": "assert the splitwise_user_id_to_amount (share_amount) from expense shares match\nprivate_data.splitwise_user_id_to_amount (tolerance of 0.51, ignore_order).",
+              "trace": "```python\nwith test(\n    \"\"\"\n    assert the splitwise_user_id_to_amount (share_amount) from expense shares match\n    private_data.splitwise_user_id_to_amount (tolerance of 0.51, ignore_order).\n    \"\"\"\n):\n    splitwise_user_id_to_amount = dict_of(\n        added_expense_shares, \"expense.payer_id\", \"share_amount\"\n```\n----------\nAssertionError:  {62: 20.0 \u00b1 0.51} == Munch({20: 20 \u00b1 0.51, 42: 80 \u00b1 0.51, 90: 15 \u00b1 0.51})\n\nOriginal values:\n{62: 20.0} == Munch({20: 20 \u00b1 0.51, 42: 80 \u00b1 0.51, 90: 15 \u00b1 0.51})"
+            },
+            {
+              "label": "no_op_fail",
+              "requirement": "assert the splitwise_user_id_to_description from expenses match\nprivate_data.splitwise_user_id_to_description (normalize_text=True).",
+              "trace": "```python\nwith test(\n    \"\"\"\n    assert the splitwise_user_id_to_description from expenses match\n    private_data.splitwise_user_id_to_description (normalize_text=True).\n    \"\"\"\n):\n    splitwise_user_id_to_description = dict_of(added_expenses, \"payer_id\", \"description\")\n    test.case(\n```\n----------\nAssertionError:\n{62: 'ski socks'}\n==\nMunch({20: 'ski socks', 42: 'cycling shoes', 90: 'gloves'})\n\nOriginal values:\n{62: 'Ski Socks'}\n==\nMunch({20: 'Ski Socks', 42: 'Cycling Shoes', 90: 'Gloves'})"
+            },
+            {
+              "label": "no_op_fail",
+              "requirement": "assert the attached files of these expenses match the\nprivate_data.splitwise_user_id_to_file_content (normalize_text=True).",
+              "trace": "```python\nwith test(\n    \"\"\"\n    assert the attached files of these expenses match the\n    private_data.splitwise_user_id_to_file_content (normalize_text=True).\n    \"\"\"\n):\n    splitwise_user_id_to_file_content = dict_of(\n        added_expenses, \"payer_id\", \"receipt_file_content\"\n```\n----------\nAssertionError:\n{62: 'binary:83edc27401...'}\n==\nMunch({20: 'binary:83edc27401...', 42: 'binary:a4c362a6a7...', 90: 'binary:43c163d23e...'})"
+            },
+            {
+              "label": "no_op_fail",
+              "requirement": "assert the splitwise_user_id_to_amount from added splitwise expenses match\nthe private_data.splitwise_user_id_to_amount.",
+              "trace": "```python\nwith test(\n    \"\"\"\n    assert the splitwise_user_id_to_amount from added splitwise expenses match\n    the private_data.splitwise_user_id_to_amount.\n    \"\"\"\n):\n    splitwise_user_id_to_amount = dict_of(\n        added_expense_shares, \"expense.payer_id\", \"share_amount\"\n```\n----------\nAssertionError:  {62: 20.0 \u00b1 0.51} == Munch({20: 20 \u00b1 0.51, 42: 80 \u00b1 0.51, 90: 15 \u00b1 0.51})\n\nOriginal values:\n{62: 20.0} == Munch({20: 20 \u00b1 0.51, 42: 80 \u00b1 0.51, 90: 15 \u00b1 0.51})"
+            }
+          ],
+          "num_passes": 8,
+          "num_tests": 19,
+          "task_id": "6b6ca61_1"
+        },
+        {
+          "difficulty": 3,
+          "failures": [
+            {
+              "label": "no_op_fail",
+              "requirement": "assert answers match.",
+              "trace": "```python\nwith test(\n    \"\"\"\n    assert answers match.\n    \"\"\"\n):\n    test.answer(predicted_answer, ground_truth_answer)\n```\n----------\nAssertionError:  '<<not_given>>' == 'null'"
+            },
+            {
+              "label": "no_op_fail",
+              "requirement": "assert model changes match venmo.Transaction, venmo.Notification,\nsplitwise.Expense, splitwise.ExpenseShare, splitwise.Notification, ignoring\ngmail.GlobalEmailThread, gmail.UserEmailThread, gmail.Email, gmail.Attachment,\nvenmo.User, venmo.BankTransfer, file_system.Directory, file_system.File.",
+              "trace": "```python\nwith test(\n    \"\"\"\n    assert model changes match venmo.Transaction, venmo.Notification,\n    splitwise.Expense, splitwise.ExpenseShare, splitwise.Notification, ignoring\n    gmail.GlobalEmailThread, gmail.UserEmailThread, gmail.Email, gmail.Attachment,\n    venmo.User, venmo.BankTransfer, file_system.Directory, file_system.File.\n    \"\"\"\n):\n```\n----------\nAssertionError:\nset()\n==\n{'venmo.Transaction', 'venmo.Notification', 'splitwise.ExpenseShare', 'splitwise.Notification', 'splitwise.Expense'}\n\nIn right but not left:\n['venmo.Transaction', 'venmo.Notification', 'splitwise.ExpenseShare', 'splitwise.Notification', 'splitwise.Expense']"
+            },
+            {
+              "label": "no_op_fail",
+              "requirement": "assert all the added_transactions are private/public based on public_data.privacy.",
+              "trace": "```python\nwith test(\n    \"\"\"\n    assert all the added_transactions are private/public based on public_data.privacy.\n    \"\"\"\n):\n    private = public_data.privacy == \"privately\"\n    test.case(list_of(added_transactions, \"private\"), \"all ==\", private)\n```\n----------\nAssertionError: The left modifier is 'all' with allow_left_empty=False, but left operand is empty."
+            },
+            {
+              "label": "no_op_fail",
+              "requirement": "assert the venmo_user_id_to_amount from these transactions match\nprivate_data.venmo_user_id_to_amount (tolerance of 0.51, ignore_order).",
+              "trace": "```python\nwith test(\n    \"\"\"\n    assert the venmo_user_id_to_amount from these transactions match\n    private_data.venmo_user_id_to_amount (tolerance of 0.51, ignore_order).\n    \"\"\"\n):\n    venmo_user_id_to_amount = dict_of(added_transactions, \"receiver_id\", \"amount\")\n    test.case(\n```\n----------\nAssertionError:  {} == Munch({58: 12 \u00b1 0.51, 15: 80 \u00b1 0.51, 71: 20 \u00b1 0.51})\n\nOriginal values:\n{} == Munch({58: 12, 15: 80, 71: 20})"
+            },
+            {
+              "label": "no_op_fail",
+              "requirement": "assert the venmo_user_id_to_description from these transactions match\nprivate_data.venmo_user_id_to_description (normalize_text=True, ignore_order).",
+              "trace": "```python\nwith test(\n    \"\"\"\n    assert the venmo_user_id_to_description from these transactions match\n    private_data.venmo_user_id_to_description (normalize_text=True, ignore_order).\n    \"\"\"\n):\n    venmo_user_id_to_description = dict_of(added_transactions, \"receiver_id\", \"description\")\n    test.case(\n```\n----------\nAssertionError:  {} == Munch({58: 'notebooks', 15: 'climbing backpack', 71: 'e-books'})\n\nOriginal values:\n{} == Munch({58: 'Notebooks', 15: 'Climbing Backpack', 71: 'E-Books'})"
+            },
+            {
+              "label": "no_op_fail",
+              "requirement": "assert all the added expenses have a None group_id",
+              "trace": "```python\nwith test(\n    \"\"\"\n    assert all the added expenses have a None group_id\n    \"\"\"\n):\n    test.case(list_of(added_expenses, \"group_id\"), \"all ==\", None)\n```\n----------\nAssertionError: The left modifier is 'all' with allow_left_empty=False, but left operand is empty."
+            },
+            {
+              "label": "no_op_fail",
+              "requirement": "assert the debtor_ids of the added expense shares match the private_data.venmo_user_id.",
+              "trace": "```python\nwith test(\n    \"\"\"\n    assert the debtor_ids of the added expense shares match the private_data.venmo_user_id.\n    \"\"\"\n):\n    test.case(set_of(added_expense_shares, \"debtor_id\"), \"==\", {private_data.venmo_user_id})\n```\n----------\nAssertionError:  set() == {86}\n\nIn right but not left:\n[86]"
+            },
+            {
+              "label": "no_op_fail",
+              "requirement": "assert the splitwise_user_id_to_amount (expense.amount) from expenses match\nprivate_data.splitwise_user_id_to_amount (tolerance of 0.51, ignore_order).",
+              "trace": "```python\nwith test(\n    \"\"\"\n    assert the splitwise_user_id_to_amount (expense.amount) from expenses match\n    private_data.splitwise_user_id_to_amount (tolerance of 0.51, ignore_order).\n    \"\"\"\n):\n    splitwise_user_id_to_amount = dict_of(added_expenses, \"payer_id\", \"amount\")\n    test.case(\n```\n----------\nAssertionError:  {} == Munch({67: 50 \u00b1 0.51, 63: 5 \u00b1 0.51, 54: 40 \u00b1 0.51, 48: 10 \u00b1 0.51})\n\nOriginal values:\n{} == Munch({67: 50, 63: 5, 54: 40, 48: 10})"
+            },
+            {
+              "label": "no_op_fail",
+              "requirement": "assert the splitwise_user_id_to_amount (share_amount) from expense shares match\nprivate_data.splitwise_user_id_to_amount (tolerance of 0.51, ignore_order).",
+              "trace": "```python\nwith test(\n    \"\"\"\n    assert the splitwise_user_id_to_amount (share_amount) from expense shares match\n    private_data.splitwise_user_id_to_amount (tolerance of 0.51, ignore_order).\n    \"\"\"\n):\n    splitwise_user_id_to_amount = dict_of(\n        added_expense_shares, \"expense.payer_id\", \"share_amount\"\n```\n----------\nAssertionError:  {} == Munch({67: 50 \u00b1 0.51, 63: 5 \u00b1 0.51, 54: 40 \u00b1 0.51, 48: 10 \u00b1 0.51})"
+            },
+            {
+              "label": "no_op_fail",
+              "requirement": "assert the splitwise_user_id_to_description from expenses match\nprivate_data.splitwise_user_id_to_description (normalize_text=True).",
+              "trace": "```python\nwith test(\n    \"\"\"\n    assert the splitwise_user_id_to_description from expenses match\n    private_data.splitwise_user_id_to_description (normalize_text=True).\n    \"\"\"\n):\n    splitwise_user_id_to_description = dict_of(added_expenses, \"payer_id\", \"description\")\n    test.case(\n```\n----------\nAssertionError:\n{}\n==\nMunch({67: 'after party', 63: 'climbing tape', 54: 'reading glasses', 48: 'bike bell'})\n\nOriginal values:\n{}\n==\nMunch({67: 'After Party', 63: 'Climbing Tape', 54: 'Reading Glasses', 48: 'Bike Bell'})"
+            },
+            {
+              "label": "no_op_fail",
+              "requirement": "assert the attached files of these expenses match the\nprivate_data.splitwise_user_id_to_file_content (normalize_text=True).",
+              "trace": "```python\nwith test(\n    \"\"\"\n    assert the attached files of these expenses match the\n    private_data.splitwise_user_id_to_file_content (normalize_text=True).\n    \"\"\"\n):\n    splitwise_user_id_to_file_content = dict_of(\n        added_expenses, \"payer_id\", \"receipt_file_content\"\n```\n----------\nAssertionError:\n{}\n==\nMunch({67: 'binary:43d3da8432...', 63: 'binary:eae740d37a...', 54: 'binary:237cf0d704...', 48: 'binary:f211503960...'})"
+            },
+            {
+              "label": "no_op_fail",
+              "requirement": "assert the splitwise_user_id_to_amount from added splitwise expenses match\nthe private_data.splitwise_user_id_to_amount.",
+              "trace": "```python\nwith test(\n    \"\"\"\n    assert the splitwise_user_id_to_amount from added splitwise expenses match\n    the private_data.splitwise_user_id_to_amount.\n    \"\"\"\n):\n    splitwise_user_id_to_amount = dict_of(\n        added_expense_shares, \"expense.payer_id\", \"share_amount\"\n```\n----------\nAssertionError:  {} == Munch({67: 50 \u00b1 0.51, 63: 5 \u00b1 0.51, 54: 40 \u00b1 0.51, 48: 10 \u00b1 0.51})"
+            }
+          ],
+          "num_passes": 7,
+          "num_tests": 19,
+          "task_id": "6b6ca61_2"
+        },
+        {
+          "difficulty": 3,
+          "failures": [
+            {
+              "label": "no_op_fail",
+              "requirement": "assert answers match.",
+              "trace": "```python\nwith test(\n    \"\"\"\n    assert answers match.\n    \"\"\"\n):\n    test.answer(predicted_answer, ground_truth_answer)\n```\n----------\nAssertionError:  '<<not_given>>' == 'null'"
+            },
+            {
+              "label": "no_op_fail",
+              "requirement": "assert the debtor_ids of the added expense shares match the private_data.venmo_user_id.",
+              "trace": "```python\nwith test(\n    \"\"\"\n    assert the debtor_ids of the added expense shares match the private_data.venmo_user_id.\n    \"\"\"\n):\n    test.case(set_of(added_expense_shares, \"debtor_id\"), \"==\", {private_data.venmo_user_id})\n```\n----------\nAssertionError:  {35, 40, 83, 91, 60} == {87}\n\nIn left but not right:\n[35, 40, 83, 91, 60]\n\nIn right but not left:\n[87]"
+            },
+            {
+              "label": "no_op_fail",
+              "requirement": "assert the splitwise_user_id_to_amount (expense.amount) from expenses match\nprivate_data.splitwise_user_id_to_amount (tolerance of 0.51, ignore_order).",
+              "trace": "```python\nwith test(\n    \"\"\"\n    assert the splitwise_user_id_to_amount (expense.amount) from expenses match\n    private_data.splitwise_user_id_to_amount (tolerance of 0.51, ignore_order).\n    \"\"\"\n):\n    splitwise_user_id_to_amount = dict_of(added_expenses, \"payer_id\", \"amount\")\n    test.case(\n```\n----------\nAssertionError:\n{87: 60.0 \u00b1 0.51}\n==\nMunch({60: 20 \u00b1 0.51, 35: 20 \u00b1 0.51, 91: 10 \u00b1 0.51, 83: 15 \u00b1 0.51, 40: 60 \u00b1 0.51})\n\nOriginal values:\n{87: 60.0}\n==\nMunch({60: 20, 35: 20, 91: 10, 83: 15, 40: 60})"
+            },
+            {
+              "label": "no_op_fail",
+              "requirement": "assert the splitwise_user_id_to_amount (share_amount) from expense shares match\nprivate_data.splitwise_user_id_to_amount (tolerance of 0.51, ignore_order).",
+              "trace": "```python\nwith test(\n    \"\"\"\n    assert the splitwise_user_id_to_amount (share_amount) from expense shares match\n    private_data.splitwise_user_id_to_amount (tolerance of 0.51, ignore_order).\n    \"\"\"\n):\n    splitwise_user_id_to_amount = dict_of(\n        added_expense_shares, \"expense.payer_id\", \"share_amount\"\n```\n----------\nAssertionError:\n{87: 60.0 \u00b1 0.51}\n==\nMunch({60: 20 \u00b1 0.51, 35: 20 \u00b1 0.51, 91: 10 \u00b1 0.51, 83: 15 \u00b1 0.51, 40: 60 \u00b1 0.51})\n\nOriginal values:\n{87: 60.0}\n==\nMunch({60: 20 \u00b1 0.51, 35: 20 \u00b1 0.51, 91: 10 \u00b1 0.51, 83: 15 \u00b1 0.51, 40: 60 \u00b1 0.51})"
+            },
+            {
+              "label": "no_op_fail",
+              "requirement": "assert the splitwise_user_id_to_description from expenses match\nprivate_data.splitwise_user_id_to_description (normalize_text=True).",
+              "trace": "```python\nwith test(\n    \"\"\"\n    assert the splitwise_user_id_to_description from expenses match\n    private_data.splitwise_user_id_to_description (normalize_text=True).\n    \"\"\"\n):\n    splitwise_user_id_to_description = dict_of(added_expenses, \"payer_id\", \"description\")\n    test.case(\n```\n----------\nAssertionError:\n{87: 'bike tires'}\n==\nMunch({60: 'garden decor', 35: 'cycling gloves', 91: 'tea', 83: 'timers', 40: 'bike tires'})\n\nOriginal values:\n{87: 'Bike Tires'}\n==\nMunch({60: 'Garden Decor', 35: 'Cycling Gloves', 91: 'Tea', 83: 'Timers', 40: 'Bike Tires'})"
+            },
+            {
+              "label": "no_op_fail",
+              "requirement": "assert the attached files of these expenses match the\nprivate_data.splitwise_user_id_to_file_content (normalize_text=True).",
+              "trace": "```python\nwith test(\n    \"\"\"\n    assert the attached files of these expenses match the\n    private_data.splitwise_user_id_to_file_content (normalize_text=True).\n    \"\"\"\n):\n    splitwise_user_id_to_file_content = dict_of(\n        added_expenses, \"payer_id\", \"receipt_file_content\"\n```\n----------\nAssertionError:\n{87: 'binary:698df417b6...'}\n==\nMunch({60: 'binary:3c0e65a64a...', 35: 'binary:3bfb1e082c...', 91: 'binary:861e0fd27d...', 83: 'binary:70d96a35d5...', 40: 'binary:698df417b6...'})"
+            },
+            {
+              "label": "no_op_fail",
+              "requirement": "assert the splitwise_user_id_to_amount from added splitwise expenses match\nthe private_data.splitwise_user_id_to_amount.",
+              "trace": "```python\nwith test(\n    \"\"\"\n    assert the splitwise_user_id_to_amount from added splitwise expenses match\n    the private_data.splitwise_user_id_to_amount.\n    \"\"\"\n):\n    splitwise_user_id_to_amount = dict_of(\n        added_expense_shares, \"expense.payer_id\", \"share_amount\"\n```\n----------\nAssertionError:\n{87: 60.0 \u00b1 0.51}\n==\nMunch({60: 20 \u00b1 0.51, 35: 20 \u00b1 0.51, 91: 10 \u00b1 0.51, 83: 15 \u00b1 0.51, 40: 60 \u00b1 0.51})\n\nOriginal values:\n{87: 60.0}\n==\nMunch({60: 20 \u00b1 0.51, 35: 20 \u00b1 0.51, 91: 10 \u00b1 0.51, 83: 15 \u00b1 0.51, 40: 60 \u00b1 0.51})"
+            }
+          ],
+          "num_passes": 12,
+          "num_tests": 19,
+          "task_id": "6b6ca61_3"
+        },
+        {
+          "difficulty": 3,
+          "failures": [
+            {
+              "label": "no_op_fail",
+              "requirement": "assert answers match.",
+              "trace": "```python\nwith test(\n    \"\"\"\n    assert answers match.\n    \"\"\"\n):\n    test.answer(predicted_answer, ground_truth_answer)\n```\n----------\nAssertionError:  '<<not_given>>' == 'null'"
+            },
+            {
+              "label": "no_op_fail",
+              "requirement": "assert the set of added task comment task_ids matches the\nset of keys of private_data.task_id_to_comment_text.",
+              "trace": "```python\nwith test(\n    \"\"\"\n    assert the set of added task comment task_ids matches the\n    set of keys of private_data.task_id_to_comment_text.\n    \"\"\"\n):\n    added_task_comment_ids = list_of(added_task_comments, \"task_id\")\n    test.case(\n```\n----------\nAssertionError:  [2889, 2905, 2914] == [2889, 2905, 2914, 2922]\n\nIn right but not left:\n[2922]\n\nOriginal values:\n[2905, 2914, 2889] == [2889, 2922, 2905, 2914]"
+            },
+            {
+              "label": "no_op_fail",
+              "requirement": "assert the task_id_to_comment_text obtained from the added_task_comments matches the\nprivate_data.task_id_to_comment_text (normalize_text=True).",
+              "trace": "```python\nwith test(\n    \"\"\"\n    assert the task_id_to_comment_text obtained from the added_task_comments matches the\n    private_data.task_id_to_comment_text (normalize_text=True).\n    \"\"\"\n):\n    task_id_to_comment_text = dict_of(added_task_comments, \"task_id\", \"content\")\n    test.case(\n```\n----------\nAssertionError:\n{2905: 'greatly appreciate it christopher!', 2914: 'greatly appreciate it katherine!', 2889: 'greatly appreciate it catherine!'}\n==\nMunch({2889: 'greatly appreciate it catherine!', 2922: 'greatly appreciate it thomas!', 2905: 'greatly appreciate it christopher!', 2914: 'greatly appreciate it katherine!'})\n\nOriginal values:\n{2905: 'Greatly appreciate it Christopher!', 2914: 'Greatly appreciate it Katherine!', 2889: 'Greatly appreciate it Catherine!'}\n==\nMunch({2889: 'Greatly appreciate it Catherine!', 2922: 'Greatly appreciate it Thomas!', 2905: 'Greatly appreciate it Christopher!', 2914: 'Greatly appreciate it Katherine!'})"
+            }
+          ],
+          "num_passes": 6,
+          "num_tests": 9,
+          "task_id": "8ce6779_3"
+        },
+        {
+          "difficulty": 3,
+          "failures": [
+            {
+              "label": "no_op_fail",
+              "requirement": "assert answers match.",
+              "trace": "```python\nwith test(\n    \"\"\"\n    assert answers match.\n    \"\"\"\n):\n    test.answer(predicted_answer, ground_truth_answer)\n```\n----------\nAssertionError:  '<<not_given>>' == 'null'"
+            },
+            {
+              "label": "no_op_fail",
+              "requirement": "assert model changes match {public_data.app_name}.User, phone.GlobalTextMessage,\nphone.UserTextMessage, gmail.Email, gmail.GlobalEmailThread, gmail.UserEmailThread",
+              "trace": "```python\nwith test(\n    \"\"\"\n    assert model changes match {public_data.app_name}.User, phone.GlobalTextMessage,\n    phone.UserTextMessage, gmail.Email, gmail.GlobalEmailThread, gmail.UserEmailThread\n    \"\"\"\n):\n    user_model_name = f\"{public_data.app_name}.User\"\n    changed_model_names = models.changed_model_names()\n```\n----------\nAssertionError:\nset()\n==\n{'phone.UserTextMessage', 'gmail.Email', 'gmail.UserEmailThread', 'venmo.User', 'gmail.GlobalEmailThread', 'phone.GlobalTextMessage'}\n\nIn right but not left:\n['phone.UserTextMessage', 'gmail.Email', 'gmail.UserEmailThread', 'venmo.User', 'gmail.GlobalEmailThread', 'phone.GlobalTextMessage']"
+            },
+            {
+              "label": "no_op_fail",
+              "requirement": "obtain admin.MainUser records for private_data.no_account_admin_user_ids in the start state,\nand assert email_to_name is as per the admin.MainUser records (normalize_text=True)",
+              "trace": "```python\nwith test(\n    \"\"\"\n    obtain admin.MainUser records for private_data.no_account_admin_user_ids in the start state,\n    and assert email_to_name is as per the admin.MainUser records (normalize_text=True)\n    \"\"\"\n):\n    admin_users = models.start.admin.MainUser.by_ids(private_data.no_account_admin_user_ids)\n    added_email_to_name = dict_of(added_users, \"email\", \"name\")\n```\n----------\nAssertionError:  {} == {'ch.brow@gmail.com': 'chad brown'}\n\nOriginal values:\n{} == {'ch.brow@gmail.com': 'Chad Brown'}"
+            },
+            {
+              "label": "no_op_fail",
+              "requirement": "assert receiver_ids of added global text messages match\nprivate_data.no_account_phone_user_ids (ignore order).",
+              "trace": "```python\nwith test(\n    \"\"\"\n    assert receiver_ids of added global text messages match\n    private_data.no_account_phone_user_ids (ignore order).\n    \"\"\"\n):\n    added_global_text_messages, _, _ = models.changed_records(\"phone.GlobalTextMessage\")\n    added_receiver_ids = list_of(added_global_text_messages, \"receiver_id\")\n```\n----------\nAssertionError:  [] == [88]\n\nIn right but not left:\n[88]"
+            },
+            {
+              "label": "no_op_fail",
+              "requirement": "assert all added global text messages have message public_data.message_text (normalize_text=True)",
+              "trace": "```python\nwith test(\n    \"\"\"\n    assert all added global text messages have message public_data.message_text (normalize_text=True)\n    \"\"\"\n):\n    test.case(\n        list_of(added_global_text_messages, \"message\"),\n        \"all ==\",\n```\n----------\nAssertionError: The left modifier is 'all' with allow_left_empty=False, but left operand is empty."
+            }
+          ],
+          "num_passes": 2,
+          "num_tests": 7,
+          "task_id": "9016950_1"
+        },
+        {
+          "difficulty": 3,
+          "failures": [
+            {
+              "label": "no_op_fail",
+              "requirement": "assert answers match.",
+              "trace": "```python\nwith test(\n    \"\"\"\n    assert answers match.\n    \"\"\"\n):\n    test.answer(predicted_answer, ground_truth_answer)\n```\n----------\nAssertionError:  '<<not_given>>' == 'null'"
+            },
+            {
+              "label": "no_op_fail",
+              "requirement": "assert model changes match {public_data.app_name}.User, phone.GlobalTextMessage,\nphone.UserTextMessage, gmail.Email, gmail.GlobalEmailThread, gmail.UserEmailThread",
+              "trace": "```python\nwith test(\n    \"\"\"\n    assert model changes match {public_data.app_name}.User, phone.GlobalTextMessage,\n    phone.UserTextMessage, gmail.Email, gmail.GlobalEmailThread, gmail.UserEmailThread\n    \"\"\"\n):\n    user_model_name = f\"{public_data.app_name}.User\"\n    changed_model_names = models.changed_model_names()\n```\n----------\nAssertionError:\nset()\n==\n{'phone.UserTextMessage', 'gmail.Email', 'gmail.UserEmailThread', 'venmo.User', 'gmail.GlobalEmailThread', 'phone.GlobalTextMessage'}\n\nIn right but not left:\n['phone.UserTextMessage', 'gmail.Email', 'gmail.UserEmailThread', 'venmo.User', 'gmail.GlobalEmailThread', 'phone.GlobalTextMessage']"
+            },
+            {
+              "label": "no_op_fail",
+              "requirement": "obtain admin.MainUser records for private_data.no_account_admin_user_ids in the start state,\nand assert email_to_name is as per the admin.MainUser records (normalize_text=True)",
+              "trace": "```python\nwith test(\n    \"\"\"\n    obtain admin.MainUser records for private_data.no_account_admin_user_ids in the start state,\n    and assert email_to_name is as per the admin.MainUser records (normalize_text=True)\n    \"\"\"\n):\n    admin_users = models.start.admin.MainUser.by_ids(private_data.no_account_admin_user_ids)\n    added_email_to_name = dict_of(added_users, \"email\", \"name\")\n```\n----------\nAssertionError:\n{}\n==\n{'tr_solo@gmail.com': 'troy solomon', 'kathrynmaldonado@gmail.com': 'kathryn maldonado'}\n\nOriginal values:\n{}\n==\n{'tr_solo@gmail.com': 'Troy Solomon', 'kathrynmaldonado@gmail.com': 'Kathryn Maldonado'}"
+            },
+            {
+              "label": "no_op_fail",
+              "requirement": "assert receiver_ids of added global text messages match\nprivate_data.no_account_phone_user_ids (ignore order).",
+              "trace": "```python\nwith test(\n    \"\"\"\n    assert receiver_ids of added global text messages match\n    private_data.no_account_phone_user_ids (ignore order).\n    \"\"\"\n):\n    added_global_text_messages, _, _ = models.changed_records(\"phone.GlobalTextMessage\")\n    added_receiver_ids = list_of(added_global_text_messages, \"receiver_id\")\n```\n----------\nAssertionError:  [] == [11, 86]\n\nIn right but not left:\n[11, 86]"
+            },
+            {
+              "label": "no_op_fail",
+              "requirement": "assert all added global text messages have message public_data.message_text (normalize_text=True)",
+              "trace": "```python\nwith test(\n    \"\"\"\n    assert all added global text messages have message public_data.message_text (normalize_text=True)\n    \"\"\"\n):\n    test.case(\n        list_of(added_global_text_messages, \"message\"),\n        \"all ==\",\n```\n----------\nAssertionError: The left modifier is 'all' with allow_left_empty=False, but left operand is empty."
+            }
+          ],
+          "num_passes": 2,
+          "num_tests": 7,
+          "task_id": "9016950_2"
+        },
+        {
+          "difficulty": 3,
+          "failures": [
+            {
+              "label": "no_op_fail",
+              "requirement": "assert answers match.",
+              "trace": "```python\nwith test(\n    \"\"\"\n    assert answers match.\n    \"\"\"\n):\n    test.answer(predicted_answer, ground_truth_answer)\n```\n----------\nAssertionError:  '<<not_given>>' == 'null'"
+            },
+            {
+              "label": "no_op_fail",
+              "requirement": "assert model changes match {public_data.app_name}.User, phone.GlobalTextMessage,\nphone.UserTextMessage, gmail.Email, gmail.GlobalEmailThread, gmail.UserEmailThread",
+              "trace": "```python\nwith test(\n    \"\"\"\n    assert model changes match {public_data.app_name}.User, phone.GlobalTextMessage,\n    phone.UserTextMessage, gmail.Email, gmail.GlobalEmailThread, gmail.UserEmailThread\n    \"\"\"\n):\n    user_model_name = f\"{public_data.app_name}.User\"\n    changed_model_names = models.changed_model_names()\n```\n----------\nAssertionError:\nset()\n==\n{'phone.UserTextMessage', 'gmail.Email', 'gmail.UserEmailThread', 'venmo.User', 'gmail.GlobalEmailThread', 'phone.GlobalTextMessage'}\n\nIn right but not left:\n['phone.UserTextMessage', 'gmail.Email', 'gmail.UserEmailThread', 'venmo.User', 'gmail.GlobalEmailThread', 'phone.GlobalTextMessage']"
+            },
+            {
+              "label": "no_op_fail",
+              "requirement": "obtain admin.MainUser records for private_data.no_account_admin_user_ids in the start state,\nand assert email_to_name is as per the admin.MainUser records (normalize_text=True)",
+              "trace": "```python\nwith test(\n    \"\"\"\n    obtain admin.MainUser records for private_data.no_account_admin_user_ids in the start state,\n    and assert email_to_name is as per the admin.MainUser records (normalize_text=True)\n    \"\"\"\n):\n    admin_users = models.start.admin.MainUser.by_ids(private_data.no_account_admin_user_ids)\n    added_email_to_name = dict_of(added_users, \"email\", \"name\")\n```\n----------\nAssertionError:  {} == {'ch-burch@gmail.com': 'christopher burch'}\n\nOriginal values:\n{} == {'ch-burch@gmail.com': 'Christopher Burch'}"
+            },
+            {
+              "label": "no_op_fail",
+              "requirement": "assert receiver_ids of added global text messages match\nprivate_data.no_account_phone_user_ids (ignore order).",
+              "trace": "```python\nwith test(\n    \"\"\"\n    assert receiver_ids of added global text messages match\n    private_data.no_account_phone_user_ids (ignore order).\n    \"\"\"\n):\n    added_global_text_messages, _, _ = models.changed_records(\"phone.GlobalTextMessage\")\n    added_receiver_ids = list_of(added_global_text_messages, \"receiver_id\")\n```\n----------\nAssertionError:  [] == [32]\n\nIn right but not left:\n[32]"
+            },
+            {
+              "label": "no_op_fail",
+              "requirement": "assert all added global text messages have message public_data.message_text (normalize_text=True)",
+              "trace": "```python\nwith test(\n    \"\"\"\n    assert all added global text messages have message public_data.message_text (normalize_text=True)\n    \"\"\"\n):\n    test.case(\n        list_of(added_global_text_messages, \"message\"),\n        \"all ==\",\n```\n----------\nAssertionError: The left modifier is 'all' with allow_left_empty=False, but left operand is empty."
+            }
+          ],
+          "num_passes": 2,
+          "num_tests": 7,
+          "task_id": "9016950_3"
+        },
+        {
+          "difficulty": 3,
+          "failures": [
+            {
+              "label": "no_op_fail",
+              "requirement": "assert receiver_ids from added payment requests match exactly to\nprivate_data.dinner_relative_ids (ignore order).",
+              "trace": "```python\nwith test(\n    \"\"\"\n    assert receiver_ids from added payment requests match exactly to\n    private_data.dinner_relative_ids (ignore order).\n    \"\"\"\n):\n    test.case(\n        list_of(added_payment_requests, \"receiver_id\"),\n```\n----------\nAssertionError:  [45, 58, 60, 68, 72, 85, 86, 89, 97] == [58, 60, 72, 86, 97]\n\nIn left but not right:\n[45, 68, 85, 89]\n\nOriginal values:\n[89, 45, 58, 85, 60, 68, 86, 97, 72] == [60, 97, 86, 58, 72]"
+            },
+            {
+              "label": "no_op_fail",
+              "requirement": "assert added_payment_requests have amount\nprivate_data.dinner_share +/- public_data.difference_amount\nas per public_data.less_more (round_to=0)",
+              "trace": "```python\nwith test(\n    \"\"\"\n    assert added_payment_requests have amount\n    private_data.dinner_share +/- public_data.difference_amount\n    as per public_data.less_more (round_to=0)\n    \"\"\"\n):\n    if public_data.less_more == \"less\":\n```\n----------\nAssertionError:  25.0 == 45"
+            },
+            {
+              "label": "no_op_fail",
+              "requirement": "assert added_payment_requests have description\nprivate_data.dinner_description (normalize_text=True)",
+              "trace": "```python\nwith test(\n    \"\"\"\n    assert added_payment_requests have description\n    private_data.dinner_description (normalize_text=True)\n    \"\"\"\n):\n    test.case(\n        list_of(added_payment_requests, \"description\"),\n```\n----------\nAssertionError:  'for work lunch' == 'for dinner'\n\nOriginal values:\n'For Work Lunch' == 'For Dinner'"
+            },
+            {
+              "label": "no_op_fail",
+              "requirement": "assert removed_payment_requests have ids\nprivate_data.dinner_payment_request_ids (ignore order).",
+              "trace": "```python\nwith test(\n    \"\"\"\n    assert removed_payment_requests have ids\n    private_data.dinner_payment_request_ids (ignore order).\n    \"\"\"\n):\n    removed_payment_request_ids = list_of(removed_payment_requests, \"id\")\n    test.case(\n```\n----------\nAssertionError:\n[6097, 6098, 6099, 6100, 6101, 6102, 6103, 6104, 6105]\n==\n[6101, 6102, 6103, 6104, 6105]\n\nIn left but not right:\n[6097, 6098, 6099, 6100]\n\nOriginal values:\n[6101, 6098, 6100, 6097, 6102, 6103, 6104, 6099, 6105]\n==\n[6101, 6102, 6103, 6104, 6105]"
+            }
+          ],
+          "num_passes": 3,
+          "num_tests": 7,
+          "task_id": "90adc3f_1"
+        },
+        {
+          "difficulty": 3,
+          "failures": [
+            {
+              "label": "no_op_fail",
+              "requirement": "assert receiver_ids from added payment requests match exactly to\nprivate_data.dinner_relative_ids (ignore order).",
+              "trace": "```python\nwith test(\n    \"\"\"\n    assert receiver_ids from added payment requests match exactly to\n    private_data.dinner_relative_ids (ignore order).\n    \"\"\"\n):\n    test.case(\n        list_of(added_payment_requests, \"receiver_id\"),\n```\n----------\nAssertionError:  [17, 20, 23, 42, 49, 56, 69, 72] == [17, 20, 23, 49, 72]\n\nIn left but not right:\n[42, 56, 69]\n\nOriginal values:\n[20, 69, 23, 72, 42, 56, 17, 49] == [49, 20, 17, 72, 23]"
+            },
+            {
+              "label": "no_op_fail",
+              "requirement": "assert added_payment_requests have amount\nprivate_data.dinner_share +/- public_data.difference_amount\nas per public_data.less_more (round_to=0)",
+              "trace": "```python\nwith test(\n    \"\"\"\n    assert added_payment_requests have amount\n    private_data.dinner_share +/- public_data.difference_amount\n    as per public_data.less_more (round_to=0)\n    \"\"\"\n):\n    if public_data.less_more == \"less\":\n```\n----------\nAssertionError:  35.0 == 55"
+            },
+            {
+              "label": "no_op_fail",
+              "requirement": "assert added_payment_requests have description\nprivate_data.dinner_description (normalize_text=True)",
+              "trace": "```python\nwith test(\n    \"\"\"\n    assert added_payment_requests have description\n    private_data.dinner_description (normalize_text=True)\n    \"\"\"\n):\n    test.case(\n        list_of(added_payment_requests, \"description\"),\n```\n----------\nAssertionError:  'office lunch order' == 'dinner order'\n\nOriginal values:\n'Office Lunch Order' == 'Dinner Order'"
+            },
+            {
+              "label": "no_op_fail",
+              "requirement": "assert removed_payment_requests have ids\nprivate_data.dinner_payment_request_ids (ignore order).",
+              "trace": "```python\nwith test(\n    \"\"\"\n    assert removed_payment_requests have ids\n    private_data.dinner_payment_request_ids (ignore order).\n    \"\"\"\n):\n    removed_payment_request_ids = list_of(removed_payment_requests, \"id\")\n    test.case(\n```\n----------\nAssertionError:\n[6097, 6098, 6099, 6100, 6101, 6102, 6103, 6104]\n==\n[6100, 6101, 6102, 6103, 6104]\n\nIn left but not right:\n[6097, 6098, 6099]\n\nOriginal values:\n[6101, 6097, 6098, 6099, 6103, 6104, 6100, 6102]\n==\n[6100, 6101, 6102, 6103, 6104]"
+            }
+          ],
+          "num_passes": 3,
+          "num_tests": 7,
+          "task_id": "90adc3f_3"
+        }
+      ],
+      "path": "/home/abdo/ace-reproduction/results/ace-appworld/subset/appworld_test_normal_repr__expensive_generator__cheap-openai-gpt-oss-120b__exp-deepseek-deepseek-v4-flash/full_seed-42_20260511_035059/stages/eval-normal/evaluations/test_normal.json",
+      "scenario_count": 20,
+      "scenario_failure_count": 7,
+      "scenario_success_count": 13,
+      "task_count": 60,
+      "task_failure_count": 18,
+      "task_success_count": 42
+    }
+  },
+  "task_count": 60
+}
