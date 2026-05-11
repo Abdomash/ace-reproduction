@@ -54,6 +54,24 @@ RETRY_ERROR = (
     RateLimitError,
     UnprocessableEntityError,
 )
+
+
+class InvalidLLMResponseError(Exception):
+    pass
+
+
+def _response_message(response: dict[str, Any] | None) -> dict[str, Any] | None:
+    choices = (response or {}).get("choices")
+    if not isinstance(choices, list) or not choices:
+        return None
+    choice = choices[0]
+    if not isinstance(choice, dict):
+        return None
+    message = choice.get("message")
+    return message if isinstance(message, dict) else None
+
+
+RETRY_ERROR = RETRY_ERROR + (InvalidLLMResponseError,)
 CHAT_COMPLETION = {  # These are lambda so set environment variables take effect at runtime
     "openai": lambda: OpenAI(
         api_key="9b419298-ffce-4d50-a42c-0b4a0b911a89", base_url="https://api.sambanova.ai/v1"
@@ -415,6 +433,7 @@ class LiteLLMGenerator:
             True: cached_chat_completion,
             False: non_cached_chat_completion,
         }[use_cache]
+        self.use_cache = use_cache
         if completion_method == "openai":
             # LiteLLM accepts these two arguments in completion function, whereas OpenAI
             # accepts them in the OpenAI constructor or in the environment variables.
@@ -482,6 +501,10 @@ class LiteLLMGenerator:
                         span.set_attribute("llm.attempt", attempt_number)
                     call_start = _real_perf_counter()
                     response = self.chat_completion(**arguments)
+                    if _response_message(response) is None and self.use_cache:
+                        response = non_cached_chat_completion(**arguments)
+                    if _response_message(response) is None:
+                        raise InvalidLLMResponseError("LLM response did not include choices[0].message")
                     call_end = _real_perf_counter()
                     response["call_time"] = call_end - call_start
                     response["total_time"] = response["call_time"]
@@ -522,7 +545,7 @@ class LiteLLMGenerator:
                 "content"
             ].split("<think>\n")[-1]
 
-        output = {**response["choices"][0]["message"], "cost": response["cost"]}
+        output = {**_response_message(response), "cost": response["cost"]}
         return output
 
     def may_log_call(self, arguments: dict, response: dict) -> None:
