@@ -1,0 +1,658 @@
+## STRATEGIES AND HARD RULES
+[shr-00001] Make sure to end code blocks with ``` followed by a newline(\n).
+[shr-00005] Always look at API specifications (using apis.api_docs.show_api_doc) before calling an API.
+[shr-00006] Write small chunks of code and only one chunk of code in every step. Make sure everything is working correctly before making any irreversible change.
+
+[shr-00009] Never rely on results or answers from previous tasks. Each task runs in a separate environment with its own data. Always compute the final answer from the current environment's data, even if the same answer appeared in a previous task.
+[shr-00018] When performing bulk updates (e.g., rating all liked songs), always verify the current state before making changes. Use APIs like `show_song_reviews` with the user's email to retrieve existing reviews, and only call update/review APIs if the current rating is not already the target value. This reduces unnecessary API calls and avoids potential rate limits.
+[shr-00022] When performing bulk updates (liking, rating, etc.), always verify the current state before making changes. If the API does not expose a direct 'liked_by_me' or similar field, attempt to check indirect indicators (e.g., like_count changes, separate endpoints) or document the limitation. Do not assume the resource is unmodified.
+[shr-00024] When collecting data from multiple sources (e.g., song library, album library, playlists), check if the list API response already contains the required fields (e.g., artists) to avoid unnecessary individual fetch calls. Only fetch details for items that lack the needed information. This reduces API calls and improves efficiency.
+[shr-00025] When a task requires terminating an account (e.g., delete Spotify account) after an operation, ensure the operation is completed successfully before performing the termination. This is an irreversible action, so double-check that all required data has been exported and verified before calling the delete API.
+[shr-00033] When a task requires identifying 'friends' or 'family' on a social platform (e.g., Venmo), use the Phone app's contact relationships as the authoritative source. Cross-reference the platform's friend list with the Phone app's relationship data (e.g., 'friend', 'family') to ensure the correct set of contacts is used. Do not rely solely on the platform's own friend list, as it may be incomplete or out of sync with the user's personal contacts.
+[shr-00034] When searching for a phone contact on another platform (e.g., Venmo), use the contact's email address as the primary search query because it is unique. If the email search returns no results, fall back to a name-based search. This avoids false matches from shared names and ensures the correct user is identified.
+[shr-00039] When comparing dates that are in ISO 8601 format (e.g., '2023-02-08T21:51:57'), use direct string comparison (lexicographic) because ISO 8601 strings are designed to be comparable in this way. This avoids the need to parse them into datetime objects and reduces complexity. Always verify that the date format is consistent ISO 8601 before relying on string comparison.
+[shr-00045] When searching contacts in the Phone app (e.g., by relationship), always paginate through all pages using a while True loop with page_index incremented until an empty page is returned. Do not assume all results fit on the first page, even if the expected result set is small. This ensures completeness and avoids missing contacts due to pagination limits.
+[shr-00048] When retrieving transactions on Venmo to calculate money received from a specific group, use the `direction='received'` parameter in `show_transactions` to filter only incoming transactions. This avoids processing sent transactions and reduces data volume. Combine with `min_created_at` in YYYY-MM-DD format to filter by date range.
+[shr-00050] When iterating over a collection of items (e.g., songs) to extract multiple fields (e.g., genre, artists), structure the loop to capture all required data in a single pass. Avoid making a second pass over the same items to retrieve fields that were already available in the first fetch. This minimizes API calls and improves efficiency.
+[shr-00051] When writing code blocks, ensure every line is valid Python. If you need to explain what the code does, write the explanation outside the code block (before or after) or use a comment (starting with #) inside the code block. Never write plain English sentences as standalone lines inside a code block, as this will cause a syntax error and the entire block will fail.
+[shr-00054] When processing files from a directory to extract financial data (e.g., bill amounts), handle binary files (e.g., .pdf) appropriately: (a) first check if a readable alternative (e.g., .txt) exists for the same period; (b) if only a binary file exists, attempt to use any available API to convert or extract the data (e.g., check if there is a PDF parsing API); (c) if extraction is impossible, explicitly note the omission in the final answer or report the limitation to the user. Do not silently ignore binary files that may contain relevant data for the requested time period.
+[shr-00056] When moving multiple files in a directory, avoid stale path references by either: (a) collecting all file metadata (path, creation date, etc.) into a dictionary upfront and then moving all files in a single pass, or (b) re-listing the source directory after each batch of moves to get the current set of files. Do not reuse an old file list after some files have been moved, as those paths will no longer exist.
+[shr-00058] When removing songs (or other items) based on a condition from multiple sources (e.g., song library and playlists), first collect all unique item IDs from all sources into a single set. Then fetch the details (e.g., release_date) for all unique IDs in one pass. This avoids redundant API calls that would occur if you fetched details separately for each source. After identifying items to remove, perform the removals from each source accordingly.
+[shr-00060] Always prioritize the actual API specification (obtained via `show_api_doc`) over generic playbook advice or heuristics. If the API documentation for a list endpoint shows that it returns the required fields (e.g., `song_ids` in `show_playlist_library`), use those fields directly. Do not assume fields are missing based on past environments or general rules; verify by checking the concrete API spec before making additional fetch calls.
+[shr-00062] When the user's own playlist library does not contain a playlist with enough songs or duration for a time-based activity (e.g., workout), use `search_playlists` with relevant keywords (e.g., 'workout', 'fitness', 'running') to find public playlists. The `search_playlists` API returns `song_ids` directly, allowing quick estimation of song count. Then verify total duration by fetching individual song details. This expands the pool of available playlists beyond the user's personal library.
+[shr-00064] When determining whether to keep or remove items based on multiple conditions (e.g., liked OR downloaded), use the most direct API that provides all required status fields in a single call. For Spotify, `show_song_privates` provides both 'liked' and 'downloaded' status for a song, making it more efficient than maintaining separate sets from list endpoints like `show_liked_songs` and `show_downloaded_songs`. Similarly, `show_album_privates` provides 'liked' status for albums. Always check the API spec for private status endpoints before falling back to list-based approaches.
+[shr-00068] When cleaning up both song and album libraries based on liked/downloaded status, collect all unique song IDs from both the song library and the album library's song_ids into a single set before fetching private statuses. This avoids redundant API calls when the same song appears in both libraries. Then use show_song_privates on each unique song ID to get liked/downloaded status in one pass.
+[shr-00070] When a task requires compressing directories and then deleting the original directories, use an API that supports a combined operation (e.g., compress_directory with delete_directory=True) to reduce the number of API calls and ensure atomicity. Always verify the final state by re-listing the parent directory after the operation to confirm only the expected files remain.
+[shr-00073] When writing code blocks, never include narrative text (e.g., 'The task is complete. I have:') as part of a print statement or any other Python expression without proper string syntax. If you need to output a summary, either: (a) write the summary as a separate string argument to print (e.g., print(playlist_details); print('The task is complete.')), or (b) write the summary as a comment inside the code block (e.g., # The task is complete.), or (c) write the summary outside the code block entirely. Mixing unquoted narrative text with code will cause a syntax error and the entire block will fail.
+[shr-00078] Before sending money (create_transaction) on Venmo, verify that the recipient is a friend on the platform. Check the `friends_since` field in the user's profile (obtained via search_users or show_profile). If `friends_since` is null, add the user as a friend using `add_friend` before proceeding, or document the limitation if adding is not possible. This applies to both payment requests and direct money transfers.
+[shr-00082] Before performing an irreversible financial action (e.g., sending money via Venmo's create_transaction), re-verify the recipient's friendship status (friends_since field) immediately before the transaction, even if checked earlier in the workflow. State may have changed (e.g., unfriended). Use show_profile or search_users to confirm friends_since is not null. If null, add as friend first or document the limitation.
+[shr-00088] [shr-XXXX] When splitting a bill equally among a group that includes yourself, compute the per-person share by dividing the total amount by the number of people (including yourself). Then send payment requests only to the other members for their share. Do not request money from yourself. This ensures the correct amount is requested and avoids overcharging.
+[shr-00090] After a syntax error in a code block, you must immediately restart the entire dependent computation from scratch (e.g., re-login, re-fetch data, re-populate variables) before executing any further steps. Do not attempt to 'fix' just the syntax error and continue, as all variables from the failed block are lost. This applies even if the error occurred in a step that was not directly related to the final answer.
+[shr-00093] When adjusting a time value (e.g., alarm time) by a fixed offset, always compute the new time programmatically from the current time value. Parse the current time string (e.g., 'HH:MM') into hours and minutes, apply the offset (e.g., subtract 40 minutes), handle potential day wrap-around if necessary, and format back to 'HH:MM'. Do not hardcode the resulting time based on observed values, as the current environment may differ.
+[shr-00094] When computing aggregate metrics (e.g., total duration, average play count) across multiple playlists, first collect all unique song IDs from all playlists into a single set before fetching song details. This avoids redundant API calls when the same song appears in multiple playlists. Only after fetching details for all unique songs, compute per-playlist aggregates by referencing the cached details.
+[shr-00106] After a syntax error in a code block that occurs after irreversible changes (e.g., unfollowing artists, deleting files, sending money), do not blindly restart the entire computation from scratch. The environment state may have already been modified by the partially executed operations. Instead, first verify the current state of the affected resources (e.g., re-fetch the list of followed artists) to determine which operations have already been applied. Then only perform the remaining operations that have not yet been executed. This prevents re-applying irreversible changes and ensures correct results.
+## APIs TO USE FOR SPECIFIC INFORMATION
+[api-00004] You can use the "supervisor" app to get information about my accounts and use the "phone" app to get information about friends and family.
+
+## USEFUL CODE SNIPPETS AND TEMPLATES
+
+[code-00012] To find the least-played (or most-played) song in the Spotify song library:
+1. Use `show_song_library` with pagination to get all songs (each object contains `song_id`).
+2. For each song, call `show_song(song_id=song_id)` to retrieve `play_count` (a float).
+3. Find the minimum (or maximum) play_count and return the corresponding `title`.
+Example snippet:
+```python
+all_songs = []
+page_index = 0
+while True:
+    page = apis.spotify.show_song_library(access_token=token, page_index=page_index, page_limit=20)
+    if not page:
+        break
+    all_songs.extend(page)
+    page_index += 1
+song_play_counts = []
+for song in all_songs:
+    details = apis.spotify.show_song(song_id=song['song_id'])
+    song_play_counts.append({'title': details['title'], 'play_count': details['play_count']})
+least_played = min(song_play_counts, key=lambda x: x['play_count'])
+answer = least_played['title']
+```
+[code-00015] To find the most-played (or least-played) song in the Spotify album library:
+1. Use `show_album_library` with pagination to get all albums (each object contains `song_ids`).
+2. Collect all unique `song_id` values from all albums.
+3. For each song, call `show_song(song_id=song_id)` to retrieve `play_count` (a float).
+4. Find the maximum (or minimum) play_count and return the corresponding `title`.
+Example snippet:
+```python
+all_albums = []
+page_index = 0
+while True:
+    page = apis.spotify.show_album_library(access_token=token, page_index=page_index, page_limit=20)
+    if not page:
+        break
+    all_albums.extend(page)
+    page_index += 1
+all_song_ids = set()
+for album in all_albums:
+    for song_id in album['song_ids']:
+        all_song_ids.add(song_id)
+song_play_counts = []
+for song_id in all_song_ids:
+    details = apis.spotify.show_song(song_id=song_id)
+    song_play_counts.append({'title': details['title'], 'play_count': details['play_count']})
+most_played = max(song_play_counts, key=lambda x: x['play_count'])
+answer = most_played['title']
+```
+[code-00036] To find the most recommended artist on Spotify:
+1. Use `show_recommendations` with pagination to get all recommended songs (each object contains `artists` list).
+2. For each song, iterate over its `artists` list and count occurrences of each artist name using a Counter.
+3. Find the artist with the highest count and return the artist name.
+Example snippet:
+```python
+all_recs = []
+page_index = 0
+while True:
+    page = apis.spotify.show_recommendations(access_token=token, page_index=page_index, page_limit=20)
+    if not page:
+        break
+    all_recs.extend(page)
+    page_index += 1
+from collections import Counter
+artist_counts = Counter()
+for rec in all_recs:
+    for artist in rec['artists']:
+        artist_counts[artist['name']] += 1
+most_recommended = artist_counts.most_common(1)[0][0]
+answer = most_recommended
+```
+[code-00037] To find the least recommended artist on Spotify:
+1. Use `show_recommendations` with pagination to get all recommended songs (each object contains `artists` list).
+2. For each song, iterate over its `artists` list and count occurrences of each artist name using a Counter.
+3. Find the artist with the lowest count and return the artist name.
+Example snippet:
+```python
+all_recs = []
+page_index = 0
+while True:
+    page = apis.spotify.show_recommendations(access_token=token, page_index=page_index, page_limit=20)
+    if not page:
+        break
+    all_recs.extend(page)
+    page_index += 1
+from collections import Counter
+artist_counts = Counter()
+for rec in all_recs:
+    for artist in rec['artists']:
+        artist_counts[artist['name']] += 1
+least_recommended = min(artist_counts, key=artist_counts.get)
+answer = least_recommended
+```
+[code-00038] [code-XXXX] To collect all unique song IDs from the Spotify playlist library efficiently:
+1. Use `show_playlist_library` with pagination to get all playlists (each object contains `song_ids`).
+2. Collect all unique `song_id` values directly from the `song_ids` field of each playlist.
+3. No need to call `show_playlist` for each playlist.
+Example snippet:
+```python
+all_song_ids = set()
+page_index = 0
+while True:
+    page = apis.spotify.show_playlist_library(access_token=token, page_index=page_index, page_limit=20)
+    if not page:
+        break
+    for playlist in page:
+        for song_id in playlist['song_ids']:
+            all_song_ids.add(song_id)
+    page_index += 1
+```
+[code-00040] To find the oldest (or newest) released song across all Spotify libraries (song, album, playlist):
+1. Collect all unique song IDs from the song library using `show_song_library` with pagination.
+2. Collect all unique song IDs from the album library using `show_album_library` and extracting `song_ids` from each album.
+3. Collect all unique song IDs from the playlist library: use `show_playlist_library` with pagination, then for each playlist call `show_playlist` to get its `songs` array, and extract the `id` of each song.
+4. For each unique song ID, call `show_song` to retrieve the `release_date` field.
+5. Use ISO 8601 string comparison (lexicographic) to find the minimum (oldest) or maximum (newest) release_date.
+6. Return the corresponding `title`.
+Example snippet:
+```python
+all_song_ids = set()
+# Song library
+page_index = 0
+while True:
+    page = apis.spotify.show_song_library(access_token=token, page_index=page_index, page_limit=20)
+    if not page:
+        break
+    for song in page:
+        all_song_ids.add(song['song_id'])
+    page_index += 1
+# Album library
+page_index = 0
+while True:
+    page = apis.spotify.show_album_library(access_token=token, page_index=page_index, page_limit=20)
+    if not page:
+        break
+    for album in page:
+        for song_id in album['song_ids']:
+            all_song_ids.add(song_id)
+    page_index += 1
+# Playlist library
+page_index = 0
+while True:
+    page = apis.spotify.show_playlist_library(access_token=token, page_index=page_index, page_limit=20)
+    if not page:
+        break
+    for playlist in page:
+        pl_details = apis.spotify.show_playlist(playlist_id=playlist['playlist_id'], access_token=token)
+        for song in pl_details['songs']:
+            all_song_ids.add(song['id'])
+    page_index += 1
+# Find oldest
+oldest_song = None
+oldest_date = None
+for song_id in all_song_ids:
+    details = apis.spotify.show_song(song_id=song_id)
+    if oldest_date is None or details['release_date'] < oldest_date:
+        oldest_date = details['release_date']
+        oldest_song = details
+answer = oldest_song['title']
+```
+[code-00046] To find total money received from a specific group of people (e.g., coworkers) since a given date on Venmo:
+1. Use the Phone app to get the group's email addresses (e.g., via search_contacts with relationship filter and pagination).
+2. Login to Venmo and use `show_transactions` with `direction='received'` and `min_created_at` in YYYY-MM-DD format (e.g., '2023-02-01'). Paginate through all pages using a while True loop.
+3. Filter the received transactions to only include those where the sender's email is in the set of group emails.
+4. Sum the amounts of the filtered transactions.
+Example snippet:
+```python
+# Assume coworker_emails is a set of email strings from Phone contacts
+received_transactions = []
+page_index = 0
+while True:
+    page = apis.venmo.show_transactions(access_token=venmo_token, direction='received', min_created_at='2023-02-01', page_index=page_index, page_limit=20)
+    if not page:
+        break
+    received_transactions.extend(page)
+    page_index += 1
+total = sum(t['amount'] for t in received_transactions if t['sender']['email'] in coworker_emails)
+answer = total
+```
+[code-00049] To find total money sent or received to/from a specific group of people (e.g., roommates) since a given date on Venmo:
+1. Use the Phone app to get the group's email addresses (e.g., via search_contacts with relationship filter and pagination).
+2. Login to Venmo and for each group member's email, use `show_transactions` with `user_email` parameter (no direction filter) and `min_created_at` in YYYY-MM-DD format. Paginate through all pages using a while True loop.
+3. Sum the amounts of all transactions (both sent and received) since the `user_email` filter already ensures only transactions with that person are returned.
+Example snippet:
+```python
+# Assume roommate_emails is a list of email strings from Phone contacts
+all_transactions = []
+for email in roommate_emails:
+    page_index = 0
+    while True:
+        page = apis.venmo.show_transactions(access_token=venmo_token, user_email=email, min_created_at='2023-03-01', page_index=page_index, page_limit=20)
+        if not page:
+            break
+        all_transactions.extend(page)
+        page_index += 1
+total = sum(t['amount'] for t in all_transactions)
+answer = total
+```
+[code-00053] [code-XXXX] To follow all artists of songs with a specific genre (e.g., indie) from all playlists:
+1. Use `show_playlist_library` with pagination to get all playlists.
+2. For each playlist, call `show_playlist` to get its songs (each song has `id` and `artist_ids`).
+3. Collect all unique song IDs from all playlists.
+4. For each song, call `show_song` to retrieve its `genre` and `artists` array (each artist has `id` and `name`).
+5. If the song's genre matches the target genre (e.g., 'indie'), add the artist IDs to a set.
+6. For each unique artist ID, call `show_artist_following` to check if already following.
+7. Only call `follow_artist` for artists not already followed.
+Example snippet:
+```python
+# Assume spotify_access_token is already obtained
+# Step 1: Get all playlists
+playlists = []
+page_index = 0
+while True:
+    page = apis.spotify.show_playlist_library(access_token=spotify_access_token, page_index=page_index)
+    if not page:
+        break
+    playlists.extend(page)
+    page_index += 1
+# Step 2-3: Collect all unique song IDs
+all_song_ids = set()
+for playlist in playlists:
+    pl = apis.spotify.show_playlist(playlist_id=playlist['playlist_id'], access_token=spotify_access_token)
+    for song in pl['songs']:
+        all_song_ids.add(song['id'])
+# Step 4-5: Find indie artists
+indie_artist_ids = set()
+for song_id in all_song_ids:
+    song = apis.spotify.show_song(song_id=song_id)
+    if song['genre'] == 'indie':
+        for artist in song['artists']:
+            indie_artist_ids.add(artist['id'])
+# Step 6-7: Follow only if not already following
+for artist_id in indie_artist_ids:
+    status = apis.spotify.show_artist_following(artist_id=artist_id, access_token=spotify_access_token)
+    if not status['following']:
+        apis.spotify.follow_artist(artist_id=artist_id, access_token=spotify_access_token)
+```
+[code-00061] To find a playlist with enough total duration for a time-based activity (e.g., workout):
+1. Determine the required duration (e.g., from a schedule note).
+2. Use `search_playlists` with relevant keywords (e.g., 'workout', 'fitness') and pagination to get candidate playlists (each object contains `song_ids`).
+3. For each candidate playlist, call `show_playlist` to get the list of songs (each song has `id`).
+4. For each song, call `show_song` to retrieve `duration` (in seconds).
+5. Sum the durations and select the first playlist whose total duration >= required duration.
+6. Play that playlist using `play_music` with `playlist_id`.
+Example snippet:
+```python
+required_seconds = 30 * 60  # 30 minutes
+candidates = []
+page_index = 0
+while True:
+    page = apis.spotify.search_playlists(access_token=token, query='workout', page_index=page_index, page_limit=20)
+    if not page:
+        break
+    candidates.extend(page)
+    page_index += 1
+selected_playlist = None
+for pl in candidates:
+    pl_details = apis.spotify.show_playlist(playlist_id=pl['playlist_id'], access_token=token)
+    total_duration = 0
+    for song in pl_details['songs']:
+        song_info = apis.spotify.show_song(song_id=song['id'])
+        total_duration += song_info['duration']
+    if total_duration >= required_seconds:
+        selected_playlist = pl_details
+        break
+if selected_playlist:
+    apis.spotify.play_music(access_token=token, playlist_id=selected_playlist['playlist_id'])
+```
+[code-00067] To clean up Spotify album library by keeping only albums that are liked AND have all songs downloaded:
+1. Use `show_album_library` with pagination to get all albums (each object contains `song_ids`).
+2. For each album, call `show_album_privates` to check if it is liked.
+3. For each album, iterate over its `song_ids` and call `show_song_privates` for each song to check if it is downloaded.
+4. An album is considered 'downloaded' only if all songs in it are downloaded.
+5. Keep albums that are liked AND have all songs downloaded; remove the rest using `remove_album_from_library`.
+Example snippet:
+```python
+all_albums = []
+page_index = 0
+while True:
+    page = apis.spotify.show_album_library(access_token=token, page_index=page_index, page_limit=20)
+    if not page:
+        break
+    all_albums.extend(page)
+    page_index += 1
+for album in all_albums:
+    album_privates = apis.spotify.show_album_privates(album_id=album['album_id'], access_token=token)
+    is_liked = album_privates['liked']
+    all_songs_downloaded = True
+    for song_id in album['song_ids']:
+        song_privates = apis.spotify.show_song_privates(song_id=song_id, access_token=token)
+        if not song_privates['downloaded']:
+            all_songs_downloaded = False
+            break
+    if not (is_liked and all_songs_downloaded):
+        apis.spotify.remove_album_from_library(album_id=album['album_id'], access_token=token)
+```
+[code-00072] To compress multiple sub-directories into zip files and delete the originals:
+1. Use show_directory with entry_type='directories' to list all sub-directories.
+2. For each sub-directory, call compress_directory with directory_path, compressed_file_path (e.g., '~/parent/<name>.zip'), and delete_directory=True.
+3. Verify by re-listing the parent directory with show_directory.
+Example snippet:
+```python
+fs_token = login_result['access_token']
+subdirs = apis.file_system.show_directory(access_token=fs_token, directory_path='~/parent/', entry_type='directories', recursive=False)
+for dir_path in subdirs:
+    name = dir_path.rstrip('/').split('/')[-1]
+    result = apis.file_system.compress_directory(
+        access_token=fs_token,
+        directory_path=dir_path,
+        compressed_file_path=f'~/parent/{name}.zip',
+        delete_directory=True
+    )
+    print(result)
+# Verify
+final = apis.file_system.show_directory(access_token=fs_token, directory_path='~/parent/', entry_type='all', recursive=False)
+print(final)
+```
+[code-00076] To like all songs played so far in the Spotify queue (including the current song):
+1. Use `show_song_queue` to get the queue (each object has `position`, `is_current`, `song_id`).
+2. Identify the current song by finding the one with `is_current: true` (or `is_playing: true`).
+3. Filter songs with `position <= current_song['position']` as 'played so far'.
+4. For each such song, call `show_song_privates` to check if already liked.
+5. Only call `like_song` for songs not already liked.
+6. Verify by re-checking `show_song_privates` for each song.
+Example snippet:
+```python
+queue = apis.spotify.show_song_queue(access_token=token)
+current_song = next(s for s in queue if s['is_current'])
+songs_played = [s for s in queue if s['position'] <= current_song['position']]
+for song in songs_played:
+    privates = apis.spotify.show_song_privates(song_id=song['song_id'], access_token=token)
+    if not privates['liked']:
+        apis.spotify.like_song(song_id=song['song_id'], access_token=token)
+# Verify
+for song in songs_played:
+    privates = apis.spotify.show_song_privates(song_id=song['song_id'], access_token=token)
+    print(f"{song['title']}: liked={privates['liked']}")
+```
+[code-00084] To delete all text and voice messages from a specific phone number in the Phone app:
+1. Login to the Phone app using your phone number as username.
+2. Use `search_text_messages` with `phone_number` parameter and pagination (while True loop) to collect all text message IDs from that number.
+3. Use `search_voice_messages` similarly to collect all voice message IDs.
+4. For each text message ID, call `delete_text_message`.
+5. For each voice message ID, call `delete_voice_message`.
+6. Verify by re-querying both message types with the same phone_number and confirming zero results.
+Example snippet:
+```python
+spam_number = "3654328626"
+# Collect text messages
+all_text = []
+page_index = 0
+while True:
+    page = apis.phone.search_text_messages(access_token=token, phone_number=spam_number, page_index=page_index, page_limit=20)
+    if not page:
+        break
+    all_text.extend(page)
+    page_index += 1
+# Delete text messages
+for msg in all_text:
+    apis.phone.delete_text_message(text_message_id=msg['text_message_id'], access_token=token)
+# Collect voice messages
+all_voice = []
+page_index = 0
+while True:
+    page = apis.phone.search_voice_messages(access_token=token, phone_number=spam_number, page_index=page_index, page_limit=20)
+    if not page:
+        break
+    all_voice.extend(page)
+    page_index += 1
+# Delete voice messages
+for msg in all_voice:
+    apis.phone.delete_voice_message(voice_message_id=msg['voice_message_id'], access_token=token)
+# Verify
+remaining_text = apis.phone.search_text_messages(access_token=token, phone_number=spam_number, page_index=0, page_limit=20)
+remaining_voice = apis.phone.search_voice_messages(access_token=token, phone_number=spam_number, page_index=0, page_limit=20)
+print(f"Remaining text: {len(remaining_text)}, voice: {len(remaining_voice)}")
+```
+[code-00085] To follow all artists of a specific genre with at least a minimum number of followers:
+1. Use `search_artists` with `genre` and `min_follower_count` parameters, paginating through all pages (while True loop with page_index).
+2. For each artist in the results, call `show_artist_following` to check if already following.
+3. Only call `follow_artist` for artists not already followed.
+4. (Optional) Verify by re-checking `show_artist_following` for each artist.
+Example snippet:
+```python
+artists_to_follow = []
+page_index = 0
+while True:
+    page = apis.spotify.search_artists(access_token=token, genre='classical', min_follower_count=22, page_index=page_index, page_limit=20)
+    if not page:
+        break
+    artists_to_follow.extend(page)
+    page_index += 1
+for artist in artists_to_follow:
+    status = apis.spotify.show_artist_following(artist_id=artist['artist_id'], access_token=token)
+    if not status['following']:
+        apis.spotify.follow_artist(artist_id=artist['artist_id'], access_token=token)
+        print(f"Followed {artist['name']}")
+    else:
+        print(f"Already following {artist['name']}")
+```
+[code-00087] [code-XXXX] To split a bill equally among roommates and send Venmo payment requests:
+1. Use the Phone app to get roommates' email addresses (search_contacts with relationship='roommate', paginate through all pages).
+2. Login to the file system and locate the bill file (e.g., most recent cable bill in ~/bills/cable/).
+3. Read the bill content to extract the total amount.
+4. Compute each person's share = total / (number of roommates + 1 for yourself).
+5. Login to Venmo and for each roommate, search by email to confirm friendship (friends_since not null). If null, add as friend first.
+6. Check existing sent payment requests (show_sent_payment_requests with pagination) to avoid duplicates with the same description and recipient.
+7. Create a payment request for each roommate with amount = share and description = "I paid for cable bill."
+Example snippet:
+```python
+# Assume phone_token, fs_token, venmo_token are already obtained
+# Step 1: Get roommate emails
+roommates = []
+page_index = 0
+while True:
+    page = apis.phone.search_contacts(access_token=phone_token, relationship='roommate', page_index=page_index, page_limit=20)
+    if not page:
+        break
+    roommates.extend(page)
+    page_index += 1
+roommate_emails = [r['email'] for r in roommates]
+# Step 2-3: Get bill total
+bill_content = apis.file_system.show_file(access_token=fs_token, file_path='/home/jennifer/bills/cable/2023-04.txt')['content']
+# Parse total (e.g., extract number after 'Total Amount => $')
+total = float(bill_content.split('Total Amount => $')[1].strip())
+# Step 4: Compute share
+num_people = len(roommate_emails) + 1  # including yourself
+share = total / num_people
+# Step 5-6: Verify friendship and check duplicates
+for email in roommate_emails:
+    user = apis.venmo.search_users(access_token=venmo_token, query=email)[0]
+    if user['friends_since'] is None:
+        apis.venmo.add_friend(access_token=venmo_token, user_email=email)
+# Check existing requests
+existing = []
+page_index = 0
+while True:
+    page = apis.venmo.show_sent_payment_requests(access_token=venmo_token, page_index=page_index, page_limit=20)
+    if not page:
+        break
+    existing.extend(page)
+    page_index += 1
+duplicate_emails = {r['receiver']['email'] for r in existing if r['description'] == 'I paid for cable bill.'}
+# Step 7: Create requests
+for email in roommate_emails:
+    if email not in duplicate_emails:
+        apis.venmo.create_payment_request(access_token=venmo_token, user_email=email, amount=share, description='I paid for cable bill.')
+```
+[code-00095] [code-XXXX] To find the least-played (or most-played) song from a specific album on Spotify:
+1. Use `search_albums` with the album title as query to find the album (paginate if needed).
+2. Extract the `song_ids` array from the album object.
+3. For each song_id, call `show_song` to retrieve `play_count` (a float).
+4. Find the minimum (or maximum) play_count and return the corresponding `title`.
+5. Optionally, play the song using `play_music` with `song_id`.
+Example snippet:
+```python
+# Assume spotify_access_token is already obtained
+albums = apis.spotify.search_albums(access_token=spotify_access_token, query='Echo Chamber Chronicles', page_index=0, page_limit=20)
+album = next(a for a in albums if a['title'] == 'Echo Chamber Chronicles')
+song_ids = album['song_ids']
+song_details = []
+for song_id in song_ids:
+    details = apis.spotify.show_song(song_id=song_id)
+    song_details.append(details)
+least_played = min(song_details, key=lambda x: x['play_count'])
+answer = least_played['title']
+# To play the song:
+# apis.spotify.play_music(access_token=spotify_access_token, song_id=least_played['song_id'])
+```
+[code-00100] To approve all pending Venmo payment requests from a specific group (e.g., coworkers, friends):
+1. Use the Phone app to get the group's email addresses (search_contacts with relationship filter, paginate through all pages).
+2. Login to Venmo and use `show_received_payment_requests` with `status='pending'` and pagination to get all pending requests.
+3. Filter the pending requests to only include those where the sender's email is in the set of group emails.
+4. For each filtered request, call `approve_payment_request` with the payment_request_id.
+Example snippet:
+```python
+# Assume phone_token, venmo_token are already obtained
+# Step 1: Get coworker emails
+coworkers = []
+page_index = 0
+while True:
+    page = apis.phone.search_contacts(access_token=phone_token, relationship='coworker', page_index=page_index, page_limit=20)
+    if not page:
+        break
+    coworkers.extend(page)
+    page_index += 1
+coworker_emails = {c['email'] for c in coworkers}
+# Step 2: Get all pending requests
+pending = []
+page_index = 0
+while True:
+    page = apis.venmo.show_received_payment_requests(access_token=venmo_token, status='pending', page_index=page_index, page_limit=20)
+    if not page:
+        break
+    pending.extend(page)
+    page_index += 1
+# Step 3: Filter by group emails
+requests_to_approve = [req for req in pending if req['sender']['email'] in coworker_emails]
+# Step 4: Approve each
+for req in requests_to_approve:
+    apis.venmo.approve_payment_request(payment_request_id=req['payment_request_id'], access_token=venmo_token)
+```
+[code-00102] [code-XXXX] To find the most-played (or least-played) song by a specific artist on Spotify:
+1. Use `search_artists` to find the artist's ID (paginate if needed).
+2. Use `search_songs` with `artist_id` and `sort_by='-play_count'` (descending for most played) or `sort_by='+play_count'` (ascending for least played).
+3. The first result in the sorted list is the answer. Check subsequent pages if the first page is empty or if you need to verify all results.
+Example snippet:
+```python
+# Assume spotify_access_token is already obtained
+# Step 1: Find artist ID
+artists = apis.spotify.search_artists(access_token=spotify_access_token, query='Velvet Echo', page_index=0, page_limit=5)
+artist_id = next(a['artist_id'] for a in artists if a['name'] == 'Velvet Echo')
+# Step 2: Search songs sorted by play_count descending
+songs = apis.spotify.search_songs(access_token=spotify_access_token, artist_id=artist_id, sort_by='-play_count', page_index=0, page_limit=20)
+most_played = songs[0]
+answer = most_played['title']
+```
+[code-00107] [code-XXXX] To follow all artists who have sung at least one liked song on Spotify:
+1. Use `show_liked_songs` with pagination to get all liked songs (each object contains `artists` array with `id` and `name`).
+2. Collect all unique artist IDs from all liked songs into a set.
+3. Use `show_following_artists` with pagination to get the set of artist IDs already followed.
+4. Compute the difference: artists to follow = liked artist IDs - already followed artist IDs.
+5. For each artist ID in the difference, call `follow_artist`.
+6. (Optional) Verify by re-fetching `show_following_artists` and confirming the new artists appear.
+Example snippet:
+```python
+# Assume spotify_access_token is already obtained
+# Step 1: Get all liked songs
+liked_songs = []
+page_index = 0
+while True:
+    page = apis.spotify.show_liked_songs(access_token=spotify_access_token, page_index=page_index, page_limit=20)
+    if not page:
+        break
+    liked_songs.extend(page)
+    page_index += 1
+# Step 2: Collect unique artist IDs
+liked_artist_ids = set()
+for song in liked_songs:
+    for artist in song['artists']:
+        liked_artist_ids.add(artist['id'])
+# Step 3: Get already followed artists
+following_artists = []
+page_index = 0
+while True:
+    page = apis.spotify.show_following_artists(access_token=spotify_access_token, page_index=page_index, page_limit=20)
+    if not page:
+        break
+    following_artists.extend(page)
+    page_index += 1
+following_artist_ids = {artist['artist_id'] for artist in following_artists}
+# Step 4-5: Follow new artists
+artists_to_follow = liked_artist_ids - following_artist_ids
+for artist_id in artists_to_follow:
+    apis.spotify.follow_artist(artist_id=artist_id, access_token=spotify_access_token)
+# Step 6: Verify (optional)
+# Re-fetch following artists and check that all liked artist IDs are now in the list
+```
+## COMMON MISTAKES AND CORRECT STRATEGIES
+
+[cms-00013] Do not confuse 'song library' with 'playlist library'. When the task asks for songs in the user's library (e.g., 'least-played song in my Spotify song library'), use `show_song_library` (not `show_playlist_library`). The song library contains individual songs, while playlists are collections. Using the wrong API will lead to incorrect results.
+[cms-00016] Do not confuse 'album library' with 'song library' or 'playlist library'. When the task asks for songs in the user's album library (e.g., 'most-played song in my Spotify album library'), use `show_album_library` to get albums and their song_ids, then query individual songs. Using `show_song_library` or `show_playlist_library` will return songs from the wrong collection and lead to incorrect results.
+[cms-00019] Avoid syntax errors and API name typos: Always double-check that all string literals (including f-strings) are properly closed with matching quotes and braces. When calling an API, ensure the function name is spelled exactly as shown in the API documentation (e.g., 'review_song' not 'view_song'). A quick visual scan before executing can prevent wasted steps.
+[cms-00020] Do not mix explanatory text with code in code blocks. Every line in a code block must be valid Python code. If you need to explain what the code does, add comments using `#` at the start of the line, or write the explanation outside the code block. Including uncommented text inside a code block will cause a syntax error and the entire block will fail to execute.
+[cms-00031] When retrieving transactions for multiple users (e.g., coworkers), ensure you paginate through all pages for each user. Do not assume a single page (e.g., page_limit=20) captures all transactions. Use a while True loop with page_index incremented until an empty page is returned.
+[cms-00041] Do not assume that `show_playlist_library` returns song IDs directly. The response from `show_playlist_library` contains only playlist metadata (e.g., playlist_id, title). To get the list of songs in a playlist, you must call `show_playlist` for each playlist and extract the `songs` array. The existing code snippet [code-00038] is incorrect in stating that song_ids are directly available from the playlist library response; always use `show_playlist` to retrieve song IDs.
+[cms-00044] Do not assume that a user found via email search on Venmo is automatically a friend. The `friends_since` field indicates friendship status; if it is `None`, you are not friends. Sending a payment request to a non-friend may fail or be inappropriate. Always check this field and, if needed, add the user as a friend before proceeding.
+[cms-00104] Never append narrative text directly to a variable name inside a print call. For example, `print(variable_name + "some text")` is valid, but `print(variable_namesome text)` is a syntax error because the variable name and text are concatenated without a string operator. Always use proper string concatenation (with +), f-strings (with f"{var}"), or separate arguments (print(var, "text")). Before executing any code block, visually scan every print statement to ensure that no variable name is immediately followed by unquoted narrative text.
+## PROBLEM-SOLVING HEURISTICS AND WORKFLOWS
+[psw-00002] Remember you can use the variables in your code in subsequent code blocks.
+[psw-00007] Many APIs return items in "pages". Make sure to run through all the pages by looping over `page_index`.
+
+## VERIFICATION CHECKLIST
+
+[vc-00010] Confirm that the answer was computed from the current environment's data, not recalled from memory of a prior task. If the answer appears to match a previous task's answer, verify the computation by re-running the relevant code.
+[vc-00014] Before computing the final answer, verify that the API used to retrieve the metric (e.g., `play_count`) actually returns that field. Check the API specification via `show_api_doc` to confirm the response schema includes the required field.
+[vc-00017] Before updating a review (or any mutable resource), check the current value of the field you intend to change. If it already matches the desired value, skip the update to avoid unnecessary API calls. For example, before updating a song review's rating to 5, retrieve the existing review via `show_song_reviews` with `user_email` filter and check the `rating` field.
+[vc-00023] Before interacting with a user's social feed (e.g., Venmo), verify that the identified contacts (e.g., coworkers from phone) are actually friends on the platform. Use the platform's friend search or social feed to confirm they appear as friends; otherwise, the feed may not contain their transactions.
+[vc-00026] After creating a file (e.g., CSV), verify its content by reading it back using the file system API to ensure correctness. Check that headers match specifications, data rows are present, and separators are correct.
+[vc-00028] When a task specifies an exact output format (e.g., 'a list of comma-separated movie titles', 'a JSON object with fields X and Y'), follow it literally without adding extra explanatory text, greetings, or conversational framing. The recipient's context is already understood from the conversation history; the reply should contain only the requested data in the specified format. Before sending the final response, verify that the output matches the exact format requested.
+[vc-00029] When replying to a text message that includes a specific request (e.g., 'recommendations for a movie from Peter Jackson'), first parse the message content to extract the exact filter criteria (e.g., director name, genre). Then verify that the data retrieved from the note (e.g., Simple Note) is filtered according to that criteria before sending the reply. Do not send unfiltered data or data filtered by a different criterion.
+[vc-00030] Before adding a comment or liking a Venmo transaction, verify the current state: (a) check existing comments via show_transaction_comments to see if a 'Thank you!' comment already exists; (b) check the transaction's like_count (via show_transaction) to determine if it is already liked. Only add the comment or like if the desired state is not already present.
+[vc-00032] When performing bulk updates (e.g., adding comments, liking transactions), do not rely on a sample check of a few items to infer the state of all items. For each individual item, verify the current state (e.g., existing comments, like status) before making changes. Sampling is insufficient because different items may have different states.
+[vc-00035] When a task involves a time window like 'last X days', use the phone app's get_current_date_and_time API to obtain the current date/time and compute the start date programmatically. Do not assume the current date from memory or previous tasks, as the environment may differ.
+[vc-00042] Before comparing release dates to find the oldest or newest song, verify that the `show_song` API response includes a `release_date` field and that it is in ISO 8601 format (e.g., '2019-01-01T00:00:00'). Check the API specification via `show_api_doc` to confirm the response schema includes this field. If the field is missing or in a different format, adjust the comparison logic accordingly.
+[vc-00043] Before creating a payment request (e.g., on Venmo), verify two preconditions: (a) the recipient is a friend on the platform – check the `friends_since` field in the search result; if it is `None`, consider adding them as a friend first (or document the limitation). (b) No existing payment request with the same description already exists for that user – retrieve all sent payment requests using `show_sent_payment_requests` with pagination (while True loop) and check for duplicates. Only create the request if both conditions are satisfied.
+[vc-00047] When summing transactions from a specific group of people (e.g., coworkers, family), verify that the sender email of each transaction is in the set of emails of the identified group. Do not rely on names alone, as names may be ambiguous. Use the email field from the transaction's sender object to cross-reference.
+[vc-00055] Before finalizing a total sum from file contents, verify that all files for the relevant time period have been accounted for. If some files are binary and unreadable, check if alternative readable versions exist. If not, either attempt to extract data from the binary file using available APIs or explicitly document the missing data in the answer.
+[vc-00057] Before moving files, collect all necessary metadata (e.g., creation dates) into a dictionary keyed by file path. This avoids redundant API calls when categorizing files for different destinations. After moving a batch, verify the current state of the source directory by re-listing it, rather than relying on a previously fetched list.
+[vc-00059] After performing bulk removals (e.g., removing songs from library and playlists), verify the final state by re-fetching the relevant lists (e.g., show_song_library, show_playlist for each playlist) and confirming that only the intended items remain. Check that no items that should have been removed are still present, and that no unintended items were removed.
+[vc-00063] Before playing a playlist for a time-based activity (e.g., workout), verify that the total duration of all songs in the playlist meets or exceeds the required time. Sum the `duration` field (in seconds) from each song's details (obtained via `show_song`). Do not rely solely on song count, as song lengths vary. If the total duration is insufficient, continue searching for a longer playlist.
+[vc-00065] After performing bulk removals (e.g., removing songs from library), verify the final state by re-fetching the relevant lists and confirming that the remaining items actually satisfy the keep conditions. For example, after removing songs that are not liked or downloaded, re-fetch the song library and use `show_song_privates` on each remaining song to confirm that each is either liked or downloaded. Do not assume that being in the liked_songs or downloaded_songs lists is sufficient proof that the remaining items have those statuses.
+[vc-00066] Before performing bulk removals (e.g., removing songs from library), verify the current state of each item to avoid unnecessary API calls. For example, before calling `remove_song_from_library`, check if the song is already not in the library by verifying its `in_song_library` field via `show_song_privates`. Only call the removal API if the item is actually present. This prevents redundant operations and potential errors.
+[vc-00069] After performing bulk removals on the album library, verify that each remaining album satisfies the keep condition (e.g., liked OR all songs downloaded). For each remaining album, call show_album_privates to check liked status, and for each song_id in the album, call show_song_privates to check downloaded status. Confirm that all remaining albums meet the condition.
+[vc-00071] After performing file system operations (e.g., compressing directories, moving files), verify the final state by re-listing the relevant directory using show_directory with entry_type='all' and recursive=False. Confirm that only the expected files/directories remain and that no unintended items were left behind.
+[vc-00074] Before executing a code block, visually scan each line to ensure that no line contains unquoted narrative text mixed with Python code. Specifically, check that print statements and other expressions do not have plain English sentences concatenated without proper string delimiters (quotes, commas, or operators). This prevents syntax errors that waste execution steps.
+[vc-00075] After creating a playlist and adding songs to it, verify the final state by re-fetching the playlist details (e.g., using show_playlist) to confirm that all intended songs are present and no unintended songs were added. This ensures the operation completed successfully and the playlist contains the correct content.
+[vc-00077] When a task involves 'songs played so far' in a queue, verify that you correctly identified the subset: use the `position` field from `show_song_queue` and the current song (identified by `is_current: true`). Songs with `position <= current_song['position']` are 'played so far'. Do not include songs with higher positions (future songs).
+[vc-00079] After sending money via Venmo's create_transaction, verify the transaction outcome by either: (a) checking the updated Venmo balance (show_venmo_balance) to confirm it decreased by the expected amount, or (b) fetching the transaction details (show_transaction) using the returned transaction_id to confirm the amount, receiver, and status. This ensures the money was actually sent and prevents silent failures.
+[vc-00080] When identifying the 'last' or 'most recent' item (e.g., payment request, transaction), explicitly sort by the timestamp field (e.g., created_at) in descending order rather than relying on API default ordering. Use ISO 8601 string comparison (lexicographic) if the format is consistent. This ensures the correct item is selected even if the API returns results in a different order.
+[vc-00081] Before sending money via Venmo's create_transaction, verify that no existing transaction (e.g., refund) with a similar description or for the same payment request already exists. Check recent transactions with the recipient (using show_transactions with user_email filter) to avoid duplicate payments. Only proceed if no matching refund transaction is found.
+[vc-00083] Before sending money via Venmo's create_transaction, check the Venmo balance (show_venmo_balance) to ensure sufficient funds are available. If the balance is insufficient, consider adding money via add_to_venmo_balance or using a payment card. Do not proceed with a transaction that will fail due to insufficient funds.
+[vc-00086] Before executing a code block, perform a line-by-line visual scan to ensure that every line is valid Python. Specifically, check that: (a) no line contains unquoted narrative text (e.g., plain English sentences) as part of a print statement or f-string without proper string delimiters; (b) any explanatory text is placed outside the code block or as a comment (starting with #); (c) all string literals (including f-strings) are properly closed with matching quotes and braces. If any line fails this check, fix it before executing the block.
+[vc-00091] Before calling complete_task(), always verify the final state of the modified resource by re-fetching it (e.g., re-fetch the note, re-list the directory, re-check the playlist) and confirming the change was applied correctly. Do not rely solely on the success message from the update API, as it may not guarantee the change was persisted as expected.
+[vc-00096] When writing print statements for debugging or output, use the simplest possible form: `print(variable_name)` or `print(f"{variable_name}")`. Never embed explanatory narrative text (e.g., 'The result is:') inside the print call, as this increases the risk of unterminated string literals. If you need to label the output, write the label as a separate print statement before the variable print, or use a comment outside the code block.
+[vc-00098] Before accessing any field from an API response, verify the exact key names by checking the API specification via `show_api_doc`. Do not assume field names based on intuition or prior experience. For example, `show_venmo_balance` returns `venmo_balance`, not `balance`.
+[vc-00099] Before using a variable in a code block, ensure it was successfully defined in a previous step. If a previous step failed (e.g., NameError, KeyError), do not assume the variable exists. Re-execute the step that defines the variable before using it. This is especially important for variables like login results that are used across multiple blocks.
+[vc-00101] Before approving a Venmo payment request, verify that the sender is a friend on the platform. Check the `friends_since` field in the sender's profile (obtained via `search_users` or `show_profile`). If `friends_since` is null, consider adding the user as a friend first or document the limitation. This ensures you only approve requests from trusted contacts, even if the sender's email matches a phone contact.
+[vc-00103] Before executing a code block, verify that every variable name used in the block matches the variable name defined in the same block or in a previous block. Specifically, check that the variable name on the left side of an assignment is the same as the variable name used in subsequent lines. A mismatch (e.g., defining `least_played_song` but referencing `least_played`) will cause a NameError. This is especially important when copying or adapting code snippets from the playbook.
+[vc-00105] Before executing a code block, perform a targeted scan of every print statement: (a) verify that each print call has properly closed parentheses; (b) verify that each string literal (single or double quoted) has a matching closing quote; (c) verify that no variable name is immediately followed by unquoted narrative text (e.g., `print(variable_nameresponse` is invalid — the word 'response' is not a valid Python expression and is not inside a string). If any print statement fails this check, fix it before executing the block.
+## TROUBLESHOOTING AND PITFALLS:
+
+[ts-00011] When a syntax error or runtime error occurs in a code block, do not proceed to the next step without fixing the error and re-executing the computation that failed. The error may have prevented the intended result from being computed. Always correct the code and re-run before assuming any output.
+[ts-00021] After a syntax error in a code block, all variables that were supposed to be defined in that block are lost. You must re-execute the entire computation from scratch, not just the corrected line. For example, if a pagination loop fails due to a syntax error, you need to re-run the full loop to populate the list variable again before using it.
+[ts-00052] After a syntax error in a code block, do not attempt to continue with the next step using variables from the failed block. All variables defined in the failed block are lost. You must re-run the entire computation from the beginning (e.g., re-fetch data from APIs, re-populate lists) before proceeding. A common mistake is to try to 'fix' just the syntax error and re-run only that line, but this leaves other variables undefined. Always restart the full sequence of steps that led to the error.
+[ts-00089] When you receive 'No code available to execute' as output, it indicates that the code block was not properly formatted. Immediately inspect the code block for: (a) missing newline after the closing triple backticks (```), (b) narrative text mixed with Python code inside the block, (c) unclosed string literals or braces. Fix the formatting and re-run the entire code block from scratch. Do not proceed to the next step or re-run the same malformed code without fixing the formatting.
+[ts-00092] After a syntax error, you must restart the entire computation from scratch (re-login, re-fetch data) in a new code block. Ensure that the new code block contains only valid Python code. Do not include any narrative text (e.g., 'I need to find the note ID first') inside the code block, as this will cause another syntax error. Write all explanations outside the code block or as comments (starting with #). A common mistake is to try to 'fix' the previous block by adding a few lines, which leaves other variables undefined and may still contain narrative text. Always start fresh with a clean code block.
+[ts-00097] After a syntax error caused by an unterminated string literal in a print statement, do not just restart the computation—also explicitly verify that the new code block's print statements use simple, closed string literals. A common recurring mistake is to keep writing complex print statements with embedded text that leads to the same error. Use `print(variable)` or `print(f"{variable}")` only, and check that the closing quote and parenthesis are present before executing.
+## OTHERS
+[misc-00003] Remember that the email addresses, access tokens and variables (e.g. spotify_password) in the example above are not valid anymore.
+[misc-00008] Once you have completed the task, make sure to call apis.supervisor.complete_task(). If the task asked for some information, return it as the answer argument, i.e. call apis.supervisor.complete_task(answer=<answer>). Many tasks do not require an answer, so in those cases, just call apis.supervisor.complete_task() i.e. do not pass any argument.
+[misc-00027] When parsing content from a note (e.g., Simple Note), first print the raw content to understand its structure (e.g., markdown, bullet points, indentation). Then write a parser that matches that exact structure. If the parser returns an empty list or unexpected results, re-examine the raw content and adjust the parsing logic accordingly. Do not rely on assumptions about the format without verifying.

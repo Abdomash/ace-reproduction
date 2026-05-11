@@ -1,0 +1,2295 @@
+{
+  "aggregate": {
+    "scenario_goal_completion": 50.0,
+    "task_goal_completion": 61.7
+  },
+  "individual": {
+    "024c982_1": {
+      "difficulty": 1,
+      "failures": [],
+      "num_tests": 7,
+      "passes": [
+        {
+          "label": "no_op_fail",
+          "requirement": "assert answers match."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert model changes match venmo.Notification, venmo.PaymentRequest"
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "obtain added, updated, removed venmo.PaymentRequest records using models.changed_records,\nand assert 1 is added, 0 is updated, and 0 is deleted."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert the added payment request's receiver_id is private_data.person_venmo_user_id."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert the added payment request has description public_data.note (normalize_text=True)."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert the added payment request has amount public_data.amount."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert the added payment request has privacy_type public_data.privacy."
+        }
+      ],
+      "success": true
+    },
+    "024c982_2": {
+      "difficulty": 1,
+      "failures": [],
+      "num_tests": 7,
+      "passes": [
+        {
+          "label": "no_op_fail",
+          "requirement": "assert answers match."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert model changes match venmo.Notification, venmo.PaymentRequest"
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "obtain added, updated, removed venmo.PaymentRequest records using models.changed_records,\nand assert 1 is added, 0 is updated, and 0 is deleted."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert the added payment request's receiver_id is private_data.person_venmo_user_id."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert the added payment request has description public_data.note (normalize_text=True)."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert the added payment request has amount public_data.amount."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert the added payment request has privacy_type public_data.privacy."
+        }
+      ],
+      "success": true
+    },
+    "024c982_3": {
+      "difficulty": 1,
+      "failures": [],
+      "num_tests": 7,
+      "passes": [
+        {
+          "label": "no_op_fail",
+          "requirement": "assert answers match."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert model changes match venmo.Notification, venmo.PaymentRequest"
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "obtain added, updated, removed venmo.PaymentRequest records using models.changed_records,\nand assert 1 is added, 0 is updated, and 0 is deleted."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert the added payment request's receiver_id is private_data.person_venmo_user_id."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert the added payment request has description public_data.note (normalize_text=True)."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert the added payment request has amount public_data.amount."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert the added payment request has privacy_type public_data.privacy."
+        }
+      ],
+      "success": true
+    },
+    "21abae1_1": {
+      "difficulty": 1,
+      "failures": [],
+      "num_tests": 2,
+      "passes": [
+        {
+          "label": "no_op_fail",
+          "requirement": "assert answers match."
+        },
+        {
+          "label": "no_op_pass",
+          "requirement": "assert no model changes."
+        }
+      ],
+      "success": true
+    },
+    "21abae1_2": {
+      "difficulty": 1,
+      "failures": [],
+      "num_tests": 2,
+      "passes": [
+        {
+          "label": "no_op_fail",
+          "requirement": "assert answers match."
+        },
+        {
+          "label": "no_op_pass",
+          "requirement": "assert no model changes."
+        }
+      ],
+      "success": true
+    },
+    "21abae1_3": {
+      "difficulty": 1,
+      "failures": [],
+      "num_tests": 2,
+      "passes": [
+        {
+          "label": "no_op_fail",
+          "requirement": "assert answers match."
+        },
+        {
+          "label": "no_op_pass",
+          "requirement": "assert no model changes."
+        }
+      ],
+      "success": true
+    },
+    "270f1ff_1": {
+      "difficulty": 2,
+      "failures": [
+        {
+          "label": "no_op_fail",
+          "requirement": "assert the added transaction is from main_user to private_data.child_relation_email",
+          "trace": "```python\nwith test(\n    \"\"\"\n    assert the added transaction is from main_user to private_data.child_relation_email\n    \"\"\"\n):\n    added_transaction = added_transactions[0]\n    test.case(added_transaction.sender.email, \"==\", main_user.email)\n    test.case(added_transaction.receiver.email, \"==\", private_data.child_relation_email)\n```\n----------\nAssertionError:  'joseph.webe@gmail.com' == 'nicholas.weber@gmail.com'"
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert the added transaction has amount private_data.this_year_gift_amount",
+          "trace": "```python\nwith test(\n    \"\"\"\n    assert the added transaction has amount private_data.this_year_gift_amount\n    \"\"\"\n):\n    test.case(added_transaction.amount, \"==\", private_data.this_year_gift_amount)\n```\n----------\nAssertionError:  300.0 == 200"
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert the added global_text_message is from main_user to private_data.child_relation_phone_number",
+          "trace": "```python\nwith test(\n    \"\"\"\n    assert the added global_text_message is from main_user to private_data.child_relation_phone_number\n    \"\"\"\n):\n    added_global_text_message = added_global_text_messages[0]\n    test.case(added_global_text_message.sender.phone_number, \"==\", main_user.phone_number)\n    test.case(\n```\n----------\nAssertionError:  '2233697879' == '9503658964'"
+        }
+      ],
+      "num_tests": 11,
+      "passes": [
+        {
+          "label": "no_op_fail",
+          "requirement": "assert answers match."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert model changes match venmo.Transaction, phone.GlobalTextMessage, phone.UserTextMessage,\nignoring venmo.Notification and venmo.User"
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "obtain added, updated, deleted venmo.Transactions using models.changed_records\nand assert 1 is added, 0 is updated, and 0 is deleted"
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert the added transaction has description public_data.expected_note normalize_text=True"
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert the added transaction is private"
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "obtain added, updated, deleted phone.GlobalTextMessage using models.changed_records\nand assert 1 is added, 0 is updated, and 0 is deleted"
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert the added global_text_message has content public_data.expected_message normalize_text=True"
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "obtain added, updated, deleted phone.UserTextMessage using models.changed_records\nand assert 2 is added, 0 is updated, and 0 is deleted"
+        }
+      ],
+      "success": false
+    },
+    "270f1ff_2": {
+      "difficulty": 2,
+      "failures": [],
+      "num_tests": 11,
+      "passes": [
+        {
+          "label": "no_op_fail",
+          "requirement": "assert answers match."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert model changes match venmo.Transaction, phone.GlobalTextMessage, phone.UserTextMessage,\nignoring venmo.Notification and venmo.User"
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "obtain added, updated, deleted venmo.Transactions using models.changed_records\nand assert 1 is added, 0 is updated, and 0 is deleted"
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert the added transaction is from main_user to private_data.child_relation_email"
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert the added transaction has description public_data.expected_note normalize_text=True"
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert the added transaction has amount private_data.this_year_gift_amount"
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert the added transaction is private"
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "obtain added, updated, deleted phone.GlobalTextMessage using models.changed_records\nand assert 1 is added, 0 is updated, and 0 is deleted"
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert the added global_text_message is from main_user to private_data.child_relation_phone_number"
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert the added global_text_message has content public_data.expected_message normalize_text=True"
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "obtain added, updated, deleted phone.UserTextMessage using models.changed_records\nand assert 2 is added, 0 is updated, and 0 is deleted"
+        }
+      ],
+      "success": true
+    },
+    "270f1ff_3": {
+      "difficulty": 2,
+      "failures": [
+        {
+          "label": "no_op_fail",
+          "requirement": "assert the added transaction is from main_user to private_data.child_relation_email",
+          "trace": "```python\nwith test(\n    \"\"\"\n    assert the added transaction is from main_user to private_data.child_relation_email\n    \"\"\"\n):\n    added_transaction = added_transactions[0]\n    test.case(added_transaction.sender.email, \"==\", main_user.email)\n    test.case(added_transaction.receiver.email, \"==\", private_data.child_relation_email)\n```\n----------\nAssertionError:  'andrew_brow@gmail.com' == 'carbrown@gmail.com'"
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert the added transaction has amount private_data.this_year_gift_amount",
+          "trace": "```python\nwith test(\n    \"\"\"\n    assert the added transaction has amount private_data.this_year_gift_amount\n    \"\"\"\n):\n    test.case(added_transaction.amount, \"==\", private_data.this_year_gift_amount)\n```\n----------\nAssertionError:  400.0 == 800"
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert the added global_text_message is from main_user to private_data.child_relation_phone_number",
+          "trace": "```python\nwith test(\n    \"\"\"\n    assert the added global_text_message is from main_user to private_data.child_relation_phone_number\n    \"\"\"\n):\n    added_global_text_message = added_global_text_messages[0]\n    test.case(added_global_text_message.sender.phone_number, \"==\", main_user.phone_number)\n    test.case(\n```\n----------\nAssertionError:  '8993579400' == '7934818191'"
+        }
+      ],
+      "num_tests": 11,
+      "passes": [
+        {
+          "label": "no_op_fail",
+          "requirement": "assert answers match."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert model changes match venmo.Transaction, phone.GlobalTextMessage, phone.UserTextMessage,\nignoring venmo.Notification and venmo.User"
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "obtain added, updated, deleted venmo.Transactions using models.changed_records\nand assert 1 is added, 0 is updated, and 0 is deleted"
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert the added transaction has description public_data.expected_note normalize_text=True"
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert the added transaction is private"
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "obtain added, updated, deleted phone.GlobalTextMessage using models.changed_records\nand assert 1 is added, 0 is updated, and 0 is deleted"
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert the added global_text_message has content public_data.expected_message normalize_text=True"
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "obtain added, updated, deleted phone.UserTextMessage using models.changed_records\nand assert 2 is added, 0 is updated, and 0 is deleted"
+        }
+      ],
+      "success": false
+    },
+    "29a7b7e_1": {
+      "difficulty": 1,
+      "failures": [],
+      "num_tests": 4,
+      "passes": [
+        {
+          "label": "no_op_fail",
+          "requirement": "assert answers match."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert model changes match file_system.File."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "prepare start_file_path_to_content and end_file_path_to_content from start and end state of user.files,\nthen assert the files have been renamed (with proper content) as per private_data.meeting_start_to_end_file_path."
+        },
+        {
+          "label": "no_op_pass",
+          "requirement": "obtain all the file paths from start_file_path_to_content's keys that are not in\nprivate_data.meeting_start_to_end_file_path. These are the file_paths that should not have been renamed.\nAssert their paths and contents are identical in the start and the end state."
+        }
+      ],
+      "success": true
+    },
+    "29a7b7e_2": {
+      "difficulty": 1,
+      "failures": [],
+      "num_tests": 4,
+      "passes": [
+        {
+          "label": "no_op_fail",
+          "requirement": "assert answers match."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert model changes match file_system.File."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "prepare start_file_path_to_content and end_file_path_to_content from start and end state of user.files,\nthen assert the files have been renamed (with proper content) as per private_data.meeting_start_to_end_file_path."
+        },
+        {
+          "label": "no_op_pass",
+          "requirement": "obtain all the file paths from start_file_path_to_content's keys that are not in\nprivate_data.meeting_start_to_end_file_path. These are the file_paths that should not have been renamed.\nAssert their paths and contents are identical in the start and the end state."
+        }
+      ],
+      "success": true
+    },
+    "29a7b7e_3": {
+      "difficulty": 1,
+      "failures": [],
+      "num_tests": 4,
+      "passes": [
+        {
+          "label": "no_op_fail",
+          "requirement": "assert answers match."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert model changes match file_system.File."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "prepare start_file_path_to_content and end_file_path_to_content from start and end state of user.files,\nthen assert the files have been renamed (with proper content) as per private_data.meeting_start_to_end_file_path."
+        },
+        {
+          "label": "no_op_pass",
+          "requirement": "obtain all the file paths from start_file_path_to_content's keys that are not in\nprivate_data.meeting_start_to_end_file_path. These are the file_paths that should not have been renamed.\nAssert their paths and contents are identical in the start and the end state."
+        }
+      ],
+      "success": true
+    },
+    "2c544f9_1": {
+      "difficulty": 3,
+      "failures": [
+        {
+          "label": "no_op_fail",
+          "requirement": "assert model changes match venmo.Transaction, venmo.Notification,\nvenmo.User, ignoring venmo.PaymentCard.",
+          "trace": "```python\nwith test(\n    \"\"\"\n    assert model changes match venmo.Transaction, venmo.Notification,\n    venmo.User, ignoring venmo.PaymentCard.\n    \"\"\"\n):\n    changed_model_names = models.changed_model_names(ignore=[\"venmo.PaymentCard\"])\n    test.case(\n```\n----------\nAssertionError:  set() == {'venmo.Transaction', 'venmo.User', 'venmo.Notification'}\n\nIn right but not left:\n['venmo.Transaction', 'venmo.User', 'venmo.Notification']"
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "obtain added, updated, removed venmo.Transaction records using models.changed_records,\nand assert 1 was added, 0 were updated or removed.",
+          "trace": "```python\nwith test(\n    \"\"\"\n    obtain added, updated, removed venmo.Transaction records using models.changed_records,\n    and assert 1 was added, 0 were updated or removed.\n    \"\"\"\n):\n    added_transactions, updated_transactions, removed_transactions = models.changed_records(\n        \"venmo.Transaction\"\n```\n----------\nAssertionError:  0 == 1"
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert the added transaction's receiver_id is private_data.person_venmo_user_id.",
+          "trace": "```python\nwith test(\n    \"\"\"\n    assert the added transaction's receiver_id is private_data.person_venmo_user_id.\n    \"\"\"\n):\n    added_transaction = added_transactions[0]\n    test.case(added_transaction.receiver_id, \"==\", private_data.person_venmo_user_id)\n```\n----------"
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert the added transaction has amount public_data.amount.",
+          "trace": "```python\nwith test(\n    \"\"\"\n    assert the added transaction has amount public_data.amount.\n    \"\"\"\n):\n    test.case(added_transaction.amount, \"==\", public_data.amount)\n```\n----------"
+        }
+      ],
+      "num_tests": 6,
+      "passes": [
+        {
+          "label": "no_op_fail",
+          "requirement": "assert answers match."
+        },
+        {
+          "label": "no_op_pass",
+          "requirement": "assert 0 venmo.PaymentCard records have been updated or deleted using models.changed_records."
+        }
+      ],
+      "success": false
+    },
+    "2c544f9_2": {
+      "difficulty": 3,
+      "failures": [
+        {
+          "label": "no_op_fail",
+          "requirement": "assert answers match.",
+          "trace": "```python\nwith test(\n    \"\"\"\n    assert answers match.\n    \"\"\"\n):\n    test.answer(predicted_answer, ground_truth_answer)\n```\n----------\nAssertionError:\n'unable to send $427 to anita via venmo: all existing payment cards have insufficient funds, and adding a new payment card or topping up the balance is not possible (card validation errors).'\n==\n'null'"
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert model changes match venmo.Transaction, venmo.Notification,\nvenmo.User, ignoring venmo.PaymentCard.",
+          "trace": "```python\nwith test(\n    \"\"\"\n    assert model changes match venmo.Transaction, venmo.Notification,\n    venmo.User, ignoring venmo.PaymentCard.\n    \"\"\"\n):\n    changed_model_names = models.changed_model_names(ignore=[\"venmo.PaymentCard\"])\n    test.case(\n```\n----------\nAssertionError:  set() == {'venmo.Transaction', 'venmo.User', 'venmo.Notification'}\n\nIn right but not left:\n['venmo.Transaction', 'venmo.User', 'venmo.Notification']"
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "obtain added, updated, removed venmo.Transaction records using models.changed_records,\nand assert 1 was added, 0 were updated or removed.",
+          "trace": "```python\nwith test(\n    \"\"\"\n    obtain added, updated, removed venmo.Transaction records using models.changed_records,\n    and assert 1 was added, 0 were updated or removed.\n    \"\"\"\n):\n    added_transactions, updated_transactions, removed_transactions = models.changed_records(\n        \"venmo.Transaction\"\n```\n----------\nAssertionError:  0 == 1"
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert the added transaction's receiver_id is private_data.person_venmo_user_id.",
+          "trace": "```python\nwith test(\n    \"\"\"\n    assert the added transaction's receiver_id is private_data.person_venmo_user_id.\n    \"\"\"\n):\n    added_transaction = added_transactions[0]\n    test.case(added_transaction.receiver_id, \"==\", private_data.person_venmo_user_id)\n```\n----------"
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert the added transaction has amount public_data.amount.",
+          "trace": "```python\nwith test(\n    \"\"\"\n    assert the added transaction has amount public_data.amount.\n    \"\"\"\n):\n    test.case(added_transaction.amount, \"==\", public_data.amount)\n```\n----------"
+        }
+      ],
+      "num_tests": 6,
+      "passes": [
+        {
+          "label": "no_op_pass",
+          "requirement": "assert 0 venmo.PaymentCard records have been updated or deleted using models.changed_records."
+        }
+      ],
+      "success": false
+    },
+    "2c544f9_3": {
+      "difficulty": 3,
+      "failures": [
+        {
+          "label": "no_op_fail",
+          "requirement": "assert answers match.",
+          "trace": "```python\nwith test(\n    \"\"\"\n    assert answers match.\n    \"\"\"\n):\n    test.answer(predicted_answer, ground_truth_answer)\n```\n----------\nAssertionError:\n'unable to send $234 to jack: no payment card has sufficient funds and venmo balance is $0.00.'\n==\n'null'"
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert model changes match venmo.Transaction, venmo.Notification,\nvenmo.User, ignoring venmo.PaymentCard.",
+          "trace": "```python\nwith test(\n    \"\"\"\n    assert model changes match venmo.Transaction, venmo.Notification,\n    venmo.User, ignoring venmo.PaymentCard.\n    \"\"\"\n):\n    changed_model_names = models.changed_model_names(ignore=[\"venmo.PaymentCard\"])\n    test.case(\n```\n----------\nAssertionError:  set() == {'venmo.Transaction', 'venmo.User', 'venmo.Notification'}\n\nIn right but not left:\n['venmo.Transaction', 'venmo.User', 'venmo.Notification']"
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "obtain added, updated, removed venmo.Transaction records using models.changed_records,\nand assert 1 was added, 0 were updated or removed.",
+          "trace": "```python\nwith test(\n    \"\"\"\n    obtain added, updated, removed venmo.Transaction records using models.changed_records,\n    and assert 1 was added, 0 were updated or removed.\n    \"\"\"\n):\n    added_transactions, updated_transactions, removed_transactions = models.changed_records(\n        \"venmo.Transaction\"\n```\n----------\nAssertionError:  0 == 1"
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert the added transaction's receiver_id is private_data.person_venmo_user_id.",
+          "trace": "```python\nwith test(\n    \"\"\"\n    assert the added transaction's receiver_id is private_data.person_venmo_user_id.\n    \"\"\"\n):\n    added_transaction = added_transactions[0]\n    test.case(added_transaction.receiver_id, \"==\", private_data.person_venmo_user_id)\n```\n----------"
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert the added transaction has amount public_data.amount.",
+          "trace": "```python\nwith test(\n    \"\"\"\n    assert the added transaction has amount public_data.amount.\n    \"\"\"\n):\n    test.case(added_transaction.amount, \"==\", public_data.amount)\n```\n----------"
+        }
+      ],
+      "num_tests": 6,
+      "passes": [
+        {
+          "label": "no_op_pass",
+          "requirement": "assert 0 venmo.PaymentCard records have been updated or deleted using models.changed_records."
+        }
+      ],
+      "success": false
+    },
+    "325d6ec_1": {
+      "difficulty": 2,
+      "failures": [],
+      "num_tests": 5,
+      "passes": [
+        {
+          "label": "no_op_fail",
+          "requirement": "assert answers match."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert model changes match spotify.MusicPlayer."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "obtain added, updated, removed spotify.MusicPlayer records using models.changed_records,\nand assert 1 has been updated, and 0 have been added or removed."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert music player's cursor is on the song with private_data.target_song_id."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert updated music_player's changed_field_names is only {\"cursor_position\"}."
+        }
+      ],
+      "success": true
+    },
+    "325d6ec_2": {
+      "difficulty": 2,
+      "failures": [],
+      "num_tests": 5,
+      "passes": [
+        {
+          "label": "no_op_fail",
+          "requirement": "assert answers match."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert model changes match spotify.MusicPlayer."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "obtain added, updated, removed spotify.MusicPlayer records using models.changed_records,\nand assert 1 has been updated, and 0 have been added or removed."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert music player's cursor is on the song with private_data.target_song_id."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert updated music_player's changed_field_names is only {\"cursor_position\"}."
+        }
+      ],
+      "success": true
+    },
+    "325d6ec_3": {
+      "difficulty": 2,
+      "failures": [],
+      "num_tests": 5,
+      "passes": [
+        {
+          "label": "no_op_fail",
+          "requirement": "assert answers match."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert model changes match spotify.MusicPlayer."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "obtain added, updated, removed spotify.MusicPlayer records using models.changed_records,\nand assert 1 has been updated, and 0 have been added or removed."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert music player's cursor is on the song with private_data.target_song_id."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert updated music_player's changed_field_names is only {\"cursor_position\"}."
+        }
+      ],
+      "success": true
+    },
+    "3d9a636_1": {
+      "difficulty": 2,
+      "failures": [],
+      "num_tests": 5,
+      "passes": [
+        {
+          "label": "no_op_fail",
+          "requirement": "assert answers match."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert model changes match venmo.Friendship"
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "obtain added, deleted friendships using models.changed_records\nand assert friend_ids of the added ones match private_data.to_befriend_venmo_user_ids (ignore_order)"
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert friend_ids of the deleted ones match private_data.to_unfriend_venmo_user_ids (ignore_order)"
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert all main_user's friends on venmo match\nprivate_data.all_friends_venmo_user_ids in the end state (ignore_order)"
+        }
+      ],
+      "success": true
+    },
+    "3d9a636_2": {
+      "difficulty": 2,
+      "failures": [],
+      "num_tests": 5,
+      "passes": [
+        {
+          "label": "no_op_fail",
+          "requirement": "assert answers match."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert model changes match venmo.Friendship"
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "obtain added, deleted friendships using models.changed_records\nand assert friend_ids of the added ones match private_data.to_befriend_venmo_user_ids (ignore_order)"
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert friend_ids of the deleted ones match private_data.to_unfriend_venmo_user_ids (ignore_order)"
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert all main_user's friends on venmo match\nprivate_data.all_friends_venmo_user_ids in the end state (ignore_order)"
+        }
+      ],
+      "success": true
+    },
+    "3d9a636_3": {
+      "difficulty": 2,
+      "failures": [
+        {
+          "label": "no_op_fail",
+          "requirement": "obtain added, deleted friendships using models.changed_records\nand assert friend_ids of the added ones match private_data.to_befriend_venmo_user_ids (ignore_order)",
+          "trace": "```python\nwith test(\n    \"\"\"\n    obtain added, deleted friendships using models.changed_records\n    and assert friend_ids of the added ones match private_data.to_befriend_venmo_user_ids (ignore_order)\n    \"\"\"\n):\n    added_friendships, _, deleted_friendships = models.changed_records(\"venmo.Friendship\")\n    added_friend_ids = list_of(added_friendships, \"friend_id\")\n```\n----------\nAssertionError:\n[10, 16, 20, 23, 42, 46, 55, 68, 69, 88, 89, 91, 92, 95]\n==\n[10, 20, 23, 55, 68]\n\nIn left but not right:\n[16, 42, 46, 69, 88, 89, 91, 92, 95]\n\nOriginal values:\n[16, 95, 46, 42, 20, 23, 69, 92, 55, 89, 88, 68, 10, 91]\n==\n[10, 68, 55, 20, 23]"
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert friend_ids of the deleted ones match private_data.to_unfriend_venmo_user_ids (ignore_order)",
+          "trace": "```python\nwith test(\n    \"\"\"\n    assert friend_ids of the deleted ones match private_data.to_unfriend_venmo_user_ids (ignore_order)\n    \"\"\"\n):\n    deleted_friend_ids = list_of(deleted_friendships, \"friend_id\")\n    test.case(\n        deleted_friend_ids, \"==\", private_data.to_unfriend_venmo_user_ids, ignore_order=True\n```\n----------\nAssertionError:  [] == [40, 52, 56, 66, 78]\n\nIn right but not left:\n[40, 52, 56, 66, 78]\n\nOriginal values:\n[] == [40, 66, 56, 52, 78]"
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert all main_user's friends on venmo match\nprivate_data.all_friends_venmo_user_ids in the end state (ignore_order)",
+          "trace": "```python\nwith test(\n    \"\"\"\n    assert all main_user's friends on venmo match\n    private_data.all_friends_venmo_user_ids in the end state (ignore_order)\n    \"\"\"\n):\n    venmo_user = models.end.venmo.User.find_from(main_user)\n    venmo_friend_ids = list_of(venmo_user.friends, \"id\")\n```\n----------\nAssertionError:\n[10, 16, 20, 23, 31, 35, 36, 40, 42, 43, 46, 52, 55, 56, 66, 68, 69, 78, 88, 89, 91, 92, 95, 106]\n==\n[10, 20, 23, 31, 35, 36, 43, 55, 68, 106]\n\nIn left but not right:\n[16, 40, 42, 46, 52, 56, 66, 69, 78, 88, 89, 91, 92, 95]\n\nOriginal values:\n[35, 31, 36, 106, 43, 40, 66, 56, 52, 78, 68, 95, 91, 20, 55, 92, 16, 23, 42, 89, 69, 46, 10, 88]\n==\n[35, 31, 36, 106, 43, 10, 68, 55, 20, 23]"
+        }
+      ],
+      "num_tests": 5,
+      "passes": [
+        {
+          "label": "no_op_fail",
+          "requirement": "assert answers match."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert model changes match venmo.Friendship"
+        }
+      ],
+      "success": false
+    },
+    "6b6ca61_1": {
+      "difficulty": 3,
+      "failures": [
+        {
+          "label": "no_op_fail",
+          "requirement": "assert model changes match venmo.Transaction, venmo.Notification,\nsplitwise.Expense, splitwise.ExpenseShare, splitwise.Notification, ignoring\ngmail.GlobalEmailThread, gmail.UserEmailThread, gmail.Email, gmail.Attachment,\nvenmo.User, venmo.BankTransfer, file_system.Directory, file_system.File.",
+          "trace": "```python\nwith test(\n    \"\"\"\n    assert model changes match venmo.Transaction, venmo.Notification,\n    splitwise.Expense, splitwise.ExpenseShare, splitwise.Notification, ignoring\n    gmail.GlobalEmailThread, gmail.UserEmailThread, gmail.Email, gmail.Attachment,\n    venmo.User, venmo.BankTransfer, file_system.Directory, file_system.File.\n    \"\"\"\n):\n```\n----------\nAssertionError:\n{'splitwise.ExpenseShare', 'splitwise.Expense', 'splitwise.Notification'}\n==\n{'splitwise.ExpenseShare', 'venmo.Transaction', 'splitwise.Expense', 'venmo.Notification', 'splitwise.Notification'}\n\nIn right but not left:\n['venmo.Transaction', 'venmo.Notification']"
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert all the added_transactions are private/public based on public_data.privacy.",
+          "trace": "```python\nwith test(\n    \"\"\"\n    assert all the added_transactions are private/public based on public_data.privacy.\n    \"\"\"\n):\n    private = public_data.privacy == \"privately\"\n    test.case(list_of(added_transactions, \"private\"), \"all ==\", private)\n```\n----------\nAssertionError: The left modifier is 'all' with allow_left_empty=False, but left operand is empty."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert the venmo_user_id_to_amount from these transactions match\nprivate_data.venmo_user_id_to_amount (tolerance of 0.51, ignore_order).",
+          "trace": "```python\nwith test(\n    \"\"\"\n    assert the venmo_user_id_to_amount from these transactions match\n    private_data.venmo_user_id_to_amount (tolerance of 0.51, ignore_order).\n    \"\"\"\n):\n    venmo_user_id_to_amount = dict_of(added_transactions, \"receiver_id\", \"amount\")\n    test.case(\n```\n----------\nAssertionError:  {} == Munch({17: 50 \u00b1 0.51, 25: 10 \u00b1 0.51})\n\nOriginal values:\n{} == Munch({17: 50, 25: 10})"
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert the venmo_user_id_to_description from these transactions match\nprivate_data.venmo_user_id_to_description (normalize_text=True, ignore_order).",
+          "trace": "```python\nwith test(\n    \"\"\"\n    assert the venmo_user_id_to_description from these transactions match\n    private_data.venmo_user_id_to_description (normalize_text=True, ignore_order).\n    \"\"\"\n):\n    venmo_user_id_to_description = dict_of(added_transactions, \"receiver_id\", \"description\")\n    test.case(\n```\n----------\nAssertionError:  {} == Munch({17: 'holiday concert', 25: 'thermometer'})\n\nOriginal values:\n{} == Munch({17: 'Holiday Concert', 25: 'Thermometer'})"
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert the debtor_ids of the added expense shares match the private_data.venmo_user_id.",
+          "trace": "```python\nwith test(\n    \"\"\"\n    assert the debtor_ids of the added expense shares match the private_data.venmo_user_id.\n    \"\"\"\n):\n    test.case(set_of(added_expense_shares, \"debtor_id\"), \"==\", {private_data.venmo_user_id})\n```\n----------\nAssertionError:  {42, 17, 20, 25, 90} == {62}\n\nIn left but not right:\n[42, 17, 20, 25, 90]\n\nIn right but not left:\n[62]"
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert the splitwise_user_id_to_amount (expense.amount) from expenses match\nprivate_data.splitwise_user_id_to_amount (tolerance of 0.51, ignore_order).",
+          "trace": "```python\nwith test(\n    \"\"\"\n    assert the splitwise_user_id_to_amount (expense.amount) from expenses match\n    private_data.splitwise_user_id_to_amount (tolerance of 0.51, ignore_order).\n    \"\"\"\n):\n    splitwise_user_id_to_amount = dict_of(added_expenses, \"payer_id\", \"amount\")\n    test.case(\n```\n----------\nAssertionError:  {62: 20.0 \u00b1 0.51} == Munch({20: 20 \u00b1 0.51, 42: 80 \u00b1 0.51, 90: 15 \u00b1 0.51})\n\nOriginal values:\n{62: 20.0} == Munch({20: 20, 42: 80, 90: 15})"
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert the splitwise_user_id_to_amount (share_amount) from expense shares match\nprivate_data.splitwise_user_id_to_amount (tolerance of 0.51, ignore_order).",
+          "trace": "```python\nwith test(\n    \"\"\"\n    assert the splitwise_user_id_to_amount (share_amount) from expense shares match\n    private_data.splitwise_user_id_to_amount (tolerance of 0.51, ignore_order).\n    \"\"\"\n):\n    splitwise_user_id_to_amount = dict_of(\n        added_expense_shares, \"expense.payer_id\", \"share_amount\"\n```\n----------\nAssertionError:  {62: 10.0 \u00b1 0.51} == Munch({20: 20 \u00b1 0.51, 42: 80 \u00b1 0.51, 90: 15 \u00b1 0.51})\n\nOriginal values:\n{62: 10.0} == Munch({20: 20 \u00b1 0.51, 42: 80 \u00b1 0.51, 90: 15 \u00b1 0.51})"
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert the splitwise_user_id_to_description from expenses match\nprivate_data.splitwise_user_id_to_description (normalize_text=True).",
+          "trace": "```python\nwith test(\n    \"\"\"\n    assert the splitwise_user_id_to_description from expenses match\n    private_data.splitwise_user_id_to_description (normalize_text=True).\n    \"\"\"\n):\n    splitwise_user_id_to_description = dict_of(added_expenses, \"payer_id\", \"description\")\n    test.case(\n```\n----------\nAssertionError:\n{62: 'ski socks'}\n==\nMunch({20: 'ski socks', 42: 'cycling shoes', 90: 'gloves'})\n\nOriginal values:\n{62: 'Ski Socks'}\n==\nMunch({20: 'Ski Socks', 42: 'Cycling Shoes', 90: 'Gloves'})"
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert the attached files of these expenses match the\nprivate_data.splitwise_user_id_to_file_content (normalize_text=True).",
+          "trace": "```python\nwith test(\n    \"\"\"\n    assert the attached files of these expenses match the\n    private_data.splitwise_user_id_to_file_content (normalize_text=True).\n    \"\"\"\n):\n    splitwise_user_id_to_file_content = dict_of(\n        added_expenses, \"payer_id\", \"receipt_file_content\"\n```\n----------\nAssertionError:\n{62: 'binary:83edc27401...'}\n==\nMunch({20: 'binary:83edc27401...', 42: 'binary:a4c362a6a7...', 90: 'binary:43c163d23e...'})"
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert the splitwise_user_id_to_amount from added splitwise expenses match\nthe private_data.splitwise_user_id_to_amount.",
+          "trace": "```python\nwith test(\n    \"\"\"\n    assert the splitwise_user_id_to_amount from added splitwise expenses match\n    the private_data.splitwise_user_id_to_amount.\n    \"\"\"\n):\n    splitwise_user_id_to_amount = dict_of(\n        added_expense_shares, \"expense.payer_id\", \"share_amount\"\n```\n----------\nAssertionError:  {62: 10.0 \u00b1 0.51} == Munch({20: 20 \u00b1 0.51, 42: 80 \u00b1 0.51, 90: 15 \u00b1 0.51})\n\nOriginal values:\n{62: 10.0} == Munch({20: 20 \u00b1 0.51, 42: 80 \u00b1 0.51, 90: 15 \u00b1 0.51})"
+        }
+      ],
+      "num_tests": 19,
+      "passes": [
+        {
+          "label": "no_op_fail",
+          "requirement": "assert answers match."
+        },
+        {
+          "label": "no_op_pass",
+          "requirement": "obtain added, updated, removed venmo.Transaction records using\nmodels.changed_records, and assert 0 transactions were updated or removed."
+        },
+        {
+          "label": "no_op_pass",
+          "requirement": "obtain added, updated, removed splitwise.Expense records\nusing models.changed_records, and assert 0 expenses were updated or removed."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert all the added expenses have a None group_id"
+        },
+        {
+          "label": "no_op_pass",
+          "requirement": "obtain added, removed splitwise.ExpenseShare records\nusing models.changed_records, and assert 0 expense shares were removed."
+        },
+        {
+          "label": "no_op_pass",
+          "requirement": "assert the expense_ids of the added expense shares match the ids of added_expenses."
+        },
+        {
+          "label": "no_op_pass",
+          "requirement": "obtain added, updated, deleted records of venmo.User and\nassert none were added or deleted."
+        },
+        {
+          "label": "no_op_pass",
+          "requirement": "assert the updated record has changed in venmo_balance or nothing\nusing changed_field_names."
+        },
+        {
+          "label": "no_op_pass",
+          "requirement": "obtain added, updated, removed file_system.File assure none have\nthe user_id of private_data.file_system_user_id."
+        }
+      ],
+      "success": false
+    },
+    "6b6ca61_2": {
+      "difficulty": 3,
+      "failures": [
+        {
+          "label": "no_op_fail",
+          "requirement": "assert answers match.",
+          "trace": "```python\nwith test(\n    \"\"\"\n    assert answers match.\n    \"\"\"\n):\n    test.answer(predicted_answer, ground_truth_answer)\n```\n----------\nAssertionError:  '<<not_given>>' == 'null'"
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert model changes match venmo.Transaction, venmo.Notification,\nsplitwise.Expense, splitwise.ExpenseShare, splitwise.Notification, ignoring\ngmail.GlobalEmailThread, gmail.UserEmailThread, gmail.Email, gmail.Attachment,\nvenmo.User, venmo.BankTransfer, file_system.Directory, file_system.File.",
+          "trace": "```python\nwith test(\n    \"\"\"\n    assert model changes match venmo.Transaction, venmo.Notification,\n    splitwise.Expense, splitwise.ExpenseShare, splitwise.Notification, ignoring\n    gmail.GlobalEmailThread, gmail.UserEmailThread, gmail.Email, gmail.Attachment,\n    venmo.User, venmo.BankTransfer, file_system.Directory, file_system.File.\n    \"\"\"\n):\n```\n----------\nAssertionError:\n{'splitwise.ExpenseShare', 'splitwise.Expense', 'splitwise.Notification'}\n==\n{'splitwise.ExpenseShare', 'venmo.Transaction', 'splitwise.Expense', 'venmo.Notification', 'splitwise.Notification'}\n\nIn right but not left:\n['venmo.Transaction', 'venmo.Notification']"
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert all the added_transactions are private/public based on public_data.privacy.",
+          "trace": "```python\nwith test(\n    \"\"\"\n    assert all the added_transactions are private/public based on public_data.privacy.\n    \"\"\"\n):\n    private = public_data.privacy == \"privately\"\n    test.case(list_of(added_transactions, \"private\"), \"all ==\", private)\n```\n----------\nAssertionError: The left modifier is 'all' with allow_left_empty=False, but left operand is empty."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert the venmo_user_id_to_amount from these transactions match\nprivate_data.venmo_user_id_to_amount (tolerance of 0.51, ignore_order).",
+          "trace": "```python\nwith test(\n    \"\"\"\n    assert the venmo_user_id_to_amount from these transactions match\n    private_data.venmo_user_id_to_amount (tolerance of 0.51, ignore_order).\n    \"\"\"\n):\n    venmo_user_id_to_amount = dict_of(added_transactions, \"receiver_id\", \"amount\")\n    test.case(\n```\n----------\nAssertionError:  {} == Munch({58: 12 \u00b1 0.51, 15: 80 \u00b1 0.51, 71: 20 \u00b1 0.51})\n\nOriginal values:\n{} == Munch({58: 12, 15: 80, 71: 20})"
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert the venmo_user_id_to_description from these transactions match\nprivate_data.venmo_user_id_to_description (normalize_text=True, ignore_order).",
+          "trace": "```python\nwith test(\n    \"\"\"\n    assert the venmo_user_id_to_description from these transactions match\n    private_data.venmo_user_id_to_description (normalize_text=True, ignore_order).\n    \"\"\"\n):\n    venmo_user_id_to_description = dict_of(added_transactions, \"receiver_id\", \"description\")\n    test.case(\n```\n----------\nAssertionError:  {} == Munch({58: 'notebooks', 15: 'climbing backpack', 71: 'e-books'})\n\nOriginal values:\n{} == Munch({58: 'Notebooks', 15: 'Climbing Backpack', 71: 'E-Books'})"
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert the debtor_ids of the added expense shares match the private_data.venmo_user_id.",
+          "trace": "```python\nwith test(\n    \"\"\"\n    assert the debtor_ids of the added expense shares match the private_data.venmo_user_id.\n    \"\"\"\n):\n    test.case(set_of(added_expense_shares, \"debtor_id\"), \"==\", {private_data.venmo_user_id})\n```\n----------\nAssertionError:  {67, 63} == {86}\n\nIn left but not right:\n[67, 63]\n\nIn right but not left:\n[86]"
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert the splitwise_user_id_to_amount (expense.amount) from expenses match\nprivate_data.splitwise_user_id_to_amount (tolerance of 0.51, ignore_order).",
+          "trace": "```python\nwith test(\n    \"\"\"\n    assert the splitwise_user_id_to_amount (expense.amount) from expenses match\n    private_data.splitwise_user_id_to_amount (tolerance of 0.51, ignore_order).\n    \"\"\"\n):\n    splitwise_user_id_to_amount = dict_of(added_expenses, \"payer_id\", \"amount\")\n    test.case(\n```\n----------\nAssertionError:\n{86: 5.0 \u00b1 0.51}\n==\nMunch({67: 50 \u00b1 0.51, 63: 5 \u00b1 0.51, 54: 40 \u00b1 0.51, 48: 10 \u00b1 0.51})\n\nOriginal values:\n{86: 5.0}\n==\nMunch({67: 50, 63: 5, 54: 40, 48: 10})"
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert the splitwise_user_id_to_amount (share_amount) from expense shares match\nprivate_data.splitwise_user_id_to_amount (tolerance of 0.51, ignore_order).",
+          "trace": "```python\nwith test(\n    \"\"\"\n    assert the splitwise_user_id_to_amount (share_amount) from expense shares match\n    private_data.splitwise_user_id_to_amount (tolerance of 0.51, ignore_order).\n    \"\"\"\n):\n    splitwise_user_id_to_amount = dict_of(\n        added_expense_shares, \"expense.payer_id\", \"share_amount\"\n```\n----------\nAssertionError:\n{86: 50.0 \u00b1 0.51}\n==\nMunch({67: 50 \u00b1 0.51, 63: 5 \u00b1 0.51, 54: 40 \u00b1 0.51, 48: 10 \u00b1 0.51})\n\nOriginal values:\n{86: 50.0}\n==\nMunch({67: 50 \u00b1 0.51, 63: 5 \u00b1 0.51, 54: 40 \u00b1 0.51, 48: 10 \u00b1 0.51})"
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert the splitwise_user_id_to_description from expenses match\nprivate_data.splitwise_user_id_to_description (normalize_text=True).",
+          "trace": "```python\nwith test(\n    \"\"\"\n    assert the splitwise_user_id_to_description from expenses match\n    private_data.splitwise_user_id_to_description (normalize_text=True).\n    \"\"\"\n):\n    splitwise_user_id_to_description = dict_of(added_expenses, \"payer_id\", \"description\")\n    test.case(\n```\n----------\nAssertionError:\n{86: 'climbing tape'}\n==\nMunch({67: 'after party', 63: 'climbing tape', 54: 'reading glasses', 48: 'bike bell'})\n\nOriginal values:\n{86: 'Climbing Tape'}\n==\nMunch({67: 'After Party', 63: 'Climbing Tape', 54: 'Reading Glasses', 48: 'Bike Bell'})"
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert the attached files of these expenses match the\nprivate_data.splitwise_user_id_to_file_content (normalize_text=True).",
+          "trace": "```python\nwith test(\n    \"\"\"\n    assert the attached files of these expenses match the\n    private_data.splitwise_user_id_to_file_content (normalize_text=True).\n    \"\"\"\n):\n    splitwise_user_id_to_file_content = dict_of(\n        added_expenses, \"payer_id\", \"receipt_file_content\"\n```\n----------\nAssertionError:\n{86: 'binary:43d3da8432...'}\n==\nMunch({67: 'binary:43d3da8432...', 63: 'binary:eae740d37a...', 54: 'binary:237cf0d704...', 48: 'binary:f211503960...'})"
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert the splitwise_user_id_to_amount from added splitwise expenses match\nthe private_data.splitwise_user_id_to_amount.",
+          "trace": "```python\nwith test(\n    \"\"\"\n    assert the splitwise_user_id_to_amount from added splitwise expenses match\n    the private_data.splitwise_user_id_to_amount.\n    \"\"\"\n):\n    splitwise_user_id_to_amount = dict_of(\n        added_expense_shares, \"expense.payer_id\", \"share_amount\"\n```\n----------\nAssertionError:\n{86: 50.0 \u00b1 0.51}\n==\nMunch({67: 50 \u00b1 0.51, 63: 5 \u00b1 0.51, 54: 40 \u00b1 0.51, 48: 10 \u00b1 0.51})\n\nOriginal values:\n{86: 50.0}\n==\nMunch({67: 50 \u00b1 0.51, 63: 5 \u00b1 0.51, 54: 40 \u00b1 0.51, 48: 10 \u00b1 0.51})"
+        }
+      ],
+      "num_tests": 19,
+      "passes": [
+        {
+          "label": "no_op_pass",
+          "requirement": "obtain added, updated, removed venmo.Transaction records using\nmodels.changed_records, and assert 0 transactions were updated or removed."
+        },
+        {
+          "label": "no_op_pass",
+          "requirement": "obtain added, updated, removed splitwise.Expense records\nusing models.changed_records, and assert 0 expenses were updated or removed."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert all the added expenses have a None group_id"
+        },
+        {
+          "label": "no_op_pass",
+          "requirement": "obtain added, removed splitwise.ExpenseShare records\nusing models.changed_records, and assert 0 expense shares were removed."
+        },
+        {
+          "label": "no_op_pass",
+          "requirement": "assert the expense_ids of the added expense shares match the ids of added_expenses."
+        },
+        {
+          "label": "no_op_pass",
+          "requirement": "obtain added, updated, deleted records of venmo.User and\nassert none were added or deleted."
+        },
+        {
+          "label": "no_op_pass",
+          "requirement": "assert the updated record has changed in venmo_balance or nothing\nusing changed_field_names."
+        },
+        {
+          "label": "no_op_pass",
+          "requirement": "obtain added, updated, removed file_system.File assure none have\nthe user_id of private_data.file_system_user_id."
+        }
+      ],
+      "success": false
+    },
+    "6b6ca61_3": {
+      "difficulty": 3,
+      "failures": [
+        {
+          "label": "no_op_fail",
+          "requirement": "assert model changes match venmo.Transaction, venmo.Notification,\nsplitwise.Expense, splitwise.ExpenseShare, splitwise.Notification, ignoring\ngmail.GlobalEmailThread, gmail.UserEmailThread, gmail.Email, gmail.Attachment,\nvenmo.User, venmo.BankTransfer, file_system.Directory, file_system.File.",
+          "trace": "```python\nwith test(\n    \"\"\"\n    assert model changes match venmo.Transaction, venmo.Notification,\n    splitwise.Expense, splitwise.ExpenseShare, splitwise.Notification, ignoring\n    gmail.GlobalEmailThread, gmail.UserEmailThread, gmail.Email, gmail.Attachment,\n    venmo.User, venmo.BankTransfer, file_system.Directory, file_system.File.\n    \"\"\"\n):\n```\n----------\nAssertionError:\n{'splitwise.ExpenseShare', 'splitwise.Expense', 'splitwise.Notification'}\n==\n{'splitwise.ExpenseShare', 'venmo.Transaction', 'splitwise.Expense', 'venmo.Notification', 'splitwise.Notification'}\n\nIn right but not left:\n['venmo.Transaction', 'venmo.Notification']"
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert all the added_transactions are private/public based on public_data.privacy.",
+          "trace": "```python\nwith test(\n    \"\"\"\n    assert all the added_transactions are private/public based on public_data.privacy.\n    \"\"\"\n):\n    private = public_data.privacy == \"privately\"\n    test.case(list_of(added_transactions, \"private\"), \"all ==\", private)\n```\n----------\nAssertionError: The left modifier is 'all' with allow_left_empty=False, but left operand is empty."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert the venmo_user_id_to_amount from these transactions match\nprivate_data.venmo_user_id_to_amount (tolerance of 0.51, ignore_order).",
+          "trace": "```python\nwith test(\n    \"\"\"\n    assert the venmo_user_id_to_amount from these transactions match\n    private_data.venmo_user_id_to_amount (tolerance of 0.51, ignore_order).\n    \"\"\"\n):\n    venmo_user_id_to_amount = dict_of(added_transactions, \"receiver_id\", \"amount\")\n    test.case(\n```\n----------\nAssertionError:  {} == Munch({31: 5 \u00b1 0.51, 22: 15 \u00b1 0.51, 20: 10 \u00b1 0.51, 8: 50 \u00b1 0.51})\n\nOriginal values:\n{} == Munch({31: 5, 22: 15, 20: 10, 8: 50})"
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert the venmo_user_id_to_description from these transactions match\nprivate_data.venmo_user_id_to_description (normalize_text=True, ignore_order).",
+          "trace": "```python\nwith test(\n    \"\"\"\n    assert the venmo_user_id_to_description from these transactions match\n    private_data.venmo_user_id_to_description (normalize_text=True, ignore_order).\n    \"\"\"\n):\n    venmo_user_id_to_description = dict_of(added_transactions, \"receiver_id\", \"description\")\n    test.case(\n```\n----------\nAssertionError:\n{}\n==\nMunch({31: 'tasting notes', 22: 'ski wax', 20: 'art magazines', 8: 'book club dues'})\n\nOriginal values:\n{}\n==\nMunch({31: 'Tasting Notes', 22: 'Ski Wax', 20: 'Art Magazines', 8: 'Book Club Dues'})"
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert the debtor_ids of the added expense shares match the private_data.venmo_user_id.",
+          "trace": "```python\nwith test(\n    \"\"\"\n    assert the debtor_ids of the added expense shares match the private_data.venmo_user_id.\n    \"\"\"\n):\n    test.case(set_of(added_expense_shares, \"debtor_id\"), \"==\", {private_data.venmo_user_id})\n```\n----------\nAssertionError:  {35, 40, 8, 83, 20, 22, 91, 60, 31} == {87}\n\nIn left but not right:\n[35, 40, 8, 83, 20, 22, 91, 60, 31]\n\nIn right but not left:\n[87]"
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert the splitwise_user_id_to_amount (expense.amount) from expenses match\nprivate_data.splitwise_user_id_to_amount (tolerance of 0.51, ignore_order).",
+          "trace": "```python\nwith test(\n    \"\"\"\n    assert the splitwise_user_id_to_amount (expense.amount) from expenses match\n    private_data.splitwise_user_id_to_amount (tolerance of 0.51, ignore_order).\n    \"\"\"\n):\n    splitwise_user_id_to_amount = dict_of(added_expenses, \"payer_id\", \"amount\")\n    test.case(\n```\n----------\nAssertionError:\n{87: 60.0 \u00b1 0.51}\n==\nMunch({60: 20 \u00b1 0.51, 35: 20 \u00b1 0.51, 91: 10 \u00b1 0.51, 83: 15 \u00b1 0.51, 40: 60 \u00b1 0.51})\n\nOriginal values:\n{87: 60.0}\n==\nMunch({60: 20, 35: 20, 91: 10, 83: 15, 40: 60})"
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert the splitwise_user_id_to_amount (share_amount) from expense shares match\nprivate_data.splitwise_user_id_to_amount (tolerance of 0.51, ignore_order).",
+          "trace": "```python\nwith test(\n    \"\"\"\n    assert the splitwise_user_id_to_amount (share_amount) from expense shares match\n    private_data.splitwise_user_id_to_amount (tolerance of 0.51, ignore_order).\n    \"\"\"\n):\n    splitwise_user_id_to_amount = dict_of(\n        added_expense_shares, \"expense.payer_id\", \"share_amount\"\n```\n----------\nAssertionError:\n{87: 50.0 \u00b1 0.51}\n==\nMunch({60: 20 \u00b1 0.51, 35: 20 \u00b1 0.51, 91: 10 \u00b1 0.51, 83: 15 \u00b1 0.51, 40: 60 \u00b1 0.51})\n\nOriginal values:\n{87: 50.0}\n==\nMunch({60: 20 \u00b1 0.51, 35: 20 \u00b1 0.51, 91: 10 \u00b1 0.51, 83: 15 \u00b1 0.51, 40: 60 \u00b1 0.51})"
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert the splitwise_user_id_to_description from expenses match\nprivate_data.splitwise_user_id_to_description (normalize_text=True).",
+          "trace": "```python\nwith test(\n    \"\"\"\n    assert the splitwise_user_id_to_description from expenses match\n    private_data.splitwise_user_id_to_description (normalize_text=True).\n    \"\"\"\n):\n    splitwise_user_id_to_description = dict_of(added_expenses, \"payer_id\", \"description\")\n    test.case(\n```\n----------\nAssertionError:\n{87: 'bike tires'}\n==\nMunch({60: 'garden decor', 35: 'cycling gloves', 91: 'tea', 83: 'timers', 40: 'bike tires'})\n\nOriginal values:\n{87: 'Bike Tires'}\n==\nMunch({60: 'Garden Decor', 35: 'Cycling Gloves', 91: 'Tea', 83: 'Timers', 40: 'Bike Tires'})"
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert the attached files of these expenses match the\nprivate_data.splitwise_user_id_to_file_content (normalize_text=True).",
+          "trace": "```python\nwith test(\n    \"\"\"\n    assert the attached files of these expenses match the\n    private_data.splitwise_user_id_to_file_content (normalize_text=True).\n    \"\"\"\n):\n    splitwise_user_id_to_file_content = dict_of(\n        added_expenses, \"payer_id\", \"receipt_file_content\"\n```\n----------\nAssertionError:\n{87: 'binary:698df417b6...'}\n==\nMunch({60: 'binary:3c0e65a64a...', 35: 'binary:3bfb1e082c...', 91: 'binary:861e0fd27d...', 83: 'binary:70d96a35d5...', 40: 'binary:698df417b6...'})"
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert the splitwise_user_id_to_amount from added splitwise expenses match\nthe private_data.splitwise_user_id_to_amount.",
+          "trace": "```python\nwith test(\n    \"\"\"\n    assert the splitwise_user_id_to_amount from added splitwise expenses match\n    the private_data.splitwise_user_id_to_amount.\n    \"\"\"\n):\n    splitwise_user_id_to_amount = dict_of(\n        added_expense_shares, \"expense.payer_id\", \"share_amount\"\n```\n----------\nAssertionError:\n{87: 50.0 \u00b1 0.51}\n==\nMunch({60: 20 \u00b1 0.51, 35: 20 \u00b1 0.51, 91: 10 \u00b1 0.51, 83: 15 \u00b1 0.51, 40: 60 \u00b1 0.51})\n\nOriginal values:\n{87: 50.0}\n==\nMunch({60: 20 \u00b1 0.51, 35: 20 \u00b1 0.51, 91: 10 \u00b1 0.51, 83: 15 \u00b1 0.51, 40: 60 \u00b1 0.51})"
+        }
+      ],
+      "num_tests": 19,
+      "passes": [
+        {
+          "label": "no_op_fail",
+          "requirement": "assert answers match."
+        },
+        {
+          "label": "no_op_pass",
+          "requirement": "obtain added, updated, removed venmo.Transaction records using\nmodels.changed_records, and assert 0 transactions were updated or removed."
+        },
+        {
+          "label": "no_op_pass",
+          "requirement": "obtain added, updated, removed splitwise.Expense records\nusing models.changed_records, and assert 0 expenses were updated or removed."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert all the added expenses have a None group_id"
+        },
+        {
+          "label": "no_op_pass",
+          "requirement": "obtain added, removed splitwise.ExpenseShare records\nusing models.changed_records, and assert 0 expense shares were removed."
+        },
+        {
+          "label": "no_op_pass",
+          "requirement": "assert the expense_ids of the added expense shares match the ids of added_expenses."
+        },
+        {
+          "label": "no_op_pass",
+          "requirement": "obtain added, updated, deleted records of venmo.User and\nassert none were added or deleted."
+        },
+        {
+          "label": "no_op_pass",
+          "requirement": "assert the updated record has changed in venmo_balance or nothing\nusing changed_field_names."
+        },
+        {
+          "label": "no_op_pass",
+          "requirement": "obtain added, updated, removed file_system.File assure none have\nthe user_id of private_data.file_system_user_id."
+        }
+      ],
+      "success": false
+    },
+    "6f4b9a5_1": {
+      "difficulty": 3,
+      "failures": [],
+      "num_tests": 8,
+      "passes": [
+        {
+          "label": "no_op_fail",
+          "requirement": "assert answers match."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert model changes match simple_note.Note."
+        },
+        {
+          "label": "no_op_pass",
+          "requirement": "obtain added, updated, removed simple_note.Note records using models.changed_records,\nand assert 0 were added or removed."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert exactly 1 simple_note.Note was updated."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert the updated note has ID private_data.note_id."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "parse the contents of the updated note to obtain song_name_to_artist_names, song_name_to_release_month_str\nand assert the song_name_to_artist_names match\nprivate_data.song_name_to_artist_names (ignore order, normalize_text)."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert the song_name_to_release_month_str match\nprivate_data.song_name_to_release_month_str (ignore order, normalize_text)."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert the udpated note has not changed in any other field ignoring content, updated_at,\nusing models.changed_field_names."
+        }
+      ],
+      "success": true
+    },
+    "6f4b9a5_2": {
+      "difficulty": 3,
+      "failures": [],
+      "num_tests": 8,
+      "passes": [
+        {
+          "label": "no_op_fail",
+          "requirement": "assert answers match."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert model changes match simple_note.Note."
+        },
+        {
+          "label": "no_op_pass",
+          "requirement": "obtain added, updated, removed simple_note.Note records using models.changed_records,\nand assert 0 were added or removed."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert exactly 1 simple_note.Note was updated."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert the updated note has ID private_data.note_id."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "parse the contents of the updated note to obtain song_name_to_artist_names, song_name_to_release_month_str\nand assert the song_name_to_artist_names match\nprivate_data.song_name_to_artist_names (ignore order, normalize_text)."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert the song_name_to_release_month_str match\nprivate_data.song_name_to_release_month_str (ignore order, normalize_text)."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert the udpated note has not changed in any other field ignoring content, updated_at,\nusing models.changed_field_names."
+        }
+      ],
+      "success": true
+    },
+    "6f4b9a5_3": {
+      "difficulty": 3,
+      "failures": [],
+      "num_tests": 8,
+      "passes": [
+        {
+          "label": "no_op_fail",
+          "requirement": "assert answers match."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert model changes match simple_note.Note."
+        },
+        {
+          "label": "no_op_pass",
+          "requirement": "obtain added, updated, removed simple_note.Note records using models.changed_records,\nand assert 0 were added or removed."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert exactly 1 simple_note.Note was updated."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert the updated note has ID private_data.note_id."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "parse the contents of the updated note to obtain song_name_to_artist_names, song_name_to_release_month_str\nand assert the song_name_to_artist_names match\nprivate_data.song_name_to_artist_names (ignore order, normalize_text)."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert the song_name_to_release_month_str match\nprivate_data.song_name_to_release_month_str (ignore order, normalize_text)."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert the udpated note has not changed in any other field ignoring content, updated_at,\nusing models.changed_field_names."
+        }
+      ],
+      "success": true
+    },
+    "8ce6779_1": {
+      "difficulty": 3,
+      "failures": [
+        {
+          "label": "no_op_fail",
+          "requirement": "assert model changes match todoist.Task, todoist.TaskComment.",
+          "trace": "```python\nwith test(\n    \"\"\"\n    assert model changes match todoist.Task, todoist.TaskComment.\n    \"\"\"\n):\n    changed_model_names = models.changed_model_names()\n    test.case(\n        changed_model_names,\n```\n----------\nAssertionError:  set() == {'todoist.TaskComment', 'todoist.Notification', 'todoist.Task'}\n\nIn right but not left:\n['todoist.TaskComment', 'todoist.Notification', 'todoist.Task']"
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert the keys of the updated_tasks match the set of task_ids in private_data.task_id_to_assignee_id.",
+          "trace": "```python\nwith test(\n    \"\"\"\n    assert the keys of the updated_tasks match the set of task_ids in private_data.task_id_to_assignee_id.\n    \"\"\"\n):\n    updated_task_ids = set_of(updated_tasks, \"id\")\n    test.case(updated_task_ids, \"==\", set(private_data.task_id_to_assignee_id.keys()))\n```\n----------\nAssertionError:  set() == {2672, 2682, 2683, 2694}\n\nIn right but not left:\n[2672, 2682, 2683, 2694]"
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert updated_task_ids have only updated in assigner_id, assignee_id\nusing models.changed_field_names.",
+          "trace": "```python\nwith test(\n    \"\"\"\n    assert updated_task_ids have only updated in assigner_id, assignee_id\n    using models.changed_field_names.\n    \"\"\"\n):\n    list_of_updated_field_names = [\n        models.changed_field_names(\"todoist.Task\", task.id) for task in updated_tasks\n```\n----------\nAssertionError: The left modifier is 'all' with allow_left_empty=False, but left operand is empty."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert the task_id_to_assignee_id obtained from the updated_tasks matches the\nprivate_data.task_id_to_assignee_id.",
+          "trace": "```python\nwith test(\n    \"\"\"\n    assert the task_id_to_assignee_id obtained from the updated_tasks matches the\n    private_data.task_id_to_assignee_id.\n    \"\"\"\n):\n    task_id_to_assignee_id = dict_of(updated_tasks, \"id\", \"assignee_id\")\n    test.case(task_id_to_assignee_id, \"==\", private_data.task_id_to_assignee_id)\n```\n----------\nAssertionError:  {} == Munch({2682: 91, 2694: 19, 2672: 40, 2683: 75})"
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert the set of added task comment task_ids matches the\nset of keys of private_data.task_id_to_comment_text.",
+          "trace": "```python\nwith test(\n    \"\"\"\n    assert the set of added task comment task_ids matches the\n    set of keys of private_data.task_id_to_comment_text.\n    \"\"\"\n):\n    added_task_comment_ids = list_of(added_task_comments, \"task_id\")\n    test.case(\n```\n----------\nAssertionError:  [] == [2672, 2682, 2683, 2694]\n\nIn right but not left:\n[2672, 2682, 2683, 2694]\n\nOriginal values:\n[] == [2682, 2694, 2672, 2683]"
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert the task_id_to_comment_text obtained from the added_task_comments matches the\nprivate_data.task_id_to_comment_text (normalize_text=True).",
+          "trace": "```python\nwith test(\n    \"\"\"\n    assert the task_id_to_comment_text obtained from the added_task_comments matches the\n    private_data.task_id_to_comment_text (normalize_text=True).\n    \"\"\"\n):\n    task_id_to_comment_text = dict_of(added_task_comments, \"task_id\", \"content\")\n    test.case(\n```\n----------\nAssertionError:\n{}\n==\nMunch({2682: 'thank you connor!', 2694: 'thank you angela!', 2672: 'thank you adam!', 2683: 'thank you ashlee!'})\n\nOriginal values:\n{}\n==\nMunch({2682: 'Thank you Connor!', 2694: 'Thank you Angela!', 2672: 'Thank you Adam!', 2683: 'Thank you Ashlee!'})"
+        }
+      ],
+      "num_tests": 9,
+      "passes": [
+        {
+          "label": "no_op_fail",
+          "requirement": "assert answers match."
+        },
+        {
+          "label": "no_op_pass",
+          "requirement": "obtain added, updated, removed todoist.Task records using models.changed_records,\nand assert 0 tasks were added or removed."
+        },
+        {
+          "label": "no_op_pass",
+          "requirement": "obtain added, updated, removed todoist.TaskComment records using models.changed_records,\nand assert 0 task comments were updated or removed."
+        }
+      ],
+      "success": false
+    },
+    "8ce6779_2": {
+      "difficulty": 3,
+      "failures": [
+        {
+          "label": "no_op_fail",
+          "requirement": "assert the keys of the updated_tasks match the set of task_ids in private_data.task_id_to_assignee_id.",
+          "trace": "```python\nwith test(\n    \"\"\"\n    assert the keys of the updated_tasks match the set of task_ids in private_data.task_id_to_assignee_id.\n    \"\"\"\n):\n    updated_task_ids = set_of(updated_tasks, \"id\")\n    test.case(updated_task_ids, \"==\", set(private_data.task_id_to_assignee_id.keys()))\n```\n----------\nAssertionError:  {2886, 2861, 2854} == {2886, 2851, 2861, 2854}\n\nIn right but not left:\n[2851]"
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert the task_id_to_assignee_id obtained from the updated_tasks matches the\nprivate_data.task_id_to_assignee_id.",
+          "trace": "```python\nwith test(\n    \"\"\"\n    assert the task_id_to_assignee_id obtained from the updated_tasks matches the\n    private_data.task_id_to_assignee_id.\n    \"\"\"\n):\n    task_id_to_assignee_id = dict_of(updated_tasks, \"id\", \"assignee_id\")\n    test.case(task_id_to_assignee_id, \"==\", private_data.task_id_to_assignee_id)\n```\n----------\nAssertionError:\n{2854: 41, 2861: 105, 2886: 86}\n==\nMunch({2854: 41, 2886: 86, 2851: 70, 2861: 105})"
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert the set of added task comment task_ids matches the\nset of keys of private_data.task_id_to_comment_text.",
+          "trace": "```python\nwith test(\n    \"\"\"\n    assert the set of added task comment task_ids matches the\n    set of keys of private_data.task_id_to_comment_text.\n    \"\"\"\n):\n    added_task_comment_ids = list_of(added_task_comments, \"task_id\")\n    test.case(\n```\n----------\nAssertionError:  [2854, 2861, 2886] == [2851, 2854, 2861, 2886]\n\nIn right but not left:\n[2851]\n\nOriginal values:\n[2854, 2861, 2886] == [2854, 2886, 2851, 2861]"
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert the task_id_to_comment_text obtained from the added_task_comments matches the\nprivate_data.task_id_to_comment_text (normalize_text=True).",
+          "trace": "```python\nwith test(\n    \"\"\"\n    assert the task_id_to_comment_text obtained from the added_task_comments matches the\n    private_data.task_id_to_comment_text (normalize_text=True).\n    \"\"\"\n):\n    task_id_to_comment_text = dict_of(added_task_comments, \"task_id\", \"content\")\n    test.case(\n```\n----------\nAssertionError:\n{2854: 'thanks matthew!', 2861: 'thanks sierra!', 2886: 'thanks kathryn!'}\n==\nMunch({2854: 'thanks matthew!', 2886: 'thanks kathryn!', 2851: 'thanks angelica!', 2861: 'thanks sierra!'})\n\nOriginal values:\n{2854: 'Thanks Matthew!', 2861: 'Thanks Sierra!', 2886: 'Thanks Kathryn!'}\n==\nMunch({2854: 'Thanks Matthew!', 2886: 'Thanks Kathryn!', 2851: 'Thanks Angelica!', 2861: 'Thanks Sierra!'})"
+        }
+      ],
+      "num_tests": 9,
+      "passes": [
+        {
+          "label": "no_op_fail",
+          "requirement": "assert answers match."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert model changes match todoist.Task, todoist.TaskComment."
+        },
+        {
+          "label": "no_op_pass",
+          "requirement": "obtain added, updated, removed todoist.Task records using models.changed_records,\nand assert 0 tasks were added or removed."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert updated_task_ids have only updated in assigner_id, assignee_id\nusing models.changed_field_names."
+        },
+        {
+          "label": "no_op_pass",
+          "requirement": "obtain added, updated, removed todoist.TaskComment records using models.changed_records,\nand assert 0 task comments were updated or removed."
+        }
+      ],
+      "success": false
+    },
+    "8ce6779_3": {
+      "difficulty": 3,
+      "failures": [
+        {
+          "label": "no_op_fail",
+          "requirement": "assert the keys of the updated_tasks match the set of task_ids in private_data.task_id_to_assignee_id.",
+          "trace": "```python\nwith test(\n    \"\"\"\n    assert the keys of the updated_tasks match the set of task_ids in private_data.task_id_to_assignee_id.\n    \"\"\"\n):\n    updated_task_ids = set_of(updated_tasks, \"id\")\n    test.case(updated_task_ids, \"==\", set(private_data.task_id_to_assignee_id.keys()))\n```\n----------\nAssertionError:  {2914} == {2905, 2889, 2922, 2914}\n\nIn right but not left:\n[2905, 2889, 2922]"
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert the task_id_to_assignee_id obtained from the updated_tasks matches the\nprivate_data.task_id_to_assignee_id.",
+          "trace": "```python\nwith test(\n    \"\"\"\n    assert the task_id_to_assignee_id obtained from the updated_tasks matches the\n    private_data.task_id_to_assignee_id.\n    \"\"\"\n):\n    task_id_to_assignee_id = dict_of(updated_tasks, \"id\", \"assignee_id\")\n    test.case(task_id_to_assignee_id, \"==\", private_data.task_id_to_assignee_id)\n```\n----------\nAssertionError:  {2914: 7} == Munch({2889: 64, 2922: 8, 2905: 32, 2914: 7})"
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert the set of added task comment task_ids matches the\nset of keys of private_data.task_id_to_comment_text.",
+          "trace": "```python\nwith test(\n    \"\"\"\n    assert the set of added task comment task_ids matches the\n    set of keys of private_data.task_id_to_comment_text.\n    \"\"\"\n):\n    added_task_comment_ids = list_of(added_task_comments, \"task_id\")\n    test.case(\n```\n----------\nAssertionError:  [2914] == [2889, 2905, 2914, 2922]\n\nIn right but not left:\n[2889, 2905, 2922]\n\nOriginal values:\n[2914] == [2889, 2922, 2905, 2914]"
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert the task_id_to_comment_text obtained from the added_task_comments matches the\nprivate_data.task_id_to_comment_text (normalize_text=True).",
+          "trace": "```python\nwith test(\n    \"\"\"\n    assert the task_id_to_comment_text obtained from the added_task_comments matches the\n    private_data.task_id_to_comment_text (normalize_text=True).\n    \"\"\"\n):\n    task_id_to_comment_text = dict_of(added_task_comments, \"task_id\", \"content\")\n    test.case(\n```\n----------\nAssertionError:\n{2914: 'greatly appreciate it katherine!'}\n==\nMunch({2889: 'greatly appreciate it catherine!', 2922: 'greatly appreciate it thomas!', 2905: 'greatly appreciate it christopher!', 2914: 'greatly appreciate it katherine!'})\n\nOriginal values:\n{2914: 'Greatly appreciate it Katherine!'}\n==\nMunch({2889: 'Greatly appreciate it Catherine!', 2922: 'Greatly appreciate it Thomas!', 2905: 'Greatly appreciate it Christopher!', 2914: 'Greatly appreciate it Katherine!'})"
+        }
+      ],
+      "num_tests": 9,
+      "passes": [
+        {
+          "label": "no_op_fail",
+          "requirement": "assert answers match."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert model changes match todoist.Task, todoist.TaskComment."
+        },
+        {
+          "label": "no_op_pass",
+          "requirement": "obtain added, updated, removed todoist.Task records using models.changed_records,\nand assert 0 tasks were added or removed."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert updated_task_ids have only updated in assigner_id, assignee_id\nusing models.changed_field_names."
+        },
+        {
+          "label": "no_op_pass",
+          "requirement": "obtain added, updated, removed todoist.TaskComment records using models.changed_records,\nand assert 0 task comments were updated or removed."
+        }
+      ],
+      "success": false
+    },
+    "9016950_1": {
+      "difficulty": 3,
+      "failures": [
+        {
+          "label": "no_op_fail",
+          "requirement": "assert model changes match {public_data.app_name}.User, phone.GlobalTextMessage,\nphone.UserTextMessage, gmail.Email, gmail.GlobalEmailThread, gmail.UserEmailThread",
+          "trace": "```python\nwith test(\n    \"\"\"\n    assert model changes match {public_data.app_name}.User, phone.GlobalTextMessage,\n    phone.UserTextMessage, gmail.Email, gmail.GlobalEmailThread, gmail.UserEmailThread\n    \"\"\"\n):\n    user_model_name = f\"{public_data.app_name}.User\"\n    changed_model_names = models.changed_model_names()\n```\n----------\nAssertionError:\n{'phone.GlobalTextMessage', 'phone.UserTextMessage'}\n==\n{'venmo.User', 'gmail.GlobalEmailThread', 'gmail.Email', 'phone.UserTextMessage', 'phone.GlobalTextMessage', 'gmail.UserEmailThread'}\n\nIn right but not left:\n['venmo.User', 'gmail.GlobalEmailThread', 'gmail.Email', 'gmail.UserEmailThread']"
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "obtain admin.MainUser records for private_data.no_account_admin_user_ids in the start state,\nand assert email_to_name is as per the admin.MainUser records (normalize_text=True)",
+          "trace": "```python\nwith test(\n    \"\"\"\n    obtain admin.MainUser records for private_data.no_account_admin_user_ids in the start state,\n    and assert email_to_name is as per the admin.MainUser records (normalize_text=True)\n    \"\"\"\n):\n    admin_users = models.start.admin.MainUser.by_ids(private_data.no_account_admin_user_ids)\n    added_email_to_name = dict_of(added_users, \"email\", \"name\")\n```\n----------\nAssertionError:  {} == {'ch.brow@gmail.com': 'chad brown'}\n\nOriginal values:\n{} == {'ch.brow@gmail.com': 'Chad Brown'}"
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert receiver_ids of added global text messages match\nprivate_data.no_account_phone_user_ids (ignore order).",
+          "trace": "```python\nwith test(\n    \"\"\"\n    assert receiver_ids of added global text messages match\n    private_data.no_account_phone_user_ids (ignore order).\n    \"\"\"\n):\n    added_global_text_messages, _, _ = models.changed_records(\"phone.GlobalTextMessage\")\n    added_receiver_ids = list_of(added_global_text_messages, \"receiver_id\")\n```\n----------\nAssertionError:  [88, 89] == [88]\n\nIn left but not right:\n[89]\n\nOriginal values:\n[89, 88] == [88]"
+        }
+      ],
+      "num_tests": 7,
+      "passes": [
+        {
+          "label": "no_op_fail",
+          "requirement": "assert answers match."
+        },
+        {
+          "label": "no_op_pass",
+          "requirement": "obtain added, updated, removed user_model_name records using models.changed_records,\nand no are updated or removed."
+        },
+        {
+          "label": "no_op_pass",
+          "requirement": "assert 0 phone.UserTextMessage records were removed using models.changed_records."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert all added global text messages have message public_data.message_text (normalize_text=True)"
+        }
+      ],
+      "success": false
+    },
+    "9016950_2": {
+      "difficulty": 3,
+      "failures": [
+        {
+          "label": "no_op_fail",
+          "requirement": "assert model changes match {public_data.app_name}.User, phone.GlobalTextMessage,\nphone.UserTextMessage, gmail.Email, gmail.GlobalEmailThread, gmail.UserEmailThread",
+          "trace": "```python\nwith test(\n    \"\"\"\n    assert model changes match {public_data.app_name}.User, phone.GlobalTextMessage,\n    phone.UserTextMessage, gmail.Email, gmail.GlobalEmailThread, gmail.UserEmailThread\n    \"\"\"\n):\n    user_model_name = f\"{public_data.app_name}.User\"\n    changed_model_names = models.changed_model_names()\n```\n----------\nAssertionError:\nset()\n==\n{'venmo.User', 'gmail.GlobalEmailThread', 'gmail.Email', 'phone.UserTextMessage', 'phone.GlobalTextMessage', 'gmail.UserEmailThread'}\n\nIn right but not left:\n['venmo.User', 'gmail.GlobalEmailThread', 'gmail.Email', 'phone.UserTextMessage', 'phone.GlobalTextMessage', 'gmail.UserEmailThread']"
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "obtain admin.MainUser records for private_data.no_account_admin_user_ids in the start state,\nand assert email_to_name is as per the admin.MainUser records (normalize_text=True)",
+          "trace": "```python\nwith test(\n    \"\"\"\n    obtain admin.MainUser records for private_data.no_account_admin_user_ids in the start state,\n    and assert email_to_name is as per the admin.MainUser records (normalize_text=True)\n    \"\"\"\n):\n    admin_users = models.start.admin.MainUser.by_ids(private_data.no_account_admin_user_ids)\n    added_email_to_name = dict_of(added_users, \"email\", \"name\")\n```\n----------\nAssertionError:\n{}\n==\n{'tr_solo@gmail.com': 'troy solomon', 'kathrynmaldonado@gmail.com': 'kathryn maldonado'}\n\nOriginal values:\n{}\n==\n{'tr_solo@gmail.com': 'Troy Solomon', 'kathrynmaldonado@gmail.com': 'Kathryn Maldonado'}"
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert receiver_ids of added global text messages match\nprivate_data.no_account_phone_user_ids (ignore order).",
+          "trace": "```python\nwith test(\n    \"\"\"\n    assert receiver_ids of added global text messages match\n    private_data.no_account_phone_user_ids (ignore order).\n    \"\"\"\n):\n    added_global_text_messages, _, _ = models.changed_records(\"phone.GlobalTextMessage\")\n    added_receiver_ids = list_of(added_global_text_messages, \"receiver_id\")\n```\n----------\nAssertionError:  [] == [11, 86]\n\nIn right but not left:\n[11, 86]"
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert all added global text messages have message public_data.message_text (normalize_text=True)",
+          "trace": "```python\nwith test(\n    \"\"\"\n    assert all added global text messages have message public_data.message_text (normalize_text=True)\n    \"\"\"\n):\n    test.case(\n        list_of(added_global_text_messages, \"message\"),\n        \"all ==\",\n```\n----------\nAssertionError: The left modifier is 'all' with allow_left_empty=False, but left operand is empty."
+        }
+      ],
+      "num_tests": 7,
+      "passes": [
+        {
+          "label": "no_op_fail",
+          "requirement": "assert answers match."
+        },
+        {
+          "label": "no_op_pass",
+          "requirement": "obtain added, updated, removed user_model_name records using models.changed_records,\nand no are updated or removed."
+        },
+        {
+          "label": "no_op_pass",
+          "requirement": "assert 0 phone.UserTextMessage records were removed using models.changed_records."
+        }
+      ],
+      "success": false
+    },
+    "9016950_3": {
+      "difficulty": 3,
+      "failures": [
+        {
+          "label": "no_op_fail",
+          "requirement": "assert model changes match {public_data.app_name}.User, phone.GlobalTextMessage,\nphone.UserTextMessage, gmail.Email, gmail.GlobalEmailThread, gmail.UserEmailThread",
+          "trace": "```python\nwith test(\n    \"\"\"\n    assert model changes match {public_data.app_name}.User, phone.GlobalTextMessage,\n    phone.UserTextMessage, gmail.Email, gmail.GlobalEmailThread, gmail.UserEmailThread\n    \"\"\"\n):\n    user_model_name = f\"{public_data.app_name}.User\"\n    changed_model_names = models.changed_model_names()\n```\n----------\nAssertionError:\n{'phone.GlobalTextMessage', 'phone.UserTextMessage'}\n==\n{'venmo.User', 'gmail.GlobalEmailThread', 'gmail.Email', 'phone.UserTextMessage', 'phone.GlobalTextMessage', 'gmail.UserEmailThread'}\n\nIn right but not left:\n['venmo.User', 'gmail.GlobalEmailThread', 'gmail.Email', 'gmail.UserEmailThread']"
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "obtain admin.MainUser records for private_data.no_account_admin_user_ids in the start state,\nand assert email_to_name is as per the admin.MainUser records (normalize_text=True)",
+          "trace": "```python\nwith test(\n    \"\"\"\n    obtain admin.MainUser records for private_data.no_account_admin_user_ids in the start state,\n    and assert email_to_name is as per the admin.MainUser records (normalize_text=True)\n    \"\"\"\n):\n    admin_users = models.start.admin.MainUser.by_ids(private_data.no_account_admin_user_ids)\n    added_email_to_name = dict_of(added_users, \"email\", \"name\")\n```\n----------\nAssertionError:  {} == {'ch-burch@gmail.com': 'christopher burch'}\n\nOriginal values:\n{} == {'ch-burch@gmail.com': 'Christopher Burch'}"
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert receiver_ids of added global text messages match\nprivate_data.no_account_phone_user_ids (ignore order).",
+          "trace": "```python\nwith test(\n    \"\"\"\n    assert receiver_ids of added global text messages match\n    private_data.no_account_phone_user_ids (ignore order).\n    \"\"\"\n):\n    added_global_text_messages, _, _ = models.changed_records(\"phone.GlobalTextMessage\")\n    added_receiver_ids = list_of(added_global_text_messages, \"receiver_id\")\n```\n----------\nAssertionError:  [32, 32, 32, 33, 33, 33, 33] == [32]\n\nIn left but not right:\n[33, 33, 33, 33]\n\nOriginal values:\n[33, 33, 33, 33, 32, 32, 32] == [32]"
+        }
+      ],
+      "num_tests": 7,
+      "passes": [
+        {
+          "label": "no_op_fail",
+          "requirement": "assert answers match."
+        },
+        {
+          "label": "no_op_pass",
+          "requirement": "obtain added, updated, removed user_model_name records using models.changed_records,\nand no are updated or removed."
+        },
+        {
+          "label": "no_op_pass",
+          "requirement": "assert 0 phone.UserTextMessage records were removed using models.changed_records."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert all added global text messages have message public_data.message_text (normalize_text=True)"
+        }
+      ],
+      "success": false
+    },
+    "90adc3f_1": {
+      "difficulty": 3,
+      "failures": [
+        {
+          "label": "no_op_fail",
+          "requirement": "assert model changes match venmo.Notification, venmo.PaymentRequest",
+          "trace": "```python\nwith test(\n    \"\"\"\n    assert model changes match venmo.Notification, venmo.PaymentRequest\n    \"\"\"\n):\n    test.case(\n        models.changed_model_names(), \"==\", {\"venmo.Notification\", \"venmo.PaymentRequest\"}\n    )\n```\n----------\nAssertionError:\n{'file_system.Directory', 'file_system.File', 'venmo.PaymentRequest', 'venmo.Notification'}\n==\n{'venmo.PaymentRequest', 'venmo.Notification'}\n\nIn left but not right:\n['file_system.Directory', 'file_system.File']"
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert receiver_ids from added payment requests match exactly to\nprivate_data.dinner_relative_ids (ignore order).",
+          "trace": "```python\nwith test(\n    \"\"\"\n    assert receiver_ids from added payment requests match exactly to\n    private_data.dinner_relative_ids (ignore order).\n    \"\"\"\n):\n    test.case(\n        list_of(added_payment_requests, \"receiver_id\"),\n```\n----------\nAssertionError:  [45, 58, 60, 68, 72, 85, 86, 89, 97] == [58, 60, 72, 86, 97]\n\nIn left but not right:\n[45, 68, 85, 89]\n\nOriginal values:\n[97, 60, 85, 58, 89, 68, 45, 86, 72] == [60, 97, 86, 58, 72]"
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert added_payment_requests have amount\nprivate_data.dinner_share +/- public_data.difference_amount\nas per public_data.less_more (round_to=0)",
+          "trace": "```python\nwith test(\n    \"\"\"\n    assert added_payment_requests have amount\n    private_data.dinner_share +/- public_data.difference_amount\n    as per public_data.less_more (round_to=0)\n    \"\"\"\n):\n    if public_data.less_more == \"less\":\n```\n----------\nAssertionError:  25.0 == 45"
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert added_payment_requests have description\nprivate_data.dinner_description (normalize_text=True)",
+          "trace": "```python\nwith test(\n    \"\"\"\n    assert added_payment_requests have description\n    private_data.dinner_description (normalize_text=True)\n    \"\"\"\n):\n    test.case(\n        list_of(added_payment_requests, \"description\"),\n```\n----------\nAssertionError:  'for work lunch' == 'for dinner'\n\nOriginal values:\n'For Work Lunch' == 'For Dinner'"
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert removed_payment_requests have ids\nprivate_data.dinner_payment_request_ids (ignore order).",
+          "trace": "```python\nwith test(\n    \"\"\"\n    assert removed_payment_requests have ids\n    private_data.dinner_payment_request_ids (ignore order).\n    \"\"\"\n):\n    removed_payment_request_ids = list_of(removed_payment_requests, \"id\")\n    test.case(\n```\n----------\nAssertionError:\n[6097, 6098, 6099, 6100, 6101, 6102, 6103, 6104, 6105]\n==\n[6101, 6102, 6103, 6104, 6105]\n\nIn left but not right:\n[6097, 6098, 6099, 6100]\n\nOriginal values:\n[6100, 6104, 6102, 6097, 6099, 6103, 6105, 6098, 6101]\n==\n[6101, 6102, 6103, 6104, 6105]"
+        }
+      ],
+      "num_tests": 7,
+      "passes": [
+        {
+          "label": "no_op_fail",
+          "requirement": "assert answers match."
+        },
+        {
+          "label": "no_op_pass",
+          "requirement": "obtain added, updated, removed venmo.PaymentRequest records using models.changed_records,\nand assert 0 payment requests were updated."
+        }
+      ],
+      "success": false
+    },
+    "90adc3f_2": {
+      "difficulty": 3,
+      "failures": [],
+      "num_tests": 7,
+      "passes": [
+        {
+          "label": "no_op_fail",
+          "requirement": "assert answers match."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert model changes match venmo.Notification, venmo.PaymentRequest"
+        },
+        {
+          "label": "no_op_pass",
+          "requirement": "obtain added, updated, removed venmo.PaymentRequest records using models.changed_records,\nand assert 0 payment requests were updated."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert receiver_ids from added payment requests match exactly to\nprivate_data.dinner_relative_ids (ignore order)."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert added_payment_requests have amount\nprivate_data.dinner_share +/- public_data.difference_amount\nas per public_data.less_more (round_to=0)"
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert added_payment_requests have description\nprivate_data.dinner_description (normalize_text=True)"
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert removed_payment_requests have ids\nprivate_data.dinner_payment_request_ids (ignore order)."
+        }
+      ],
+      "success": true
+    },
+    "90adc3f_3": {
+      "difficulty": 3,
+      "failures": [
+        {
+          "label": "no_op_fail",
+          "requirement": "assert receiver_ids from added payment requests match exactly to\nprivate_data.dinner_relative_ids (ignore order).",
+          "trace": "```python\nwith test(\n    \"\"\"\n    assert receiver_ids from added payment requests match exactly to\n    private_data.dinner_relative_ids (ignore order).\n    \"\"\"\n):\n    test.case(\n        list_of(added_payment_requests, \"receiver_id\"),\n```\n----------\nAssertionError:  [17, 20, 23, 42, 49, 56, 69, 72] == [17, 20, 23, 49, 72]\n\nIn left but not right:\n[42, 56, 69]\n\nOriginal values:\n[17, 49, 42, 69, 56, 23, 20, 72] == [49, 20, 17, 72, 23]"
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert added_payment_requests have amount\nprivate_data.dinner_share +/- public_data.difference_amount\nas per public_data.less_more (round_to=0)",
+          "trace": "```python\nwith test(\n    \"\"\"\n    assert added_payment_requests have amount\n    private_data.dinner_share +/- public_data.difference_amount\n    as per public_data.less_more (round_to=0)\n    \"\"\"\n):\n    if public_data.less_more == \"less\":\n```\n----------\nAssertionError:  35.0 == 55"
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert added_payment_requests have description\nprivate_data.dinner_description (normalize_text=True)",
+          "trace": "```python\nwith test(\n    \"\"\"\n    assert added_payment_requests have description\n    private_data.dinner_description (normalize_text=True)\n    \"\"\"\n):\n    test.case(\n        list_of(added_payment_requests, \"description\"),\n```\n----------\nAssertionError:  'office lunch order' == 'dinner order'\n\nOriginal values:\n'Office Lunch Order' == 'Dinner Order'"
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert removed_payment_requests have ids\nprivate_data.dinner_payment_request_ids (ignore order).",
+          "trace": "```python\nwith test(\n    \"\"\"\n    assert removed_payment_requests have ids\n    private_data.dinner_payment_request_ids (ignore order).\n    \"\"\"\n):\n    removed_payment_request_ids = list_of(removed_payment_requests, \"id\")\n    test.case(\n```\n----------\nAssertionError:\n[6097, 6098, 6099, 6100, 6101, 6102, 6103, 6104]\n==\n[6100, 6101, 6102, 6103, 6104]\n\nIn left but not right:\n[6097, 6098, 6099]\n\nOriginal values:\n[6099, 6097, 6103, 6100, 6101, 6098, 6104, 6102]\n==\n[6100, 6101, 6102, 6103, 6104]"
+        }
+      ],
+      "num_tests": 7,
+      "passes": [
+        {
+          "label": "no_op_fail",
+          "requirement": "assert answers match."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert model changes match venmo.Notification, venmo.PaymentRequest"
+        },
+        {
+          "label": "no_op_pass",
+          "requirement": "obtain added, updated, removed venmo.PaymentRequest records using models.changed_records,\nand assert 0 payment requests were updated."
+        }
+      ],
+      "success": false
+    },
+    "a30375d_1": {
+      "difficulty": 1,
+      "failures": [
+        {
+          "label": "no_op_fail",
+          "requirement": "assert any one of the private_data.quotes is substring in the predicted_answer\n(normalize_text=True)",
+          "trace": "```python\nwith test(\n    \"\"\"\n    assert any one of the private_data.quotes is substring in the predicted_answer\n    (normalize_text=True)\n    \"\"\"\n):\n    test.case(private_data.quotes, \"any in\", predicted_answer, normalize_text=True)\n```\n----------"
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert the predicted answer is substring in any one of the private_data.quotes\n(normalize_text=True)",
+          "trace": "```python\nwith test(\n    \"\"\"\n    assert the predicted answer is substring in any one of the private_data.quotes\n    (normalize_text=True)\n    \"\"\"\n):\n    test.case(predicted_answer, \"in any\", private_data.quotes, normalize_text=True)\n```\n----------"
+        }
+      ],
+      "num_tests": 3,
+      "passes": [
+        {
+          "label": "no_op_pass",
+          "requirement": "assert no model changes."
+        }
+      ],
+      "success": false
+    },
+    "a30375d_2": {
+      "difficulty": 1,
+      "failures": [
+        {
+          "label": "no_op_fail",
+          "requirement": "assert any one of the private_data.quotes is substring in the predicted_answer\n(normalize_text=True)",
+          "trace": "```python\nwith test(\n    \"\"\"\n    assert any one of the private_data.quotes is substring in the predicted_answer\n    (normalize_text=True)\n    \"\"\"\n):\n    test.case(private_data.quotes, \"any in\", predicted_answer, normalize_text=True)\n```\n----------"
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert the predicted answer is substring in any one of the private_data.quotes\n(normalize_text=True)",
+          "trace": "```python\nwith test(\n    \"\"\"\n    assert the predicted answer is substring in any one of the private_data.quotes\n    (normalize_text=True)\n    \"\"\"\n):\n    test.case(predicted_answer, \"in any\", private_data.quotes, normalize_text=True)\n```\n----------"
+        }
+      ],
+      "num_tests": 3,
+      "passes": [
+        {
+          "label": "no_op_pass",
+          "requirement": "assert no model changes."
+        }
+      ],
+      "success": false
+    },
+    "a30375d_3": {
+      "difficulty": 1,
+      "failures": [],
+      "num_tests": 3,
+      "passes": [
+        {
+          "label": "no_op_fail",
+          "requirement": "assert any one of the private_data.quotes is substring in the predicted_answer\n(normalize_text=True)"
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert the predicted answer is substring in any one of the private_data.quotes\n(normalize_text=True)"
+        },
+        {
+          "label": "no_op_pass",
+          "requirement": "assert no model changes."
+        }
+      ],
+      "success": true
+    },
+    "b9c5c9a_1": {
+      "difficulty": 3,
+      "failures": [
+        {
+          "label": "no_op_fail",
+          "requirement": "assert the updated file's rest of the lines matches the private_data.csv_lines (normalize_text=True).",
+          "trace": "```python\nwith test(\n    \"\"\"\n    assert the updated file's rest of the lines matches the private_data.csv_lines (normalize_text=True).\n    \"\"\"\n):\n    test.case(\n        updated_file_content_lines[1:],\n        \"==\",\n```\n----------\nAssertionError:\n['ashlee,yes,yes', 'brandon,yes,yes', 'caitlin,yes,no', 'david,yes,unknown', 'kayla,yes,unknown', 'sabrina,yes,unknown', 'sierra,yes,unknown', 'thomas,yes,unknown', 'tracy,yes,unknown', 'vickie,yes,unknown']\n==\n['ashlee,yes,yes', 'brandon,yes,yes', 'caitlin,yes,no', 'david,yes,yes', 'kayla,yes,no', 'sabrina,yes,no', 'sierra,yes,no', 'thomas,yes,yes', 'tracy,yes,yes', 'vickie,yes,no']\n\nIn left but not right:\n['david,yes,unknown', 'kayla,yes,unknown', 'sabrina,yes,unknown', 'sierra,yes,unknown', 'thomas,yes,unknown', 'tracy,yes,unknown', 'vickie,yes,unknown']\n\nIn right but not left:\n['david,yes,yes', 'kayla,yes,no', 'sabrina,yes,no', 'sierra,yes,no', 'thomas,yes,yes', 'tracy,yes,yes', 'vickie,yes,no']\n\nOriginal values:\n['Thomas,yes,unknown', 'Caitlin,yes,no', 'David,yes,unknown', 'Brandon,yes,yes', 'Sierra,yes,unknown', 'Sabrina,yes,unknown', 'Kayla,yes,unknown', 'Ashlee,yes,yes', 'Vickie,yes,unknown', 'Tracy,yes,unknown']\n==\n['David,yes,yes', 'Sierra,yes,no', 'Vickie,yes,no', 'Caitlin,yes,no', 'Ashlee,yes,yes', 'Brandon,yes,yes', 'Thomas,yes,yes', 'Kayla,yes,no', 'Sabrina,yes,no', 'Tracy,yes,yes']"
+        }
+      ],
+      "num_tests": 7,
+      "passes": [
+        {
+          "label": "no_op_fail",
+          "requirement": "assert answers match."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert model changes match file_system.File."
+        },
+        {
+          "label": "no_op_pass",
+          "requirement": "obtain added, updated, removed file_system.File records using models.changed_records,\nand assert 0 were added or removed."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert 1 file_system.File record was updated."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert the updated file's path is private_data.csv_file_path."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert the updated file's first line matches the private_data.csv_header (normalize_text=True)."
+        }
+      ],
+      "success": false
+    },
+    "b9c5c9a_2": {
+      "difficulty": 3,
+      "failures": [
+        {
+          "label": "no_op_fail",
+          "requirement": "assert model changes match file_system.File.",
+          "trace": "```python\nwith test(\n    \"\"\"\n    assert model changes match file_system.File.\n    \"\"\"\n):\n    test.case(models.changed_model_names(), \"==\", {\"file_system.File\", \"file_system.Directory\"})\n```\n----------\nAssertionError:  {'file_system.Directory'} == {'file_system.Directory', 'file_system.File'}\n\nIn right but not left:\n['file_system.File']"
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert 1 file_system.File record was updated.",
+          "trace": "```python\nwith test(\n    \"\"\"\n    assert 1 file_system.File record was updated.\n    \"\"\"\n):\n    test.case(len(updated_files), \"==\", 1)\n```\n----------\nAssertionError:  0 == 1"
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert the updated file's path is private_data.csv_file_path.",
+          "trace": "```python\nwith test(\n    \"\"\"\n    assert the updated file's path is private_data.csv_file_path.\n    \"\"\"\n):\n    updated_file = updated_files[0]\n    test.case(updated_file.tilde_path, \"==\", private_data.csv_file_path)\n```\n----------"
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert the updated file's first line matches the private_data.csv_header (normalize_text=True).",
+          "trace": "```python\nwith test(\n    \"\"\"\n    assert the updated file's first line matches the private_data.csv_header (normalize_text=True).\n    \"\"\"\n):\n    updated_file_content_lines = updated_file.content.strip().splitlines()\n    test.case(\n        updated_file_content_lines[0],\n```\n----------"
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert the updated file's rest of the lines matches the private_data.csv_lines (normalize_text=True).",
+          "trace": "```python\nwith test(\n    \"\"\"\n    assert the updated file's rest of the lines matches the private_data.csv_lines (normalize_text=True).\n    \"\"\"\n):\n    test.case(\n        updated_file_content_lines[1:],\n        \"==\",\n```\n----------"
+        }
+      ],
+      "num_tests": 7,
+      "passes": [
+        {
+          "label": "no_op_fail",
+          "requirement": "assert answers match."
+        },
+        {
+          "label": "no_op_pass",
+          "requirement": "obtain added, updated, removed file_system.File records using models.changed_records,\nand assert 0 were added or removed."
+        }
+      ],
+      "success": false
+    },
+    "b9c5c9a_3": {
+      "difficulty": 3,
+      "failures": [
+        {
+          "label": "no_op_fail",
+          "requirement": "assert model changes match file_system.File.",
+          "trace": "```python\nwith test(\n    \"\"\"\n    assert model changes match file_system.File.\n    \"\"\"\n):\n    test.case(models.changed_model_names(), \"==\", {\"file_system.File\", \"file_system.Directory\"})\n```\n----------\nAssertionError:  {'file_system.Directory'} == {'file_system.Directory', 'file_system.File'}\n\nIn right but not left:\n['file_system.File']"
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert 1 file_system.File record was updated.",
+          "trace": "```python\nwith test(\n    \"\"\"\n    assert 1 file_system.File record was updated.\n    \"\"\"\n):\n    test.case(len(updated_files), \"==\", 1)\n```\n----------\nAssertionError:  0 == 1"
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert the updated file's path is private_data.csv_file_path.",
+          "trace": "```python\nwith test(\n    \"\"\"\n    assert the updated file's path is private_data.csv_file_path.\n    \"\"\"\n):\n    updated_file = updated_files[0]\n    test.case(updated_file.tilde_path, \"==\", private_data.csv_file_path)\n```\n----------"
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert the updated file's first line matches the private_data.csv_header (normalize_text=True).",
+          "trace": "```python\nwith test(\n    \"\"\"\n    assert the updated file's first line matches the private_data.csv_header (normalize_text=True).\n    \"\"\"\n):\n    updated_file_content_lines = updated_file.content.strip().splitlines()\n    test.case(\n        updated_file_content_lines[0],\n```\n----------"
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert the updated file's rest of the lines matches the private_data.csv_lines (normalize_text=True).",
+          "trace": "```python\nwith test(\n    \"\"\"\n    assert the updated file's rest of the lines matches the private_data.csv_lines (normalize_text=True).\n    \"\"\"\n):\n    test.case(\n        updated_file_content_lines[1:],\n        \"==\",\n```\n----------"
+        }
+      ],
+      "num_tests": 7,
+      "passes": [
+        {
+          "label": "no_op_fail",
+          "requirement": "assert answers match."
+        },
+        {
+          "label": "no_op_pass",
+          "requirement": "obtain added, updated, removed file_system.File records using models.changed_records,\nand assert 0 were added or removed."
+        }
+      ],
+      "success": false
+    },
+    "ccf4b82_1": {
+      "difficulty": 2,
+      "failures": [],
+      "num_tests": 11,
+      "passes": [
+        {
+          "label": "no_op_fail",
+          "requirement": "assert answers match."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert model changes match venmo.Notification, venmo.PaymentRequest, venmo.Transaction,\nvenmo.User, venmo.BankTransfer, file_system.File, file_system.Directory,\ngmail.GlobalEmailThread, gmail.Attachment, gmail.Email, gmail.UserEmailThread"
+        },
+        {
+          "label": "no_op_pass",
+          "requirement": "obtain added, updated, removed venmo.PaymentRequest records using models.changed_records,\nand assert 0 were added or removed."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert the updated payment requests have ids private_data.to_approve_payment_request_ids."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert the only changed_field_names in the updated payment requests is \"approved_at\", and that\nin the end state, the payment request's approved_at is not None."
+        },
+        {
+          "label": "no_op_pass",
+          "requirement": "obtain added, updated, removed venmo.User records using models.changed_records,\nand assert 0 were added or removed."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert the only changed_field_names in all updated users is \"venmo_balance\"."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert main_user's venmo balance is 0 in the end state."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert 1 admin.PaymentCard record has been updated using models.changed_records,"
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert the last 4 digits of this updated payment_card match exactly to public_data.card_last_4_digits."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert the total balance of main_user's updated payment card in the end state\nis private_data.surplus_amount (tolerance=0.51)"
+        }
+      ],
+      "success": true
+    },
+    "ccf4b82_2": {
+      "difficulty": 2,
+      "failures": [
+        {
+          "label": "no_op_fail",
+          "requirement": "assert the updated payment requests have ids private_data.to_approve_payment_request_ids.",
+          "trace": "```python\nwith test(\n    \"\"\"\n    assert the updated payment requests have ids private_data.to_approve_payment_request_ids.\n    \"\"\"\n):\n    updated_payment_request_ids = list_of(updated_payment_requests, \"id\")\n    test.case(\n        updated_payment_request_ids,\n```\n----------\nAssertionError:\n[1198, 1509, 2170, 6117, 6124, 6126, 6140, 6142, 6143, 6144]\n==\n[1198, 1509, 2170, 6097, 6099, 6100, 6104, 6112, 6117, 6124, 6126, 6140, 6142, 6143, 6144]\n\nIn right but not left:\n[6097, 6099, 6100, 6104, 6112]"
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert the total balance of main_user's updated payment card in the end state\nis private_data.surplus_amount (tolerance=0.51)",
+          "trace": "```python\nwith test(\n    \"\"\"\n    assert the total balance of main_user's updated payment card in the end state\n    is private_data.surplus_amount (tolerance=0.51)\n    \"\"\"\n):\n```\n----------\nAssertionError:  618.0 \u00b1 0.51 == 487 \u00b1 0.51\n\nOriginal values:\n618.0 == 487"
+        }
+      ],
+      "num_tests": 11,
+      "passes": [
+        {
+          "label": "no_op_fail",
+          "requirement": "assert answers match."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert model changes match venmo.Notification, venmo.PaymentRequest, venmo.Transaction,\nvenmo.User, venmo.BankTransfer, file_system.File, file_system.Directory,\ngmail.GlobalEmailThread, gmail.Attachment, gmail.Email, gmail.UserEmailThread"
+        },
+        {
+          "label": "no_op_pass",
+          "requirement": "obtain added, updated, removed venmo.PaymentRequest records using models.changed_records,\nand assert 0 were added or removed."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert the only changed_field_names in the updated payment requests is \"approved_at\", and that\nin the end state, the payment request's approved_at is not None."
+        },
+        {
+          "label": "no_op_pass",
+          "requirement": "obtain added, updated, removed venmo.User records using models.changed_records,\nand assert 0 were added or removed."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert the only changed_field_names in all updated users is \"venmo_balance\"."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert main_user's venmo balance is 0 in the end state."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert 1 admin.PaymentCard record has been updated using models.changed_records,"
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert the last 4 digits of this updated payment_card match exactly to public_data.card_last_4_digits."
+        }
+      ],
+      "success": false
+    },
+    "ccf4b82_3": {
+      "difficulty": 2,
+      "failures": [],
+      "num_tests": 11,
+      "passes": [
+        {
+          "label": "no_op_fail",
+          "requirement": "assert answers match."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert model changes match venmo.Notification, venmo.PaymentRequest, venmo.Transaction,\nvenmo.User, venmo.BankTransfer, file_system.File, file_system.Directory,\ngmail.GlobalEmailThread, gmail.Attachment, gmail.Email, gmail.UserEmailThread"
+        },
+        {
+          "label": "no_op_pass",
+          "requirement": "obtain added, updated, removed venmo.PaymentRequest records using models.changed_records,\nand assert 0 were added or removed."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert the updated payment requests have ids private_data.to_approve_payment_request_ids."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert the only changed_field_names in the updated payment requests is \"approved_at\", and that\nin the end state, the payment request's approved_at is not None."
+        },
+        {
+          "label": "no_op_pass",
+          "requirement": "obtain added, updated, removed venmo.User records using models.changed_records,\nand assert 0 were added or removed."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert the only changed_field_names in all updated users is \"venmo_balance\"."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert main_user's venmo balance is 0 in the end state."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert 1 admin.PaymentCard record has been updated using models.changed_records,"
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert the last 4 digits of this updated payment_card match exactly to public_data.card_last_4_digits."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert the total balance of main_user's updated payment card in the end state\nis private_data.surplus_amount (tolerance=0.51)"
+        }
+      ],
+      "success": true
+    },
+    "dac78d9_1": {
+      "difficulty": 1,
+      "failures": [],
+      "num_tests": 2,
+      "passes": [
+        {
+          "label": "no_op_fail",
+          "requirement": "assert answers match."
+        },
+        {
+          "label": "no_op_pass",
+          "requirement": "assert no model changes."
+        }
+      ],
+      "success": true
+    },
+    "dac78d9_2": {
+      "difficulty": 1,
+      "failures": [],
+      "num_tests": 2,
+      "passes": [
+        {
+          "label": "no_op_fail",
+          "requirement": "assert answers match."
+        },
+        {
+          "label": "no_op_pass",
+          "requirement": "assert no model changes."
+        }
+      ],
+      "success": true
+    },
+    "dac78d9_3": {
+      "difficulty": 1,
+      "failures": [],
+      "num_tests": 2,
+      "passes": [
+        {
+          "label": "no_op_fail",
+          "requirement": "assert answers match."
+        },
+        {
+          "label": "no_op_pass",
+          "requirement": "assert no model changes."
+        }
+      ],
+      "success": true
+    },
+    "f3f60f0_1": {
+      "difficulty": 1,
+      "failures": [],
+      "num_tests": 8,
+      "passes": [
+        {
+          "label": "no_op_fail",
+          "requirement": "assert answers match."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert model changes match spotify.Song, spotify.SongLike, spotify.Album, spotify.AlbumLike."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert all newly liked songs are in my library via models.changed_records"
+        },
+        {
+          "label": "no_op_pass",
+          "requirement": "assure none of the updated or removed song likes are from outside of song library."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assure everything in main_user's song library is liked now."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert all newly liked albums are in my library via models.changed_records"
+        },
+        {
+          "label": "no_op_pass",
+          "requirement": "assure none of the updated or removed album likes are from outside of album library."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assure everything in main_user's album library is liked now."
+        }
+      ],
+      "success": true
+    },
+    "f3f60f0_2": {
+      "difficulty": 1,
+      "failures": [],
+      "num_tests": 8,
+      "passes": [
+        {
+          "label": "no_op_fail",
+          "requirement": "assert answers match."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert model changes match spotify.Song, spotify.SongLike, spotify.Album, spotify.AlbumLike."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert all newly liked songs are in my library via models.changed_records"
+        },
+        {
+          "label": "no_op_pass",
+          "requirement": "assure none of the updated or removed song likes are from outside of song library."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assure everything in main_user's song library is liked now."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert all newly liked albums are in my library via models.changed_records"
+        },
+        {
+          "label": "no_op_pass",
+          "requirement": "assure none of the updated or removed album likes are from outside of album library."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assure everything in main_user's album library is liked now."
+        }
+      ],
+      "success": true
+    },
+    "f3f60f0_3": {
+      "difficulty": 1,
+      "failures": [],
+      "num_tests": 8,
+      "passes": [
+        {
+          "label": "no_op_fail",
+          "requirement": "assert answers match."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert model changes match spotify.Song, spotify.SongLike, spotify.Album, spotify.AlbumLike."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert all newly liked songs are in my library via models.changed_records"
+        },
+        {
+          "label": "no_op_pass",
+          "requirement": "assure none of the updated or removed song likes are from outside of song library."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assure everything in main_user's song library is liked now."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert all newly liked albums are in my library via models.changed_records"
+        },
+        {
+          "label": "no_op_pass",
+          "requirement": "assure none of the updated or removed album likes are from outside of album library."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assure everything in main_user's album library is liked now."
+        }
+      ],
+      "success": true
+    },
+    "fd1f8fa_1": {
+      "difficulty": 1,
+      "failures": [],
+      "num_tests": 5,
+      "passes": [
+        {
+          "label": "no_op_fail",
+          "requirement": "assert answers match."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert model changes match spotify.MusicPlayer."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "obtain added, updated, removed spotify.MusicPlayer records using models.changed_records,\nand assert 1 has been updated, and 0 have been added or removed."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert song_ids in the end state of the music player's queue match\nprivate_data.expected_queue_song_ids, ignoring order."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert music player is in playing state."
+        }
+      ],
+      "success": true
+    },
+    "fd1f8fa_2": {
+      "difficulty": 1,
+      "failures": [],
+      "num_tests": 5,
+      "passes": [
+        {
+          "label": "no_op_fail",
+          "requirement": "assert answers match."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert model changes match spotify.MusicPlayer."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "obtain added, updated, removed spotify.MusicPlayer records using models.changed_records,\nand assert 1 has been updated, and 0 have been added or removed."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert song_ids in the end state of the music player's queue match\nprivate_data.expected_queue_song_ids, ignoring order."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert music player is in playing state."
+        }
+      ],
+      "success": true
+    },
+    "fd1f8fa_3": {
+      "difficulty": 1,
+      "failures": [],
+      "num_tests": 5,
+      "passes": [
+        {
+          "label": "no_op_fail",
+          "requirement": "assert answers match."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert model changes match spotify.MusicPlayer."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "obtain added, updated, removed spotify.MusicPlayer records using models.changed_records,\nand assert 1 has been updated, and 0 have been added or removed."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert song_ids in the end state of the music player's queue match\nprivate_data.expected_queue_song_ids, ignoring order."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert music player is in playing state."
+        }
+      ],
+      "success": true
+    },
+    "ff58e36_1": {
+      "difficulty": 2,
+      "failures": [],
+      "num_tests": 6,
+      "passes": [
+        {
+          "label": "no_op_fail",
+          "requirement": "assert answers match."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert model changes match venmo.Friendship"
+        },
+        {
+          "label": "no_op_pass",
+          "requirement": "obtain all added, and deleted friendships using models.changed_records\nand assert none are deleted."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert all of added friend ids are in private_data.to_befriend_venmo_user_ids."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert all of private_data.to_befriend_venmo_user_ids_1 are in newly_befriended_venmo_user_ids."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert all of private_data.to_befriend_venmo_user_ids_2 are in newly_befriended_venmo_user_ids."
+        }
+      ],
+      "success": true
+    },
+    "ff58e36_2": {
+      "difficulty": 2,
+      "failures": [],
+      "num_tests": 6,
+      "passes": [
+        {
+          "label": "no_op_fail",
+          "requirement": "assert answers match."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert model changes match venmo.Friendship"
+        },
+        {
+          "label": "no_op_pass",
+          "requirement": "obtain all added, and deleted friendships using models.changed_records\nand assert none are deleted."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert all of added friend ids are in private_data.to_befriend_venmo_user_ids."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert all of private_data.to_befriend_venmo_user_ids_1 are in newly_befriended_venmo_user_ids."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert all of private_data.to_befriend_venmo_user_ids_2 are in newly_befriended_venmo_user_ids."
+        }
+      ],
+      "success": true
+    },
+    "ff58e36_3": {
+      "difficulty": 2,
+      "failures": [],
+      "num_tests": 6,
+      "passes": [
+        {
+          "label": "no_op_fail",
+          "requirement": "assert answers match."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert model changes match venmo.Friendship"
+        },
+        {
+          "label": "no_op_pass",
+          "requirement": "obtain all added, and deleted friendships using models.changed_records\nand assert none are deleted."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert all of added friend ids are in private_data.to_befriend_venmo_user_ids."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert all of private_data.to_befriend_venmo_user_ids_1 are in newly_befriended_venmo_user_ids."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert all of private_data.to_befriend_venmo_user_ids_2 are in newly_befriended_venmo_user_ids."
+        }
+      ],
+      "success": true
+    },
+    "ffe6d5e_1": {
+      "difficulty": 2,
+      "failures": [],
+      "num_tests": 8,
+      "passes": [
+        {
+          "label": "no_op_fail",
+          "requirement": "assert answers match."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert model changes match phone.GlobalTextMessage, phone.UserTextMessage."
+        },
+        {
+          "label": "no_op_pass",
+          "requirement": "assure no phone.UserTextMessage records were removed using models.changed_records."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert 1 phone.GlobalTextMessage record was added using models.changed_records,"
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert any one of the private_data.favorite_recipe_names is in the added message's content\n(normalize_text=True)."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert the number of recipe names from favorite_recipe_names in the added message's content\nis exactly one (lowercase, merge white space)."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert none of the private_data.non_favorite_recipe_names is in the added message's content\n(normalize_text=True)."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert the added message's receiver_id is private_data.relative_phone_user_id"
+        }
+      ],
+      "success": true
+    },
+    "ffe6d5e_2": {
+      "difficulty": 2,
+      "failures": [],
+      "num_tests": 8,
+      "passes": [
+        {
+          "label": "no_op_fail",
+          "requirement": "assert answers match."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert model changes match phone.GlobalTextMessage, phone.UserTextMessage."
+        },
+        {
+          "label": "no_op_pass",
+          "requirement": "assure no phone.UserTextMessage records were removed using models.changed_records."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert 1 phone.GlobalTextMessage record was added using models.changed_records,"
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert any one of the private_data.favorite_recipe_names is in the added message's content\n(normalize_text=True)."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert the number of recipe names from favorite_recipe_names in the added message's content\nis exactly one (lowercase, merge white space)."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert none of the private_data.non_favorite_recipe_names is in the added message's content\n(normalize_text=True)."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert the added message's receiver_id is private_data.relative_phone_user_id"
+        }
+      ],
+      "success": true
+    },
+    "ffe6d5e_3": {
+      "difficulty": 2,
+      "failures": [],
+      "num_tests": 8,
+      "passes": [
+        {
+          "label": "no_op_fail",
+          "requirement": "assert answers match."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert model changes match phone.GlobalTextMessage, phone.UserTextMessage."
+        },
+        {
+          "label": "no_op_pass",
+          "requirement": "assure no phone.UserTextMessage records were removed using models.changed_records."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert 1 phone.GlobalTextMessage record was added using models.changed_records,"
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert any one of the private_data.favorite_recipe_names is in the added message's content\n(normalize_text=True)."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert the number of recipe names from favorite_recipe_names in the added message's content\nis exactly one (lowercase, merge white space)."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert none of the private_data.non_favorite_recipe_names is in the added message's content\n(normalize_text=True)."
+        },
+        {
+          "label": "no_op_fail",
+          "requirement": "assert the added message's receiver_id is private_data.relative_phone_user_id"
+        }
+      ],
+      "success": true
+    }
+  }
+}

@@ -1,0 +1,336 @@
+## STRATEGIES AND HARD RULES
+[shr-00001] Make sure to end code blocks with ``` followed by a newline(\n).
+[shr-00005] Always look at API specifications (using apis.api_docs.show_api_doc) before calling an API.
+[shr-00006] Write small chunks of code and only one chunk of code in every step. Make sure everything is working correctly before making any irreversible change.
+
+[shr-00016] [shr-00007] Always include the required `access_token` (or other authentication parameters) in every Spotify API call, even if the parameter is not explicitly listed in a shortened API doc snippet. Missing this token will cause the request to fail or be unauthorized.
+[shr-00018] When a task requires acting only on items that satisfy a specific condition (e.g., songs you have NOT liked), always build a set of IDs that meet the condition (e.g., `liked_song_ids`) and explicitly skip those IDs in any processing loop: `if song_id not in liked_song_ids:`. Do not assume the absence of a review implies the song is not liked.
+[shr-00022] When filtering items by date, always parse ISO timestamps with timezone awareness (e.g., using datetime.fromisoformat or dateutil.parser) and compare using UTC or the user's local timezone consistently. Avoid assuming the server's local time matches the user's timezone.
+[shr-00023] When identifying contacts for relationship‑based tasks, build a set that includes **both** email addresses and phone numbers (if present). Use this combined identifier set for matching, e.g., `roommate_ids = set(email for email in contacts if email) | set(phone for phone in contacts if phone)`.
+[shr-00026] When liking Venmo transactions, always verify the transaction hasn't been liked already. You can maintain a set of transaction IDs that have been liked in the current run (or query a field if the API provides one) and skip calling `like_transaction` for IDs already present in that set.
+[shr-00028] When a task involves coworkers (or any contacts) for Venmo actions, always build a combined identifier set that includes **both** email addresses **and** phone numbers from the Phone app contacts. Example:
+```python
+coworker_ids = set(email.lower() for email in coworker_emails) | set(phone for phone in coworker_phones)
+```
+Use this `coworker_ids` set for matching against both `sender.email`/`receiver.email` **and** `sender.phone_number`/`receiver.phone_number` fields in Venmo transactions.
+[shr-00031] Always include the required `access_token` (or other authentication parameters) in every API call, regardless of which app is being used. Missing the token will cause the request to fail or be unauthorized.
+[shr-00032] Before calling any endpoint of an app, first log in to that app (using its `login` API) and store the returned `access_token`. Use the exact parameter name required by the endpoint (e.g., `directory_path` for `create_directory`, `file_path` for `create_file`).
+[shr-00036] When calling any Spotify data retrieval endpoint (e.g., `show_song`), always include the `access_token` argument even if the API documentation does not list it. This prevents unauthorized errors.
+[shr-00037] For paginated Spotify calls (`show_song_library`, `show_album_library`, `show_playlist_library`), set `page_limit` to the maximum allowed value (20) to minimize the number of API requests.
+[shr-00039] Before creating a file with `create_file`, check if the file already exists using `file_system.file_exists`. If it exists, use `file_system.update_file` to overwrite the content instead of `create_file` to avoid duplicate‑file errors.
+[shr-00040] [shr-00100] Use absolute file system paths for all file_system API calls. The file_system app does not expand '~' or user‑home shortcuts; specify the full path such as "/home/<username>/...".
+[shr-00042] [shr-00102] Always include the required `access_token` argument in every file_system API call (e.g., `create_file`, `update_file`, `file_exists`, `directory_exists`). Missing the token will cause unauthorized errors.
+[shr-00044] When parsing free‑form note content, use a tolerant pattern: treat any non‑empty line that does not start with '-' or '#' as a potential title, and treat lines starting with '- director:' (case‑insensitive) as the director field. Compare director names using lower‑case strings to handle case variations.
+[shr-00048] When searching notes with `search_notes`, always implement pagination (loop over `page_index` until an empty page is returned) and consider a fallback query (e.g., first search for "recommendation", then for "movie", then retrieve all notes) to ensure the target note is not missed due to query mismatch.
+[shr-00050] After a successful login call, immediately extract the `access_token` from the response and store it in a consistently named variable (e.g., `spotify_access_token`, `phone_access_token`, `simple_note_access_token`). Use this variable for all subsequent API calls to that app. Example:
+```python
+login_res = apis.phone.login(username=..., password=...)
+phone_access_token = login_res["access_token"]
+```
+Never rely on the original login response object for later calls; always reference the dedicated token variable.
+[shr-00052] When working with a new app, always consult the API specification (`show_api_doc`) to confirm which fields are present in the response before accessing them. Accessing undocumented fields (e.g., `sender.phone_number` in Venmo `show_transactions`) can raise errors. Use `dict.get` with defaults or guard with `if 'phone_number' in sender`.
+[shr-00053] Before creating a comment on a transaction, retrieve existing comments with `show_transaction_comments` and check whether the desired comment text already exists. Skip `create_transaction_comment` if the comment is already present to avoid duplicate comments.
+[shr-00054] Persist the set of transaction IDs that have been liked (and/or commented) across script runs. Store the IDs in a file (e.g., using `file_system.create_file`/`update_file`) and load them at the start of the script. This prevents re‑liking or re‑commenting on the same transaction when the task is re‑executed.
+[shr-00055] When building identifier sets for matching (e.g., coworker emails/phone numbers), always normalise the values: lower‑case emails, strip surrounding whitespace, and store phone numbers in a canonical format. Use these normalised identifiers for all comparisons.
+[shr-00056] For date‑range filters, convert the user's local date range to UTC if the API expects UTC timestamps. Use `datetime.now(timezone.utc)` or `dateutil.tz` to ensure the `min_created_at` and `max_created_at` parameters match the timezone of the service.
+[shr-00060] When matching Venmo transaction senders to friends, build a combined identifier set that includes **both** normalized email addresses (lower‑cased) **and** phone numbers from the Phone contacts. Use this set to compare against both `sender.email` and `sender.phone_number` fields in Venmo transactions.
+[shr-00061] When reading a file from the file_system app, always use the `show_file` endpoint to retrieve its content. There is no `read_file` API; attempting to call it will result in an error.
+[shr-00067] When aggregating artist recommendations from `show_recommendations`, use the artist's unique `id` as the primary key for counting to avoid duplicate entries caused by variations in the artist's name spelling or case. After counting, map the winning `id` back to its display `name` using the first occurrence of that `id` in the recommendation data.
+[shr-00068] Always verify the type and structure of the response from `show_recommendations` before iterating. If the response is a dictionary, extract the list of songs from the appropriate key (e.g., `response['recommendations']`). If it is already a list, proceed directly. This prevents runtime errors when the API schema changes.
+[shr-00069] If multiple artists share the highest recommendation count, apply a deterministic tie‑breaking rule such as selecting the artist whose name appears first alphabetically (or the first encountered in the pagination order). Document the chosen rule in the code comments.
+[shr-00071] When determining the **least‑recommended** artist (or any minimum‑frequency item), apply a deterministic tie‑breaking rule similar to the one for most‑recommended: if multiple artists share the smallest count, select the artist whose name comes first alphabetically (case‑insensitive). Document this rule in the code comments.
+[shr-00074] When calling `show_recommendations`, always verify the response type before iterating. If the response is a dictionary, extract the list of songs from the appropriate key (e.g., `response['recommendations']` or `response['songs']`). If the response is already a list, use it directly. This prevents errors when the API schema changes.
+[shr-00075] After retrieving all recommendation pages, check whether any songs were collected. If the aggregated list is empty, handle the situation gracefully (e.g., set the answer to `None` or a descriptive message) instead of proceeding with counting.
+[shr-00077] When determining the earliest (or latest) date among items, if multiple items share the same date, apply a deterministic tie‑breaking rule such as selecting the item whose title comes first alphabetically (case‑insensitive) or the first encountered in the iteration order. Document the chosen rule in code comments to ensure reproducibility.
+[shr-00078] When parsing a `release_date` field from Spotify objects, handle three possible formats: (1) full ISO datetime with timezone, (2) ISO datetime without timezone, and (3) date‑only string (YYYY‑MM‑DD). Use `datetime.fromisoformat`; if it raises, fall back to `datetime.strptime(date_str, "%Y-%m-%d")`. Always attach UTC timezone if none is present before comparison.
+[shr-00081] Only include parameters that are explicitly listed in the API specification. Before calling any endpoint, consult its `show_api_doc` and pass only the documented arguments. Do NOT add `access_token` (or any other argument) to calls where the spec does not require it, as this can cause request failures.
+[shr-00083] When iterating over the playlist library, first check if each playlist object includes a `song_ids` list. If present, use those IDs directly to collect songs and skip the extra `show_playlist` call. This reduces API usage and speeds up processing.
+[shr-00084] Always aggregate song identifiers from the song, album, and playlist libraries into a Python `set` to guarantee uniqueness before fetching detailed song data. This prevents duplicate `show_song` calls and simplifies later processing.
+[shr-00085] When extracting IDs from API responses, be prepared for different field names. For example, a song ID may appear as `song_id`, `id`, or within nested objects. Write code that checks for all known variants (e.g., `sid = item.get('song_id') or item.get('id')`) to avoid KeyError exceptions.
+[shr-00087] When matching coworker names to Phone contacts for Venmo actions, first try an exact full‑name match (lower‑cased). If not found, only fall back to a first‑name match when it yields a single unique contact; otherwise log a warning and skip to avoid sending a request to the wrong person.
+[shr-00088] For Venmo `create_payment_request`, always use the documented parameter name `user_email`. Verify that the identifier you supply is an email address; if only a phone number is available, skip the request and log that the contact cannot be used for a payment request.
+[shr-00090] When building the set of identifiers for coworkers who have already paid, include both normalized email addresses (lower‑cased) and phone numbers from the Venmo transaction `sender` object. Store them in a single set for fast membership checks.
+[shr-00091] When paginating Venmo `show_transactions`, always set `page_limit` to the maximum allowed value (20) to minimise the number of API calls and ensure complete coverage.
+[shr-00092] When parsing Simple Note content for expense shares, use a tolerant pattern that handles different separators (e.g., '=>', ':', '-', or any whitespace) and strips leading dashes and spaces. Example:
+```python
+shares = {}
+for line in content.splitlines():
+    line = line.strip()
+    if not line or not any(sep in line for sep in ['=>', ':', '-']):
+        continue
+    # Find the separator used
+    for sep in ['=>', ':', '-']:
+        if sep in line:
+            parts = line.split(sep, 1)
+            break
+    name = parts[0].lstrip('-').strip()
+    amount_str = parts[1].replace('$', '').strip()
+    try:
+        amount = float(amount_str)
+    except ValueError:
+        continue
+    shares[name] = amount
+```
+[shr-00093] When building the set of friends who have already paid via Venmo, include both normalized email addresses **and** phone numbers from the transaction's `sender` object. Use a combined identifier set for membership checks:
+```python
+paid_friends = set()
+for tx in transactions:
+    sender = tx.get('sender', {})
+    email = sender.get('email')
+    phone = sender.get('phone_number')
+    if email:
+        paid_friends.add(email.lower())
+    if phone:
+        paid_friends.add(phone)
+```
+[shr-00094] Persist the IDs of created Venmo payment requests (e.g., `payment_request_id`) to a durable store (such as a JSON file via the file_system app) and load them at script start. Skip creating a request if its ID already exists to avoid duplicate requests across multiple runs.
+[shr-00096] When retrieving passwords via the supervisor app, always verify that the required account password exists; if a password for an expected account (e.g., 'venmo', 'simple_note', 'phone') is missing, raise a clear error before proceeding with any login calls.
+[shr-00097] For Simple Note note searches, always implement full pagination (loop over `page_index` until an empty page is returned) even if the first page returns results, to ensure the target note is not missed due to pagination limits.
+[shr-00098] After parsing Simple Note content into a dictionary of shares, assert that the dictionary is non‑empty. If it is empty, fall back to a secondary tolerant parser or abort with a descriptive error, rather than proceeding with an empty payment list.
+[shr-00099] Normalize phone numbers before using them in identifier sets: strip all non‑digit characters, optionally prepend a country code, and store the cleaned string for consistent matching.
+[shr-00100] When building the set of identifiers for Venmo payment requests, include both normalized email addresses (lower‑cased) and normalized phone numbers. Only call `venmo.create_payment_request` if the identifier is a valid email address; if only a phone number is available, skip the request and log the omission.
+[shr-00101] After each `venmo.create_payment_request` call, verify that the response contains the `payment_request_id` field and no error field. Treat the request as failed if the ID is missing, log the full response, and do not add it to the list of successful requests.
+[shr-00105] When identifying contacts for relationship‑based tasks, retrieve **all** contacts (call `search_contacts` without a query or with an empty query) and filter them using the `relationships` field, e.g., `if 'roommate' in contact.get('relationships', [])`. Do not rely on keyword searches in contact names or notes.
+[shr-00106] Compute date ranges dynamically instead of hard‑coding a year. Use `datetime.utcnow().year` to build `min_date = f"{year}-01-01"` and `max_date = datetime.utcnow().strftime("%Y-%m-%d")` (UTC). This ensures the query always covers "since 1st Jan of this year" regardless of when the script runs.
+[shr-00107] After any login API call, immediately verify that the response contains a non‑empty `access_token` field. If the token is missing or empty, raise a clear error and abort further calls.
+[shr-00108] When processing Venmo transaction objects, guard against missing fields: check that `tx.get('receiver')` is a dict before accessing `receiver.get('email')` or `receiver.get('phone_number')`. Use `dict.get` with defaults to avoid KeyError exceptions.
+[shr-00111] When a task involves Venmo transaction direction phrasing such as "received to my coworkers" or "sent to my friends", always interpret the direction from the user's perspective: *received to X* means the user sent money to X (the recipient received it). Conversely, *received from X* means the user received money from X. Explicitly map the natural‑language phrase to the appropriate `direction` parameter ('sent' for money the user gave, 'received' for money the user got) before constructing the API call.
+[shr-00113] [shr-00113] Never hard‑code a computed result when completing a task. After calculating a value (e.g., total_amount), always pass the variable holding that value to apis.supervisor.complete_task (e.g., `apis.supervisor.complete_task(answer=total_amount)`). This ensures the answer reflects live data and remains correct if the data changes.
+[shr-00115] When iterating over many song IDs, always include the `access_token` in each `apis.spotify.show_song` call, even if the API documentation does not list it. Example: `song_info = apis.spotify.show_song(song_id=sid, access_token=spotify_access_token)`.
+[shr-00116] When filtering songs by genre, treat the `genre` field as a comma‑separated list. Perform a case‑insensitive containment check, e.g., `if 'classical' in [g.strip().lower() for g in genre.split(',')]:` to correctly capture songs with multiple genre tags.
+[shr-00119] When filtering songs by genre, check both the `genre` and `genres` fields (if present) for the target genre. Perform a case‑insensitive containment check on each string, handling comma‑separated lists. Example:
+```python
+genre_val = song_info.get('genre') or song_info.get('genres')
+if isinstance(genre_val, str):
+    genres = [g.strip().lower() for g in genre_val.split(',')]
+    if 'reggae' in genres:
+        # process song
+```
+[shr-00120] When extracting artist identifiers from a song object, handle both possible structures:
+- A list of artist objects under the key `artists`, where each object contains an `id` (or `artist_id`).
+- A direct list of IDs under the key `artist_ids`.
+Collect IDs using a fallback approach to ensure no artist is missed. Example:
+```python
+artist_ids = set()
+if 'artist_ids' in song_info:
+    artist_ids.update(song_info['artist_ids'])
+if 'artists' in song_info:
+    for a in song_info['artists']:
+        aid = a.get('id') or a.get('artist_id')
+        if aid:
+            artist_ids.add(aid)
+```
+[shr-00123] When following artists (or performing any idempotent action), persist the set of processed IDs to durable storage (e.g., a JSON file via the file_system app) and load it at the start of the script. Before calling `follow_artist`, check the persisted set and skip any artist_id already present. After a successful follow, add the artist_id to the persisted store. This avoids duplicate follow attempts across multiple runs.
+[shr-00125] When aggregating data from files that are named by date (e.g., "2023-01.txt"), never hard‑code the year. Instead, compute the current year at runtime using `datetime.utcnow().year` (or the appropriate timezone) and build a filter that selects only files containing that year (e.g., `if f"/{current_year}-" in file_path`). This ensures the script works correctly when the calendar year changes.
+[shr-00126] Before calling `file_system.show_file` on any path, optionally call `file_system.file_exists` with the same `access_token` and `file_path` to confirm the file is present. If the file does not exist, log a warning and skip it to avoid runtime errors.
+[shr-00127] If a directory contains both `.txt` and `.pdf` versions of a bill, prefer the `.txt` file for parsing (it is plain text). Only fall back to `.pdf` if no `.txt` exists, and use an appropriate PDF‑text extraction method (if available) or log that the PDF cannot be parsed.
+[shr-00130] When calculating date ranges that depend on "this year" or similar user‑centric periods, use the user's local timezone rather than UTC. Example: `current_year = datetime.now().year` (or `datetime.now(tz=local_tz).year` if a specific timezone is known). This ensures the year matches the user's expectation, especially if they are in a timezone where the UTC date may differ.
+[shr-00132] [shr-00133] Always use absolute file system paths for file_system API calls. The file_system app does not expand '~' or user‑home shortcuts; construct the full path (e.g., "/home/<username>/bills") before passing it to `show_directory`, `show_file`, etc.
+[shr-00133] [shr-00134] Before reading a file with `show_file`, optionally call `file_system.file_exists` using the same `access_token` and `file_path`. If the file does not exist, log a warning and skip processing to avoid runtime errors.
+[shr-00134] [shr-00135] When extracting monetary amounts from free‑form text, use a tolerant parser that finds all dollar amounts (e.g., using `re.findall(r"\$?\s*([0-9]+(?:\.[0-9]{2})?)", text)`) and sums them, rather than only the first match. This ensures the total reflects all charges present in the file.
+[shr-00137] When a task involves a user‑specific home directory, never assume the path (e.g., "/home/paul_mill"). Instead, list the top‑level "/home" directory, identify the correct user folder (matching the email or known username), and construct absolute paths from that discovered folder. This ensures the script works even if the home directory name differs.
+[shr-00138] When categorising files by month, also compare the year to the current year (e.g., `datetime.now().year`). Only files whose `created_at` year matches the current year should be assigned to the month‑based vacation folders; all other files belong to the default folder (e.g., "Amsterdam"). This prevents older February/March files from being mis‑classified.
+[shr-00139] Only pass parameters that are explicitly listed in the API specification. If an endpoint (e.g., `create_directory`) does not document a `recursive` argument, do not include it. Instead, create each missing intermediate directory individually or rely on the API’s built‑in recursion if documented.
+[shr-00140] If a file's metadata lacks a `created_at` timestamp, log a warning and move the file to an "Unsorted" sub‑directory (or another designated fallback folder) rather than silently skipping it. This ensures no files are unintentionally left untouched.
+[shr-00141] After calling `move_file`, verify the operation succeeded by checking the response schema (e.g., presence of a `message` field and the expected `destination_file_path`). Optionally, call `file_system.file_exists` on the destination path to confirm the file is present before counting it as moved.
+[shr-00145] When moving files with `file_system.move_file` and you need to keep the original creation and update timestamps, always set the `retain_dates` parameter to `True`. This ensures the moved file retains its original `created_at` and `updated_at` metadata.
+[shr-00146] File timestamps (`created_at`) may appear in different ISO formats (with timezone, without timezone, or date‑only). Parse them safely by first trying `datetime.fromisoformat`; if it raises, fall back to `datetime.strptime(date_str, "%Y-%m-%d")`. Attach UTC timezone if none is present before any date comparisons.
+[shr-00147] When categorising files by month, also compare the year component to the current year (e.g., `datetime.now().year`). If the file's year differs, treat the file as belonging to the default folder (or a designated "Unsorted" folder) to avoid mis‑classifying older files.
+[shr-00150] When using any file_system destructive endpoint (e.g., `move_file`, `create_directory`), first consult its API specification (`show_api_doc`) and include ONLY the documented parameters. Do NOT add undocumented arguments such as `retain_dates` unless the spec explicitly lists them.
+[shr-00151] After creating a directory with `create_directory`, immediately call `directory_exists` to confirm the directory now exists before performing any file operations inside it. If the check fails, raise a clear error.
+[shr-00152] When a file's metadata lacks a `created_at` timestamp, fall back to extracting a date from the filename. Use a tolerant regex that matches common patterns such as `YYYY-MM-DD`, `YYYY_MM_DD`, or `YYYYMMDD`. If no date can be extracted, treat the file as belonging to the default folder.
+[shr-00153] When parsing ISO timestamps from file metadata, always handle timezone awareness: try `datetime.fromisoformat`; if the parsed datetime has no tzinfo, attach UTC (`datetime.replace(tzinfo=timezone.utc)`). This ensures consistent date comparisons.
+[shr-00156] When iterating over many items with a data‑retrieval API (e.g., `show_song`, `show_playlist`), always verify the response matches the documented success schema before accessing any fields. Check for an error indicator such as a `message` field or missing expected keys. If the response indicates failure, log the issue and skip that item instead of assuming success.
+[shr-00160] When processing a `show_playlist` response, first check if the response contains a `song_ids` list. If present, use those IDs directly; otherwise fall back to the `songs` list and extract IDs from each song object. This mirrors the handling for `show_playlist_library` and ensures no songs are missed.
+[shr-00161] When parsing a `release_date` field, handle a year‑only string (e.g., "2021"). If the string length is 4 and consists only of digits, interpret it as January 1 of that year in UTC (e.g., `datetime(year=int(date_str), month=1, day=1, tzinfo=timezone.utc)`). This allows correct filtering of songs released in or before the specified year.
+[shr-00163] Always perform a generic success check after each API call: confirm the presence of expected success fields (such as 'message' or specific IDs) and ensure no error field is present. If the check fails, handle the error (log, retry, or abort) before proceeding with further logic.
+[shr-00164] When calling `search_songs`, do NOT include `access_token` unless the API spec explicitly lists it. Always set `page_limit=20` (the maximum allowed) to retrieve the largest possible batch per request and loop over `page_index` until the required total duration is met or no more results are returned.
+[shr-00165] When calling `play_music`, include only the documented parameters (`playlist_id`, `song_id`, `album_id`, or `queue_position`). Do NOT pass `access_token` as it is not listed in the spec. Verify the response contains a `message` field (and optionally `song_id`) to confirm playback started successfully.
+[shr-00169] When you need to meet a minimum total duration (e.g., for a workout), implement a deterministic selection algorithm: 1) Retrieve all candidate songs with a numeric `duration` field; skip any song where `duration` is missing or not an int/float, logging a warning. 2) Sort the songs by `duration` descending, and break ties by `song_id` ascending to ensure reproducibility. 3) Accumulate song IDs in that order until the summed duration meets or exceeds the required total seconds. This guarantees the playlist is long enough and selection is repeatable.
+[shr-00170] When constructing a new playlist for a specific purpose (e.g., a workout), generate a descriptive title that includes the current day of the week, e.g., `f"Workout – {datetime.datetime.now().strftime('%A')}"`. This helps the user identify the playlist later and avoids name collisions.
+[shr-00175] When processing the album library, if an album object does not contain a `song_ids` list, fall back to calling `show_album` to retrieve the full album details and extract song IDs from the `songs` field. This ensures you have the complete set of song IDs for each album before applying any keep/remove logic.
+[shr-00176] To determine which albums to keep, build a set `keep_album_ids` that includes:
+1. All liked album IDs (from `show_liked_albums`).
+2. Any album where **every** song ID in the album's `song_ids` (or fetched via `show_album`) is present in the `downloaded_song_ids` set. Use a subset check: `if album_song_ids.issubset(downloaded_song_ids): keep_album_ids.add(album_id)`.
+[shr-00177] Maintain a set `already_removed_ids` for songs and albums. Before calling `remove_song_from_library` or `remove_album_from_library`, check if the ID is already in this set and skip the call if so. After a successful removal (response contains a `message` field), add the ID to the set. This prevents duplicate removal attempts and unnecessary API calls.
+[shr-00180] Do NOT add `access_token` (or any other argument) to Spotify API calls unless the parameter is explicitly listed in the endpoint's specification. This rule overrides any generic advice to always include `access_token`. Before each call, consult `show_api_doc` and pass only the documented arguments (e.g., for `show_album`, omit `access_token`).
+[shr-00181] When performing destructive actions (e.g., `remove_song_from_library` or `remove_album_from_library`), first check that the response contains the documented success field (usually a `message`). If the field is missing or an error field is present, log the full response and abort the removal loop to avoid silent failures.
+[shr-00182] Persist the IDs of items that have been successfully removed (songs and albums) to a durable store (e.g., a JSON file via the `file_system` app). Load this set at script start and skip any ID already present to prevent duplicate removal attempts across multiple runs.
+[shr-00183] Before entering any removal loop, assert that the keep‑set (e.g., `keep_song_ids` or `keep_album_ids`) is non‑empty. If a keep‑set is unexpectedly empty, raise a clear error and abort the removal process to avoid wiping the entire library unintentionally.
+[shr-00188] When using the `compress_directory` endpoint, always provide absolute paths for both `directory_path` and `compressed_file_path`. Do not rely on '~' or other user‑home shortcuts; construct the full path (e.g., "/home/<username>/photographs/vacations/<spot>.zip"). This follows the general rule that the file_system app does not expand '~' and prevents compression failures.
+[shr-00191] When processing a parent directory for batch operations (e.g., compressing sub‑directories), first check whether the list of target sub‑directories is non‑empty. If it is empty, log a clear informational message (e.g., "No vacation spot directories found; nothing to compress.") and skip the processing loop instead of proceeding with API calls that would fail.
+[shr-00192] When processing a parent directory for batch operations (e.g., compressing sub‑directories), always retrieve the list of target sub‑directories via `show_directory` and store it in a variable. Iterate over that variable rather than hard‑coding paths. Before the loop, check that the list is non‑empty; if it is empty, log an informational message and skip the processing to avoid API errors.
+[shr-00193] After calling `compress_directory` with `delete_directory=True`, immediately verify that the original directory no longer exists by calling `file_system.directory_exists` (or `file_system.file_exists` on a known file inside). Log an error and raise an exception if the directory still exists.
+[shr-00195] When calling `show_recommendations`, always set `page_limit=20` (the maximum allowed) to retrieve the full page of recommendations. The default limit is 5, which may miss eligible songs.
+[shr-00196] For any Spotify endpoint, include `access_token` only if the API specification explicitly lists it as a required parameter. Do NOT add `access_token` to `show_song` calls, even if other generic rules suggest otherwise.
+[shr-00197] After creating a new playlist with `create_playlist`, immediately verify the response contains both a `message` and a `playlist_id`. Optionally call `show_playlist` (or `show_playlist_library`) to confirm the playlist exists before adding songs.
+[shr-00198] When adding songs to a playlist, first retrieve the playlist's current `song_ids` (if available) and skip any song that is already present to avoid duplicate additions.
+[shr-00199] If the filtered set of songs (e.g., classical songs released this year) is empty, handle the situation gracefully: log a clear message, skip playlist creation, and complete the task with an appropriate answer (e.g., "No matching songs found").
+[shr-00203] When creating a new playlist, always first search the user's playlist library (using `show_playlist_library` with `page_limit=20`) for a playlist with the desired title. If such a playlist exists, reuse its `playlist_id` instead of calling `create_playlist`. This prevents undefined variables, duplicate playlists, and unnecessary API calls.
+[shr-00204] When filtering songs by genre, normalize the genre string to lower‑case and treat common variations as equivalent. For R&B, consider "r&b", "rnb", and "r & b" as matches. This ensures songs are not missed due to minor formatting differences.
+[shr-00206] When paginating the `show_liked_songs` endpoint, always include `page_limit=20` (the maximum allowed) in the API call to ensure all liked songs are retrieved. Example:
+```python
+page_index = 0
+liked_song_ids = set()
+while True:
+    liked_page = apis.spotify.show_liked_songs(access_token=token, page_index=page_index, page_limit=20)
+    if not liked_page:
+        break
+    liked_song_ids.update(item['song_id'] for item in liked_page if 'song_id' in item)
+    page_index += 1
+```
+[shr-00208] When processing the Spotify music player queue for actions that should apply only to songs already played (e.g., liking), use the queue metadata to limit the scope: iterate through the queue in order and stop after the song where `is_current` is true, or include only songs whose `position` is less than or equal to the `position` of the current song. Do not process songs that appear after the current song in the queue.
+[shr-00210] When calling `show_liked_songs`, always include `page_limit=20` (the maximum allowed) to retrieve all liked songs in each page. Loop with `while True` and increment `page_index` until an empty page is returned to build a complete set of liked song IDs.
+[shr-00211] Wrap every `like_song` call in a try/except block (or check for a 422 response) to handle the case where the song has already been liked. On a 422 error, log the situation and continue without aborting the script.
+[shr-00216] When no matching approved payment request is found (e.g., after filtering sent payment requests), do not raise an exception. Instead, log a clear informational message and complete the task with an appropriate answer such as "No approved payment request to the specified contact was found". This ensures graceful handling of empty result sets.
+[shr-00217] When using Venmo payment request listing APIs (`show_sent_payment_requests`, `show_received_payment_requests`), always set `page_limit=20` (the maximum allowed) to retrieve all results and avoid missing any requests.
+[shr-00218] When parsing ISO timestamps from Venmo responses (e.g., `created_at`, `approved_at`), use timezone‑aware parsing (`datetime.fromisoformat` with a fallback to `datetime.strptime`) and compare timestamps in UTC, mirroring the Spotify date‑handling rules.
+[shr-00219] Always normalize email addresses (lower‑case, strip surrounding whitespace) before comparing them across apps (Phone contacts vs Venmo payment requests) to ensure reliable matching.
+[shr-00220] If multiple contacts share the same name, prefer the contact that includes an email address; if the match remains ambiguous, log a warning and skip the operation to avoid sending money to the wrong person.
+[shr-00221] After calling `create_transaction`, verify that the response contains both a `message` field and a `transaction_id` field and that no error field is present before treating the refund as successful.
+[shr-00222] Persist the `transaction_id` of successful refund transactions to a durable store (e.g., a JSON file via the `file_system` app) and load it at script start to prevent duplicate refunds across multiple runs.
+## APIs TO USE FOR SPECIFIC INFORMATION
+[api-00004] You can use the "supervisor" app to get information about my accounts and use the "phone" app to get information about friends and family.
+
+## USEFUL CODE SNIPPETS AND TEMPLATES
+
+[code-00012] Pagination loop template:
+```python
+page_index = 0
+while True:
+    page = apis.<app>.show_<endpoint>(access_token=token, page_index=page_index, page_limit=20)
+    if not page:
+        break
+    # process items in page
+    page_index += 1
+```
+[code-00034] CSV building without external modules:
+```python
+lines = ["Title,Artists"]
+for song in songs:
+    title = song["title"].replace('"', '""')
+    artists = "|".join(a.replace('"', '""') for a in song["artists"])
+    # wrap fields containing commas in double quotes
+    if "," in title:
+        title = f'"{title}"'
+    if "," in artists:
+        artists = f'"{artists}"'
+    lines.append(f"{title},{artists}")
+csv_content = "\n".join(lines)
+```
+## COMMON MISTAKES AND CORRECT STRATEGIES
+
+[cms-00009] Avoid unnecessary API calls: when the `show_playlist_library` response includes a `song_ids` list, use it directly to collect song IDs instead of calling `show_playlist` for each playlist. This reduces API usage and speeds up processing.
+[cms-00014] When `show_album_library` responses include a `song_ids` list, use it directly to collect song IDs instead of calling `show_album` for each album. This avoids extra API calls and speeds up processing.
+[cms-00017] [cms-00015] When using review‑related Spotify endpoints such as `show_song_reviews`, `review_song`, `update_song_review`, etc., remember to pass the `access_token` argument. Omitting it results in a failed request and prevents detection of existing reviews.
+[cms-00019] Missing explicit inclusion/exclusion checks can cause unintended modifications. For example, rating or updating reviews for liked songs when the task only targets non‑liked songs.
+[cms-00024] Do not assume every contact has an email field. If a contact lacks an email, fall back to the phone_number field for identification. Missing this check can cause valid roommate transactions to be skipped.
+[cms-00029] Do not assume that a transaction is unliked just because you haven't liked it in the current script run. Always check the transaction's current like status (e.g., a `liked_by_user` flag or by calling `show_transaction` and inspecting `like_count`/user‑specific fields) before invoking `like_transaction`. Skipping this check can cause redundant API calls or errors.
+[cms-00033] Do not assume parameter names from other APIs. Always consult the API specification (`show_api_doc`) to confirm the exact field names and required arguments before making a call.
+[cms-00041] [cms-00101] When an update_file call returns a 422 error indicating the file does not exist, fall back to create_file instead of aborting. This handles the case where the existence check was stale or the API requires explicit creation.
+[cms-00045] Do not assume a note follows a fixed structure. After extracting data, verify the result is non‑empty. If the extraction yields an empty list, re‑inspect the raw content, adjust the parsing logic (e.g., handle missing dashes, extra spaces), or fall back to a manual keyword search within the note.
+[cms-00066] Do not rely on specific wording (e.g., the word "success") in API success responses. Instead, verify success by checking that the response matches the documented schema (e.g., contains a `message` field) and that no error field is present. This avoids misinterpreting legitimate success messages as failures.
+[cms-00073] Do not assume that `show_recommendations` will always return at least one song. After each paginated request, check if the accumulated list of songs is empty; if so, handle the situation gracefully (e.g., return a message indicating no recommendations are available) instead of proceeding with counting.
+[cms-00079] Do not assume every song object contains a valid `release_date`. Before parsing, check `if song.get("release_date")` and skip items lacking this field or with malformed values. This prevents crashes and ensures only comparable dates are considered.
+[cms-00082] When using `show_playlist_library`, check if each playlist object contains a `song_ids` list. If present, use those IDs directly to collect songs instead of calling `show_playlist` for that playlist. This reduces unnecessary API calls and speeds up processing.
+[cms-00144] Do not assume `create_directory` supports a `recursive` flag. Passing undocumented arguments can cause request failures. Instead, create missing parent directories one by one using separate `create_directory` calls, each with only the documented `access_token` and `directory_path` parameters.
+## PROBLEM-SOLVING HEURISTICS AND WORKFLOWS
+[psw-00002] Remember you can use the variables in your code in subsequent code blocks.
+[psw-00007] Many APIs return items in "pages". Make sure to run through all the pages by looping over `page_index`.
+
+## VERIFICATION CHECKLIST
+
+[vc-00010] After determining the most‑liked song, verify that its `like_count` is greater than or equal to the `like_count` of every other song retrieved. If any tie occurs, ensure a deterministic tie‑breaking rule (e.g., first encountered).
+[vc-00013] [vc-00011] After determining the least‑played song, verify that its `play_count` is less than or equal to the `play_count` of every other song retrieved. If any tie occurs, apply a deterministic tie‑breaking rule (e.g., first encountered) before finalizing the answer.
+[vc-00015] After determining the most‑played song in the album library, verify that its `play_count` is greater than or equal to the `play_count` of every other song retrieved. If any tie occurs, apply a deterministic tie‑breaking rule (e.g., first encountered) before finalizing the answer.
+[vc-00020] After applying ratings, verify that no `song_id` present in the `liked_song_ids` set was created or updated (i.e., ensure liked songs retain their original reviews/ratings).
+[vc-00021] After constructing any call to a review‑related Spotify endpoint (e.g., `show_song_reviews`, `review_song`, `update_song_review`), verify that the `access_token` argument is included in the function call. If it is missing, raise an error or add the token before proceeding.
+[vc-00025] After calling `like_transaction`, verify that the response matches the documented success schema (e.g., contains a `message` field indicating success). If the response deviates, log the transaction_id and handle the error before completing the task.
+[vc-00027] After attempting to like a transaction, confirm that the transaction ID was not previously liked (e.g., by checking your local `liked_tx_ids` set or by inspecting the API response for an indication of duplicate like). If a duplicate like is detected, skip the call and log the transaction ID.
+[vc-00030] Before calling `like_transaction`, verify that the target transaction is not already liked by the user. This can be done by:
+1. Calling `apis.venmo.show_transaction(transaction_id=tx_id, access_token=token)` and checking a field such as `liked_by_user` or confirming that the user's ID is not present in the `likes` list.
+2. If the API does not provide a direct flag, ensure you have a persistent record of previously liked transaction IDs across runs and skip any transaction found in that record.
+Only proceed with `like_transaction` when the transaction is confirmed to be unliked.
+[vc-00035] After calling a destructive endpoint such as `delete_account`, verify that the response contains a success message (e.g., `"User account with all data belonging to it have been deleted."`). If the deletion is confirmed, do not make any further API calls with the now‑invalid token before completing the task.
+[vc-00038] After calling `delete_account` on Spotify, verify that the response contains a success message (e.g., `"message": "User account deleted."`). Ensure no further Spotify API calls are made after this deletion.
+[vc-00043] [vc-00103] After writing a backup file with `create_file` or `update_file`, call `file_system.file_exists` to confirm the file now exists before performing any subsequent destructive actions (e.g., deleting the Spotify account). If the file is not present, raise an error or retry the write operation.
+[vc-00046] After extracting the list of movie titles, assert that the list is not empty. If it is empty, raise an error or re‑run the parsing with a more permissive regex before proceeding.
+[vc-00047] After calling `phone.send_text_message`, verify that the response contains a success indicator (e.g., a `message` field with "Text message sent" or a `text_message_id`). Only call `apis.supervisor.complete_task()` after confirming the send was successful.
+[vc-00049] [vc-00050] After calling `phone.send_text_message`, verify that the response dictionary contains a `message` field whose value includes the phrase "Text message sent" (case‑insensitive) and that a `text_message_id` field is present. Only proceed to `apis.supervisor.complete_task()` if both conditions are satisfied; otherwise log the response and handle the error.
+[vc-00051] After each login API call, verify that the response contains a non‑empty `access_token` field and assign it to a variable. If the token is missing or empty, raise an error before proceeding with any further API calls.
+[vc-00057] After calling `show_transaction_comments` for a transaction, verify that the returned list does not already contain a comment with the exact text you intend to add. If it does, skip the `create_transaction_comment` call and log that the comment already exists.
+[vc-00058] When persisting liked transaction IDs, after each successful `like_transaction` call, write the transaction ID to a durable store (e.g., a JSON file). On script start, read this file and merge its contents into the in‑memory `liked_tx_ids` set before processing.
+[vc-00059] After constructing any Venmo request that includes date filters, verify that the `min_created_at` and `max_created_at` strings are in `YYYY-MM-DD` format and represent the intended inclusive range in the correct timezone.
+[vc-00062] Do not infer whether you have already liked a transaction from the `like_count` field. Instead, check a user‑specific flag (e.g., `liked_by_user`) via `show_transaction` or rely on a persisted set of transaction IDs that you have liked.
+[vc-00063] After calling `create_transaction_comment`, verify that the request used the exact parameter name `comment` as defined in the API spec, and confirm that the response contains a `comment_id` or a success message.
+[vc-00064] After persisting data to a file with `create_file` or `update_file`, verify that the file now exists using `file_exists` (or `show_file`) before proceeding with further actions.
+[vc-00065] After calling `like_transaction`, consider the operation successful if the response contains a `message` field and does not include an error indicator. Do not require the word "success" in the message. Upon success, add the transaction ID to the liked‑transaction set for persistence.
+[vc-00070] After determining the most‑recommended artist, verify that its recommendation count is greater than or equal to the count of every other artist. If a tie occurs, ensure the deterministic tie‑breaking rule defined in the strategy is applied before finalizing the answer.
+[vc-00072] After identifying the least‑recommended artist, verify that its recommendation count is less than or equal to the count of every other artist. If a tie occurs, ensure the alphabetical tie‑break rule (as defined in the strategies) was applied before finalizing the answer.
+[vc-00076] After each `show_recommendations` call, verify that the returned object is either a list of song objects or a dict containing such a list. Confirm that the list is non‑empty before adding to the artist count. If the list is empty for all pages, ensure the final answer reflects that no recommendations were found.
+[vc-00080] After selecting the oldest song, verify that its parsed `release_date` (in UTC) is less than or equal to the `release_date` of every other song examined. If any other song has the same earliest date, ensure the deterministic tie‑breaking rule (e.g., alphabetical title) was applied before finalizing the answer.
+[vc-00086] After collecting all song IDs from the three libraries, verify that the resulting set is not empty. If it is empty, raise a clear error or return a descriptive message (e.g., "No songs with a valid release date were found.") before attempting to fetch song details.
+[vc-00089] After calling `venmo.create_payment_request`, confirm that the response contains the `payment_request_id` field (as defined in the API spec). If it is missing, treat the request as failed, log the full response, and do not add the request to the success list.
+[vc-00095] After calling `venmo.create_payment_request`, verify that the response contains the `payment_request_id` field as defined in the API schema. If the field is missing, treat the request as failed, log the full response, and do not add the request to the success list.
+[vc-00102] Verify that `share_amounts` (the dict of coworker → amount) is not empty after parsing the Simple Note. If empty, raise an error before proceeding to payment requests.
+[vc-00103] Confirm that all identifiers in the `already_paid_ids` set are consistently normalized (emails lower‑cased, phone numbers digit‑only) before performing membership checks.
+[vc-00104] After each `venmo.create_payment_request`, check that the response includes a `payment_request_id` and lacks any error indicator. Only then add the ID to the persisted list of created requests.
+[vc-00109] After constructing a `venmo.show_transactions` request with date filters, verify that `min_created_at` and `max_created_at` strings are in `YYYY-MM-DD` format and correctly represent the intended inclusive range (e.g., start of current year to today).
+[vc-00110] When summing transaction amounts, ensure each `amount` value is numeric. Convert with `float()` inside a try/except block; if conversion fails, treat the amount as 0 and log a warning.
+[vc-00112] After constructing a `venmo.show_transactions` request, verify that the `direction` argument ('sent' or 'received') correctly reflects the intended flow described in the task wording. If the task asks for money the user sent to a group, the direction must be 'sent'; if it asks for money the user received from a group, the direction must be 'received'. Log a warning and abort if the mapping is ambiguous.
+[vc-00114] [vc-00113] After computing the final numeric result (e.g., total_amount), verify that the value passed to `apis.supervisor.complete_task(answer=…)` is the variable itself, not a hard‑coded literal. You can assert `answer == total_amount` before calling the API.
+[vc-00117] After each `apis.spotify.show_song` call, verify that the response is not an authentication error (e.g., does not contain a `message` field indicating failure). If authentication failed, raise an error before proceeding.
+[vc-00118] After calling `apis.spotify.follow_artist`, confirm that the response includes a `message` field indicating success and does not contain an error field. If the success message is missing, log the `artist_id` and treat the follow as failed.
+[vc-00121] After implementing pagination for any Spotify `show_*_library` call, verify that the `page_limit` argument was set to the maximum allowed value (20). If the argument is missing or set to a lower value, log a warning and adjust the call to use `page_limit=20` to minimize API requests.
+[vc-00122] Before invoking `apis.spotify.follow_artist` for a set of artist IDs, assert that the set of target artist IDs is non‑empty. If the set is empty, log an informative message and skip the follow loop to avoid unnecessary API calls.
+[vc-00124] After each `apis.spotify.follow_artist` call, verify that the response contains a `message` field indicating success and no error field. Then ensure the followed artist_id is written to the persisted store (e.g., update the JSON file). If the response indicates failure, log the artist_id and do not add it to the store.
+[vc-00128] After summing the monetary values, verify that `total_cost` is greater than or equal to zero and that at least one file contributed to the sum (e.g., maintain a counter of successfully parsed files). If no contributions were found, raise an error or return a descriptive message before calling `complete_task`.
+[vc-00129] When completing the task with a numeric answer, ensure the value passed to `apis.supervisor.complete_task(answer=…)` is the variable holding the computed total (e.g., `total_cost`) and not a hard‑coded literal. Optionally assert `answer == total_cost` before the call.
+[vc-00131] Before calling `apis.supervisor.complete_task`, assert that at least one relevant file was processed (e.g., `assert processed_files > 0`) to guarantee the result is based on actual data and not an empty aggregation.
+[vc-00135] [vc-00132] After filtering and processing bill files, assert that `processed_files > 0`. If no relevant files are found, raise a clear error or return a descriptive message instead of completing the task with a zero total.
+[vc-00136] [vc-00133] After summing the extracted amounts, verify that `total_cost >= 0`. If the total is negative (which would indicate a parsing error), log the issue and abort the task.
+[vc-00142] After creating each vacation sub‑directory, call `file_system.directory_exists` to confirm it now exists before attempting to move files into it.
+[vc-00143] After moving a file, verify that `file_system.file_exists` returns true for the destination path. If the check fails, log the file path and raise an error before proceeding.
+[vc-00148] After calling `file_system.move_file`, verify that `file_system.file_exists` returns `True` for the destination path **and** `False` for the source path. Log an error and raise an exception if either check fails.
+[vc-00149] After creating a directory with `file_system.create_directory`, immediately call `file_system.directory_exists` to confirm the directory now exists. If the check fails, raise a clear error before proceeding with any file operations.
+[vc-00154] After calling `move_file`, verify the operation succeeded by (a) checking the response contains a `message` field and the expected `destination_file_path`, (b) confirming the source file no longer exists with `file_exists`, and (c) confirming the destination file now exists with `file_exists`. Log any discrepancy and raise an error.
+[vc-00155] After creating a directory with `create_directory`, verify its existence using `directory_exists`. If the directory does not exist, raise an error before proceeding with further file operations.
+[vc-00157] After each `show_song` (or similar retrieval) call, assert that the response contains the expected fields (e.g., `release_date`). If the response contains an error field (`message`) or lacks required fields, treat it as a failed call, log the song_id, and continue without processing that item.
+[vc-00158] After calling `remove_song_from_library` or `remove_song_from_playlist`, verify that the response includes a success `message` field as defined in the API schema. If the `message` is missing or an error field is present, log the failure and do not count the removal as successful.
+[vc-00159] After constructing any Spotify data‑retrieval API call (e.g., `show_song`, `show_playlist`, `show_album`, `show_song_library`), verify that the `access_token` argument is included in the function call. If the token is missing, raise an error before executing the call.
+[vc-00162] [vc-00170] After every API call, verify that the response conforms to the documented success schema (e.g., contains a 'message' field or other success indicator and lacks any error field). If the response indicates failure, log the full response, raise a clear error, and abort or handle the failure before using any returned data.
+[vc-00166] After `create_playlist`, assert that the response schema contains both a `message` field and a `playlist_id` field. If either is missing, log the full response and raise an error before proceeding.
+[vc-00167] After each `add_song_to_playlist` call, verify that the response includes a `message` field indicating success. If the field is absent or an error field is present, log the song_id and playlist_id, and abort further additions.
+[vc-00168] After `play_music`, confirm that the response contains a `message` field (e.g., "Song ... is now playing.") and, when applicable, a `song_id` field. Treat the call as failed if these are missing or an error field is present.
+[vc-00171] After calling `create_playlist`, verify that the response contains both a `message` field and a `playlist_id` field. If either is missing, log the full response and raise an error before proceeding.
+[vc-00172] After each `add_song_to_playlist` call, check that the response includes a `message` field indicating success. If the field is absent or an error field is present, log the `song_id` and `playlist_id`, and raise an error to avoid silent failures.
+[vc-00173] After selecting songs for the workout playlist, assert that the accumulated total duration (in seconds) is greater than or equal to the required workout duration. If the total is insufficient, raise a clear error indicating that no suitable playlist could be built.
+[vc-00174] When retrieving song details via `show_song`, always include the `access_token` argument even if the spec does not list it, and verify that the `duration` field exists and is a number. If `duration` is missing or not numeric, skip that song and log a warning.
+[vc-00178] After each removal API call, re‑fetch the corresponding library page (song or album) and verify that the removed ID no longer appears. If the ID is still present, log a warning and optionally retry the removal. This double‑check ensures that deletions were effective.
+[vc-00179] When building keep sets, assert that the sets are non‑empty before proceeding with removal loops. If a keep set is unexpectedly empty (e.g., no liked or downloaded songs), raise a clear error to avoid wiping the entire library unintentionally.
+[vc-00184] After each `remove_song_from_library` or `remove_album_from_library` call, re‑fetch the corresponding library page (`show_song_library` or `show_album_library`) and verify that the removed ID no longer appears. Log a warning and optionally retry if the ID is still present.
+[vc-00185] For all paginated Spotify calls (`show_song_library`, `show_album_library`, `show_liked_songs`, `show_liked_albums`, etc.), ensure the `page_limit` argument is set to the maximum allowed value (20) to minimize the number of API requests and guarantee complete coverage.
+[vc-00186] When building sets of IDs (liked, downloaded, keep, remove), always use a Python `set` to guarantee uniqueness and avoid duplicate API calls.
+[vc-00187] After any API call, perform a generic success check: confirm the presence of the expected success fields (e.g., `message`) and the absence of an error field. If the check fails, log the full response, raise a clear exception, and abort further processing.
+[vc-00189] After calling `compress_directory`, verify that the compressed file was created by checking `file_system.file_exists` with the same `access_token` and the absolute `compressed_file_path`. Log an error and abort if the file does not exist.
+[vc-00190] [vc-00190] After calling `compress_directory` with `delete_directory=True`, verify that the original directory no longer exists by calling `file_system.directory_exists` (or `file_system.file_exists` for a known file inside). If the directory still exists, log an error and raise an exception.
+[vc-00194] After each `compress_directory` call with `delete_directory=True`, confirm the source directory has been removed using `file_system.directory_exists`. Also confirm the compressed zip file exists with `file_system.file_exists`. If either check fails, log the discrepancy and abort the task.
+[vc-00200] After `create_playlist`, assert that the response includes both a `message` field and a `playlist_id`. If either is missing, raise an error before proceeding.
+[vc-00201] After each `add_song_to_playlist` call, verify the response contains a success `message`. Optionally, fetch the playlist via `show_playlist` and confirm the `song_ids` list now includes the added song.
+[vc-00202] If no songs satisfy the genre and release‑date filters, assert that the task either creates no playlist or returns a descriptive answer, and ensure no subsequent API calls (e.g., `add_song_to_playlist`) are made.
+[vc-00205] After searching for an existing playlist, verify that `target_playlist_id` is set when a matching playlist is found. If not found, create the playlist and confirm the response contains both a `message` and a `playlist_id` before proceeding to add songs.
+[vc-00207] After calling `like_song`, verify that the response contains a `message` field indicating success and does not include any error field. Only consider the like operation successful if both conditions are met; otherwise log the full response and handle the failure before proceeding.
+[vc-00209] After iterating over the song queue and performing actions, verify that no song with a `position` greater than the current song's position (or with `is_current` == false after the first true) was processed. This ensures only songs that have already been played (including the current one) were acted upon.
+[vc-00212] After calling `like_song`, consider the operation successful if the response is a dict containing a `message` field and does **not** contain an `error` field. Do NOT require the word "success" in the message; simply verify the schema matches the documented success response.
+[vc-00213] After building the set of liked songs, assert that the set was constructed by fully paginating `show_liked_songs` (i.e., `page_limit` was set to 20 and the loop terminated on an empty page). If the set size seems unexpectedly low, raise a warning.
+[vc-00214] After calling `venmo.create_transaction`, verify that the response contains both a `message` field indicating success and a `transaction_id` field, and that no error field is present. If the verification fails, log the full response and abort or handle the error before proceeding.
+[vc-00215] After calling `venmo.create_transaction`, verify that the response contains both a `message` field and a `transaction_id` field, and that no error field is present. If either field is missing or an error is indicated, log the full response, treat the transaction as failed, and do not consider the refund successful.
+[vc-00223] When iterating over payment requests, ensure each request's `receiver` object exists and contains an `email` field before matching; guard with `if receiver and 'email' in receiver`.
+[vc-00224] When selecting the most recent approved payment request, if two requests share the same `created_at` timestamp, apply a deterministic tie‑breaking rule such as choosing the request with the higher `payment_request_id`.
+[vc-00225] Optionally verify that the Venmo balance reflects the refund by calling `show_venmo_balance` after `create_transaction` and confirming the expected change in the balance.
+## TROUBLESHOOTING AND PITFALLS:
+
+## OTHERS
+[misc-00003] Remember that the email addresses, access tokens and variables (e.g. spotify_password) in the example above are not valid anymore.
+[misc-00008] Once you have completed the task, make sure to call apis.supervisor.complete_task(). If the task asked for some information, return it as the answer argument, i.e. call apis.supervisor.complete_task(answer=<answer>). Many tasks do not require an answer, so in those cases, just call apis.supervisor.complete_task() i.e. do not pass any argument.
+[misc-00011] Always inspect the API response schema via `show_api_doc` to identify which fields contain the required data (e.g., `song_ids` in playlist library, `like_count` in song details). This helps avoid extra API calls and clarifies data extraction steps.

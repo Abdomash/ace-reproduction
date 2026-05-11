@@ -1,0 +1,39 @@
+## STRATEGIES AND HARD RULES
+[shr-00001] Make sure to end code blocks with ``` followed by a newline(\n).
+[shr-00005] Always look at API specifications (using apis.api_docs.show_api_doc) before calling an API.
+[shr-00006] Write small chunks of code and only one chunk of code in every step. Make sure everything is working correctly before making any irreversible change.
+
+[shr-00009] When searching for notes (or any searchable resource) that may have multiple matches, always retrieve **all** matching items. Then disambiguate by:
+- Checking the `created_at` timestamp (choose the most recent if it aligns with the described event).
+- Inspecting the title for keywords (e.g., "Expense Shares", "Dinner", "Bill").
+- Optionally, previewing the content of each candidate note to confirm it contains the expected data before proceeding.
+[shr-00014] [shr-00010] When a task mentions a relative date (e.g., "this year", "today", "last month"), compute the actual date at runtime using Python's `datetime` module (e.g., `from datetime import datetime; current_year = datetime.now().year; min_created_at = f"{current_year}-01-01"`). Never hard‑code a specific year or month; always derive it from the current system time to match the environment's calendar.
+[shr-00019] [shr-00017] If a login attempt fails (e.g., 401 Unauthorized) using the primary identifier (phone number), automatically retry using the secondary identifier (email address) before aborting.
+[shr-00021] [shr-00018] When filtering contacts by relationship, normalize relationship strings to lower case before comparison to handle case variations (e.g., "Roommate" vs "roommate").
+## APIs TO USE FOR SPECIFIC INFORMATION
+[api-00004] You can use the "supervisor" app to get information about my accounts and use the "phone" app to get information about friends and family.
+
+## USEFUL CODE SNIPPETS AND TEMPLATES
+
+## COMMON MISTAKES AND CORRECT STRATEGIES
+
+[cms-00010] Do **not** assume the first result from a search API is the correct one. Verify by examining all results, especially when the task description is ambiguous or when multiple notes share similar keywords.
+[cms-00013] Do **not** rely on a single date‑range query to detect prior Venmo payments. Payments can be sent on any date, so using a fixed `min_created_at`/`max_created_at` may miss them. Always verify per‑recipient with the `user_email` filter and paginate through all results.
+[cms-00015] [cms-00014] Do **not** hardcode calendar values (year, month, day) for relative time queries. Instead, dynamically calculate them using `datetime.now()` (or equivalent) and format them as required by the API (YYYY‑MM‑DD). This prevents mismatches when the environment's current date differs from the assumed static value.
+[cms-00016] [cms-00016] Do **not** assume that a single page of results from `search_contacts` contains all relevant contacts. The `search_contacts` API is paginated (default page_limit=5). Always loop over `page_index` until an empty page is returned to collect the complete set of contacts, especially when filtering by relationship (e.g., `relationship='coworker'`).
+[cms-00018] [cms-00017] When a task asks for "sent or received" amounts, the request is ambiguous. Default to providing both totals (sent and received) in a clear structure (e.g., a dict) unless the wording explicitly requests a combined figure. If unsure, include both values and a brief note explaining the interpretation.
+## PROBLEM-SOLVING HEURISTICS AND WORKFLOWS
+[psw-00002] Remember you can use the variables in your code in subsequent code blocks.
+[psw-00007] Many APIs return items in "pages". Make sure to run through all the pages by looping over `page_index`.
+
+## VERIFICATION CHECKLIST
+
+[vc-00011] When verifying whether friends have already paid via Venmo, loop over **all pages** of `show_transactions` (using `page_index` and optionally `page_limit`) for each friend to ensure no transaction is missed before deciding to send a payment request.
+[vc-00012] When verifying Venmo payments for a list of people, query `show_transactions` separately for each person's email using the `user_email` filter and `direction='received'`. Loop over all pages (`page_index`) without applying narrow `min_created_at`/`max_created_at` date ranges, because payments may have occurred on any date. Only consider a person as having paid if a transaction is found in any page of their filtered results.
+[vc-00017] [vc-00013] Before aggregating Venmo transaction amounts for coworkers, verify that the coworker list retrieved via `phone.search_contacts` has been fully paginated. Loop over `page_index` (and optionally increase `page_limit` up to the allowed maximum) until no more contacts are returned, then proceed with the financial calculations.
+[vc-00020] [vc-00018] Verify that the final answer's format matches the task's phrasing: if the task asks for a single monetary amount, return a single number (rounded to two decimals); if it asks for separate sent/received values, return a dictionary with keys "total_sent" and "total_received". Ensure rounding is applied consistently.
+## TROUBLESHOOTING AND PITFALLS:
+
+## OTHERS
+[misc-00003] Remember that the email addresses, access tokens and variables (e.g. spotify_password) in the example above are not valid anymore.
+[misc-00008] Once you have completed the task, make sure to call apis.supervisor.complete_task(). If the task asked for some information, return it as the answer argument, i.e. call apis.supervisor.complete_task(answer=<answer>). Many tasks do not require an answer, so in those cases, just call apis.supervisor.complete_task() i.e. do not pass any argument.

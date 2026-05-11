@@ -1,0 +1,68 @@
+{
+  "active_runtime_seconds": 39394.746136197005,
+  "campaign_id": null,
+  "checkpointing_enabled": true,
+  "completed_at": "2026-05-11T11:46:01.123440+00:00",
+  "config_id": null,
+  "config_name": "AppWorld Test Normal Representative / Expensive Reflector / cheap=openai/gpt-oss-120b expensive=deepseek/deepseek-v4-flash",
+  "current_stage": "eval-normal",
+  "dataset": "full",
+  "enabled_stages": [
+    "adapt",
+    "eval-normal"
+  ],
+  "evaluation_run": {
+    "ran": false,
+    "reason": "disabled"
+  },
+  "evaluation_size_bytes": 247368,
+  "failure_reason": null,
+  "has_checkpoints": true,
+  "last_checkpoint_at": "2026-05-11T11:38:22.104707+00:00",
+  "last_completed_stage": "eval-normal",
+  "last_resumed_at": "2026-05-11T00:49:26.376407+00:00",
+  "mode": "full",
+  "models": {
+    "curator": {
+      "model": "openai/gpt-oss-120b",
+      "provider": "openrouter"
+    },
+    "generator": {
+      "model": "openai/gpt-oss-120b",
+      "provider": "openrouter"
+    },
+    "reflector": {
+      "model": "deepseek/deepseek-v4-flash",
+      "provider": "openrouter"
+    }
+  },
+  "post_export_evaluation_size_bytes": 123684,
+  "post_export_size_bytes": 890708891,
+  "post_export_tasks_size_bytes": 0,
+  "post_export_telemetry_size_bytes": 0,
+  "prune": {
+    "bytes_removed": 0,
+    "removed": [],
+    "removed_count": 0
+  },
+  "resolved_models": null,
+  "resume_count": 1,
+  "resume_enabled": true,
+  "run_dir": "/home/abdo/ace-reproduction/results/ace-appworld/subset/appworld_test_normal_repr__expensive_reflector__cheap-openai-gpt-oss-120b__exp-deepseek-deepseek-v4-flash/full_seed-42_20260511_005120",
+  "sample_id": null,
+  "sample_kind": null,
+  "sample_manifest_path": null,
+  "stage_count": 2,
+  "started_at": "2026-05-10T21:51:20.737576+00:00",
+  "status": "completed",
+  "task_directory_count": 150,
+  "task_manifests": {
+    "adapt": null,
+    "eval-challenge": null,
+    "eval-normal": "/home/abdo/ace-reproduction/runners/campaigns/ace_repr_v1/samples/appworld_test_normal_repr.json"
+  },
+  "tasks_size_bytes": 454778717,
+  "telemetry_size_bytes": 10429582,
+  "tier_models": null,
+  "total_size_bytes": 890708891
+}

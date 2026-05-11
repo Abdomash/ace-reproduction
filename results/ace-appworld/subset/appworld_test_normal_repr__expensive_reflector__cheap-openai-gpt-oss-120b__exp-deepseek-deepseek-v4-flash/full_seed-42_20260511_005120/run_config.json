@@ -1,0 +1,37 @@
+{
+  "run_id": "full_seed-42_20260511_005120",
+  "mode": "full",
+  "task_name": "appworld",
+  "config_name": "AppWorld Test Normal Representative / Expensive Reflector / cheap=openai/gpt-oss-120b expensive=deepseek/deepseek-v4-flash",
+  "seed": 42,
+  "checkpoint_enabled": true,
+  "resume_from": "/home/abdo/ace-reproduction/results/ace-appworld/subset/appworld_test_normal_repr__expensive_reflector__cheap-openai-gpt-oss-120b__exp-deepseek-deepseek-v4-flash/full_seed-42_20260511_005120",
+  "stop_after_stage": null,
+  "stop_after_task": null,
+  "checkpoint_every_task": 1,
+  "appworld_root": "/home/abdo/ace-reproduction/projects/ace-appworld",
+  "save_path": "/home/abdo/ace-reproduction/results/ace-appworld/subset/appworld_test_normal_repr__expensive_reflector__cheap-openai-gpt-oss-120b__exp-deepseek-deepseek-v4-flash/full_seed-42_20260511_005120",
+  "models": {
+    "generator": {
+      "provider": "openrouter",
+      "model": "openai/gpt-oss-120b"
+    },
+    "reflector": {
+      "provider": "openrouter",
+      "model": "deepseek/deepseek-v4-flash"
+    },
+    "curator": {
+      "provider": "openrouter",
+      "model": "openai/gpt-oss-120b"
+    }
+  },
+  "enabled_stages": [
+    "adapt",
+    "eval-normal"
+  ],
+  "task_manifests": {
+    "adapt": null,
+    "eval-normal": "/home/abdo/ace-reproduction/runners/campaigns/ace_repr_v1/samples/appworld_test_normal_repr.json",
+    "eval-challenge": null
+  }
+}

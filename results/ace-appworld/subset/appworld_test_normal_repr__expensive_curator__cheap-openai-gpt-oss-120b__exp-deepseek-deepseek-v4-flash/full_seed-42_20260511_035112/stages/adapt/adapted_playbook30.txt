@@ -1,0 +1,401 @@
+## STRATEGIES AND HARD RULES
+[shr-00001] Make sure to end code blocks with ``` followed by a newline(\n).
+[shr-00005] Always look at API specifications (using apis.api_docs.show_api_doc) before calling an API.
+[shr-00006] Write small chunks of code and only one chunk of code in every step. Make sure everything is working correctly before making any irreversible change.
+
+[shr-00031] When a text message contains a specific request (e.g., 'recommendations for a movie from David Fincher'), parse the message to identify the specific criteria (director, genre, etc.) and filter your data accordingly. Do not send all available recommendations; only send those that match the explicit request.
+[shr-00056] When a task uses ambiguous financial language like 'received to [someone]' (e.g., 'received to my coworkers'), interpret it as money you sent to that person (outgoing), not money you received from them. Use `show_transactions` with `direction='sent'` and filter by the receiver's email (not the sender's). If the phrase is 'received from [someone]', use `direction='received'` and filter by the sender's email. Always clarify the intended direction by parsing the preposition ('to' vs 'from') and the context of the sentence.
+## APIs TO USE FOR SPECIFIC INFORMATION
+[api-00004] You can use the "supervisor" app to get information about my accounts and use the "phone" app to get information about friends and family.
+
+[api-00016] When using the Phone app's `search_contacts` API, you can filter by the `relationship` parameter (e.g., 'roommate', 'friend', 'family') to directly retrieve contacts with that relationship, rather than searching by name and then filtering manually.
+[api-00019] For tasks involving a Venmo 'social feed', use `show_social_feed` (not `show_transactions`). `show_transactions` returns only transactions that you directly sent or received, while `show_social_feed` returns transactions of your friends. If the task says 'social feed', always prefer `show_social_feed`.
+[api-00025] The file_system app requires its own authentication. Retrieve the file_system password from the supervisor app and call `apis.file_system.login(username=<email>, password=<password>)` to obtain an access token. Use this token in all subsequent file_system API calls (e.g., `create_directory`, `create_file`, `file_exists`).
+[api-00033] For tasks involving replying to a text message request with data from a note-taking app (e.g., Simple Note), follow this workflow: (1) use the Phone app to find the contact and their message, (2) parse the message to understand the specific request, (3) log in to the note-taking app, (4) search for the relevant note, (5) retrieve the note content, (6) filter/parse the content based on the request criteria, (7) send the reply via the Phone app's send_text_message API.
+[api-00037] For tasks involving payments you received (e.g., 'payments I received from coworkers'), use `show_transactions` with `direction='received'` and date filters (`min_created_at`, `max_created_at`) to retrieve only relevant transactions. Do not use `show_social_feed` for this purpose, as it returns transactions of friends, not your own received payments.
+## USEFUL CODE SNIPPETS AND TEMPLATES
+
+[code-00011] Collecting all unique songs from the album library and fetching their details:
+```python
+# After paginating through show_album_library and storing albums in all_albums
+song_ids = set()
+for album in all_albums:
+    for sid in album.get("song_ids", []):
+        song_ids.add(sid)
+
+song_details = {}
+for sid in song_ids:
+    song_details[sid] = apis.spotify.show_song(song_id=sid)
+```
+[code-00017] Getting today's date and comparing with ISO timestamp from API responses:
+```python
+import datetime
+today_str = datetime.date.today().isoformat()  # e.g., '2023-05-18'
+# For a transaction with 'created_at' field like '2023-05-18T10:17:40', extract date:
+txn_date = txn.get('created_at', '')[:10]
+if txn_date == today_str:
+    # process today's transaction
+```
+[code-00020] When you need to identify siblings (or any relationship group) across multiple apps (e.g., Phone contacts and Venmo transactions), first build a comprehensive set of identifiers from the Phone app: collect both email addresses and full names (lowercase) for all matching contacts. Then, when filtering Venmo transactions, check whether the sender or receiver matches any of those identifiers (email or name). This ensures you catch transactions even when the Venmo profile name differs slightly from the contact name. Example:
+
+```python
+from phone: for each contact, sibling_emails.add(contact['email']); sibling_names.add(f"{contact['first_name']} {contact['last_name']}".lower())
+# Later, in Venmo filtering:
+sender_name = txn['sender']['name'].strip().lower()
+receiver_name = txn['receiver']['name'].strip().lower()
+if (sender_email in sibling_emails or receiver_email in sibling_emails) or (sender_name in sibling_names or receiver_name in sibling_names):
+    # sibling is involved
+```
+[code-00021] Exporting all unique songs from song library, album library, and playlists to CSV with '|'-separated artists:
+```python
+# After logging in and obtaining spotify_token
+song_ids = set()
+
+# 1. Song library
+page = 0
+while True:
+    songs = apis.spotify.show_song_library(access_token=spotify_token, page_index=page)
+    if not songs: break
+    for s in songs:
+        song_ids.add(s['song_id'])
+    page += 1
+
+# 2. Album library
+page = 0
+while True:
+    albums = apis.spotify.show_album_library(access_token=spotify_token, page_index=page)
+    if not albums: break
+    for album in albums:
+        for sid in album.get('song_ids', []):
+            song_ids.add(sid)
+    page += 1
+
+# 3. All playlists
+page = 0
+while True:
+    pl_list = apis.spotify.show_playlist_library(access_token=spotify_token, page_index=page)
+    if not pl_list: break
+    for pl in pl_list:
+        pl_detail = apis.spotify.show_playlist(playlist_id=pl['playlist_id'], access_token=spotify_token)
+        for song in pl_detail.get('songs', []):
+            song_ids.add(song['id'])
+    page += 1
+
+# Fetch details and build CSV rows
+csv_rows = ['Title,Artists']
+for sid in song_ids:
+    info = apis.spotify.show_song(song_id=sid)
+    title = info.get('title', '').replace('"', '""')
+    artists = '|'.join(a.get('name', '').replace('"', '""') for a in info.get('artists', []))
+    csv_rows.append(f'"{title}","{artists}"')
+csv_content = '\n'.join(csv_rows)
+```
+[code-00027] Writing a CSV file to the file system with proper authentication:
+```python
+# Get file_system password and login
+passwords = apis.supervisor.show_account_passwords()
+fs_password = next(p['password'] for p in passwords if p['account_name'] == 'file_system')
+fs_login = apis.file_system.login(username='your_email', password=fs_password)
+fs_token = fs_login['access_token']
+
+# Create directory (if needed)
+apis.file_system.create_directory(directory_path='~/backups', access_token=fs_token, recursive=True)
+
+# Create file with content
+apis.file_system.create_file(file_path='~/backups/spotify_library.csv', access_token=fs_token, content=csv_content, overwrite=True)
+
+# Verify file exists
+result = apis.file_system.file_exists(file_path='~/backups/spotify_library.csv', access_token=fs_token)
+if not result.get('exists'):
+    raise RuntimeError('File not created')
+```
+[code-00029] When collecting song IDs from playlists, check if the playlist library response already contains a `song_ids` field. If it does, use it directly instead of calling `show_playlist` for each playlist. This reduces API calls and speeds up the process. Example:
+```python
+# After paginating through show_playlist_library and storing playlists in all_playlists
+for pl in all_playlists:
+    for sid in pl.get('song_ids', []):
+        song_ids.add(sid)
+```
+Only fall back to `show_playlist` if the `song_ids` field is not present in the playlist library response.
+[code-00032] Parsing structured note content with title lines and attribute lines (e.g., ' - director: ...'):
+```python
+content = note['content']
+lines = content.splitlines()
+items = []
+current_title = None
+for line in lines:
+    stripped = line.strip()
+    if not stripped:
+        continue
+    if not stripped.startswith('-') and not stripped.startswith('director:') and not stripped.startswith('genre:'):
+        current_title = stripped
+    elif stripped.startswith('- director:'):
+        director = stripped.split(':', 1)[1].strip()
+        if 'David Fincher' in director and current_title:
+            items.append(current_title)
+```
+[code-00038] Processing Venmo payments received from a specific relationship group (e.g., coworkers) in a date range:
+```python
+# After logging into Phone and Venmo, and obtaining access tokens
+# 1. Get coworker emails from Phone contacts
+coworker_emails = set()
+page = 0
+while True:
+    contacts_page = apis.phone.search_contacts(access_token=phone_access_token, relationship='coworker', page_index=page)
+    if not contacts_page: break
+    for c in contacts_page:
+        if c.get('email'): coworker_emails.add(c['email'].lower())
+    page += 1
+
+# 2. Compute date range (last 5 days inclusive)
+import datetime
+today = datetime.date.today()
+min_date = (today - datetime.timedelta(days=4)).isoformat()
+max_date = today.isoformat()
+
+# 3. Get received transactions in date range
+received_txns = []
+page = 0
+while True:
+    txns_page = apis.venmo.show_transactions(access_token=venmo_access_token, direction='received', min_created_at=min_date, max_created_at=max_date, page_index=page)
+    if not txns_page: break
+    received_txns.extend(txns_page)
+    page += 1
+
+# 4. Filter by coworker sender email
+coworker_txns = [txn for txn in received_txns if txn.get('sender', {}).get('email', '').lower() in coworker_emails]
+
+# 5. Comment and like each transaction
+for txn in coworker_txns:
+    txn_id = txn['transaction_id']
+    comment_resp = apis.venmo.create_transaction_comment(transaction_id=txn_id, comment='Thank you!', access_token=venmo_access_token)
+    # optional: verify comment_resp.get('message') == 'Comment created'
+    like_resp = apis.venmo.like_transaction(transaction_id=txn_id, access_token=venmo_access_token)
+    # optional: verify like_resp.get('message') == 'Transaction liked.'
+```
+[code-00040] Determining the most recommended artist from Spotify recommendations:
+```python
+# After logging in and obtaining spotify_access_token
+recommended_songs = []
+page_index = 0
+while True:
+    rec_page = apis.spotify.show_recommendations(
+        access_token=spotify_access_token,
+        page_index=page_index,
+        page_limit=20  # max allowed per page
+    )
+    if not rec_page:
+        break
+    recommended_songs.extend(rec_page)
+    page_index += 1
+
+# Count artist appearances across all recommended songs
+artist_counts = {}
+for song in recommended_songs:
+    for artist in song.get("artists", []):
+        name = artist.get("name")
+        if name:
+            artist_counts[name] = artist_counts.get(name, 0) + 1
+
+# Find the artist with the highest count
+most_recommended_artist = max(artist_counts, key=artist_counts.get)
+```
+[code-00042] Determining the least recommended artist from Spotify recommendations (with tie-breaking):
+```python
+# After logging in and obtaining spotify_access_token
+recommended_songs = []
+page_index = 0
+while True:
+    rec_page = apis.spotify.show_recommendations(
+        access_token=spotify_access_token,
+        page_index=page_index,
+        page_limit=20  # max allowed per page
+    )
+    if not rec_page:
+        break
+    recommended_songs.extend(rec_page)
+    page_index += 1
+
+# Count artist appearances across all recommended songs
+artist_counts = {}
+for song in recommended_songs:
+    for artist in song.get("artists", []):
+        name = artist.get("name")
+        if name:
+            artist_counts[name] = artist_counts.get(name, 0) + 1
+
+# Find the artist with the lowest count; break ties alphabetically
+min_count = min(artist_counts.values())
+least_artists = [a for a, cnt in artist_counts.items() if cnt == min_count]
+least_recommended_artist = sorted(least_artists)[0]
+```
+[code-00043] Finding the oldest released song across song library, album library, and playlists:
+```python
+import datetime
+
+def paginate(endpoint_func, **kwargs):
+    items = []
+    page = 0
+    while True:
+        page_items = endpoint_func(access_token=spotify_token, page_index=page, page_limit=20, **kwargs)
+        if not page_items:
+            break
+        items.extend(page_items)
+        page += 1
+    return items
+
+# Collect all unique song IDs
+song_ids = set()
+
+# 1. Song library
+for s in paginate(apis.spotify.show_song_library):
+    song_ids.add(s['song_id'])
+
+# 2. Album library
+for album in paginate(apis.spotify.show_album_library):
+    for sid in album.get('song_ids', []):
+        song_ids.add(sid)
+
+# 3. Playlist library (use song_ids field directly if present)
+playlists = paginate(apis.spotify.show_playlist_library)
+for pl in playlists:
+    for sid in pl.get('song_ids', []):
+        song_ids.add(sid)
+
+# Find oldest song
+oldest_song = None
+oldest_date = None
+
+for sid in song_ids:
+    info = apis.spotify.show_song(song_id=sid)
+    rel_str = info.get('release_date')
+    if not rel_str:
+        continue  # skip songs without release date
+    try:
+        rel_date = datetime.datetime.strptime(rel_str[:10], "%Y-%m-%d").date()
+    except ValueError:
+        continue  # skip malformed dates
+    if oldest_date is None or rel_date < oldest_date:
+        oldest_date = rel_date
+        oldest_song = info
+
+if oldest_song:
+    print(f"Oldest song: {oldest_song['title']} (released on {oldest_date})")
+else:
+    print("No song with a valid release date found.")
+```
+[code-00048] When you need to send payment requests to friends listed in a note (e.g., dinner shares), first use the Phone app's `search_contacts` to find each friend's email address. Then use that email to search Venmo users (or directly as the `user_email` parameter if it matches). This ensures reliable identity resolution and avoids relying on name-based Venmo searches which may be ambiguous. Example:
+```python
+# After logging into Phone and obtaining phone_access_token
+friend_emails = {}
+for name in share_amounts.keys():
+    contacts = apis.phone.search_contacts(access_token=phone_access_token, query=name)
+    if contacts:
+        friend_emails[name] = contacts[0].get('email')
+# Then use friend_emails to look up Venmo users or directly create payment requests
+```
+[code-00053] Computing the start of the current year for date filtering (e.g., 'since 1st Jan of this year'):
+```python
+import datetime
+start_date = datetime.date.today().replace(month=1, day=1).isoformat()  # e.g. '2024-01-01'
+```
+Then pass `min_created_at=start_date` to `show_transactions` or similar APIs.
+[code-00058] Computing the start of a specific month (e.g., March 1) for date filtering:
+```python
+import datetime
+start_date = datetime.date.today().replace(month=3, day=1).isoformat()  # e.g. '2024-03-01'
+```
+Then pass `min_created_at=start_date` to `show_transactions` or similar APIs.
+[code-00059] Summing Venmo transactions with a specific relationship group (e.g., roommates) for both sent and received directions in a date range:
+```python
+# After obtaining roommate_emails set from Phone app and venmo_access_token
+import datetime
+start_date = datetime.date.today().replace(month=3, day=1).isoformat()
+
+def sum_amounts(transactions, role, roommate_emails):
+    total = 0.0
+    for txn in transactions:
+        amount = txn.get('amount')
+        if not isinstance(amount, (int, float)):
+            continue
+        if role == 'sent':
+            counterpart_email = txn.get('receiver', {}).get('email', '').lower()
+        else:
+            counterpart_email = txn.get('sender', {}).get('email', '').lower()
+        if counterpart_email in roommate_emails:
+            total += float(amount)
+    return total
+
+sent_total = 0.0
+page = 0
+while True:
+    sent_page = apis.venmo.show_transactions(access_token=venmo_access_token, direction='sent', min_created_at=start_date, page_index=page, page_limit=20)
+    if not sent_page: break
+    sent_total += sum_amounts(sent_page, 'sent', roommate_emails)
+    page += 1
+
+received_total = 0.0
+page = 0
+while True:
+    recv_page = apis.venmo.show_transactions(access_token=venmo_access_token, direction='received', min_created_at=start_date, page_index=page, page_limit=20)
+    if not recv_page: break
+    received_total += sum_amounts(recv_page, 'received', roommate_emails)
+    page += 1
+
+total = round(sent_total + received_total, 2)
+```
+## COMMON MISTAKES AND CORRECT STRATEGIES
+
+[cms-00009] When comparing numeric fields from API responses (e.g., play_count, like_count), always check if the field exists. If it is missing, either skip that record or assign a sentinel value (e.g., `float('inf')` for minimum, `-1` for maximum) to avoid false minima/maxima. Example: `play_count = details.get('play_count'); if play_count is None: continue`.
+[cms-00010] When working with the album library, do not assume that `show_album_library` returns full song objects. It only returns `song_ids` (a list of integers). To get play counts or other song details, you must call `show_song` for each song ID individually. Failing to do so will result in missing data.
+[cms-00013] When a task requires operating on the intersection of two data sources (e.g., 'songs in my playlists which I have liked'), always gather both datasets completely first, compute their intersection, and then operate only on the intersected set. Do not assume that one dataset (e.g., liked songs) already satisfies the constraint. For example, to rate liked songs that are in playlists: (1) paginate through show_playlist_library to get all playlists, (2) for each playlist call show_playlist to collect all song IDs, (3) paginate through show_liked_songs to get all liked songs, (4) filter liked songs to keep only those whose song_id is in the playlist song ID set, (5) then process the filtered set.
+[cms-00014] When a task requires different actions based on membership in a precomputed set (e.g., liked songs), always use that set to gate the creation of new records. Separate the 'create if missing' path from the 'update if rating > 1' path. For example: (1) paginate through show_song_library to get all song IDs; (2) paginate through show_liked_songs to build a set of liked song IDs; (3) for each song in the library, check if a review exists; (4) if a review exists and its rating > 1, update it to 1; (5) if no review exists and the song is NOT in the liked set, create a 1-star review; (6) if no review exists and the song IS liked, do nothing. This ensures you only create reviews for unliked songs and only update existing reviews when necessary.
+[cms-00015] When calling an API, pass only the parameters explicitly listed in its specification. Do not add extra parameters (e.g., access_token) even if they seem necessary based on other APIs. If authentication is needed, rely on the environment's implicit handling or include it only if the spec explicitly lists it. Always verify the exact parameter list for each API call before writing code.
+[cms-00022] When exporting data from multiple Spotify collections (song library, album library, playlists), always collect all unique song IDs into a set first before fetching song details. Do not fetch song details for each source separately; this avoids redundant API calls and ensures de-duplication. After building the complete set, fetch details once per unique ID.
+[cms-00026] When using file_system APIs, always verify the exact parameter names from the API spec before calling. Common pitfalls: `create_directory` expects `directory_path` (not `path`), `create_file` expects `file_path` (not `path`), `file_exists` expects `file_path` (not `path`). Using incorrect parameter names will cause 422 validation errors.
+[cms-00041] When determining the most recommended artist from Spotify recommendations, do not assume that each song has only one artist. The `show_recommendations` API returns songs with an `artists` field that is a list of artist objects (each with `id` and `name`). Always iterate over all artists in the list and count each occurrence separately. Also, use `page_limit=20` (the maximum allowed) to minimize the number of API calls when paginating through recommendations.
+[cms-00044] When comparing date fields from API responses (e.g., release_date), always handle missing or malformed values. Do not assume the field is always present or in a valid ISO format. Use a try/except block to skip records that fail parsing, or treat missing dates as a sentinel (e.g., far future for oldest, far past for newest) to avoid errors or incorrect comparisons. Example:
+```python
+try:
+    rel_date = datetime.datetime.strptime(rel_str[:10], "%Y-%m-%d").date()
+except (ValueError, TypeError):
+    continue  # skip problematic entries
+```
+[cms-00045] When building name-to-email lookup tables from contact data (e.g., Phone app), always preserve the space between first and last names (e.g., `f"{first} {last}".lower()`) or create a separate first‑name-to-email map if you need to match by first name alone. Avoid concatenating names without a delimiter (e.g., `f"{first}{last}"`), as this will cause lookups by first name to fail and produce empty results.
+[cms-00047] When determining who has already paid via Venmo transactions (e.g., for a dinner bill), do not restrict the transaction query to a specific date (e.g., yesterday) unless the task explicitly requires it. Retrieve all received transactions (or use a sufficiently wide date window) to avoid missing prior payments and sending duplicate payment requests. Example: call `show_transactions` with `direction='received'` without `min_created_at`/`max_created_at` or with a broad range covering all possible payment dates.
+[cms-00049] When searching for a specific note (e.g., dinner expense shares), do not hard-code a note ID. Instead, search notes with relevant keywords (e.g., 'dinner', 'expense', 'share') and select the most recent or most relevant note by comparing titles and creation dates. If multiple notes match, retrieve their content and verify the expected format (e.g., lines with '=>' and amounts) before proceeding.
+[cms-00050] When paginating through contacts or transactions, explicitly set `page_limit=20` (the maximum allowed) to minimize the number of API calls and ensure complete data retrieval. Relying on default page sizes may lead to extra API calls or missing data if defaults change.
+[cms-00051] When filtering received Venmo transactions to identify who has already paid (e.g., for a dinner bill), use a date range that covers the full day of the event plus the following day(s) to avoid missing payments due to timezone differences. For example, set `min_created_at=yesterday` and `max_created_at=today` (or use a broader range) rather than restricting to a single day. This ensures all payments are captured.
+[cms-00054] When summing monetary amounts from API responses (e.g., Venmo `amount`), always verify the field exists and is numeric before adding. Use `isinstance(amount, (int, float))` to avoid errors from `None` or non-numeric values. Example:
+```python
+amount = txn.get('amount')
+if isinstance(amount, (int, float)):
+    total += float(amount)
+```
+[cms-00061] When logging into Venmo, use the user's email address as the username (not the phone number), as the Venmo login API expects an email. The phone number is used for the Phone app login. Using the wrong identifier will result in a 401 authentication error.
+## PROBLEM-SOLVING HEURISTICS AND WORKFLOWS
+[psw-00002] Remember you can use the variables in your code in subsequent code blocks.
+[psw-00007] Many APIs return items in "pages". Make sure to run through all the pages by looping over `page_index`.
+
+## VERIFICATION CHECKLIST
+
+[vc-00023] Confirm that the CSV file contains the required headers ('Title,Artists') and that artists are joined with '|' (pipe) separator.
+[vc-00024] If the task requires account termination (e.g., delete_account), ensure the termination API is called only after the backup/export is fully completed, and mark the task complete afterward.
+[vc-00028] When verifying file existence using `file_exists`, use the parameter name `file_path` (not `path`). The response contains an `exists` boolean field.
+[vc-00030] Before performing irreversible actions (e.g., account deletion), verify that the backup file has been successfully created using `file_exists`. This ensures the backup is complete and prevents data loss. Example: `result = apis.file_system.file_exists(file_path='...', access_token=fs_token); if not result.get('exists'): raise RuntimeError('Backup file not found')`.
+[vc-00034] Before replying to a text message request, always verify the request by searching the contact's text messages using `search_text_messages` with the contact's phone number and a relevant query (e.g., 'movie', 'recommendation'). Do not assume the request exists based solely on the task description.
+[vc-00035] After sending a text message via `send_text_message`, verify the response indicates success (e.g., `send_result.get('message') == 'Text message sent.'`) before calling `apis.supervisor.complete_task()`. If the response indicates failure, handle the error appropriately (e.g., retry or log).
+[vc-00036] After calling `create_transaction_comment` or `like_transaction` on Venmo, verify the response indicates success (e.g., `comment_resp.get('message') == 'Comment created'` and `like_resp.get('message') == 'Transaction liked.'`). If the response indicates failure, handle the error appropriately (e.g., retry or log) before proceeding.
+[vc-00039] When verifying API success responses, use flexible checks (e.g., check for presence of expected fields like 'comment_id' or substring matching on the message) rather than exact string equality, as API response messages may vary. For example, instead of checking `comment_resp.get('message') == 'Comment created'`, check `'created' in comment_resp.get('message', '').lower()` or `comment_resp.get('comment_id') is not None`.
+[vc-00046] After calling `create_payment_request` on Venmo, verify the response indicates success (e.g., check for a `payment_request_id` field or that the `message` contains `'created'`). Do not proceed to complete the task unless all payment requests have been confirmed successful.
+[vc-00052] After parsing a note's content (e.g., dinner shares), verify that the parsed data matches the expected structure (e.g., at least one line with '=>' and a valid amount). If the content does not match expectations, log a warning and consider checking alternative notes or re-examining the note selection logic.
+[vc-00055] After summing financial amounts (e.g., total money sent), round the result to two decimal places using `round(total, 2)` and confirm it is a valid float/int. This avoids floating-point precision artifacts and ensures the answer is presentable.
+[vc-00057] Before finalizing the answer for a financial query involving Venmo transactions, verify that the `direction` parameter ('sent' or 'received') matches the natural language meaning of the task. If the task says 'received to [someone]', confirm you used `direction='sent'` and filtered by receiver email. If it says 'received from [someone]', confirm you used `direction='received'` and filtered by sender email. This prevents misinterpretation of ambiguous phrasing.
+[vc-00060] When summing financial amounts for both sent and received transactions (e.g., 'sent or received to roommates'), verify that you queried both directions separately and combined the totals. Confirm that the counterpart email matching uses the correct field: for sent transactions, check the receiver's email; for received transactions, check the sender's email. This ensures the sum accurately reflects all relevant transactions.
+## TROUBLESHOOTING AND PITFALLS:
+
+## OTHERS
+[misc-00003] Remember that the email addresses, access tokens and variables (e.g. spotify_password) in the example above are not valid anymore.
+[misc-00008] Once you have completed the task, make sure to call apis.supervisor.complete_task(). If the task asked for some information, return it as the answer argument, i.e. call apis.supervisor.complete_task(answer=<answer>). Many tasks do not require an answer, so in those cases, just call apis.supervisor.complete_task() i.e. do not pass any argument.
+[misc-00012] To find the most-played song in the album library, follow this workflow: (1) paginate through `show_album_library` to get all albums, (2) collect all unique `song_ids` from the albums, (3) fetch each song's details using `show_song`, (4) compare the `play_count` field (using `.get` with a default of 0) to identify the maximum, (5) return the song title.
+[misc-00018] When paginating through API results, use a `while True` loop that breaks when the returned page is empty (e.g., `if not page: break`). This ensures you retrieve all pages regardless of the total count, unlike a fixed-range `for` loop which may miss pages or iterate unnecessarily.

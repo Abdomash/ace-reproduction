@@ -1,0 +1,1103 @@
+## STRATEGIES AND HARD RULES
+[shr-00001] Make sure to end code blocks with ``` followed by a newline(\n).
+[shr-00005] Always look at API specifications (using apis.api_docs.show_api_doc) before calling an API.
+[shr-00006] Write small chunks of code and only one chunk of code in every step. Make sure everything is working correctly before making any irreversible change.
+
+[shr-00031] When a text message contains a specific request (e.g., 'recommendations for a movie from David Fincher'), parse the message to identify the specific criteria (director, genre, etc.) and filter your data accordingly. Do not send all available recommendations; only send those that match the explicit request.
+[shr-00056] When a task uses ambiguous financial language like 'received to [someone]' (e.g., 'received to my coworkers'), interpret it as money you sent to that person (outgoing), not money you received from them. Use `show_transactions` with `direction='sent'` and filter by the receiver's email (not the sender's). If the phrase is 'received from [someone]', use `direction='received'` and filter by the sender's email. Always clarify the intended direction by parsing the preposition ('to' vs 'from') and the context of the sentence.
+[shr-00067] When a task refers to 'this year' or 'current year', determine the year from the task's stated date (e.g., the global prompt's current date) rather than relying solely on `datetime.date.today().year`, as the runtime environment date may differ from the task's context. Use the task's date to compute the start of the year for filtering.
+[shr-00069] When a task refers to 'this year' or 'current year' and does not explicitly provide a specific year (e.g., 'in 2025'), always use `datetime.date.today().year` to compute the year dynamically. Do not hardcode a year value unless the task explicitly states a different year. This ensures the code works correctly regardless of the runtime environment's date.
+[shr-00082] When cleaning up Spotify libraries (songs and albums) based on liked/downloaded status, always gather all relevant data first (liked songs, downloaded songs, song library, liked albums, album library), compute keep sets using set operations (liked OR downloaded for songs; liked OR fully downloaded for albums), then remove only the items not in the keep sets. Do not modify playlists unless explicitly instructed.
+[shr-00085] When paginating through API results, always pass the maximum allowed `page_limit` parameter (e.g., 20 for Spotify) to minimize API calls and ensure complete data retrieval. Do not rely on default page sizes.
+[shr-00089] When performing batch operations that compress and then delete source directories (e.g., vacation spot folders), always exclude the target output directory from the list of source directories before processing. This prevents accidentally compressing and deleting the output folder itself, which would destroy all previously created archives. Example: after listing subdirectories, filter out any path that equals the destination directory (e.g., `subdirs = [d for d in subdirs if d.rstrip('/') != '~/photos/vacations']`).
+[shr-00091] When accessing fields from API responses (e.g., playlist title from show_playlist_library), always inspect the API documentation's response_schemas using show_api_doc to confirm the exact field names (e.g., 'title', 'name', etc.) before writing code that accesses those fields. Do not assume field names based on examples from other APIs or previous tasks.
+[shr-00094] Before creating a new playlist, always check whether a playlist with the same title already exists in the user's library by paginating through `show_playlist_library` and comparing titles (case‑insensitively). Reuse the existing playlist ID if found to avoid duplicates.
+[shr-00097] When a task requires acting on 'all songs played so far' in the Spotify queue (including the current one), use `show_song_queue` to retrieve the queue, identify the current song by checking the `is_current` flag, and then apply the action (e.g., like) to all songs whose `position` is less than or equal to the current song's position. Always verify each action's response for success before proceeding.
+[shr-00102] When a task requires refunding an approved payment request (e.g., 'the last payment request I sent was an accident and they approved it'), follow this workflow: (1) use `show_sent_payment_requests` with `status='approved'` to retrieve all approved requests, (2) filter by the receiver's email (obtained from Phone contacts), (3) identify the most recent request by comparing `approved_at` timestamps, (4) use `create_transaction` to send the same amount back to the receiver, (5) verify the refund transaction appears in your sent transactions using `show_transactions` with `direction='sent'`.
+[shr-00112] Always programmatically extract required data (e.g., monetary amounts, dates, names) from source files or API responses instead of hard-coding values. Use regex or structured parsing to make the solution robust to changes in the underlying data. For example, when reading a bill receipt, parse the 'Total Amount' line to get the numeric value rather than manually setting it.
+[shr-00114] When a task requires marking an item in a note as done or not done (e.g., a bucket list item), follow this workflow: (1) search for the note using relevant keywords (e.g., 'Bucket List'), (2) retrieve the note content via show_note, (3) parse the content to locate the specific item line (e.g., by matching the item text), (4) modify the line to reflect the desired status (e.g., change '[x]' to '[ ]' for not done, or update a status field), (5) call update_note with the updated content, (6) verify the update by re-fetching the note or checking the response for success, and only then call complete_task. Do not call complete_task before the note content has been successfully updated.
+[shr-00119] When shifting alarm times (e.g., making an alarm earlier by a number of minutes), always use datetime arithmetic and handle the edge case where the result might cross midnight. Use `datetime.datetime.strptime` to parse the original time, subtract the timedelta, and extract the resulting time. If the subtraction yields a negative timedelta (i.e., the original time is earlier than the shift amount), the result will automatically wrap to the previous day's time (e.g., 00:30 - 40 minutes = 23:50). Do not assume the original time is always later than the shift amount; always use proper datetime arithmetic to avoid invalid times.
+[shr-00121] When a task refers to a specific type of alarm (e.g., 'go-to-sleep alarm', 'wake-up alarm'), identify it by examining the alarm's label field for relevant keywords (e.g., 'sleep', 'bedtime', 'night') or by considering the time of day (e.g., alarms set in the evening/night hours). Do not rely solely on generic heuristics like the latest enabled alarm time, as that may select an unrelated alarm (e.g., a work meeting alarm). If multiple alarms match, choose the one with the most relevant label or the latest time among the matching candidates.
+[shr-00123] When computing the total duration of a playlist (e.g., to find the longest playlist), always cache song details (duration) in a dictionary keyed by song_id to avoid redundant API calls when the same song appears in multiple playlists. Use a helper function that checks the cache before calling `show_song`. This reduces API calls and speeds up execution.
+[shr-00128] When a task refers to an album that is not found in your album library (via `show_album_library`), use the `search_albums` API to locate it by title. Do not assume the album is in your library; search is the appropriate method to find any album by name.
+[shr-00133] When using `search_albums` (or any search API), always verify the required parameters from the API documentation before making the call. In particular, check whether `access_token` is a required parameter; if it is, include it in the request. Do not assume that a search API does not require authentication based on other APIs.
+[shr-00134] When searching for albums by a specific artist (e.g., 'Velvet Underground'), do not rely solely on the query string to guarantee correct entity matching. After retrieving the search results, filter the albums by checking the `artists` field to ensure that at least one artist's name matches the target artist (case‑insensitively). This prevents including unrelated albums whose titles happen to contain the query string.
+[shr-00142] When a task asks for the 'least played' or 'most liked' song (or any min/max of a numeric attribute), first consult the API documentation to confirm the exact field name (e.g., `play_count` for played, `like_count` for liked). Then, if the search API supports a `sort_by` parameter, use it to sort by that field in ascending order (prefix '+') for minimum or descending (prefix '-') for maximum, and take the first result. This is more efficient than fetching all results and manually comparing.
+[shr-00145] When using `sort_by` to find a global minimum or maximum (e.g., most‑played song), remember that `sort_by` only orders results within each page. To obtain the true global extremum, you must paginate through all pages and manually compare the relevant field (e.g., `play_count`) across all results. Do not assume the first result on the first page is the global extremum.
+## APIs TO USE FOR SPECIFIC INFORMATION
+[api-00004] You can use the "supervisor" app to get information about my accounts and use the "phone" app to get information about friends and family.
+
+[api-00016] When using the Phone app's `search_contacts` API, you can filter by the `relationship` parameter (e.g., 'roommate', 'friend', 'family') to directly retrieve contacts with that relationship, rather than searching by name and then filtering manually.
+[api-00019] For tasks involving a Venmo 'social feed', use `show_social_feed` (not `show_transactions`). `show_transactions` returns only transactions that you directly sent or received, while `show_social_feed` returns transactions of your friends. If the task says 'social feed', always prefer `show_social_feed`.
+[api-00025] The file_system app requires its own authentication. Retrieve the file_system password from the supervisor app and call `apis.file_system.login(username=<email>, password=<password>)` to obtain an access token. Use this token in all subsequent file_system API calls (e.g., `create_directory`, `create_file`, `file_exists`).
+[api-00033] For tasks involving replying to a text message request with data from a note-taking app (e.g., Simple Note), follow this workflow: (1) use the Phone app to find the contact and their message, (2) parse the message to understand the specific request, (3) log in to the note-taking app, (4) search for the relevant note, (5) retrieve the note content, (6) filter/parse the content based on the request criteria, (7) send the reply via the Phone app's send_text_message API.
+[api-00037] For tasks involving payments you received (e.g., 'payments I received from coworkers'), use `show_transactions` with `direction='received'` and date filters (`min_created_at`, `max_created_at`) to retrieve only relevant transactions. Do not use `show_social_feed` for this purpose, as it returns transactions of friends, not your own received payments.
+[api-00078] To start playback of a playlist, use `play_music` with the `playlist_id` parameter. This API will add the playlist to the queue and begin playing. Do not use `add_to_queue` followed by `play_music` without parameters; `play_music` with `playlist_id` handles both steps.
+[api-00098] The `show_song_queue` API returns a list of songs in the music player queue. Each song object contains a `position` field (integer) indicating its order in the queue, and an `is_current` boolean field indicating whether it is the currently playing song. Use these fields to determine which songs have been played so far.
+[api-00100] When using `show_song_queue` to identify the current song, use the `is_current` boolean field (not `is_playing`). The `is_playing` field indicates whether the player is actively playing, not which song is the current one. Only `is_current` reliably marks the song that is currently being played or is the current position in the queue.
+[api-00103] For tasks involving payment requests you sent (e.g., 'the last payment request I sent'), use `show_sent_payment_requests` (not `show_transactions`). This API returns payment requests you have sent, with optional `status` filter ('pending', 'approved', 'denied'). Use `show_received_payment_requests` for requests you received.
+[api-00129] To play a single song, use `play_music` with the `song_id` parameter. This will add the song to the queue and start playing it. Do not use `add_to_queue` followed by `play_music` without parameters; `play_music` with `song_id` handles both steps.
+[api-00148] For tasks involving following artists, use `show_artist_following` (artist_id, access_token) to check if you already follow an artist. The response contains a boolean `following` field. Only call `follow_artist` when `following` is False.
+## USEFUL CODE SNIPPETS AND TEMPLATES
+
+[code-00011] Collecting all unique songs from the album library and fetching their details:
+```python
+# After paginating through show_album_library and storing albums in all_albums
+song_ids = set()
+for album in all_albums:
+    for sid in album.get("song_ids", []):
+        song_ids.add(sid)
+
+song_details = {}
+for sid in song_ids:
+    song_details[sid] = apis.spotify.show_song(song_id=sid)
+```
+[code-00017] Getting today's date and comparing with ISO timestamp from API responses:
+```python
+import datetime
+today_str = datetime.date.today().isoformat()  # e.g., '2023-05-18'
+# For a transaction with 'created_at' field like '2023-05-18T10:17:40', extract date:
+txn_date = txn.get('created_at', '')[:10]
+if txn_date == today_str:
+    # process today's transaction
+```
+[code-00020] When you need to identify siblings (or any relationship group) across multiple apps (e.g., Phone contacts and Venmo transactions), first build a comprehensive set of identifiers from the Phone app: collect both email addresses and full names (lowercase) for all matching contacts. Then, when filtering Venmo transactions, check whether the sender or receiver matches any of those identifiers (email or name). This ensures you catch transactions even when the Venmo profile name differs slightly from the contact name. Example:
+
+```python
+from phone: for each contact, sibling_emails.add(contact['email']); sibling_names.add(f"{contact['first_name']} {contact['last_name']}".lower())
+# Later, in Venmo filtering:
+sender_name = txn['sender']['name'].strip().lower()
+receiver_name = txn['receiver']['name'].strip().lower()
+if (sender_email in sibling_emails or receiver_email in sibling_emails) or (sender_name in sibling_names or receiver_name in sibling_names):
+    # sibling is involved
+```
+[code-00021] Exporting all unique songs from song library, album library, and playlists to CSV with '|'-separated artists:
+```python
+# After logging in and obtaining spotify_token
+song_ids = set()
+
+# 1. Song library
+page = 0
+while True:
+    songs = apis.spotify.show_song_library(access_token=spotify_token, page_index=page)
+    if not songs: break
+    for s in songs:
+        song_ids.add(s['song_id'])
+    page += 1
+
+# 2. Album library
+page = 0
+while True:
+    albums = apis.spotify.show_album_library(access_token=spotify_token, page_index=page)
+    if not albums: break
+    for album in albums:
+        for sid in album.get('song_ids', []):
+            song_ids.add(sid)
+    page += 1
+
+# 3. All playlists
+page = 0
+while True:
+    pl_list = apis.spotify.show_playlist_library(access_token=spotify_token, page_index=page)
+    if not pl_list: break
+    for pl in pl_list:
+        pl_detail = apis.spotify.show_playlist(playlist_id=pl['playlist_id'], access_token=spotify_token)
+        for song in pl_detail.get('songs', []):
+            song_ids.add(song['id'])
+    page += 1
+
+# Fetch details and build CSV rows
+csv_rows = ['Title,Artists']
+for sid in song_ids:
+    info = apis.spotify.show_song(song_id=sid)
+    title = info.get('title', '').replace('"', '""')
+    artists = '|'.join(a.get('name', '').replace('"', '""') for a in info.get('artists', []))
+    csv_rows.append(f'"{title}","{artists}"')
+csv_content = '\n'.join(csv_rows)
+```
+[code-00027] Writing a CSV file to the file system with proper authentication:
+```python
+# Get file_system password and login
+passwords = apis.supervisor.show_account_passwords()
+fs_password = next(p['password'] for p in passwords if p['account_name'] == 'file_system')
+fs_login = apis.file_system.login(username='your_email', password=fs_password)
+fs_token = fs_login['access_token']
+
+# Create directory (if needed)
+apis.file_system.create_directory(directory_path='~/backups', access_token=fs_token, recursive=True)
+
+# Create file with content
+apis.file_system.create_file(file_path='~/backups/spotify_library.csv', access_token=fs_token, content=csv_content, overwrite=True)
+
+# Verify file exists
+result = apis.file_system.file_exists(file_path='~/backups/spotify_library.csv', access_token=fs_token)
+if not result.get('exists'):
+    raise RuntimeError('File not created')
+```
+[code-00029] When collecting song IDs from playlists, check if the playlist library response already contains a `song_ids` field. If it does, use it directly instead of calling `show_playlist` for each playlist. This reduces API calls and speeds up the process. Example:
+```python
+# After paginating through show_playlist_library and storing playlists in all_playlists
+for pl in all_playlists:
+    for sid in pl.get('song_ids', []):
+        song_ids.add(sid)
+```
+Only fall back to `show_playlist` if the `song_ids` field is not present in the playlist library response.
+[code-00032] Parsing structured note content with title lines and attribute lines (e.g., ' - director: ...'):
+```python
+content = note['content']
+lines = content.splitlines()
+items = []
+current_title = None
+for line in lines:
+    stripped = line.strip()
+    if not stripped:
+        continue
+    if not stripped.startswith('-') and not stripped.startswith('director:') and not stripped.startswith('genre:'):
+        current_title = stripped
+    elif stripped.startswith('- director:'):
+        director = stripped.split(':', 1)[1].strip()
+        if 'David Fincher' in director and current_title:
+            items.append(current_title)
+```
+[code-00038] Processing Venmo payments received from a specific relationship group (e.g., coworkers) in a date range:
+```python
+# After logging into Phone and Venmo, and obtaining access tokens
+# 1. Get coworker emails from Phone contacts
+coworker_emails = set()
+page = 0
+while True:
+    contacts_page = apis.phone.search_contacts(access_token=phone_access_token, relationship='coworker', page_index=page)
+    if not contacts_page: break
+    for c in contacts_page:
+        if c.get('email'): coworker_emails.add(c['email'].lower())
+    page += 1
+
+# 2. Compute date range (last 5 days inclusive)
+import datetime
+today = datetime.date.today()
+min_date = (today - datetime.timedelta(days=4)).isoformat()
+max_date = today.isoformat()
+
+# 3. Get received transactions in date range
+received_txns = []
+page = 0
+while True:
+    txns_page = apis.venmo.show_transactions(access_token=venmo_access_token, direction='received', min_created_at=min_date, max_created_at=max_date, page_index=page)
+    if not txns_page: break
+    received_txns.extend(txns_page)
+    page += 1
+
+# 4. Filter by coworker sender email
+coworker_txns = [txn for txn in received_txns if txn.get('sender', {}).get('email', '').lower() in coworker_emails]
+
+# 5. Comment and like each transaction
+for txn in coworker_txns:
+    txn_id = txn['transaction_id']
+    comment_resp = apis.venmo.create_transaction_comment(transaction_id=txn_id, comment='Thank you!', access_token=venmo_access_token)
+    # optional: verify comment_resp.get('message') == 'Comment created'
+    like_resp = apis.venmo.like_transaction(transaction_id=txn_id, access_token=venmo_access_token)
+    # optional: verify like_resp.get('message') == 'Transaction liked.'
+```
+[code-00040] Determining the most recommended artist from Spotify recommendations:
+```python
+# After logging in and obtaining spotify_access_token
+recommended_songs = []
+page_index = 0
+while True:
+    rec_page = apis.spotify.show_recommendations(
+        access_token=spotify_access_token,
+        page_index=page_index,
+        page_limit=20  # max allowed per page
+    )
+    if not rec_page:
+        break
+    recommended_songs.extend(rec_page)
+    page_index += 1
+
+# Count artist appearances across all recommended songs
+artist_counts = {}
+for song in recommended_songs:
+    for artist in song.get("artists", []):
+        name = artist.get("name")
+        if name:
+            artist_counts[name] = artist_counts.get(name, 0) + 1
+
+# Find the artist with the highest count
+most_recommended_artist = max(artist_counts, key=artist_counts.get)
+```
+[code-00042] Determining the least recommended artist from Spotify recommendations (with tie-breaking):
+```python
+# After logging in and obtaining spotify_access_token
+recommended_songs = []
+page_index = 0
+while True:
+    rec_page = apis.spotify.show_recommendations(
+        access_token=spotify_access_token,
+        page_index=page_index,
+        page_limit=20  # max allowed per page
+    )
+    if not rec_page:
+        break
+    recommended_songs.extend(rec_page)
+    page_index += 1
+
+# Count artist appearances across all recommended songs
+artist_counts = {}
+for song in recommended_songs:
+    for artist in song.get("artists", []):
+        name = artist.get("name")
+        if name:
+            artist_counts[name] = artist_counts.get(name, 0) + 1
+
+# Find the artist with the lowest count; break ties alphabetically
+min_count = min(artist_counts.values())
+least_artists = [a for a, cnt in artist_counts.items() if cnt == min_count]
+least_recommended_artist = sorted(least_artists)[0]
+```
+[code-00043] Finding the oldest released song across song library, album library, and playlists:
+```python
+import datetime
+
+def paginate(endpoint_func, **kwargs):
+    items = []
+    page = 0
+    while True:
+        page_items = endpoint_func(access_token=spotify_token, page_index=page, page_limit=20, **kwargs)
+        if not page_items:
+            break
+        items.extend(page_items)
+        page += 1
+    return items
+
+# Collect all unique song IDs
+song_ids = set()
+
+# 1. Song library
+for s in paginate(apis.spotify.show_song_library):
+    song_ids.add(s['song_id'])
+
+# 2. Album library
+for album in paginate(apis.spotify.show_album_library):
+    for sid in album.get('song_ids', []):
+        song_ids.add(sid)
+
+# 3. Playlist library (use song_ids field directly if present)
+playlists = paginate(apis.spotify.show_playlist_library)
+for pl in playlists:
+    for sid in pl.get('song_ids', []):
+        song_ids.add(sid)
+
+# Find oldest song
+oldest_song = None
+oldest_date = None
+
+for sid in song_ids:
+    info = apis.spotify.show_song(song_id=sid)
+    rel_str = info.get('release_date')
+    if not rel_str:
+        continue  # skip songs without release date
+    try:
+        rel_date = datetime.datetime.strptime(rel_str[:10], "%Y-%m-%d").date()
+    except ValueError:
+        continue  # skip malformed dates
+    if oldest_date is None or rel_date < oldest_date:
+        oldest_date = rel_date
+        oldest_song = info
+
+if oldest_song:
+    print(f"Oldest song: {oldest_song['title']} (released on {oldest_date})")
+else:
+    print("No song with a valid release date found.")
+```
+[code-00048] When you need to send payment requests to friends listed in a note (e.g., dinner shares), first use the Phone app's `search_contacts` to find each friend's email address. Then use that email to search Venmo users (or directly as the `user_email` parameter if it matches). This ensures reliable identity resolution and avoids relying on name-based Venmo searches which may be ambiguous. Example:
+```python
+# After logging into Phone and obtaining phone_access_token
+friend_emails = {}
+for name in share_amounts.keys():
+    contacts = apis.phone.search_contacts(access_token=phone_access_token, query=name)
+    if contacts:
+        friend_emails[name] = contacts[0].get('email')
+# Then use friend_emails to look up Venmo users or directly create payment requests
+```
+[code-00053] Computing the start of the current year for date filtering (e.g., 'since 1st Jan of this year'):
+```python
+import datetime
+start_date = datetime.date.today().replace(month=1, day=1).isoformat()  # e.g. '2024-01-01'
+```
+Then pass `min_created_at=start_date` to `show_transactions` or similar APIs.
+[code-00058] Computing the start of a specific month (e.g., March 1) for date filtering:
+```python
+import datetime
+start_date = datetime.date.today().replace(month=3, day=1).isoformat()  # e.g. '2024-03-01'
+```
+Then pass `min_created_at=start_date` to `show_transactions` or similar APIs.
+[code-00059] Summing Venmo transactions with a specific relationship group (e.g., roommates) for both sent and received directions in a date range:
+```python
+# After obtaining roommate_emails set from Phone app and venmo_access_token
+import datetime
+start_date = datetime.date.today().replace(month=3, day=1).isoformat()
+
+def sum_amounts(transactions, role, roommate_emails):
+    total = 0.0
+    for txn in transactions:
+        amount = txn.get('amount')
+        if not isinstance(amount, (int, float)):
+            continue
+        if role == 'sent':
+            counterpart_email = txn.get('receiver', {}).get('email', '').lower()
+        else:
+            counterpart_email = txn.get('sender', {}).get('email', '').lower()
+        if counterpart_email in roommate_emails:
+            total += float(amount)
+    return total
+
+sent_total = 0.0
+page = 0
+while True:
+    sent_page = apis.venmo.show_transactions(access_token=venmo_access_token, direction='sent', min_created_at=start_date, page_index=page, page_limit=20)
+    if not sent_page: break
+    sent_total += sum_amounts(sent_page, 'sent', roommate_emails)
+    page += 1
+
+received_total = 0.0
+page = 0
+while True:
+    recv_page = apis.venmo.show_transactions(access_token=venmo_access_token, direction='received', min_created_at=start_date, page_index=page, page_limit=20)
+    if not recv_page: break
+    received_total += sum_amounts(recv_page, 'received', roommate_emails)
+    page += 1
+
+total = round(sent_total + received_total, 2)
+```
+[code-00064] Following all artists of songs with a specific genre from all playlists:
+```python
+# After logging in and obtaining spotify_access_token
+
+# 1. Paginate through playlist library
+playlists = []
+page = 0
+while True:
+    page_pl = apis.spotify.show_playlist_library(access_token=spotify_access_token, page_index=page)
+    if not page_pl: break
+    playlists.extend(page_pl)
+    page += 1
+
+# 2. Collect all unique song IDs from every playlist
+song_ids = set()
+for pl in playlists:
+    pl_detail = apis.spotify.show_playlist(playlist_id=pl['playlist_id'], access_token=spotify_access_token)
+    for song in pl_detail.get('songs', []):
+        if song.get('id'):
+            song_ids.add(song['id'])
+
+# 3. Fetch each song, filter by genre (case‑insensitive), collect unique artist IDs
+genre_filter = 'reggae'  # change to desired genre
+artist_ids = set()
+for song_id in song_ids:
+    info = apis.spotify.show_song(song_id=song_id)
+    genre = info.get('genre', '')
+    if genre and genre_filter in genre.lower():
+        for artist in info.get('artists', []):
+            if artist.get('id'):
+                artist_ids.add(artist['id'])
+
+# 4. Follow each artist and verify success
+for aid in artist_ids:
+    resp = apis.spotify.follow_artist(artist_id=aid, access_token=spotify_access_token)
+    # Flexible verification: check for message without error indicator
+    msg = resp.get('message', '')
+    if 'error' in msg.lower():
+        print(f'Failed to follow artist {aid}: {msg}')
+    else:
+        print(f'Followed artist {aid}')
+```
+[code-00071] Listing all files in a directory and extracting creation month/year for categorization:
+```python
+import datetime
+
+# After logging into file_system and obtaining fs_token
+files = apis.file_system.show_directory(
+    access_token=fs_token,
+    directory_path='~/photographs/vacations',
+    entry_type='files',
+    recursive=True
+)
+
+current_year = datetime.date.today().year
+
+for file_path in files:
+    meta = apis.file_system.show_file(file_path=file_path, access_token=fs_token)
+    created_at = meta.get('created_at', '')
+    if not created_at:
+        continue
+    try:
+        file_date = datetime.datetime.strptime(created_at[:10], '%Y-%m-%d')
+    except ValueError:
+        continue
+    # Now use file_date.year and file_date.month for categorization
+```
+[code-00076] Building a playlist that meets a minimum duration requirement (e.g., for a workout):
+```python
+# After logging in and obtaining spotify_access_token
+import datetime, re
+
+# 1. Determine required duration (e.g., from a note)
+# workout_minutes = ... (parsed from note content)
+required_secs = workout_minutes * 60
+
+# 2. Check existing playlists for sufficient length
+def playlist_total_seconds(pl):
+    song_ids = pl.get('song_ids')
+    if not song_ids:
+        details = apis.spotify.show_playlist(playlist_id=pl['playlist_id'], access_token=spotify_access_token)
+        song_ids = [s['id'] for s in details.get('songs', [])]
+    total_secs = 0
+    for sid in song_ids:
+        info = apis.spotify.show_song(song_id=sid)
+        total_secs += info.get('duration', 0)
+    return total_secs, song_ids
+
+suitable_playlist = None
+for pl in playlists:  # playlists obtained via paginated show_playlist_library
+    secs, _ = playlist_total_seconds(pl)
+    if secs >= required_secs:
+        suitable_playlist = pl['playlist_id']
+        break
+
+# 3. If no existing playlist is long enough, create a new one
+if not suitable_playlist:
+    new_pl = apis.spotify.create_playlist(title='Workout Playlist', access_token=spotify_access_token, is_public=False)
+    new_playlist_id = new_pl['playlist_id']
+    
+    # 4. Add all songs from the user's song library
+    current_secs = 0
+    added_ids = []
+    page = 0
+    while True:
+        lib_page = apis.spotify.show_song_library(access_token=spotify_access_token, page_index=page, page_limit=20)
+        if not lib_page: break
+        for song in lib_page:
+            sid = song['song_id']
+            apis.spotify.add_song_to_playlist(playlist_id=new_playlist_id, song_id=sid, access_token=spotify_access_token)
+            added_ids.append(sid)
+            current_secs += song.get('duration', 0)
+        page += 1
+    
+    # 5. Supplement with recommendations until duration is met
+    while current_secs < required_secs:
+        rec_page = apis.spotify.show_recommendations(access_token=spotify_access_token, page_index=0, page_limit=20)
+        if not rec_page: break
+        for rec in rec_page:
+            if current_secs >= required_secs: break
+            rid = rec['song_id']
+            if rid in added_ids: continue
+            apis.spotify.add_song_to_playlist(playlist_id=new_playlist_id, song_id=rid, access_token=spotify_access_token)
+            added_ids.append(rid)
+            current_secs += rec.get('duration', 0)
+    
+    suitable_playlist = new_playlist_id
+
+# 6. Start playback
+apis.spotify.play_music(access_token=spotify_access_token, playlist_id=suitable_playlist)
+```
+[code-00079] Parsing a day-based workout schedule from a note to get today's workout duration:
+```python
+import datetime
+
+# After retrieving the note content (e.g., workout_note['content'])
+content = workout_note['content']
+
+# Build a dict mapping day name (lowercase) to duration in minutes
+day_to_minutes = {}
+for line in content.splitlines():
+    line = line.strip()
+    if line.lower().startswith('day:'):
+        current_day = line.split(':', 1)[1].strip().lower()
+    if line.lower().startswith('duration_mins:'):
+        mins = int(line.split(':', 1)[1].strip())
+        day_to_minutes[current_day] = mins
+
+# Get today's weekday name (e.g., 'monday')
+today_name = datetime.date.today().strftime('%A').lower()
+workout_minutes = day_to_minutes.get(today_name, 0)
+required_seconds = workout_minutes * 60
+```
+[code-00083] Cleaning up song and album libraries by keeping only liked or downloaded items:
+```python
+def paginate(endpoint_func, **kwargs):
+    items = []
+    page = 0
+    while True:
+        page_items = endpoint_func(page_index=page, page_limit=20, **kwargs)
+        if not page_items:
+            break
+        items.extend(page_items)
+        page += 1
+    return items
+
+# 1. Gather liked songs
+liked_songs = paginate(apis.spotify.show_liked_songs, access_token=spotify_access_token)
+liked_song_ids = {s["song_id"] for s in liked_songs}
+
+# 2. Gather downloaded songs
+downloaded_songs = paginate(apis.spotify.show_downloaded_songs, access_token=spotify_access_token)
+downloaded_song_ids = {s["song_id"] for s in downloaded_songs}
+
+# 3. Songs to keep = liked OR downloaded
+keep_song_ids = liked_song_ids.union(downloaded_song_ids)
+
+# 4. Gather current song library
+song_library = paginate(apis.spotify.show_song_library, access_token=spotify_access_token)
+song_library_ids = {s["song_id"] for s in song_library}
+
+# 5. Remove songs not in keep set
+for sid in song_library_ids - keep_song_ids:
+    apis.spotify.remove_song_from_library(song_id=sid, access_token=spotify_access_token)
+
+# 6. Gather liked albums
+liked_albums = paginate(apis.spotify.show_liked_albums, access_token=spotify_access_token)
+liked_album_ids = {a["album_id"] for a in liked_albums}
+
+# 7. Gather album library
+album_library = paginate(apis.spotify.show_album_library, access_token=spotify_access_token)
+
+# 8. Determine albums to keep: liked OR fully downloaded
+keep_album_ids = set()
+for album in album_library:
+    aid = album["album_id"]
+    if aid in liked_album_ids:
+        keep_album_ids.add(aid)
+        continue
+    album_song_ids = set(album.get("song_ids", []))
+    if album_song_ids and album_song_ids.issubset(downloaded_song_ids):
+        keep_album_ids.add(aid)
+
+# 9. Remove albums not in keep set
+album_ids_in_library = {a["album_id"] for a in album_library}
+for aid in album_ids_in_library - keep_album_ids:
+    apis.spotify.remove_album_from_library(album_id=aid, access_token=spotify_access_token)
+```
+[code-00087] When compressing multiple subdirectories (e.g., vacation spot folders) into individual zip files, follow this workflow: (1) list the subdirectories using `show_directory` with `entry_type='directories'` and `recursive=False`, (2) for each directory path, extract the folder name using `os.path.basename(path.rstrip('/'))`, (3) call `compress_directory` with `directory_path=<original_dir>`, `compressed_file_path=<desired_zip_path>`, `delete_directory=False`, and `overwrite=True`, (4) verify the response contains a `compressed_file_path` field before deleting the original directory with `delete_directory` and `recursive=True`. This ensures each zip is created successfully before removing the source.
+[code-00092] Filtering Spotify recommendations by genre and release year, then adding to a playlist:
+```python
+import datetime
+
+# After obtaining spotify_token
+current_year = datetime.date.today().year
+last_year = current_year - 1
+
+# 1. Fetch all recommended songs with pagination (max page_limit=20)
+rec_song_ids = []
+page_idx = 0
+while True:
+    page = apis.spotify.show_recommendations(access_token=spotify_token, page_index=page_idx, page_limit=20)
+    if not page: break
+    rec_song_ids.extend(s['song_id'] for s in page)
+    page_idx += 1
+
+# 2. Filter by genre and release year
+filtered_ids = []
+for sid in rec_song_ids:
+    details = apis.spotify.show_song(song_id=sid)
+    genre = details.get('genre', '').lower()
+    release_str = details.get('release_date', '')
+    try:
+        year = int(release_str[:4])
+    except (ValueError, TypeError):
+        continue
+    if 'r&b' in genre and year in (current_year, last_year):
+        filtered_ids.append(sid)
+
+# 3. Create playlist (or reuse existing)
+target_title = 'Spotify R&B Recommendations'
+# Check if playlist already exists (pseudocode – use paginated show_playlist_library)
+# If not, create it
+playlist_id = None
+# ... (create or reuse)
+
+# 4. Add songs one by one, verify each
+for sid in filtered_ids:
+    resp = apis.spotify.add_song_to_playlist(playlist_id=playlist_id, song_id=sid, access_token=spotify_token)
+    if 'error' in resp.get('message', '').lower():
+        raise RuntimeError(f'Failed to add song {sid}: {resp}')
+```
+Adjust genre and year logic as needed.
+[code-00104] Finding the most recent approved payment request sent to a specific person and refunding it:
+```python
+# After obtaining venmo_access_token and the receiver's email (e.g., robert_email)
+approved_requests = []
+page_index = 0
+while True:
+    page = apis.venmo.show_sent_payment_requests(
+        access_token=venmo_access_token,
+        status='approved',
+        page_index=page_index,
+        page_limit=20
+    )
+    if not page:
+        break
+    for req in page:
+        if req.get('receiver', {}).get('email', '').lower() == robert_email.lower():
+            approved_requests.append(req)
+    page_index += 1
+
+if not approved_requests:
+    raise RuntimeError('No approved payment request found for this person.')
+
+# Find the most recent by approved_at timestamp
+def parse_iso(ts):
+    return ts[:19] if ts else ''
+
+most_recent = max(
+    approved_requests,
+    key=lambda r: parse_iso(r.get('approved_at', '')) or parse_iso(r.get('created_at', ''))
+)
+
+amount = most_recent['amount']
+refund_resp = apis.venmo.create_transaction(
+    receiver_email=robert_email,
+    amount=amount,
+    access_token=venmo_access_token,
+    description=f'Refund for approved request #{most_recent["payment_request_id"]}',
+    private=True
+)
+# Verify refund appears in sent transactions
+sent_txns = []
+page = 0
+while True:
+    tx_page = apis.venmo.show_transactions(access_token=venmo_access_token, direction='sent', page_index=page, page_limit=20)
+    if not tx_page: break
+    sent_txns.extend(tx_page)
+    page += 1
+refund_found = any(
+    tx.get('receiver', {}).get('email', '').lower() == robert_email.lower()
+    and float(tx.get('amount', 0)) == float(amount)
+    for tx in sent_txns
+)
+if not refund_found:
+    raise RuntimeError('Refund transaction not found in sent transactions.')
+```
+[code-00108] Following all artists matching a specific genre and minimum follower count (e.g., classical with ≥22 followers):
+```python
+# After logging in and obtaining spotify_access_token
+
+# 1. Paginate through search_artists with genre and min_follower_count
+artists_to_follow = []
+page_index = 0
+while True:
+    page = apis.spotify.search_artists(
+        access_token=spotify_access_token,
+        genre='classical',          # change to desired genre
+        min_follower_count=22,      # change to desired threshold
+        page_index=page_index,
+        page_limit=20               # maximum allowed
+    )
+    if not page:
+        break
+    artists_to_follow.extend(page)
+    page_index += 1
+
+# 2. Follow each artist and verify success
+for artist in artists_to_follow:
+    resp = apis.spotify.follow_artist(artist_id=artist['artist_id'], access_token=spotify_access_token)
+    msg = resp.get('message', '')
+    if 'error' in msg.lower():
+        print(f'Failed to follow {artist["name"]}: {msg}')
+    else:
+        print(f'Followed {artist["name"]}')
+```
+This pattern directly retrieves only the artists that match the criteria, avoiding unnecessary API calls to fetch all artists and filter manually.
+[code-00109] Finding a file by keyword in the file system using recursive directory listing and path filtering:
+```python
+# After logging into file_system and obtaining fs_token
+all_files = apis.file_system.show_directory(
+    access_token=fs_token,
+    directory_path='~/',
+    entry_type='files',
+    recursive=True
+)
+# Filter for files containing a keyword (e.g., 'electricity', 'bill')
+keyword = 'electricity'
+matching_files = [f for f in all_files if keyword in f.lower()]
+# Select the most recent file if filenames are date-based (e.g., YYYY-MM.txt)
+most_recent = sorted(matching_files, reverse=True)[0]
+# Read the file
+file_data = apis.file_system.show_file(file_path=most_recent, access_token=fs_token)
+content = file_data.get('content', '')
+```
+[code-00115] Parsing a bucket list note with checkboxes and toggling a specific item to not done:
+```python
+# After retrieving note content (e.g., note_content = note['content'])
+lines = note_content.splitlines()
+new_lines = []
+for line in lines:
+    stripped = line.strip()
+    # Look for the line containing the item, e.g., '[x] Taking a solo backpacking trip'
+    if 'Taking a solo backpacking trip' in stripped:
+        # Change [x] to [ ] (not done)
+        line = line.replace('[x]', '[ ]', 1)
+    new_lines.append(line)
+updated_content = '\n'.join(new_lines)
+# Call update_note with the new content
+update_resp = apis.simple_note.update_note(access_token=simple_note_access_token, note_id=note_id, content=updated_content)
+# Verify success (e.g., check for 'note_id' in response)
+if not update_resp.get('note_id'):
+    raise RuntimeError('Failed to update note')
+```
+Adjust the checkbox format and item text as needed.
+[code-00120] Safely shifting an alarm time earlier by a given number of minutes (handles midnight crossing):
+```python
+import datetime
+
+def shift_time_earlier(original_time_str, minutes_back):
+    """Shift a HH:MM time string earlier by the given minutes, wrapping around midnight if needed."""
+    t = datetime.datetime.strptime(original_time_str, "%H:%M")
+    delta = datetime.timedelta(minutes=minutes_back)
+    new_time = (t - delta).time()
+    return new_time.strftime("%H:%M")
+
+# Example usage:
+new_time = shift_time_earlier("00:30", 40)  # returns "23:50"
+```
+[code-00130] Finding and playing the least listened to song from a specific album:
+```python
+# After obtaining spotify_access_token and the album_id (e.g., via search_albums)
+album_song_ids = [1, 2, 3, 4, 5, 6, 7]  # replace with actual song_ids from album
+
+least_played_song = None
+min_plays = None
+
+for sid in album_song_ids:
+    song_info = apis.spotify.show_song(song_id=sid)
+    plays = song_info.get('play_count')
+    if plays is None:
+        continue
+    if (min_plays is None) or (plays < min_plays):
+        min_plays = plays
+        least_played_song = song_info
+
+if least_played_song is None:
+    raise RuntimeError('No play_count data available for any song in the album.')
+
+# Play the least listened song
+play_resp = apis.spotify.play_music(access_token=spotify_access_token, song_id=least_played_song['song_id'])
+# Verify success (e.g., check for 'song_id' in response)
+if not play_resp.get('song_id'):
+    raise RuntimeError('Failed to play the song.')
+```
+[code-00135] Approving pending Venmo payment requests from a specific relationship group (e.g., roommates, coworkers):
+```python
+# After obtaining venmo_access_token and phone_access_token
+# 1. Collect target emails from Phone contacts using relationship filter
+target_emails = set()
+for relationship in ['roommate', 'coworker']:
+    page = 0
+    while True:
+        contacts_page = apis.phone.search_contacts(access_token=phone_access_token, relationship=relationship, page_index=page, page_limit=20)
+        if not contacts_page: break
+        for c in contacts_page:
+            email = c.get('email')
+            if email: target_emails.add(email.lower())
+        page += 1
+
+# 2. Retrieve all pending received payment requests
+pending_requests = []
+page = 0
+while True:
+    req_page = apis.venmo.show_received_payment_requests(access_token=venmo_access_token, status='pending', page_index=page, page_limit=20)
+    if not req_page: break
+    pending_requests.extend(req_page)
+    page += 1
+
+# 3. Filter by sender email and approve each
+for req in pending_requests:
+    sender_email = req.get('sender', {}).get('email', '').lower()
+    if sender_email in target_emails:
+        pr_id = req['payment_request_id']
+        resp = apis.venmo.approve_payment_request(payment_request_id=pr_id, access_token=venmo_access_token)
+        # Verify success (flexible check)
+        if 'error' in resp.get('message', '').lower():
+            print(f'Failed to approve request {pr_id}: {resp}')
+        else:
+            print(f'Approved request {pr_id}')
+```
+[code-00137] Denying pending Venmo payment requests from a specific relationship group (e.g., friends, roommates):
+```python
+# After obtaining venmo_access_token and phone_access_token
+# 1. Collect target emails from Phone contacts using relationship filter
+target_emails = set()
+for relationship in ['friend', 'roommate']:
+    page = 0
+    while True:
+        contacts_page = apis.phone.search_contacts(access_token=phone_access_token, relationship=relationship, page_index=page, page_limit=20)
+        if not contacts_page: break
+        for c in contacts_page:
+            email = c.get('email')
+            if email: target_emails.add(email.lower())
+        page += 1
+
+# 2. Retrieve all pending received payment requests
+pending_requests = []
+page = 0
+while True:
+    req_page = apis.venmo.show_received_payment_requests(access_token=venmo_access_token, status='pending', page_index=page, page_limit=20)
+    if not req_page: break
+    pending_requests.extend(req_page)
+    page += 1
+
+# 3. Filter by sender email and deny each
+requests_to_deny = [req for req in pending_requests if req.get('sender', {}).get('email', '').lower() in target_emails]
+
+if not requests_to_deny:
+    print('No pending requests from friends/roommates.')
+else:
+    for req in requests_to_deny:
+        pr_id = req['payment_request_id']
+        resp = apis.venmo.deny_payment_request(payment_request_id=pr_id, access_token=venmo_access_token)
+        # Verify success (flexible check)
+        if 'error' in resp.get('message', '').lower():
+            print(f'Failed to deny request {pr_id}: {resp}')
+        else:
+            print(f'Denied request {pr_id}')
+```
+[code-00143] Finding the least played song by a specific artist using `search_songs` with `sort_by`:
+```python
+# After obtaining spotify_access_token
+least_played_song = None
+page_index = 0
+while True:
+    page = apis.spotify.search_songs(
+        access_token=spotify_access_token,
+        query="Zoey James",
+        sort_by="+play_count",  # ascending order -> first result is least played
+        page_index=page_index,
+        page_limit=20
+    )
+    if not page:
+        break
+    # Filter to ensure artist name matches exactly (case-insensitive)
+    for song in page:
+        artists = song.get("artists", [])
+        if any(a.get("name", "").strip().lower() == "zoey james" for a in artists):
+            least_played_song = song
+            break  # first matching song is the least played due to sort
+    if least_played_song:
+        break
+    page_index += 1
+
+if least_played_song:
+    title = least_played_song.get("title")
+    # Verify play_count exists and is numeric
+    play_count = least_played_song.get("play_count")
+    if not isinstance(play_count, (int, float)):
+        raise RuntimeError("play_count missing or invalid")
+    print(f"Least played song: {title} (play_count={play_count})")
+else:
+    print("No song found")
+```
+Adjust the query and artist filter as needed. This pattern reduces API calls and avoids manual min search.
+[code-00149] Following all unique artists from liked songs (with pre-check):
+```python
+# After logging in and obtaining spotify_access_token
+
+# 1. Collect all unique artist IDs from liked songs
+liked_artist_ids = set()
+page_idx = 0
+while True:
+    liked_page = apis.spotify.show_liked_songs(
+        access_token=spotify_access_token,
+        page_index=page_idx,
+        page_limit=20
+    )
+    if not liked_page:
+        break
+    for song in liked_page:
+        for artist in song.get("artists", []):
+            aid = artist.get("id")
+            if aid is not None:
+                liked_artist_ids.add(aid)
+    page_idx += 1
+
+# 2. Follow only those not already followed
+followed_count = 0
+already_followed = 0
+for aid in liked_artist_ids:
+    status = apis.spotify.show_artist_following(artist_id=aid, access_token=spotify_access_token)
+    if status.get("following"):
+        already_followed += 1
+        continue
+    resp = apis.spotify.follow_artist(artist_id=aid, access_token=spotify_access_token)
+    msg = resp.get("message", "").lower()
+    if "error" not in msg:
+        followed_count += 1
+    else:
+        print(f"Failed to follow artist {aid}: {resp}")
+```
+This pattern avoids 422 errors and gives a clear count of new follows vs. already followed.
+[code-00150] Unfollowing all artists who have not appeared in any liked song (set-difference approach):
+```python
+# After logging in and obtaining spotify_access_token
+
+# 1. Collect all unique artist IDs from liked songs (paginated)
+liked_artist_ids = set()
+page_idx = 0
+while True:
+    liked_page = apis.spotify.show_liked_songs(
+        access_token=spotify_access_token,
+        page_index=page_idx,
+        page_limit=20
+    )
+    if not liked_page:
+        break
+    for song in liked_page:
+        for artist in song.get("artists", []):
+            aid = artist.get("id")
+            if aid is not None:
+                liked_artist_ids.add(aid)
+    page_idx += 1
+
+# 2. Retrieve the full list of followed artists (paginated)
+followed_artists = []
+page_idx = 0
+while True:
+    page = apis.spotify.show_following_artists(
+        access_token=spotify_access_token,
+        page_index=page_idx,
+        page_limit=20
+    )
+    if not page:
+        break
+    followed_artists.extend(page)
+    page_idx += 1
+
+# 3. Compute the set of artist IDs to unfollow (followed but not liked)
+artists_to_unfollow = [
+    artist["artist_id"]
+    for artist in followed_artists
+    if artist["artist_id"] not in liked_artist_ids
+]
+
+# 4. Unfollow each artist and verify success
+for aid in artists_to_unfollow:
+    resp = apis.spotify.unfollow_artist(artist_id=aid, access_token=spotify_access_token)
+    msg = resp.get("message", "").lower()
+    if "error" in msg:
+        print(f"Failed to unfollow artist {aid}: {resp}")
+    else:
+        print(f"Unfollowed artist {aid}")
+```
+This pattern uses the same set-difference logic as the follow-from-liked pattern but in reverse, and handles pagination with maximum page_limit.
+## COMMON MISTAKES AND CORRECT STRATEGIES
+
+[cms-00009] When comparing numeric fields from API responses (e.g., play_count, like_count), always check if the field exists. If it is missing, either skip that record or assign a sentinel value (e.g., `float('inf')` for minimum, `-1` for maximum) to avoid false minima/maxima. Example: `play_count = details.get('play_count'); if play_count is None: continue`.
+[cms-00010] When working with the album library, do not assume that `show_album_library` returns full song objects. It only returns `song_ids` (a list of integers). To get play counts or other song details, you must call `show_song` for each song ID individually. Failing to do so will result in missing data.
+[cms-00013] When a task requires operating on the intersection of two data sources (e.g., 'songs in my playlists which I have liked'), always gather both datasets completely first, compute their intersection, and then operate only on the intersected set. Do not assume that one dataset (e.g., liked songs) already satisfies the constraint. For example, to rate liked songs that are in playlists: (1) paginate through show_playlist_library to get all playlists, (2) for each playlist call show_playlist to collect all song IDs, (3) paginate through show_liked_songs to get all liked songs, (4) filter liked songs to keep only those whose song_id is in the playlist song ID set, (5) then process the filtered set.
+[cms-00014] When a task requires different actions based on membership in a precomputed set (e.g., liked songs), always use that set to gate the creation of new records. Separate the 'create if missing' path from the 'update if rating > 1' path. For example: (1) paginate through show_song_library to get all song IDs; (2) paginate through show_liked_songs to build a set of liked song IDs; (3) for each song in the library, check if a review exists; (4) if a review exists and its rating > 1, update it to 1; (5) if no review exists and the song is NOT in the liked set, create a 1-star review; (6) if no review exists and the song IS liked, do nothing. This ensures you only create reviews for unliked songs and only update existing reviews when necessary.
+[cms-00015] When calling an API, pass only the parameters explicitly listed in its specification. Do not add extra parameters (e.g., access_token) even if they seem necessary based on other APIs. If authentication is needed, rely on the environment's implicit handling or include it only if the spec explicitly lists it. Always verify the exact parameter list for each API call before writing code.
+[cms-00022] When exporting data from multiple Spotify collections (song library, album library, playlists), always collect all unique song IDs into a set first before fetching song details. Do not fetch song details for each source separately; this avoids redundant API calls and ensures de-duplication. After building the complete set, fetch details once per unique ID.
+[cms-00026] When using file_system APIs, always verify the exact parameter names from the API spec before calling. Common pitfalls: `create_directory` expects `directory_path` (not `path`), `create_file` expects `file_path` (not `path`), `file_exists` expects `file_path` (not `path`). Using incorrect parameter names will cause 422 validation errors.
+[cms-00041] When determining the most recommended artist from Spotify recommendations, do not assume that each song has only one artist. The `show_recommendations` API returns songs with an `artists` field that is a list of artist objects (each with `id` and `name`). Always iterate over all artists in the list and count each occurrence separately. Also, use `page_limit=20` (the maximum allowed) to minimize the number of API calls when paginating through recommendations.
+[cms-00044] When comparing date fields from API responses (e.g., release_date), always handle missing or malformed values. Do not assume the field is always present or in a valid ISO format. Use a try/except block to skip records that fail parsing, or treat missing dates as a sentinel (e.g., far future for oldest, far past for newest) to avoid errors or incorrect comparisons. Example:
+```python
+try:
+    rel_date = datetime.datetime.strptime(rel_str[:10], "%Y-%m-%d").date()
+except (ValueError, TypeError):
+    continue  # skip problematic entries
+```
+[cms-00045] When building name-to-email lookup tables from contact data (e.g., Phone app), always preserve the space between first and last names (e.g., `f"{first} {last}".lower()`) or create a separate first‑name-to-email map if you need to match by first name alone. Avoid concatenating names without a delimiter (e.g., `f"{first}{last}"`), as this will cause lookups by first name to fail and produce empty results.
+[cms-00047] When determining who has already paid via Venmo transactions (e.g., for a dinner bill), do not restrict the transaction query to a specific date (e.g., yesterday) unless the task explicitly requires it. Retrieve all received transactions (or use a sufficiently wide date window) to avoid missing prior payments and sending duplicate payment requests. Example: call `show_transactions` with `direction='received'` without `min_created_at`/`max_created_at` or with a broad range covering all possible payment dates.
+[cms-00049] When searching for a specific note (e.g., dinner expense shares), do not hard-code a note ID. Instead, search notes with relevant keywords (e.g., 'dinner', 'expense', 'share') and select the most recent or most relevant note by comparing titles and creation dates. If multiple notes match, retrieve their content and verify the expected format (e.g., lines with '=>' and amounts) before proceeding.
+[cms-00050] When paginating through contacts or transactions, explicitly set `page_limit=20` (the maximum allowed) to minimize the number of API calls and ensure complete data retrieval. Relying on default page sizes may lead to extra API calls or missing data if defaults change.
+[cms-00051] When filtering received Venmo transactions to identify who has already paid (e.g., for a dinner bill), use a date range that covers the full day of the event plus the following day(s) to avoid missing payments due to timezone differences. For example, set `min_created_at=yesterday` and `max_created_at=today` (or use a broader range) rather than restricting to a single day. This ensures all payments are captured.
+[cms-00054] When summing monetary amounts from API responses (e.g., Venmo `amount`), always verify the field exists and is numeric before adding. Use `isinstance(amount, (int, float))` to avoid errors from `None` or non-numeric values. Example:
+```python
+amount = txn.get('amount')
+if isinstance(amount, (int, float)):
+    total += float(amount)
+```
+[cms-00061] When logging into Venmo, use the user's email address as the username (not the phone number), as the Venmo login API expects an email. The phone number is used for the Phone app login. Using the wrong identifier will result in a 401 authentication error.
+[cms-00062] When filtering by string fields that may contain multiple values (e.g., genre: 'Classical, Instrumental') or have varied casing, do not use exact equality. Instead, use case‑insensitive substring matching. For example, `if 'classical' in song.get('genre', '').lower():`. Optionally split the string on commas and strip whitespace to check each term individually. This ensures comprehensive matching and avoids missing relevant records.
+[cms-00065] When extracting monetary amounts from free-text files (e.g., bill PDFs or TXT), do not use a regex that captures all numeric strings. Instead, parse the file line by line and look for lines containing keywords such as 'Total', 'Amount Due', 'Balance', 'Current Charges', or similar. Then extract the numeric value from that line specifically. This avoids summing irrelevant numbers (e.g., dates, IDs, sub-totals) and ensures the correct total is computed. Example:
+```python
+import re
+amount_regex = re.compile(r'\$?\s*([0-9]+(?:\.[0-9]{1,2})?)')
+total_cost = 0.0
+for line in content.split('\n'):
+    if 'total' in line.lower() or 'amount due' in line.lower():
+        match = amount_regex.search(line)
+        if match:
+            total_cost = float(match.group(1))
+            break  # assume only one total per bill
+```
+If multiple lines match, sum them or take the last one as per bill format.
+[cms-00070] When a task specifies 'this year' for date-based categorization (e.g., 'files created in March and April of this year correspond to Rome and Santorini'), always filter by both the year and the month. Do not rely solely on the month, as files from previous years with the same month will be misclassified. Use `datetime.date.today().year` to get the current year and compare it with the file's creation year. Example: `if file_date.year == current_year and file_date.month == 3: spot = 'Rome'`.
+[cms-00072] When using `directory_exists` (or similar 'exists' APIs), do not assume the response follows the same schema as `file_exists`. The response may be a plain boolean (true/false) instead of a dictionary with an `exists` field. Always verify the exact response schema using `show_api_doc` before accessing fields. Alternatively, to avoid errors, simply call `create_directory` with `recursive=True` without checking existence first – this is safe even if the directory already exists.
+[cms-00073] When deleting items from a specific collection (e.g., song library, playlist), always intersect the set of items to delete with the set of items actually present in that collection before calling the deletion API. Do not assume that all items in your 'to delete' set exist in every collection. For example, when removing songs from the library, first compute `songs_in_library_to_remove = songs_to_remove.intersection(library_song_ids)` and only delete those. This prevents 422 errors caused by attempting to delete items that are not present in the target collection.
+[cms-00074] When processing the same type of resource (e.g., songs) across multiple collections (e.g., song library and playlists), cache the results of expensive lookups (e.g., release year) in a dictionary to avoid redundant API calls. This is especially important when the same song may appear in both collections. Example: use a global cache dict `_release_year_cache = {}` and a helper function that checks the cache before calling `show_song`. This reduces API calls and speeds up execution.
+[cms-00080] When searching for a note with a specific purpose (e.g., workout plan, grocery list, movie recommendations), do not hard-code a note ID or assume a specific title. Instead, search notes with relevant keywords (e.g., 'workout', 'schedule', 'plan') and select the most relevant note by examining the titles of the returned notes. For example, if the task mentions a 'workout plan', search with query='workout' and look for a note whose title contains 'Workout Schedule' or 'Workout Plan'. This ensures you find the correct note even if the exact title is unknown.
+[cms-00084] When determining if an album is downloaded, do not assume that if any song in the album is downloaded then the album is downloaded. The task specifies that an album is downloaded only if ALL songs in it are downloaded. Use `album_song_ids.issubset(downloaded_song_ids)` to check. Failing to do so will incorrectly keep albums that are only partially downloaded.
+[cms-00110] When using `show_directory` with the home directory, always use `'~/'` (with trailing slash) as the `directory_path` parameter. Using `'~'` without the trailing slash may cause a 422 error because the API expects the path to start with `'~/'` for home-relative paths. Example: `directory_path='~/'` works, `directory_path='~'` fails.
+[cms-00118] When iterating over alarm objects from `show_alarms`, do not assume that every alarm has a `label` field. Use `.get('label', '')` to safely retrieve the label, and handle the case where it is missing (e.g., treat it as an empty string). This prevents KeyError crashes when an alarm has no label.
+[cms-00122] When identifying a 'go-to-sleep' alarm (or any semantically described alarm), do not assume it is the enabled alarm with the latest time. The latest enabled alarm could be a work-related or other non-sleep alarm. Instead, use the alarm's label field to search for keywords like 'sleep', 'bedtime', 'night', or consider alarms set in the evening (e.g., after 20:00). Always inspect the label field using .get('label', '') to avoid KeyError.
+[cms-00141] When retrieving passwords from the supervisor app using `show_account_passwords`, always handle the case where a required account (e.g., 'venmo', 'phone') might be missing from the list. Use a try/except or a guard check (e.g., `if not any(p['account_name'] == 'venmo' for p in passwords): raise RuntimeError('Venmo password not found')`) to avoid KeyError or silent failures.
+[cms-00146] When calling search APIs (e.g., `search_artists`, `search_songs`), do not pass an `access_token` parameter unless the API specification explicitly lists it as a required or optional parameter. Some search endpoints may not require authentication, and passing an unexpected parameter can cause a validation error. Always verify the exact parameter list using `show_api_doc` before making the call.
+[cms-00147] When following a set of artists (e.g., from liked songs), always check the current follow status with `show_artist_following` before calling `follow_artist`. The API will reject follow attempts for already-followed artists with a 422 status code, causing an exception that stops execution. Use the `following` boolean field in the response to decide whether to follow. This prevents errors and ensures all intended artists are processed.
+## PROBLEM-SOLVING HEURISTICS AND WORKFLOWS
+[psw-00002] Remember you can use the variables in your code in subsequent code blocks.
+[psw-00007] Many APIs return items in "pages". Make sure to run through all the pages by looping over `page_index`.
+
+## VERIFICATION CHECKLIST
+
+[vc-00023] Confirm that the CSV file contains the required headers ('Title,Artists') and that artists are joined with '|' (pipe) separator.
+[vc-00024] If the task requires account termination (e.g., delete_account), ensure the termination API is called only after the backup/export is fully completed, and mark the task complete afterward.
+[vc-00028] When verifying file existence using `file_exists`, use the parameter name `file_path` (not `path`). The response contains an `exists` boolean field.
+[vc-00030] Before performing irreversible actions (e.g., account deletion), verify that the backup file has been successfully created using `file_exists`. This ensures the backup is complete and prevents data loss. Example: `result = apis.file_system.file_exists(file_path='...', access_token=fs_token); if not result.get('exists'): raise RuntimeError('Backup file not found')`.
+[vc-00034] Before replying to a text message request, always verify the request by searching the contact's text messages using `search_text_messages` with the contact's phone number and a relevant query (e.g., 'movie', 'recommendation'). Do not assume the request exists based solely on the task description.
+[vc-00035] After sending a text message via `send_text_message`, verify the response indicates success (e.g., `send_result.get('message') == 'Text message sent.'`) before calling `apis.supervisor.complete_task()`. If the response indicates failure, handle the error appropriately (e.g., retry or log).
+[vc-00036] After calling `create_transaction_comment` or `like_transaction` on Venmo, verify the response indicates success (e.g., `comment_resp.get('message') == 'Comment created'` and `like_resp.get('message') == 'Transaction liked.'`). If the response indicates failure, handle the error appropriately (e.g., retry or log) before proceeding.
+[vc-00039] When verifying API success responses, use flexible checks (e.g., check for presence of expected fields like 'comment_id' or substring matching on the message) rather than exact string equality, as API response messages may vary. For example, instead of checking `comment_resp.get('message') == 'Comment created'`, check `'created' in comment_resp.get('message', '').lower()` or `comment_resp.get('comment_id') is not None`.
+[vc-00046] After calling `create_payment_request` on Venmo, verify the response indicates success (e.g., check for a `payment_request_id` field or that the `message` contains `'created'`). Do not proceed to complete the task unless all payment requests have been confirmed successful.
+[vc-00052] After parsing a note's content (e.g., dinner shares), verify that the parsed data matches the expected structure (e.g., at least one line with '=>' and a valid amount). If the content does not match expectations, log a warning and consider checking alternative notes or re-examining the note selection logic.
+[vc-00055] After summing financial amounts (e.g., total money sent), round the result to two decimal places using `round(total, 2)` and confirm it is a valid float/int. This avoids floating-point precision artifacts and ensures the answer is presentable.
+[vc-00057] Before finalizing the answer for a financial query involving Venmo transactions, verify that the `direction` parameter ('sent' or 'received') matches the natural language meaning of the task. If the task says 'received to [someone]', confirm you used `direction='sent'` and filtered by receiver email. If it says 'received from [someone]', confirm you used `direction='received'` and filtered by sender email. This prevents misinterpretation of ambiguous phrasing.
+[vc-00060] When summing financial amounts for both sent and received transactions (e.g., 'sent or received to roommates'), verify that you queried both directions separately and combined the totals. Confirm that the counterpart email matching uses the correct field: for sent transactions, check the receiver's email; for received transactions, check the sender's email. This ensures the sum accurately reflects all relevant transactions.
+[vc-00063] After calling `follow_artist`, verify the response indicates success by checking that a `message` field exists and does not contain an error indicator, rather than relying on a specific keyword like 'followed'. For example, `if resp.get('message') and 'error' not in resp['message'].lower():` or simply check that `resp` does not have a `'message'` that starts with 'error'. This is more robust than substring matching on a specific success word.
+[vc-00066] After computing a total for the current year (e.g., summing bills), verify that the year used in the computation matches `datetime.date.today().year`. Do not hard-code a different year. Use the computed total directly as the answer without overriding it with an incorrect assumption about the current year.
+[vc-00068] After filtering files or transactions for the current year, verify that at least one matching record exists. If none are found, set the total to 0.0 and proceed. Do not assume that records exist; an empty result should yield a zero total.
+[vc-00075] After calling an API that returns a dynamic identifier (e.g., playlist_id, note_id, transaction_id), store the identifier in a variable (e.g., `new_id = response['playlist_id']`) and verify that the response contains the expected identifier and no error message before using it in subsequent API calls. This prevents hard-coding and ensures robustness against API changes.
+[vc-00077] After creating a playlist to meet a minimum duration, verify that the total duration of all songs added (library + recommendations) meets or exceeds the required duration. Use `show_song` to get each song's `duration` field (in seconds) and sum them. If the total is still below the target, continue adding more recommendations until the target is met.
+[vc-00081] After calling `create_playlist`, verify that the response contains a `playlist_id` field (e.g., `new_pl_resp.get('playlist_id') is not None`) before using it in subsequent API calls. If the field is missing or the response indicates an error, handle the failure appropriately (e.g., retry or log) before proceeding.
+[vc-00086] After calling a deletion API (e.g., remove_song_from_library, remove_album_from_library), verify the response does not contain an error message. If the response contains a 'message' field with 'error', handle the failure appropriately (e.g., log and continue or retry).
+[vc-00088] After calling `compress_directory`, verify that the response contains a `compressed_file_path` field (e.g., `compress_resp.get('compressed_file_path') is not None`) before proceeding to delete the original directory. If the field is missing or the response indicates an error, do not delete the source directory; log the failure and handle appropriately.
+[vc-00090] After compressing a directory with `compress_directory`, call `file_exists` on the resulting compressed zip file path to confirm the file was actually created before deleting the source directory. This provides an extra safety layer against silent compression failures that might not be caught by only checking the response's `compressed_file_path` field.
+[vc-00093] After adding a song to a playlist via `add_song_to_playlist`, verify the response indicates success (e.g., no 'error' in the message field, or a 'message' field exists). Do not proceed until all adds are confirmed.
+[vc-00095] When adding songs to an existing playlist, first retrieve the current song IDs in the playlist (e.g., via show_playlist) and skip any song that is already present to avoid duplicates. Only add songs that are not already in the playlist.
+[vc-00096] After filtering songs by criteria (e.g., genre and release year), if no songs match the criteria, log a warning (e.g., print a message) and complete the task without adding any songs. Do not attempt to add an empty list or raise an error.
+[vc-00099] After calling `like_song` (or similar action) on each song in the queue, verify the response does not contain an error message. If the response contains a 'message' field with 'error', log the failure and handle appropriately (e.g., continue to next song).
+[vc-00101] After retrieving the song queue and before liking songs, verify that a current song was found (i.e., `current_position is not None`). If no song has `is_current` set to True, raise an error or handle the edge case appropriately (e.g., the queue might be empty or the player might be stopped).
+[vc-00105] After sending a refund for an approved payment request, verify that the refund transaction appears in your sent transactions (using `show_transactions` with `direction='sent'`) with the correct receiver email and amount. If not found, raise an error before completing the task.
+[vc-00106] After calling create_transaction to send a refund, verify the response indicates success before proceeding to verify the refund appears in sent transactions. Check that the response contains a 'transaction_id' field or that the 'message' does not contain an error. Example: `if not refund_resp.get('transaction_id'): raise RuntimeError('Refund transaction failed')`. This prevents proceeding with verification if the refund itself was not successfully created.
+[vc-00107] When verifying that a refund transaction appears in sent transactions, consistently use `page_limit=20` (the maximum allowed) in the `show_transactions` call to ensure complete data retrieval and minimize API calls. Example: `apis.venmo.show_transactions(access_token=venmo_access_token, direction='sent', page_index=page, page_limit=20)`.
+[vc-00111] After creating payment requests, verify that each request appears in the list of sent payment requests by paginating through `show_sent_payment_requests` and confirming the `payment_request_id` is present. This ensures the requests were successfully created and persisted.
+[vc-00113] Before creating payment requests based on a bill receipt, verify that the total amount was extracted programmatically from the receipt file content (e.g., using regex or line parsing) and not hard-coded. Check that the code contains a parsing step that obtains the amount from the file content.
+[vc-00116] After calling update_note to modify note content, verify that the response indicates success (e.g., the response contains a 'note_id' field or a 'message' without 'error'). Optionally re-fetch the note using show_note to confirm the content change was applied before calling complete_task.
+[vc-00117] After calling `update_alarm` (or similar alarm mutation APIs), verify the response indicates success (e.g., check that the response contains a `message` field without 'error', or that the response is not a failure schema). Do not proceed to the next alarm or call `complete_task` until all updates have been confirmed successful.
+[vc-00124] After retrieving a playlist's details via `show_playlist`, verify that the response contains a `songs` list (or the expected field) before iterating over it. If the field is missing or the response indicates an error, log a warning and skip that playlist to avoid runtime errors.
+[vc-00125] When computing the longest playlist duration, verify that at least one playlist was found and that the computed `max_seconds` is greater than zero before converting to minutes. If no playlists exist or all durations are zero, set the answer to 0 and proceed.
+[vc-00126] When accessing song identifiers from a playlist's `songs` list (returned by `show_playlist`), use the field name `id` (not `song_id`). The `show_playlist` response schema uses `id` for the song identifier, while `show_song_library` and `show_liked_songs` use `song_id`. Always verify the exact field name from the API documentation before writing code that accesses song IDs from different endpoints.
+[vc-00127] When converting total seconds to minutes for a playlist duration, round to the nearest whole number using `round(total_seconds / 60)`. This matches the task's requirement of 'rounded to the nearest number'. Do not truncate or floor the value.
+[vc-00131] After calling `play_music` with a `song_id`, verify the response indicates success by checking that the response contains a `song_id` field (e.g., `play_resp.get('song_id') is not None`) or that the `message` does not contain an error. If the response indicates failure, handle the error appropriately before completing the task.
+[vc-00136] After approving a payment request via `approve_payment_request`, verify the response does not contain an error message. Use a flexible check such as `if 'error' in resp.get('message', '').lower():` to detect failures. Do not proceed to the next request or call `complete_task` until all approvals have been confirmed successful.
+[vc-00138] After calling `deny_payment_request` on Venmo, verify the response does not contain an error message. Use a flexible check such as `if 'error' in resp.get('message', '').lower():` to detect failures. Do not proceed to the next request or call `complete_task` until all denials have been confirmed successful.
+[vc-00139] After logging into any app (e.g., Venmo, Phone, Spotify), verify that the login response contains a valid `access_token` field (e.g., `if not login_result.get('access_token'): raise RuntimeError('Login failed')`). Do not assume the login was successful based solely on the absence of an error message.
+[vc-00140] After approving a payment request via `approve_payment_request`, optionally re-fetch the request using `show_received_payment_requests` with `status='approved'` and confirm that the approved request's `payment_request_id` appears in the list. This provides an extra layer of verification that the status change was persisted.
+[vc-00144] When using `sort_by` to find the minimum or maximum of a numeric attribute, verify that the first result in the response contains the expected field and that it is numeric. If the field is missing or non-numeric, handle the edge case (e.g., skip or raise an error) to avoid incorrect results.
+[vc-00151] After calling `unfollow_artist`, verify the response indicates success by checking that the `message` field does not contain an error indicator (e.g., `if 'error' in resp.get('message', '').lower():`). If an error is detected, log the failure and continue to the next artist. Do not assume success based on the absence of an exception.
+## TROUBLESHOOTING AND PITFALLS:
+
+[ts-00132] If you see 'No code available to execute' or your final code block is not executed, check that the code block ends with ``` followed immediately by a newline (i.e., ``` on its own line, then an empty line or the end of the message). Missing the newline after the closing backticks will cause the environment to ignore the block.
+## OTHERS
+[misc-00003] Remember that the email addresses, access tokens and variables (e.g. spotify_password) in the example above are not valid anymore.
+[misc-00008] Once you have completed the task, make sure to call apis.supervisor.complete_task(). If the task asked for some information, return it as the answer argument, i.e. call apis.supervisor.complete_task(answer=<answer>). Many tasks do not require an answer, so in those cases, just call apis.supervisor.complete_task() i.e. do not pass any argument.
+[misc-00012] To find the most-played song in the album library, follow this workflow: (1) paginate through `show_album_library` to get all albums, (2) collect all unique `song_ids` from the albums, (3) fetch each song's details using `show_song`, (4) compare the `play_count` field (using `.get` with a default of 0) to identify the maximum, (5) return the song title.
+[misc-00018] When paginating through API results, use a `while True` loop that breaks when the returned page is empty (e.g., `if not page: break`). This ensures you retrieve all pages regardless of the total count, unlike a fixed-range `for` loop which may miss pages or iterate unnecessarily.

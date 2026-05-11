@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "run_id": "full_seed-42_20260511_035048",
+  "status": "completed",
+  "checkpointing_enabled": true,
+  "resume_enabled": true,
+  "has_checkpoints": true,
+  "resume_count": 0,
+  "current_stage": "eval-normal",
+  "last_completed_stage": "eval-normal",
+  "active_runtime_seconds": 48269.767639230995,
+  "started_at": "2026-05-11T00:50:48.279179+00:00",
+  "last_resumed_at": "2026-05-11T00:50:48.281306+00:00",
+  "last_checkpoint_at": "2026-05-11T14:07:09.293505+00:00",
+  "completed_at": "2026-05-11T14:15:18.049733+00:00",
+  "failure_reason": null
+}
