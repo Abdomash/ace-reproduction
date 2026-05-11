@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "benchmark": "ace-finer",
+  "run_type": "subset",
+  "config_slug": "finer_repr_a__all_expensive__cheap-openai-gpt-oss-120b__exp-deepseek-deepseek-v4-flash",
+  "mode": "offline",
+  "seed": 42,
+  "timestamp": "20260511_012020",
+  "run_leaf": "offline_seed-42_20260511_012020",
+  "run_dir": "results/ace-finer/subset/finer_repr_a__all_expensive__cheap-openai-gpt-oss-120b__exp-deepseek-deepseek-v4-flash/offline_seed-42_20260511_012020",
+  "campaign_id": "ace_repr_v1",
+  "sample_id": "finer_repr_a",
+  "sample_kind": "representative",
+  "config_id": "all_expensive",
+  "tier_models": {
+    "cheap": {
+      "label": "openai/gpt-oss-120b",
+      "model": "openai/gpt-oss-120b",
+      "provider": "openrouter"
+    },
+    "expensive": {
+      "label": "deepseek/deepseek-v4-flash",
+      "model": "deepseek/deepseek-v4-flash",
+      "provider": "openrouter"
+    }
+  },
+  "resolved_models": {
+    "curator": {
+      "label": "deepseek/deepseek-v4-flash",
+      "model": "deepseek/deepseek-v4-flash",
+      "provider": "openrouter",
+      "tier": "expensive"
+    },
+    "generator": {
+      "label": "deepseek/deepseek-v4-flash",
+      "model": "deepseek/deepseek-v4-flash",
+      "provider": "openrouter",
+      "tier": "expensive"
+    },
+    "reflector": {
+      "label": "deepseek/deepseek-v4-flash",
+      "model": "deepseek/deepseek-v4-flash",
+      "provider": "openrouter",
+      "tier": "expensive"
+    }
+  },
+  "sample_manifest_path": "/home/abdo/ace-reproduction/runners/campaigns/ace_repr_v1/samples/finer_repr_a.json",
+  "status": "in_progress",
+  "checkpointing_enabled": true,
+  "resume_enabled": true,
+  "has_checkpoints": true,
+  "resume_count": 1,
+  "current_stage": "train",
+  "last_completed_stage": "baseline-eval",
+  "active_runtime_seconds": 0.0,
+  "started_at": "2026-05-10T22:20:20.401385+00:00",
+  "last_resumed_at": "2026-05-11T01:06:26.196221+00:00",
+  "last_checkpoint_at": "2026-05-11T00:42:29.248620+00:00",
+  "completed_at": null,
+  "failure_reason": null
+}

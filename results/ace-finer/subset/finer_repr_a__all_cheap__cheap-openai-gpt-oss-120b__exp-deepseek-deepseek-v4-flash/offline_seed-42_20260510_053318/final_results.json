@@ -1,0 +1,152 @@
+{
+  "run_id": "offline_seed-42_20260510_053318",
+  "telemetry": {
+    "enabled": true,
+    "trace_path": "/home/abdo/ace-reproduction/results/ace-finer/subset/finer_repr_a__all_cheap__cheap-openai-gpt-oss-120b__exp-deepseek-deepseek-v4-flash/offline_seed-42_20260510_053318/telemetry/run_offline_seed-42_20260510_053318.otel.jsonl",
+    "metrics_path": "/home/abdo/ace-reproduction/results/ace-finer/subset/finer_repr_a__all_cheap__cheap-openai-gpt-oss-120b__exp-deepseek-deepseek-v4-flash/offline_seed-42_20260510_053318/telemetry/ace_offline_seed-42_20260510_053318.metrics.jsonl",
+    "metrics_interval_seconds": 5.0,
+    "task_name": "finer",
+    "mode": "offline"
+  },
+  "llm_usage": {
+    "roles": {
+      "curator": {
+        "calls": 300,
+        "prompt_tokens": 8317373,
+        "response_tokens": 284335,
+        "reasoning_tokens": 235578,
+        "total_tokens": 8601708,
+        "cached_input_tokens": 31726,
+        "cached_output_tokens": 0,
+        "total_time": 9075.7729575634,
+        "cost_usd": 0.7862438040000006,
+        "calls_with_cost": 300
+      },
+      "generator": {
+        "calls": 1726,
+        "prompt_tokens": 52248064,
+        "response_tokens": 2600205,
+        "reasoning_tokens": 2449652,
+        "total_tokens": 54848269,
+        "cached_input_tokens": 36739656,
+        "cached_output_tokens": 0,
+        "total_time": 118419.44888615608,
+        "cost_usd": 5.362955419999992,
+        "calls_with_cost": 1721
+      },
+      "reflector": {
+        "calls": 366,
+        "prompt_tokens": 954298,
+        "response_tokens": 226405,
+        "reasoning_tokens": 121935,
+        "total_tokens": 1180703,
+        "cached_input_tokens": 108947,
+        "cached_output_tokens": 0,
+        "total_time": 5619.83176112175,
+        "cost_usd": 0.15995962900000002,
+        "calls_with_cost": 366
+      }
+    },
+    "total": {
+      "calls": 2392,
+      "prompt_tokens": 61519735,
+      "response_tokens": 3110945,
+      "reasoning_tokens": 2807165,
+      "total_tokens": 64630680,
+      "cached_input_tokens": 36880329,
+      "cached_output_tokens": 0,
+      "total_time": 133115.05360484123,
+      "cost_usd": 6.3091588529999925,
+      "calls_with_cost": 2387
+    }
+  },
+  "costs": {
+    "roles": {
+      "curator": {
+        "calls": 300,
+        "prompt_tokens": 8317373,
+        "response_tokens": 284335,
+        "reasoning_tokens": 235578,
+        "total_tokens": 8601708,
+        "cached_input_tokens": 31726,
+        "cached_output_tokens": 0,
+        "cost_usd": 0.7862438040000006
+      },
+      "generator": {
+        "calls": 1726,
+        "prompt_tokens": 52248064,
+        "response_tokens": 2600205,
+        "reasoning_tokens": 2449652,
+        "total_tokens": 54848269,
+        "cached_input_tokens": 36739656,
+        "cached_output_tokens": 0,
+        "cost_usd": 5.362955419999992
+      },
+      "reflector": {
+        "calls": 366,
+        "prompt_tokens": 954298,
+        "response_tokens": 226405,
+        "reasoning_tokens": 121935,
+        "total_tokens": 1180703,
+        "cached_input_tokens": 108947,
+        "cached_output_tokens": 0,
+        "cost_usd": 0.15995962900000002
+      }
+    },
+    "total": {
+      "calls": 2392,
+      "prompt_tokens": 61519735,
+      "response_tokens": 3110945,
+      "reasoning_tokens": 2807165,
+      "total_tokens": 64630680,
+      "cached_input_tokens": 36880329,
+      "cached_output_tokens": 0,
+      "cost_usd": 6.3091588529999925
+    }
+  },
+  "results": {
+    "initial_test_results": {
+      "accuracy": 0.5636363636363636,
+      "correct": 49,
+      "total": 220,
+      "no_answer": 0
+    },
+    "training_results": {
+      "best_validation_accuracy": 0.675
+    },
+    "final_test_results": {
+      "accuracy": 0.7125,
+      "correct": 84,
+      "total": 220,
+      "no_answer": 11
+    }
+  },
+  "initial_test_results": {
+    "accuracy": 0.5636363636363636,
+    "correct": 49,
+    "total": 220,
+    "no_answer": 0
+  },
+  "training_results": {
+    "best_validation_accuracy": 0.675
+  },
+  "final_test_results": {
+    "accuracy": 0.7125,
+    "correct": 84,
+    "total": 220,
+    "no_answer": 11
+  },
+  "status": "completed",
+  "checkpointing_enabled": true,
+  "resume_enabled": true,
+  "has_checkpoints": false,
+  "resume_count": 0,
+  "current_stage": "final-eval",
+  "last_completed_stage": "final-eval",
+  "active_runtime_seconds": 71162.223783022,
+  "started_at": "2026-05-10T02:33:18.195454+00:00",
+  "last_resumed_at": "2026-05-10T02:33:18.196785+00:00",
+  "last_checkpoint_at": null,
+  "completed_at": "2026-05-10T22:20:19.184884+00:00",
+  "failure_reason": null
+}

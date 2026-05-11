@@ -1,0 +1,142 @@
+{
+  "best_accuracy": 0.675,
+  "results": [
+    {
+      "epoch": 1,
+      "step": 100,
+      "train_result": {
+        "pre_train_accuracy": 0.7075,
+        "post_train_accuracy": 0.8275
+      },
+      "val_result": {
+        "accuracy": 0.65,
+        "correct": 54,
+        "total": 150,
+        "no_answer": 0
+      },
+      "playbook_num_tokens": 19168,
+      "playbook_length": 85136,
+      "playbook_stats": {
+        "total_bullets": 254,
+        "high_performing": 0,
+        "problematic": 0,
+        "unused": 254,
+        "by_section": {
+          "COMMON MISTAKES TO AVOID": {
+            "count": 83,
+            "helpful": 0,
+            "harmful": 0
+          },
+          "PROBLEM-SOLVING HEURISTICS": {
+            "count": 82,
+            "helpful": 0,
+            "harmful": 0
+          },
+          "CONTEXT CLUES & INDICATORS": {
+            "count": 88,
+            "helpful": 0,
+            "harmful": 0
+          },
+          "OTHERS": {
+            "count": 1,
+            "helpful": 0,
+            "harmful": 0
+          }
+        }
+      }
+    },
+    {
+      "epoch": 1,
+      "step": 200,
+      "train_result": {
+        "pre_train_accuracy": 0.71875,
+        "post_train_accuracy": 0.795
+      },
+      "val_result": {
+        "accuracy": 0.6516666666666666,
+        "correct": 50,
+        "total": 150,
+        "no_answer": 12
+      },
+      "playbook_num_tokens": 36051,
+      "playbook_length": 160288,
+      "playbook_stats": {
+        "total_bullets": 465,
+        "high_performing": 0,
+        "problematic": 0,
+        "unused": 465,
+        "by_section": {
+          "COMMON MISTAKES TO AVOID": {
+            "count": 164,
+            "helpful": 0,
+            "harmful": 0
+          },
+          "PROBLEM-SOLVING HEURISTICS": {
+            "count": 164,
+            "helpful": 0,
+            "harmful": 0
+          },
+          "CONTEXT CLUES & INDICATORS": {
+            "count": 133,
+            "helpful": 0,
+            "harmful": 0
+          },
+          "OTHERS": {
+            "count": 4,
+            "helpful": 0,
+            "harmful": 0
+          }
+        }
+      }
+    },
+    {
+      "epoch": 1,
+      "step": 300,
+      "train_result": {
+        "pre_train_accuracy": 0.7208333333333333,
+        "post_train_accuracy": 0.7958333333333333
+      },
+      "val_result": {
+        "accuracy": 0.675,
+        "correct": 58,
+        "total": 150,
+        "no_answer": 15
+      },
+      "playbook_num_tokens": 50286,
+      "playbook_length": 224048,
+      "playbook_stats": {
+        "total_bullets": 653,
+        "high_performing": 0,
+        "problematic": 3,
+        "unused": 645,
+        "by_section": {
+          "STRATEGIES & INSIGHTS": {
+            "count": 41,
+            "helpful": 3,
+            "harmful": 1
+          },
+          "COMMON MISTAKES TO AVOID": {
+            "count": 241,
+            "helpful": 2,
+            "harmful": 1
+          },
+          "PROBLEM-SOLVING HEURISTICS": {
+            "count": 213,
+            "helpful": 0,
+            "harmful": 0
+          },
+          "CONTEXT CLUES & INDICATORS": {
+            "count": 154,
+            "helpful": 0,
+            "harmful": 1
+          },
+          "OTHERS": {
+            "count": 4,
+            "helpful": 0,
+            "harmful": 0
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,134 @@
+{
+  "run_id": "offline_seed-42_20260511_012020",
+  "telemetry": {
+    "enabled": true,
+    "trace_path": "/home/abdo/ace-reproduction/results/ace-finer/subset/finer_repr_a__all_expensive__cheap-openai-gpt-oss-120b__exp-deepseek-deepseek-v4-flash/offline_seed-42_20260511_012020/telemetry/run_offline_seed-42_20260511_012020.otel.jsonl",
+    "metrics_path": "/home/abdo/ace-reproduction/results/ace-finer/subset/finer_repr_a__all_expensive__cheap-openai-gpt-oss-120b__exp-deepseek-deepseek-v4-flash/offline_seed-42_20260511_012020/telemetry/ace_offline_seed-42_20260511_012020.metrics.jsonl",
+    "metrics_interval_seconds": 5.0,
+    "task_name": "finer",
+    "mode": "offline"
+  },
+  "llm_usage": {
+    "roles": {
+      "curator": {
+        "calls": 58,
+        "prompt_tokens": 458284,
+        "response_tokens": 60839,
+        "reasoning_tokens": 37179,
+        "total_tokens": 519123,
+        "cached_input_tokens": 0,
+        "cached_output_tokens": 0,
+        "total_time": 2104.857945919037,
+        "cost_usd": 0.08280304,
+        "calls_with_cost": 58
+      },
+      "generator": {
+        "calls": 374,
+        "prompt_tokens": 1862409,
+        "response_tokens": 353852,
+        "reasoning_tokens": 255086,
+        "total_tokens": 2216261,
+        "cached_input_tokens": 589824,
+        "cached_output_tokens": 0,
+        "total_time": 7276.116227865219,
+        "cost_usd": 0.29701939999999977,
+        "calls_with_cost": 374
+      },
+      "reflector": {
+        "calls": 62,
+        "prompt_tokens": 179771,
+        "response_tokens": 82397,
+        "reasoning_tokens": 50173,
+        "total_tokens": 262168,
+        "cached_input_tokens": 3584,
+        "cached_output_tokens": 0,
+        "total_time": 2555.347691297531,
+        "cost_usd": 0.04946674200000001,
+        "calls_with_cost": 62
+      }
+    },
+    "total": {
+      "calls": 494,
+      "prompt_tokens": 2500464,
+      "response_tokens": 497088,
+      "reasoning_tokens": 342438,
+      "total_tokens": 2997552,
+      "cached_input_tokens": 593408,
+      "cached_output_tokens": 0,
+      "total_time": 11936.321865081787,
+      "cost_usd": 0.42928918199999977,
+      "calls_with_cost": 494
+    }
+  },
+  "costs": {
+    "roles": {
+      "curator": {
+        "calls": 58,
+        "prompt_tokens": 458284,
+        "response_tokens": 60839,
+        "reasoning_tokens": 37179,
+        "total_tokens": 519123,
+        "cached_input_tokens": 0,
+        "cached_output_tokens": 0,
+        "cost_usd": 0.08280304
+      },
+      "generator": {
+        "calls": 374,
+        "prompt_tokens": 1862409,
+        "response_tokens": 353852,
+        "reasoning_tokens": 255086,
+        "total_tokens": 2216261,
+        "cached_input_tokens": 589824,
+        "cached_output_tokens": 0,
+        "cost_usd": 0.29701939999999977
+      },
+      "reflector": {
+        "calls": 62,
+        "prompt_tokens": 179771,
+        "response_tokens": 82397,
+        "reasoning_tokens": 50173,
+        "total_tokens": 262168,
+        "cached_input_tokens": 3584,
+        "cached_output_tokens": 0,
+        "cost_usd": 0.04946674200000001
+      }
+    },
+    "total": {
+      "calls": 494,
+      "prompt_tokens": 2500464,
+      "response_tokens": 497088,
+      "reasoning_tokens": 342438,
+      "total_tokens": 2997552,
+      "cached_input_tokens": 593408,
+      "cached_output_tokens": 0,
+      "cost_usd": 0.42928918199999977
+    }
+  },
+  "results": {
+    "initial_test_results": {
+      "accuracy": 0.7670454545454546,
+      "correct": 99,
+      "total": 220,
+      "no_answer": 2
+    }
+  },
+  "initial_test_results": {
+    "accuracy": 0.7670454545454546,
+    "correct": 99,
+    "total": 220,
+    "no_answer": 2
+  },
+  "status": "in_progress",
+  "checkpointing_enabled": true,
+  "resume_enabled": true,
+  "has_checkpoints": true,
+  "resume_count": 1,
+  "current_stage": "train",
+  "last_completed_stage": "baseline-eval",
+  "active_runtime_seconds": 0.0,
+  "started_at": "2026-05-10T22:20:20.401385+00:00",
+  "last_resumed_at": "2026-05-11T01:06:26.196221+00:00",
+  "last_checkpoint_at": "2026-05-11T00:42:29.248620+00:00",
+  "completed_at": null,
+  "failure_reason": null
+}
