@@ -1,0 +1,36 @@
+{
+  "run_id": "full_seed-42_baseline",
+  "mode": "full",
+  "task_name": "appworld",
+  "config_name": "AppWorld Test Normal Representative / Baseline Cheap Generator Nitro",
+  "seed": 42,
+  "checkpoint_enabled": false,
+  "resume_from": "results/ace-appworld/subset/appworld_test_normal_repr__baseline_cheap_generator__cheap-openai-gpt-oss-120b/full_seed-42_baseline",
+  "stop_after_stage": null,
+  "stop_after_task": null,
+  "checkpoint_every_task": 1,
+  "appworld_root": "projects/ace-appworld",
+  "save_path": "/home/abdo/ace-reproduction/results/ace-appworld/subset/appworld_test_normal_repr__baseline_cheap_generator__cheap-openai-gpt-oss-120b/full_seed-42_baseline",
+  "models": {
+    "generator": {
+      "provider": "openrouter",
+      "model": "openai/gpt-oss-120b:nitro"
+    },
+    "reflector": {
+      "provider": "openrouter",
+      "model": "openai/gpt-oss-120b:nitro"
+    },
+    "curator": {
+      "provider": "openrouter",
+      "model": "openai/gpt-oss-120b:nitro"
+    }
+  },
+  "enabled_stages": [
+    "eval-normal"
+  ],
+  "task_manifests": {
+    "adapt": null,
+    "eval-normal": "/home/abdo/ace-reproduction/runners/campaigns/ace_repr_v1/samples/appworld_test_normal_repr.json",
+    "eval-challenge": null
+  }
+}

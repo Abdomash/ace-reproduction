@@ -1,0 +1,67 @@
+{
+  "active_runtime_seconds": 1317.8868051079999,
+  "campaign_id": null,
+  "checkpointing_enabled": false,
+  "completed_at": null,
+  "config_id": null,
+  "config_name": "AppWorld Test Normal Representative / Baseline Expensive Generator Nitro",
+  "current_stage": "eval-normal",
+  "dataset": "full",
+  "enabled_stages": [
+    "eval-normal"
+  ],
+  "evaluation_run": {
+    "ran": false,
+    "reason": "disabled"
+  },
+  "evaluation_size_bytes": 0,
+  "failure_reason": "Expecting value: line 5273 column 1 (char 28996)",
+  "has_checkpoints": true,
+  "last_checkpoint_at": "2026-05-12T13:27:03.702436+00:00",
+  "last_completed_stage": null,
+  "last_resumed_at": "2026-05-12T13:26:59.288618+00:00",
+  "mode": "full",
+  "models": {
+    "curator": {
+      "model": "deepseek/deepseek-v4-flash:nitro",
+      "provider": "openrouter"
+    },
+    "generator": {
+      "model": "deepseek/deepseek-v4-flash:nitro",
+      "provider": "openrouter"
+    },
+    "reflector": {
+      "model": "deepseek/deepseek-v4-flash:nitro",
+      "provider": "openrouter"
+    }
+  },
+  "post_export_evaluation_size_bytes": 0,
+  "post_export_size_bytes": 4045002,
+  "post_export_tasks_size_bytes": 0,
+  "post_export_telemetry_size_bytes": 0,
+  "prune": {
+    "bytes_removed": 0,
+    "removed": [],
+    "removed_count": 0
+  },
+  "resolved_models": null,
+  "resume_count": 1,
+  "resume_enabled": true,
+  "run_dir": "/home/abdo/ace-reproduction/results/ace-appworld/subset/appworld_test_normal_repr__baseline_expensive_generator__exp-deepseek-deepseek-v4-flash/full_seed-42_baseline",
+  "sample_id": null,
+  "sample_kind": null,
+  "sample_manifest_path": null,
+  "stage_count": 2,
+  "started_at": "2026-05-12T13:26:59.286702+00:00",
+  "status": "failed",
+  "task_directory_count": 1,
+  "task_manifests": {
+    "adapt": null,
+    "eval-challenge": null,
+    "eval-normal": "/home/abdo/ace-reproduction/runners/campaigns/ace_repr_v1/samples/appworld_test_normal_repr.json"
+  },
+  "tasks_size_bytes": 1933679,
+  "telemetry_size_bytes": 352938,
+  "tier_models": null,
+  "total_size_bytes": 4040549
+}

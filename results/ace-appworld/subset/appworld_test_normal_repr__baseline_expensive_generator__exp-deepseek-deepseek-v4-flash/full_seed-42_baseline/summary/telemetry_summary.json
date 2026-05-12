@@ -1,0 +1,52 @@
+{
+  "agent_counts": {
+    "ace": 18,
+    "appworld_environment": 16,
+    "generator": 17
+  },
+  "llm_totals": {
+    "cached_input_tokens": 116480.0,
+    "cached_output_tokens": 0.0,
+    "call_time_seconds": 200.39974382799846,
+    "cost_usd": 0.02090566,
+    "cost_usd_legacy": 0.02090566,
+    "prompt_num_tokens": 196859.0,
+    "reasoning_num_tokens": 1513.0,
+    "response_num_tokens": 21084.0,
+    "span_wall_time_seconds": 1308.5904676779983,
+    "total_num_tokens": 217943.0,
+    "wall_time_seconds": 200.39974382799846
+  },
+  "metric_file_count": 1,
+  "metrics": {
+    "process.cpu.usage": {
+      "avg": 0.0,
+      "count": 262,
+      "max": 0.0,
+      "min": 0.0,
+      "sum": 0.0,
+      "unit": "%"
+    },
+    "process.memory.usage_bytes": {
+      "avg": 778954517.4961832,
+      "count": 262,
+      "max": 781074432.0,
+      "min": 285274112.0,
+      "sum": 204086083584.0,
+      "unit": "bytes"
+    }
+  },
+  "span_count": 51,
+  "span_name_counts": {
+    "ace.call_llm": 17,
+    "ace.react_step": 17,
+    "ace.task": 1,
+    "appworld.execute": 16
+  },
+  "trace_file_count": 1,
+  "wall_time_seconds_by_agent": {
+    "ace": 2624.8813296400012,
+    "appworld_environment": 1.799106591999589,
+    "generator": 1308.5904676779983
+  }
+}

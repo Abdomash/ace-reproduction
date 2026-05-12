@@ -1,0 +1,22 @@
+{
+  "api_call_count": 17,
+  "compact_path": "/home/abdo/ace-reproduction/results/ace-appworld/subset/appworld_test_normal_repr__baseline_expensive_generator__exp-deepseek-deepseek-v4-flash/full_seed-42_baseline/summary/api_calls.summary.jsonl",
+  "endpoint_counts": {
+    "/api_docs/api_descriptions": 1,
+    "/api_docs/api_doc": 7,
+    "/api_docs/app_descriptions": 1,
+    "/phone/auth/token": 1,
+    "/phone/contacts": 3,
+    "/supervisor/account_passwords": 1,
+    "/venmo/auth/token": 1,
+    "/venmo/friends": 2
+  },
+  "method_counts": {
+    "get": 15,
+    "post": 2
+  },
+  "parse_errors": 0,
+  "task_call_counts": {
+    "eval-normal:3d9a636_1": 17
+  }
+}

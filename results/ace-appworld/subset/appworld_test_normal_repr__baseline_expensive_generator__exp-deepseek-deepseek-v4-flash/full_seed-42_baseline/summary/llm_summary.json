@@ -1,0 +1,42 @@
+{
+  "call_count": 16,
+  "compact_path": "/home/abdo/ace-reproduction/results/ace-appworld/subset/appworld_test_normal_repr__baseline_expensive_generator__exp-deepseek-deepseek-v4-flash/full_seed-42_baseline/summary/llm_calls.compact.jsonl",
+  "model_counts": {
+    "deepseek/deepseek-v4-flash:nitro": 16
+  },
+  "nonzero_cost_call_count": 16,
+  "parse_errors": 0,
+  "role_counts": {
+    "generator": 16
+  },
+  "task_call_counts": {
+    "eval-normal:generator_0499704478884d94bb09523ffafdda2d": 1,
+    "eval-normal:generator_0b6812881599423abcb55037e3089367": 1,
+    "eval-normal:generator_0d2164b3e27d4008b77b9843336b0141": 1,
+    "eval-normal:generator_2ebddf9989d1480ea6e9e837c07e4d51": 1,
+    "eval-normal:generator_37ac0bb1e9734c12963efacad676ee33": 1,
+    "eval-normal:generator_4004cfa4a74f4c72a3db9f019d524209": 1,
+    "eval-normal:generator_44c64c28821c42b082ccd3f85513f032": 1,
+    "eval-normal:generator_68e84518b4074f08bf160770bb8dd208": 1,
+    "eval-normal:generator_87570136327e4be5849b74b404f58456": 1,
+    "eval-normal:generator_8d364ada243b433a839669c63be687a7": 1,
+    "eval-normal:generator_a2fb579cf9b448f2bf550459784ddff5": 1,
+    "eval-normal:generator_ad7238efce3e4be59c376260744db5ca": 1,
+    "eval-normal:generator_c40bbbc1b1a04227b277bad35a7ba127": 1,
+    "eval-normal:generator_c536c684552b4a4e815d43b4a6687f90": 1,
+    "eval-normal:generator_dbe145d3319c4ef0831e8807bc8bfbb9": 1,
+    "eval-normal:generator_eac867255d4246e8874a2ca07c61a1d7": 1
+  },
+  "totals": {
+    "cached_input_tokens": 116480.0,
+    "cached_output_tokens": 0.0,
+    "call_time": 200.39974382799846,
+    "cost_usd": 0.02090566,
+    "prompt_num_tokens": 196859.0,
+    "reasoning_num_tokens": 1513.0,
+    "response_num_tokens": 21084.0,
+    "total_num_tokens": 217943.0,
+    "wall_time_seconds": 200.39974382799846
+  },
+  "zero_cost_call_count": 0
+}

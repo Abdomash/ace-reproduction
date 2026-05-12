@@ -1,0 +1,17 @@
+{
+  "aggregate": {},
+  "available": false,
+  "challenge_aggregate": {},
+  "failure_count": 0,
+  "stages": {
+    "eval-challenge": {
+      "available": false,
+      "path": "/home/abdo/ace-reproduction/results/ace-appworld/subset/appworld_test_normal_repr__baseline_expensive_generator__exp-deepseek-deepseek-v4-flash/full_seed-42_baseline/stages/eval-challenge/evaluations/test_challenge.json"
+    },
+    "eval-normal": {
+      "available": false,
+      "path": "/home/abdo/ace-reproduction/results/ace-appworld/subset/appworld_test_normal_repr__baseline_expensive_generator__exp-deepseek-deepseek-v4-flash/full_seed-42_baseline/stages/eval-normal/evaluations/test_normal.json"
+    }
+  },
+  "task_count": 0
+}
