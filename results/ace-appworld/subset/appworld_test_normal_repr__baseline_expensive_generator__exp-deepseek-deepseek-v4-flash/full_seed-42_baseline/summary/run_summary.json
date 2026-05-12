@@ -1,8 +1,8 @@
 {
-  "active_runtime_seconds": 1317.8868051079999,
+  "active_runtime_seconds": 13004.325867245,
   "campaign_id": null,
   "checkpointing_enabled": false,
-  "completed_at": null,
+  "completed_at": "2026-05-12T17:25:17.982767+00:00",
   "config_id": null,
   "config_name": "AppWorld Test Normal Representative / Baseline Expensive Generator Nitro",
   "current_stage": "eval-normal",
@@ -14,12 +14,12 @@
     "ran": false,
     "reason": "disabled"
   },
-  "evaluation_size_bytes": 0,
-  "failure_reason": "Expecting value: line 5273 column 1 (char 28996)",
+  "evaluation_size_bytes": 258746,
+  "failure_reason": null,
   "has_checkpoints": true,
-  "last_checkpoint_at": "2026-05-12T13:27:03.702436+00:00",
-  "last_completed_stage": null,
-  "last_resumed_at": "2026-05-12T13:26:59.288618+00:00",
+  "last_checkpoint_at": "2026-05-12T17:16:19.066213+00:00",
+  "last_completed_stage": "eval-normal",
+  "last_resumed_at": "2026-05-12T14:10:31.542840+00:00",
   "mode": "full",
   "models": {
     "curator": {
@@ -35,8 +35,8 @@
       "provider": "openrouter"
     }
   },
-  "post_export_evaluation_size_bytes": 0,
-  "post_export_size_bytes": 4045002,
+  "post_export_evaluation_size_bytes": 129373,
+  "post_export_size_bytes": 300800739,
   "post_export_tasks_size_bytes": 0,
   "post_export_telemetry_size_bytes": 0,
   "prune": {
@@ -45,7 +45,7 @@
     "removed_count": 0
   },
   "resolved_models": null,
-  "resume_count": 1,
+  "resume_count": 2,
   "resume_enabled": true,
   "run_dir": "/home/abdo/ace-reproduction/results/ace-appworld/subset/appworld_test_normal_repr__baseline_expensive_generator__exp-deepseek-deepseek-v4-flash/full_seed-42_baseline",
   "sample_id": null,
@@ -53,15 +53,15 @@
   "sample_manifest_path": null,
   "stage_count": 2,
   "started_at": "2026-05-12T13:26:59.286702+00:00",
-  "status": "failed",
-  "task_directory_count": 1,
+  "status": "completed",
+  "task_directory_count": 60,
   "task_manifests": {
     "adapt": null,
     "eval-challenge": null,
     "eval-normal": "/home/abdo/ace-reproduction/runners/campaigns/ace_repr_v1/samples/appworld_test_normal_repr.json"
   },
-  "tasks_size_bytes": 1933679,
-  "telemetry_size_bytes": 352938,
+  "tasks_size_bytes": 153716752,
+  "telemetry_size_bytes": 6683227,
   "tier_models": null,
-  "total_size_bytes": 4040549
+  "total_size_bytes": 300800739
 }

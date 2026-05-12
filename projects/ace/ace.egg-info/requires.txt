@@ -1,0 +1,11 @@
+faiss-cpu>=1.7.4
+openai>=1.0.0
+together>=1.0.0
+sambanova>=1.0.0
+python-dotenv>=1.0.0
+scikit-learn>=1.0.0
+sentence-transformers>=2.2.0
+tiktoken>=0.12.0
+
+[appworld]
+jinja2>=3.0.0
