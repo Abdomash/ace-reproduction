@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "run_id": "offline_seed-42_20260511_040744",
+  "status": "completed",
+  "checkpointing_enabled": true,
+  "resume_enabled": true,
+  "has_checkpoints": false,
+  "resume_count": 0,
+  "current_stage": "final-eval",
+  "last_completed_stage": "final-eval",
+  "active_runtime_seconds": 76297.52795796999,
+  "started_at": "2026-05-11T01:07:44.550186+00:00",
+  "last_resumed_at": "2026-05-11T01:07:44.551342+00:00",
+  "last_checkpoint_at": null,
+  "completed_at": "2026-05-11T22:20:23.108025+00:00",
+  "failure_reason": null
+}

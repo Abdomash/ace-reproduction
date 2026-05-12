@@ -1,0 +1,152 @@
+{
+  "run_id": "offline_seed-42_20260511_040744",
+  "telemetry": {
+    "enabled": true,
+    "trace_path": "/home/abdo/ace-reproduction/results/ace-finer/subset/finer_repr_a__expensive_reflector__cheap-openai-gpt-oss-120b__exp-deepseek-deepseek-v4-flash/offline_seed-42_20260511_040744/telemetry/run_offline_seed-42_20260511_040744.otel.jsonl",
+    "metrics_path": "/home/abdo/ace-reproduction/results/ace-finer/subset/finer_repr_a__expensive_reflector__cheap-openai-gpt-oss-120b__exp-deepseek-deepseek-v4-flash/offline_seed-42_20260511_040744/telemetry/ace_offline_seed-42_20260511_040744.metrics.jsonl",
+    "metrics_interval_seconds": 5.0,
+    "task_name": "finer",
+    "mode": "offline"
+  },
+  "llm_usage": {
+    "roles": {
+      "curator": {
+        "calls": 296,
+        "prompt_tokens": 7585755,
+        "response_tokens": 295785,
+        "reasoning_tokens": 233948,
+        "total_tokens": 7881540,
+        "cached_input_tokens": 73600,
+        "cached_output_tokens": 0,
+        "total_time": 14434.783142089844,
+        "cost_usd": 0.9140451319999998,
+        "calls_with_cost": 296
+      },
+      "generator": {
+        "calls": 1745,
+        "prompt_tokens": 49572365,
+        "response_tokens": 2659943,
+        "reasoning_tokens": 2342586,
+        "total_tokens": 52232308,
+        "cached_input_tokens": 26007154,
+        "cached_output_tokens": 0,
+        "total_time": 90099.91195082664,
+        "cost_usd": 6.057175901000005,
+        "calls_with_cost": 1744
+      },
+      "reflector": {
+        "calls": 382,
+        "prompt_tokens": 1047949,
+        "response_tokens": 508047,
+        "reasoning_tokens": 323007,
+        "total_tokens": 1555996,
+        "cached_input_tokens": 152448,
+        "cached_output_tokens": 0,
+        "total_time": 13933.704999446869,
+        "cost_usd": 0.27558835399999976,
+        "calls_with_cost": 382
+      }
+    },
+    "total": {
+      "calls": 2423,
+      "prompt_tokens": 58206069,
+      "response_tokens": 3463775,
+      "reasoning_tokens": 2899541,
+      "total_tokens": 61669844,
+      "cached_input_tokens": 26233202,
+      "cached_output_tokens": 0,
+      "total_time": 118468.40009236336,
+      "cost_usd": 7.246809387000005,
+      "calls_with_cost": 2422
+    }
+  },
+  "costs": {
+    "roles": {
+      "curator": {
+        "calls": 296,
+        "prompt_tokens": 7585755,
+        "response_tokens": 295785,
+        "reasoning_tokens": 233948,
+        "total_tokens": 7881540,
+        "cached_input_tokens": 73600,
+        "cached_output_tokens": 0,
+        "cost_usd": 0.9140451319999998
+      },
+      "generator": {
+        "calls": 1745,
+        "prompt_tokens": 49572365,
+        "response_tokens": 2659943,
+        "reasoning_tokens": 2342586,
+        "total_tokens": 52232308,
+        "cached_input_tokens": 26007154,
+        "cached_output_tokens": 0,
+        "cost_usd": 6.057175901000005
+      },
+      "reflector": {
+        "calls": 382,
+        "prompt_tokens": 1047949,
+        "response_tokens": 508047,
+        "reasoning_tokens": 323007,
+        "total_tokens": 1555996,
+        "cached_input_tokens": 152448,
+        "cached_output_tokens": 0,
+        "cost_usd": 0.27558835399999976
+      }
+    },
+    "total": {
+      "calls": 2423,
+      "prompt_tokens": 58206069,
+      "response_tokens": 3463775,
+      "reasoning_tokens": 2899541,
+      "total_tokens": 61669844,
+      "cached_input_tokens": 26233202,
+      "cached_output_tokens": 0,
+      "cost_usd": 7.246809387000005
+    }
+  },
+  "results": {
+    "initial_test_results": {
+      "accuracy": 0.571590909090909,
+      "correct": 50,
+      "total": 220,
+      "no_answer": 0
+    },
+    "training_results": {
+      "best_validation_accuracy": 0.7016666666666667
+    },
+    "final_test_results": {
+      "accuracy": 0.7079545454545455,
+      "correct": 80,
+      "total": 220,
+      "no_answer": 11
+    }
+  },
+  "initial_test_results": {
+    "accuracy": 0.571590909090909,
+    "correct": 50,
+    "total": 220,
+    "no_answer": 0
+  },
+  "training_results": {
+    "best_validation_accuracy": 0.7016666666666667
+  },
+  "final_test_results": {
+    "accuracy": 0.7079545454545455,
+    "correct": 80,
+    "total": 220,
+    "no_answer": 11
+  },
+  "status": "completed",
+  "checkpointing_enabled": true,
+  "resume_enabled": true,
+  "has_checkpoints": false,
+  "resume_count": 0,
+  "current_stage": "final-eval",
+  "last_completed_stage": "final-eval",
+  "active_runtime_seconds": 76297.52795796999,
+  "started_at": "2026-05-11T01:07:44.550186+00:00",
+  "last_resumed_at": "2026-05-11T01:07:44.551342+00:00",
+  "last_checkpoint_at": null,
+  "completed_at": "2026-05-11T22:20:23.108025+00:00",
+  "failure_reason": null
+}

@@ -47,18 +47,18 @@
         }
       },
       "sample_manifest_path": "/home/abdo/ace-reproduction/runners/campaigns/ace_repr_v1/samples/finer_repr_a.json",
-      "status": "in_progress",
+      "status": "completed",
       "checkpointing_enabled": true,
       "resume_enabled": true,
       "has_checkpoints": true,
       "resume_count": 1,
-      "current_stage": "train",
-      "last_completed_stage": "baseline-eval",
-      "active_runtime_seconds": 0.0,
+      "current_stage": "final-eval",
+      "last_completed_stage": "final-eval",
+      "active_runtime_seconds": 35744.71504264197,
       "started_at": "2026-05-10T22:20:20.401385+00:00",
       "last_resumed_at": "2026-05-11T01:06:26.196221+00:00",
       "last_checkpoint_at": "2026-05-11T00:42:29.248620+00:00",
-      "completed_at": null,
+      "completed_at": "2026-05-11T11:02:41.463927+00:00",
       "failure_reason": null
     }
   ]

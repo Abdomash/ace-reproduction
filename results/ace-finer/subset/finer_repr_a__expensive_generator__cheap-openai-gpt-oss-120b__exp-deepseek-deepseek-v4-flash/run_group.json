@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "benchmark": "ace-finer",
+  "run_type": "subset",
+  "config_slug": "finer_repr_a__expensive_generator__cheap-openai-gpt-oss-120b__exp-deepseek-deepseek-v4-flash",
+  "runs": [
+    {
+      "run_leaf": "offline_seed-42_20260511_040735",
+      "mode": "offline",
+      "seed": 42,
+      "timestamp": "20260511_040735",
+      "run_dir": "results/ace-finer/subset/finer_repr_a__expensive_generator__cheap-openai-gpt-oss-120b__exp-deepseek-deepseek-v4-flash/offline_seed-42_20260511_040735",
+      "campaign_id": "ace_repr_v1",
+      "sample_id": "finer_repr_a",
+      "sample_kind": "representative",
+      "config_id": "expensive_generator",
+      "tier_models": {
+        "cheap": {
+          "label": "openai/gpt-oss-120b",
+          "model": "openai/gpt-oss-120b",
+          "provider": "openrouter"
+        },
+        "expensive": {
+          "label": "deepseek/deepseek-v4-flash",
+          "model": "deepseek/deepseek-v4-flash",
+          "provider": "openrouter"
+        }
+      },
+      "resolved_models": {
+        "curator": {
+          "label": "openai/gpt-oss-120b",
+          "model": "openai/gpt-oss-120b",
+          "provider": "openrouter",
+          "tier": "cheap"
+        },
+        "generator": {
+          "label": "deepseek/deepseek-v4-flash",
+          "model": "deepseek/deepseek-v4-flash",
+          "provider": "openrouter",
+          "tier": "expensive"
+        },
+        "reflector": {
+          "label": "openai/gpt-oss-120b",
+          "model": "openai/gpt-oss-120b",
+          "provider": "openrouter",
+          "tier": "cheap"
+        }
+      },
+      "sample_manifest_path": "/home/abdo/ace-reproduction/runners/campaigns/ace_repr_v1/samples/finer_repr_a.json",
+      "status": "completed",
+      "checkpointing_enabled": true,
+      "resume_enabled": true,
+      "has_checkpoints": false,
+      "resume_count": 0,
+      "current_stage": "final-eval",
+      "last_completed_stage": "final-eval",
+      "active_runtime_seconds": 64818.31758347299,
+      "started_at": "2026-05-11T01:07:35.151936+00:00",
+      "last_resumed_at": "2026-05-11T01:07:35.153223+00:00",
+      "last_checkpoint_at": null,
+      "completed_at": "2026-05-11T19:08:47.015699+00:00",
+      "failure_reason": null
+    }
+  ]
+}

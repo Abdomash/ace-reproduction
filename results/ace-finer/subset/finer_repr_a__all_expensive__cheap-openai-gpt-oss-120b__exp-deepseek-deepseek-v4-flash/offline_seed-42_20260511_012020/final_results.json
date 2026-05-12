@@ -11,97 +11,97 @@
   "llm_usage": {
     "roles": {
       "curator": {
-        "calls": 58,
-        "prompt_tokens": 458284,
-        "response_tokens": 60839,
-        "reasoning_tokens": 37179,
-        "total_tokens": 519123,
-        "cached_input_tokens": 0,
+        "calls": 304,
+        "prompt_tokens": 8283014,
+        "response_tokens": 333478,
+        "reasoning_tokens": 228008,
+        "total_tokens": 8616492,
+        "cached_input_tokens": 8448,
         "cached_output_tokens": 0,
-        "total_time": 2104.857945919037,
-        "cost_usd": 0.08280304,
-        "calls_with_cost": 58
+        "total_time": 10202.86841917038,
+        "cost_usd": 1.2597611560000008,
+        "calls_with_cost": 304
       },
       "generator": {
-        "calls": 374,
-        "prompt_tokens": 1862409,
-        "response_tokens": 353852,
-        "reasoning_tokens": 255086,
-        "total_tokens": 2216261,
-        "cached_input_tokens": 589824,
+        "calls": 1686,
+        "prompt_tokens": 50306151,
+        "response_tokens": 1980317,
+        "reasoning_tokens": 1372167,
+        "total_tokens": 52286468,
+        "cached_input_tokens": 30034816,
         "cached_output_tokens": 0,
-        "total_time": 7276.116227865219,
-        "cost_usd": 0.29701939999999977,
-        "calls_with_cost": 374
+        "total_time": 34882.25882577896,
+        "cost_usd": 4.27129557,
+        "calls_with_cost": 1686
       },
       "reflector": {
-        "calls": 62,
-        "prompt_tokens": 179771,
-        "response_tokens": 82397,
-        "reasoning_tokens": 50173,
-        "total_tokens": 262168,
-        "cached_input_tokens": 3584,
+        "calls": 339,
+        "prompt_tokens": 1034031,
+        "response_tokens": 529877,
+        "reasoning_tokens": 338021,
+        "total_tokens": 1563908,
+        "cached_input_tokens": 118400,
         "cached_output_tokens": 0,
-        "total_time": 2555.347691297531,
-        "cost_usd": 0.04946674200000001,
-        "calls_with_cost": 62
+        "total_time": 12546.451290845871,
+        "cost_usd": 0.2864022599999998,
+        "calls_with_cost": 339
       }
     },
     "total": {
-      "calls": 494,
-      "prompt_tokens": 2500464,
-      "response_tokens": 497088,
-      "reasoning_tokens": 342438,
-      "total_tokens": 2997552,
-      "cached_input_tokens": 593408,
+      "calls": 2329,
+      "prompt_tokens": 59623196,
+      "response_tokens": 2843672,
+      "reasoning_tokens": 1938196,
+      "total_tokens": 62466868,
+      "cached_input_tokens": 30161664,
       "cached_output_tokens": 0,
-      "total_time": 11936.321865081787,
-      "cost_usd": 0.42928918199999977,
-      "calls_with_cost": 494
+      "total_time": 57631.57853579521,
+      "cost_usd": 5.817458986000001,
+      "calls_with_cost": 2329
     }
   },
   "costs": {
     "roles": {
       "curator": {
-        "calls": 58,
-        "prompt_tokens": 458284,
-        "response_tokens": 60839,
-        "reasoning_tokens": 37179,
-        "total_tokens": 519123,
-        "cached_input_tokens": 0,
+        "calls": 304,
+        "prompt_tokens": 8283014,
+        "response_tokens": 333478,
+        "reasoning_tokens": 228008,
+        "total_tokens": 8616492,
+        "cached_input_tokens": 8448,
         "cached_output_tokens": 0,
-        "cost_usd": 0.08280304
+        "cost_usd": 1.2597611560000008
       },
       "generator": {
-        "calls": 374,
-        "prompt_tokens": 1862409,
-        "response_tokens": 353852,
-        "reasoning_tokens": 255086,
-        "total_tokens": 2216261,
-        "cached_input_tokens": 589824,
+        "calls": 1686,
+        "prompt_tokens": 50306151,
+        "response_tokens": 1980317,
+        "reasoning_tokens": 1372167,
+        "total_tokens": 52286468,
+        "cached_input_tokens": 30034816,
         "cached_output_tokens": 0,
-        "cost_usd": 0.29701939999999977
+        "cost_usd": 4.27129557
       },
       "reflector": {
-        "calls": 62,
-        "prompt_tokens": 179771,
-        "response_tokens": 82397,
-        "reasoning_tokens": 50173,
-        "total_tokens": 262168,
-        "cached_input_tokens": 3584,
+        "calls": 339,
+        "prompt_tokens": 1034031,
+        "response_tokens": 529877,
+        "reasoning_tokens": 338021,
+        "total_tokens": 1563908,
+        "cached_input_tokens": 118400,
         "cached_output_tokens": 0,
-        "cost_usd": 0.04946674200000001
+        "cost_usd": 0.2864022599999998
       }
     },
     "total": {
-      "calls": 494,
-      "prompt_tokens": 2500464,
-      "response_tokens": 497088,
-      "reasoning_tokens": 342438,
-      "total_tokens": 2997552,
-      "cached_input_tokens": 593408,
+      "calls": 2329,
+      "prompt_tokens": 59623196,
+      "response_tokens": 2843672,
+      "reasoning_tokens": 1938196,
+      "total_tokens": 62466868,
+      "cached_input_tokens": 30161664,
       "cached_output_tokens": 0,
-      "cost_usd": 0.42928918199999977
+      "cost_usd": 5.817458986000001
     }
   },
   "results": {
@@ -110,6 +110,15 @@
       "correct": 99,
       "total": 220,
       "no_answer": 2
+    },
+    "training_results": {
+      "best_validation_accuracy": 0.7683333333333333
+    },
+    "final_test_results": {
+      "accuracy": 0.7715909090909091,
+      "correct": 99,
+      "total": 220,
+      "no_answer": 1
     }
   },
   "initial_test_results": {
@@ -118,17 +127,26 @@
     "total": 220,
     "no_answer": 2
   },
-  "status": "in_progress",
+  "training_results": {
+    "best_validation_accuracy": 0.7683333333333333
+  },
+  "final_test_results": {
+    "accuracy": 0.7715909090909091,
+    "correct": 99,
+    "total": 220,
+    "no_answer": 1
+  },
+  "status": "completed",
   "checkpointing_enabled": true,
   "resume_enabled": true,
   "has_checkpoints": true,
   "resume_count": 1,
-  "current_stage": "train",
-  "last_completed_stage": "baseline-eval",
-  "active_runtime_seconds": 0.0,
+  "current_stage": "final-eval",
+  "last_completed_stage": "final-eval",
+  "active_runtime_seconds": 35744.71504264197,
   "started_at": "2026-05-10T22:20:20.401385+00:00",
   "last_resumed_at": "2026-05-11T01:06:26.196221+00:00",
   "last_checkpoint_at": "2026-05-11T00:42:29.248620+00:00",
-  "completed_at": null,
+  "completed_at": "2026-05-11T11:02:41.463927+00:00",
   "failure_reason": null
 }
